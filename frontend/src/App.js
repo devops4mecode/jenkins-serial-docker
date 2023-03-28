@@ -5,7 +5,7 @@ import Dashboard from "./scenes/dashboard";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar"
 import GenerateNumber from "./scenes/generateNumber/GenerateNumber";
-// import UnusedNumber from "./scenes/contacts"
+import UnusedNumber from "./scenes/numbers/UnusedNumber"
 // import UsedNumber from "./scenes/contacts"
 // import Pie from "./scenes/pie"
 
@@ -24,7 +24,7 @@ function App() {
                         <Topbar />
                         <Routes>
                             <Route path="/" element={<Dashboard />} />
-                            {/* <Route path="/unusedNumber" element={<UnusedNumber />} /> */}
+                            <Route path="/unusedNumber" element={<UnusedNumber />} />
                             {/* <Route path="/usedNumber" element={<UsedNumber />} /> */}
                             <Route path="/generateNumber" element={<GenerateNumber />} />
                             {/* <Route path="/pie" element={<Pie />} /> */}
