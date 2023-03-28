@@ -36,17 +36,18 @@ const generateSerials = async (req, res) => {
             return res.status(400).json({ message: "All fields must be provided" });
         }
 
-        const serialNo = generateSerialNumber();
-        const serial = new Serial({
-            givenCredit,
-            remarkName,
-            serialNo,
-            redemptionAcc: "",
-            serialStatus: true,
-        });
+        for (let i = 0; i < amountToGenerate; i++) {
+            const serialNo = generateSerialNumber();
+            const serial = new Serial({
+                givenCredit,
+                remarkName,
+                serialNo,
+                redemptionAcc: "",
+                serialStatus: true,
+            });
 
-        await serial.save(); // save the document to MongoDB
-
+            await serial.save(); // save the document to MongoDB
+        }
         return res.status(200).json({ message: "Serials generated successfully" });
     } catch (error) {
         console.error(error);
