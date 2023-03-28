@@ -19,6 +19,9 @@ const SerialSchema = new Schema(
             type: Number,
             required: true,
         },
+        redemptionAcc: {
+            type: String,
+        },
         serialStatus: {
             type: Boolean,
             default: true,
