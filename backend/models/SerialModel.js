@@ -10,6 +10,7 @@ const SerialSchema = new Schema(
         serialNo: {
             type: Number,
             required: true,
+            unique: true,
         },
         remarkName: {
             type: String,
@@ -24,7 +25,7 @@ const SerialSchema = new Schema(
         },
         serialStatus: {
             type: Boolean,
-            default: true,
+            default: false,
         },
     },
     { timestamps: true }

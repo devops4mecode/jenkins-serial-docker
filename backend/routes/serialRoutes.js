@@ -5,7 +5,10 @@ const verifyJWT = require('../middleware/verifyJWT')
 
 router.use(verifyJWT)
 
-router.route('/')
-    .get(serialController.getAllSerials)
+router
+    .get('/all', serialController.getAllSerials)
+    .post('/generate', serialController.generateSerials)
+    .get('/details', serialController.getSerialDetails)
+    .patch('/redeem', serialController.redeemSerials)
 
 module.exports = router
