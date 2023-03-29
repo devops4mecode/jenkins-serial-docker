@@ -18,7 +18,6 @@ const initialValuesLogin = {
     password: ""
 }
 
-
 const Form = () => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
@@ -118,12 +117,12 @@ const Form = () => {
                             {"LOGIN"}
                         </Button>
                         <Typography
-                            
+
                             sx={{
                                 textDecoration: "underline",
                                 color: `${colors.grey[100]} !important`
                             }}
-                        >                            
+                        >
                         </Typography>
                     </Box>
                 </form>
