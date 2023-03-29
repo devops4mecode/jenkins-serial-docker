@@ -27,7 +27,7 @@ const AllNumber = () => {
 
     return (
         <Box m="20px">
-            <Header title="Unused Serial Number" subtitle="Unused Serial Number" />
+            <Header title="All Serial Number" subtitle="All Serial Number" />
             <Box m="40px 0 0 0" height="75vh" sx={{
                 "& .MuiDataGrid-root": {
                     // border: "none"

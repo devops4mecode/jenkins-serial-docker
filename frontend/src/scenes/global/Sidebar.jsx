@@ -10,6 +10,7 @@ import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import SixteenMpIcon from '@mui/icons-material/SixteenMp';
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -113,6 +114,13 @@ const Sidebar = () => {
                             title="Generate Number"
                             to="/generateNumber"
                             icon={<ReceiptOutlinedIcon />}
+                            selected={selected}
+                            setSelected={setSelected}
+                        />
+                        <Item
+                            title="All Number"
+                            to="/allNumber"
+                            icon={<FormatListBulletedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
