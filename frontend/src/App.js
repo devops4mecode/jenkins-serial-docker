@@ -7,6 +7,7 @@ import Sidebar from "./scenes/global/Sidebar"
 import GenerateNumber from "./scenes/generateNumber/GenerateNumber";
 import UnusedNumber from "./scenes/numbers/UnusedNumber"
 import UsedNumber from "./scenes/numbers/UsedNumber";
+import LoginPage from "./scenes/loginPage/Page";
 // import Pie from "./scenes/pie"
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
                             <Route path="/unusedNumber" element={<UnusedNumber />} />
                             <Route path="/usedNumber" element={<UsedNumber />} />
                             <Route path="/generateNumber" element={<GenerateNumber />} />
-                            {/* <Route path="/pie" element={<Pie />} /> */}
+                            <Route path="/LoginPage" element={<LoginPage />} />
                         </Routes>
                     </main>
                 </div>
