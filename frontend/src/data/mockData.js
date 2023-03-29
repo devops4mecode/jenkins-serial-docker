@@ -7,6 +7,7 @@ export const mockDataTeam = [
     amount: 50,
     quantity: 2,
     remark: "playerx",
+    serialStatus: "CLAIMED",
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ export const mockDataTeam = [
     amount: 50,
     quantity: 80,
     remark: "playery",
+    serialStatus: "CLAIMED",
   },
   {
     id: 3,
@@ -21,6 +23,7 @@ export const mockDataTeam = [
     amount: 50,
     quantity: 10,
     remark: "playerz",
+    serialStatus: "UNCLAIMED",
   },
   {
     id: 4,
@@ -28,6 +31,7 @@ export const mockDataTeam = [
     amount: 50,
     quantity: 15,
     remark: "xplayer",
+    serialStatus: "UNCLAIMED",
   },
   {
     id: 5,
@@ -35,5 +39,6 @@ export const mockDataTeam = [
     amount: 50,
     quantity: 1,
     remark: "yplayer",
+    serialStatus: "CLAIMED",
   },
 ];
