@@ -8,6 +8,8 @@ import GenerateNumber from "./scenes/generateNumber/GenerateNumber";
 import UnusedNumber from "./scenes/numbers/UnusedNumber"
 import UsedNumber from "./scenes/numbers/UsedNumber";
 import LoginPage from "./scenes/loginPage/Page";
+import AllNumber from "./scenes/numbers/AllNumber";
+import Line from "./scenes/line";
 // import Pie from "./scenes/pie"
 
 function App() {
@@ -27,8 +29,10 @@ function App() {
                             <Route path="/" element={<Dashboard />} />
                             <Route path="/unusedNumber" element={<UnusedNumber />} />
                             <Route path="/usedNumber" element={<UsedNumber />} />
+                            <Route path="/allNumber" element={<AllNumber />} />
                             <Route path="/generateNumber" element={<GenerateNumber />} />
                             <Route path="/LoginPage" element={<LoginPage />} />
+                            <Route path="/line" element={<Line />} />
                         </Routes>
                     </main>
                 </div>

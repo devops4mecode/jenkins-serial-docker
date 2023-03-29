@@ -6,7 +6,7 @@ import Header from "../../components/Header";
 import DownloadIcon from '@mui/icons-material/Download';
 import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
 
-const UsedNumber = () => {
+const AllNumber = () => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
 
@@ -16,13 +16,12 @@ const UsedNumber = () => {
 
     const columns = [
         // { field: "id", headerName: "ID", flex:1, headerAlign: "center", align: "center", sortable: false, filter: false },
-        { field: "serialNumber", headerName: "SERIAL NUMBER", type: "number", headerAlign: "center", align: "center", valueGetter: (params) => formatNumber(params.row.serialNumber), flex:1 },
-        { field: "amount", headerName: "CREDIT", type: "number", headerAlign: "center", align: "center", flex:1 },
-        // { field: "quantity", headerName: "QUANTITY", type: "number", headerAlign: "center", align: "center", flex:1 },
-        // { field: "remark", headerName: "WHOBUY", flex: 1, cellClassName: "name-column--cell", headerAlign: "center", align: "center" },
-        // { field: "remark", headerName: "WHOUSE", flex: 1, cellClassName: "name-column--cell", headerAlign: "center", align: "center" },
-        // { field: "createdAt", headerName: "SOLDDATE", flex: 1, headerAlign: "center", align: "center"},
-        // { field: "updatedAt", headerName: "USEDDATE", flex: 1, headerAlign: "center", align: "center"}
+        { field: "serialNo", headerName: "SERIAL NUMBER", type: "number", headerAlign: "center", align: "center", valueGetter: (params) => formatNumber(params.row.serialNo), flex:1 },
+        { field: "givenCredit", headerName: "CREDIT", type: "number", headerAlign: "center", align: "center", flex:1 },
+        { field: "remarkName", headerName: "WHO BUY", flex: 1, cellClassName: "name-column--cell", headerAlign: "center", align: "center" },
+        { field: "createdAt", headerName: "SOLD DATE", flex: 1, headerAlign: "center", align: "center"},
+        { field: "redemptionAcc", headerName: "WHO USE", flex: 1, cellClassName: "name-column--cell", headerAlign: "center", align: "center" },
+        { field: "updatedAt", headerName: "REDEEMED DATE", flex: 1, headerAlign: "center", align: "center"}
         // { field: "serialStatus", headerName: "Serial Number Status", flex: 1, cellClassName: "name-column--cell", headerAlign: "center", align: "center" },
     ]
 
@@ -69,4 +68,4 @@ const UsedNumber = () => {
     )
 }
 
-export default UsedNumber
+export default AllNumber
