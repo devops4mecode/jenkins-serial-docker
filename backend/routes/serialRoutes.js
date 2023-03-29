@@ -24,4 +24,3 @@ router
 router.use(skipAuth);
 
 module.exports = router
-
