@@ -36,17 +36,18 @@ const generateSerials = async (req, res) => {
             return res.status(400).json({ message: "All fields must be provided" });
         }
 
-        const serialNo = generateSerialNumber();
-        const serial = new Serial({
-            givenCredit,
-            remarkName,
-            serialNo,
-            redemptionAcc: "",
-            serialStatus: true,
-        });
+        for (let i = 0; i < amountToGenerate; i++) {
+            const serialNo = generateSerialNumber();
+            const serial = new Serial({
+                givenCredit,
+                remarkName,
+                serialNo,
+                redemptionAcc: "",
+                serialStatus: true,
+            });
 
-        await serial.save(); // save the document to MongoDB
-
+            await serial.save(); // save the document to MongoDB
+        }
         return res.status(200).json({ message: "Serials generated successfully" });
     } catch (error) {
         console.error(error);
@@ -56,11 +57,11 @@ const generateSerials = async (req, res) => {
 
 
 // @desc Get Serial(s) Details
-// @route Get /serials/details
+// @route Get /serials/details?redemptionAcc=${redemptionAcc}&serialNo=${serialNo}
 // @access Public
 const getSerialDetails = async (req, res) => {
     try {
-        const { redemptionAcc, serialNo } = req.body;
+        const { redemptionAcc, serialNo } = req.query;
 
         if (!redemptionAcc || !serialNo) {
             return res.status(400).json({ message: "All fields must be provided" });
@@ -73,7 +74,7 @@ const getSerialDetails = async (req, res) => {
             return res.status(400).json({ message: "Serial Number Invalid, Check your input" })
         }
         if (foundSerialNo.serialStatus !== true) {
-            return res.status(400).json({ message: "Invalid Serial Number, This Serial Number Probably been used" })
+            return res.status(400).json({ message: "Invalid code, check your input or this code already been redeemed" })
         }
         return res.json(foundSerialNo)
     } catch (error) {
@@ -82,11 +83,11 @@ const getSerialDetails = async (req, res) => {
 }
 
 // @desc Redeem Serial(s)
-// @route Patch /serials
+// @route Patch /serials/redeem?redemptionAcc=${redemptionAcc}&serialNo=${serialNo}
 // @access Public
 const redeemSerials = async (req, res) => {
     try {
-        const { redemptionAcc, serialNo } = req.body;
+        const { redemptionAcc, serialNo } = req.query;
 
         if (!redemptionAcc || !serialNo) {
             return res.status(400).json({ message: "All fields must be provided in order to redeem" });
