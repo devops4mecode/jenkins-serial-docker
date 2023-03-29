@@ -1,6 +1,6 @@
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import Dashboard from "./scenes/dashboard";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar"
@@ -12,31 +12,34 @@ import AllNumber from "./scenes/numbers/AllNumber";
 import Line from "./scenes/line";
 // import Pie from "./scenes/pie"
 
+// Samuel add
+import { useSelector } from "react-redux";
+import Layout from "./scenes/layout"
+
 function App() {
     const [theme, colorMode] = useMode();
 
     // anthing refer to the theme.js file
     return (
         <ColorModeContext.Provider value={colorMode}>
-            <ThemeProvider theme={theme}>
-                {/* CssBaseline = reset css to default */}
-                <CssBaseline />
-                <div className="app">
-                    <Sidebar/>
-                    <main className="content">
-                        <Topbar />
-                        <Routes>
-                            <Route path="/" element={<Dashboard />} />
+            <BrowserRouter>
+                <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <Routes>
+                        <Route element={<Layout />}>
+                            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                            <Route path="/dashboard" element={<Dashboard />} />
+                            <Route path="/LoginPage" element={<LoginPage />} />
+                            <Route path="/generateNumber" element={<GenerateNumber />} />
                             <Route path="/unusedNumber" element={<UnusedNumber />} />
                             <Route path="/usedNumber" element={<UsedNumber />} />
                             <Route path="/allNumber" element={<AllNumber />} />
-                            <Route path="/generateNumber" element={<GenerateNumber />} />
                             <Route path="/LoginPage" element={<LoginPage />} />
                             <Route path="/line" element={<Line />} />
-                        </Routes>
-                    </main>
-                </div>
-            </ThemeProvider>
+                        </Route>
+                    </Routes>
+                </ThemeProvider>
+            </BrowserRouter>
         </ColorModeContext.Provider>
     );
 }

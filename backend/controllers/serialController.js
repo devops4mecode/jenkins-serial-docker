@@ -108,7 +108,7 @@ const redeemSerials = async (req, res) => {
             // save the updated document
             await foundSerialNo.save();
 
-            return res.status(200).json({ message: `Successfully redeem, your wallet will be topup RM${foundSerialNo.givenCredit}` });
+            return res.status(200).json({ message: `Successfully redeem, your wallet will be topup RM${foundSerialNo.givenCredit.toFixed(2)}` });
         }
     } catch (error) {
         console.error(error);
