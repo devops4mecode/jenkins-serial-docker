@@ -3,6 +3,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid"
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData"
 import Header from "../../components/Header";
+import moment from "moment";
 import DownloadIcon from '@mui/icons-material/Download';
 import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
 
@@ -11,17 +12,63 @@ const AllNumber = () => {
     const colors = tokens(theme.palette.mode)
 
     function formatNumber(num) {
-        return num.toLocaleString('en-US', {maximumFractionDigits: 0}).toString().replace(/,/g,'')
+        return num.toLocaleString('en-US', { maximumFractionDigits: 0 }).toString().replace(/,/g, '')
     }
 
     const columns = [
         // { field: "id", headerName: "ID", flex:1, headerAlign: "center", align: "center", sortable: false, filter: false },
-        { field: "serialNo", headerName: "SERIAL NUMBER", type: "number", headerAlign: "center", align: "center", valueGetter: (params) => formatNumber(params.row.serialNo), flex:1 },
-        { field: "givenCredit", headerName: "CREDIT", type: "number", headerAlign: "center", align: "center", flex:1 },
-        { field: "remarkName", headerName: "WHO BUY", flex: 1, cellClassName: "name-column--cell", headerAlign: "center", align: "center" },
-        { field: "createdAt", headerName: "SOLD DATE", flex: 1, headerAlign: "center", align: "center"},
-        { field: "redemptionAcc", headerName: "WHO USE", flex: 1, cellClassName: "name-column--cell", headerAlign: "center", align: "center" },
-        { field: "updatedAt", headerName: "REDEEMED DATE", flex: 1, headerAlign: "center", align: "center"}
+        {
+            field: "serialNo",
+            headerName: "SERIAL NUMBER",
+            type: "number",
+            headerAlign: "center",
+            align: "center",
+            valueGetter: (params) =>
+                formatNumber(params.row.serialNo),
+            flex: 1
+        },
+        {
+            field: "givenCredit",
+            headerName: "CREDIT",
+            type: "number",
+            headerAlign: "center",
+            align: "center",
+            flex: 1
+        },
+        {
+            field: "remarkName",
+            headerName: "WHO BUY",
+            flex: 1,
+            cellClassName: "name-column--cell",
+            headerAlign: "center",
+            align: "center"
+        },
+        {
+            field: "createdAt",
+            headerName: "SOLD DATE",
+            valueFormatter: (params) =>
+                moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
+            flex: 1,
+            headerAlign: "center",
+            align: "center"
+        },
+        {
+            field: "redemptionAcc",
+            headerName: "WHO USE",
+            flex: 1,
+            cellClassName: "name-column--cell",
+            headerAlign: "center",
+            align: "center"
+        },
+        {
+            field: "updatedAt",
+            headerName: "REDEEMED DATE",
+            valueFormatter: (params) =>
+                moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
+            flex: 1,
+            headerAlign: "center",
+            align: "center"
+        }
         // { field: "serialStatus", headerName: "Serial Number Status", flex: 1, cellClassName: "name-column--cell", headerAlign: "center", align: "center" },
     ]
 
@@ -59,8 +106,8 @@ const AllNumber = () => {
                 <DataGrid
                     rows={mockDataTeam}
                     columns={columns}
-                    components={{Toolbar: GridToolbar}}
-                    // checkboxSelection
+                    components={{ Toolbar: GridToolbar }}
+                // checkboxSelection
                 />
             </Box>
         </Box>
