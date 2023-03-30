@@ -3,11 +3,14 @@ import { Formik } from "formik"
 import * as yup from "yup"
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header"
+import { useState } from "react";
 
 const GenerateNumber = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)")   //for mobile responsive
 
     const handleFormSubmit = (values) => {
+        console.log(typeof values.amount)
+        console.log(typeof values.quantity)
         console.log(values)
     }
 
@@ -19,7 +22,7 @@ const GenerateNumber = () => {
             initialValues={initialValues}
             validationSchema={checkoutSchema}
         >
-            {({ values, errors, touched, handleBlur, handleChange, handleSubmit }) => (
+            {({ values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue }) => (
                 <form onSubmit={handleSubmit}>
                     <Box
                         display="grid"
@@ -30,11 +33,16 @@ const GenerateNumber = () => {
                         }}
                     >
 
+                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("amount",10)}> RM 10 </Button>
+                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("amount",30)}> RM 30 </Button>
+                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("amount",50)}> RM 50 </Button>
+                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("amount",100)}> RM 100 </Button>
+
                         {/* Reload Amount */}
                         <TextField
                             fullWidth
                             variant="filled"
-                            type="text"
+                            type="number"
                             label="Reload Amount"
                             onBlur={handleBlur}
                             onChange={handleChange}
@@ -43,13 +51,14 @@ const GenerateNumber = () => {
                             error={!!touched.amount && !!errors.amount}
                             helperText={touched.amount && errors.amount}
                             sx={{ gridColumn: "span 2" }}
+                            InputProps={{readOnly: true}}
                         />
 
                         {/* Reload Quantity */}
                         <TextField
                             fullWidth
                             variant="filled"
-                            type="text"
+                            type="number"
                             label="Quantity"
                             onBlur={handleBlur}
                             onChange={handleChange}

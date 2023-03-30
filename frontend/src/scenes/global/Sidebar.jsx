@@ -12,6 +12,7 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
+import { useAuthContext } from "hooks/useAuthContext"
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme()
@@ -32,6 +33,9 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 }
 
 const Sidebar = () => {
+
+    const { user } = useAuthContext()
+
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     const [isCollapsed, setIsCollapsed] = useState(false)
@@ -68,7 +72,7 @@ const Sidebar = () => {
                         {!isCollapsed && (
                             <Box display="flex" justifyContent="space-between" alignItems="center" ml="15px">
                                 <Typography variant="h3" color={colors.grey[100]}>
-                                    SUPERADMIN
+                                    {user?.username.toUpperCase()}
                                 </Typography>
                                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                                     <MenuOutlinedIcon />
@@ -142,7 +146,6 @@ const Sidebar = () => {
 
                 </Menu>
             </ProSidebar>
-
         </Box>
     )
 }
