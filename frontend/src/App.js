@@ -15,8 +15,12 @@ import Line from "./scenes/line";
 // Samuel add
 import { useSelector } from "react-redux";
 import Layout from "./scenes/layout"
+import { useAuthContext } from "hooks/useAuthContext";
 
 function App() {
+
+    const { user } = useAuthContext()
+
     const [theme, colorMode] = useMode();
 
     // anthing refer to the theme.js file
@@ -27,7 +31,8 @@ function App() {
                     <CssBaseline />
                     <Routes>
                         <Route element={<Layout />}>
-                            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                            {/* <Route path="/" element={<Navigate to="/dashboard" replace />} /> */}
+                            <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <Navigate to="/LoginPage" />} />
                             <Route path="/dashboard" element={<Dashboard />} />
                             <Route path="/LoginPage" element={<LoginPage />} />
                             <Route path="/generateNumber" element={<GenerateNumber />} />
