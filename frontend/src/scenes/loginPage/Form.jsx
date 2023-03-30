@@ -8,15 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 // import { setLogin } from "state";
 
-const loginSchema = yup.object().shape({
-    username: yup.string().required("required"),
-    password: yup.string().required("required")
-})
 
-const initialValuesLogin = {
-    username: "",
-    password: ""
-}
 
 const Form = () => {
     const theme = useTheme()
@@ -129,6 +121,16 @@ const Form = () => {
             )}
         </Formik>
     )
+}
+
+const loginSchema = yup.object().shape({
+    username: yup.string().required("required"),
+    password: yup.string().required("required")
+})
+
+const initialValuesLogin = {
+    username: "",
+    password: ""
 }
 
 export default Form
