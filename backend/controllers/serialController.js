@@ -15,6 +15,19 @@ const getAllSerials = async (req, res) => {
     res.json(serials)
 }
 
+// @desc Get all serials
+// @route GET /serials/status?serialStatus=${serialStatus}
+// @access Private
+const getSerialsByStatus = async (req, res) => {
+    try {
+        const { serialStatus } = req.query
+        const serials = await Serial.find({ serialStatus })
+        res.json(serials)
+    } catch (error) {
+        return res.status(400).json({ message: "Something wrong" })
+    }
+}
+
 // @desc Generate Serial(s)
 // @route POST /serials
 // @access Private
@@ -131,6 +144,7 @@ function generateSerialNumber() {
 
 module.exports = {
     getAllSerials,
+    getSerialsByStatus,
     generateSerials,
     getSerialDetails,
     redeemSerials,

@@ -7,7 +7,33 @@ import moment from "moment";
 import DownloadIcon from '@mui/icons-material/Download';
 import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
 
+// TESTING
+import { useAuthContext } from "hooks/useAuthContext";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 const AllNumber = () => {
+
+    const { user } = useAuthContext()
+    const [serials, setSerials] = useState([])
+    const serialStatus = true
+
+    useEffect(() => {
+        const fetchAllSerials = async () => {
+            if (user) {
+                try {
+                    const response = await axios.get(`/serials/status?serialStatus=${serialStatus}`, {
+                        headers: { 'Authorization': `Bearer ${user.accessToken}` }
+                    });
+                    setSerials(response.data);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        };
+        fetchAllSerials();
+    }, [user]);
+
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
 
@@ -72,6 +98,8 @@ const AllNumber = () => {
         // { field: "serialStatus", headerName: "Serial Number Status", flex: 1, cellClassName: "name-column--cell", headerAlign: "center", align: "center" },
     ]
 
+    const getRowId = (row) => row._id
+
     return (
         <Box m="20px">
             <Header title="Unused Serial Number" subtitle="Unused Serial Number" />
@@ -104,9 +132,10 @@ const AllNumber = () => {
                 // }
             }}>
                 <DataGrid
-                    rows={mockDataTeam}
+                    rows={serials}
                     columns={columns}
                     components={{ Toolbar: GridToolbar }}
+                    getRowId={getRowId}
                 // checkboxSelection
                 />
             </Box>
