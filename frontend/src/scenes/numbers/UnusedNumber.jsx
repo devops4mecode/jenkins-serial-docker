@@ -77,25 +77,7 @@ const AllNumber = () => {
             flex: 1,
             headerAlign: "center",
             align: "center"
-        },
-        {
-            field: "redemptionAcc",
-            headerName: "WHO USE",
-            flex: 1,
-            cellClassName: "name-column--cell",
-            headerAlign: "center",
-            align: "center"
-        },
-        {
-            field: "updatedAt",
-            headerName: "REDEEMED DATE",
-            valueFormatter: (params) =>
-                moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
-            flex: 1,
-            headerAlign: "center",
-            align: "center"
-        }
-        // { field: "serialStatus", headerName: "Serial Number Status", flex: 1, cellClassName: "name-column--cell", headerAlign: "center", align: "center" },
+        },        
     ]
 
     const getRowId = (row) => row._id

@@ -80,6 +80,8 @@ const AllNumber = () => {
         {
             field: "redemptionAcc",
             headerName: "WHO USE",
+            valueGetter: (params) =>
+                params.row.redemptionAcc || "----",
             flex: 1,
             cellClassName: "name-column--cell",
             headerAlign: "center",
@@ -88,8 +90,8 @@ const AllNumber = () => {
         {
             field: "updatedAt",
             headerName: "REDEEMED DATE",
-            valueFormatter: (params) =>
-                moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
+            valueGetter: (params) =>
+                params.row.serialStatus ? "---" : moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
             flex: 1,
             headerAlign: "center",
             align: "center"
