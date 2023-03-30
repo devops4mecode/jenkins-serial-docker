@@ -5,27 +5,54 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+// import { setLogin } from "state";
 
-// TESTING
-import { useLogin } from "hooks/useLogin"
+const loginSchema = yup.object().shape({
+    username: yup.string().required("required"),
+    password: yup.string().required("required")
+})
 
-
+const initialValuesLogin = {
+    username: "",
+    password: ""
+}
 
 const Form = () => {
-
-    const { login, error, isLoading } = useLogin()
-
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
+    // const [pageType, setPageType] = useState("login");
+    // const { palette } = useTheme();
+    // const dispatch = useDispatch();
     // const navigate = useNavigate();
     const isNonMobile = useMediaQuery("(min-width:600px)");
+    // const isLogin = pageType === "login";
 
-    const handleFormSubmit = async (values) => {
-        try {
-            await login(values)
-        } catch (error) {
-            console.log(error);
-        }
+    // const login = async (values, onSubmitProps) => {
+    //     const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify(values),
+    //     });
+    //     const loggedIn = await loggedInResponse.json();
+    //     onSubmitProps.resetForm();
+    //     if (loggedIn) {
+    //         dispatch(
+    //             setLogin({
+    //                 user: loggedIn.user,
+    //                 token: loggedIn.token,
+    //             })
+    //         );
+    //         navigate("/home");
+    //     }
+    // };
+
+    // const handleFormSubmit = async (values, onSubmitProps) => {
+    //     if (isLogin) await login(values, onSubmitProps);
+    // };
+
+    const handleFormSubmit = (values) => {
+        console.log(values)
     }
 
     return (
@@ -44,7 +71,7 @@ const Form = () => {
                 setFieldValue,
                 resetForm,
             }) => (
-                <form onSubmit={handleSubmit}>
+                <form>
                     <Box
                         display="grid"
                         gap="30px"
@@ -78,7 +105,6 @@ const Form = () => {
 
                     <Box>
                         <Button
-                            disabled={isLoading}
                             fullWidth
                             type="submit"
                             sx={{
@@ -103,16 +129,6 @@ const Form = () => {
             )}
         </Formik>
     )
-}
-
-const loginSchema = yup.object().shape({
-    username: yup.string().required("required"),
-    password: yup.string().required("required")
-})
-
-const initialValuesLogin = {
-    username: "",
-    password: ""
 }
 
 export default Form

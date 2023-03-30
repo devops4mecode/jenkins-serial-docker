@@ -10,15 +10,17 @@ const StatBox = ({ title, subtitle, icon, total_redeem_count }) => {
             <Box display="flex" justifyContent="space-between">
                 <Box>
                     {icon}
-                    <Typography variant="h5" sx={{ color: colors.greenAccent[500] }}>
-                        {subtitle}
+                    <Typography variant="h4" fontWeight="bold" sx={{ color: colors.grey[100] }}>
+                        {title}
                     </Typography>
                 </Box>
             </Box>
             <Box display="flex" justifyContent="space-between">
-
-                <Typography variant="h4" fontWeight="bold" sx={{ color: colors.grey[100] }}>
-                    {title}
+                <Typography variant="h5" sx={{ color: colors.greenAccent[500] }}>
+                    {subtitle}
+                </Typography>
+                <Typography variant="h5" fontStyle="italic" sx={{ color: colors.greenAccent[600] }}>
+                    {total_redeem_count}
                 </Typography>
             </Box>
         </Box>

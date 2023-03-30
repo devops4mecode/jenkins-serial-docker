@@ -13,13 +13,6 @@ const UserSchema = new Schema({
     },
 })
 
-// Static login method
-// UserSchema.statics.login = async function (username, password) {
-//     if (!username || !password) {
-//         throw Error('All Fields must be filled')
-//     }
-// }
-
 const User = mongoose.model('User', UserSchema)
 
 const createDefaultSuperadmin = async () => {
@@ -44,9 +37,5 @@ const createDefaultSuperadmin = async () => {
 }
 
 createDefaultSuperadmin()
-
-
-
-
 
 module.exports = User
