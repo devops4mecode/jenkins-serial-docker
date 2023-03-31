@@ -16,13 +16,9 @@ const Layout = () => {
 
     return (
         <div className='app'>
-            {user && (
-                <Sidebar
-                    isNonMobile={isNonMobile}
-                />
-            )}
+            {user && (<Sidebar isNonMobile={isNonMobile} />)}
             <main className='content'>
-                <Topbar />
+                {user && (<Topbar />)}
                 <Outlet />
             </main>
         </div>

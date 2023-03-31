@@ -13,7 +13,6 @@ import Line from "./scenes/line";
 // import Pie from "./scenes/pie"
 
 // Samuel add
-import { useSelector } from "react-redux";
 import Layout from "./scenes/layout"
 import { useAuthContext } from "hooks/useAuthContext";
 
@@ -31,16 +30,13 @@ function App() {
                     <CssBaseline />
                     <Routes>
                         <Route element={<Layout />}>
-                            {/* <Route path="/" element={<Navigate to="/dashboard" replace />} /> */}
-                            <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <Navigate to="/LoginPage" />} />
-                            <Route path="/dashboard" element={<Dashboard />} />
-                            <Route path="/LoginPage" element={<LoginPage />} />
-                            <Route path="/generateNumber" element={<GenerateNumber />} />
-                            <Route path="/unusedNumber" element={<UnusedNumber />} />
-                            <Route path="/usedNumber" element={<UsedNumber />} />
-                            <Route path="/allNumber" element={<AllNumber />} />
-                            <Route path="/LoginPage" element={<LoginPage />} />
-                            <Route path="/line" element={<Line />} />
+                            <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <LoginPage />} />
+                            <Route path="/dashboard" element={user ? < Dashboard /> : <Navigate to="/" element={<LoginPage />} />} />
+                            <Route path="/generateNumber" element={user ? <GenerateNumber /> : < Navigate to="/dashboard" />} />
+                            <Route path="/unusedNumber" element={user ? <UnusedNumber /> : < Navigate to="/dashboard" />} />
+                            <Route path="/usedNumber" element={user ? <UsedNumber /> : < Navigate to="/dashboard" />} />
+                            <Route path="/allNumber" element={user ? <AllNumber /> : < Navigate to="/dashboard" />} />
+                            <Route path="/line" element={user ? <Line /> : < Navigate to="/dashboard" />} />
                         </Route>
                     </Routes>
                 </ThemeProvider>
