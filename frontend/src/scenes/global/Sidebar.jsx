@@ -115,35 +115,34 @@ const Sidebar = () => {
                             setSelected={setSelected}
                         />
                         <Item
-                            title="Generate Number"
+                            title="Generate Serial"
                             to="/generateNumber"
                             icon={<ReceiptOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
                         <Item
-                            title="All Number"
+                            title="All Serial Number"
                             to="/allNumber"
                             icon={<FormatListBulletedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
                         <Item
-                            title="Unused Number"
+                            title="Unclaimed"
                             to="/unusedNumber"
                             icon={<SixteenMpIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
                         <Item
-                            title="Used Number"
+                            title="Redeemed"
                             to="/usedNumber"
                             icon={<ContactsOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
                     </Box>
-
                 </Menu>
             </ProSidebar>
         </Box>

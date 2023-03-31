@@ -15,6 +15,36 @@ const getAllSerials = async (req, res) => {
     res.json(serials)
 }
 
+// @desc Get all serials
+// @route GET /serials/status?serialStatus=${serialStatus}
+// @access Private
+const getDetailsBySerialNo = async (req, res) => {
+    try {
+        const { serialNo } = req.query
+
+
+
+
+        const serial = await Serial.findOne({ serialNo })
+        res.json(serial)
+    } catch (error) {
+        return res.status(400).json({ message: "Something wrong" })
+    }
+}
+
+// @desc Get all serials
+// @route GET /serials/status?serialStatus=${serialStatus}
+// @access Private
+const getSerialsByStatus = async (req, res) => {
+    try {
+        const { serialStatus } = req.query
+        const serials = await Serial.find({ serialStatus })
+        res.json(serials)
+    } catch (error) {
+        return res.status(400).json({ message: "Something wrong" })
+    }
+}
+
 // @desc Generate Serial(s)
 // @route POST /serials
 // @access Private
@@ -26,6 +56,8 @@ const generateSerials = async (req, res) => {
             return res.status(400).json({ message: "All fields must be provided" });
         }
 
+        const serials = [];
+
         for (let i = 0; i < amountToGenerate; i++) {
             const serialNo = generateSerialNumber();
             const serial = new Serial({
@@ -36,15 +68,17 @@ const generateSerials = async (req, res) => {
                 serialStatus: true,
             });
 
-            await serial.save(); // save the document to MongoDB
+            const savedSerial = await serial.save(); // save the document to MongoDB
+
+            serials.push(savedSerial);
         }
-        return res.status(200).json({ message: "Serials generated successfully" });
+
+        return res.status(200).json({ serials });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Internal server error" });
     }
 }
-
 
 // @desc Get Serial(s) Details
 // @route Get /serials/details?redemptionAcc=${redemptionAcc}&serialNo=${serialNo}
@@ -111,14 +145,24 @@ function generateSerialNumber() {
     let serial = '';
     const chars = '1234567890';
 
-    for (let i = 0; i < 16; i++) {
-        serial += chars[Math.floor(Math.random() * chars.length)];
+    let firstDigitIsZero = true;
+    while (firstDigitIsZero || serial.length !== 16) {
+        serial = '';
+        for (let i = 0; i < 15; i++) {
+            serial += chars[Math.floor(Math.random() * chars.length)];
+        }
+        // Ensure the first digit is not '0'
+        serial = Math.floor(Math.random() * 9) + 1 + serial;
+        firstDigitIsZero = serial[0] === '0';
     }
 
     return serial;
 }
+
 module.exports = {
     getAllSerials,
+    getDetailsBySerialNo,
+    getSerialsByStatus,
     generateSerials,
     getSerialDetails,
     redeemSerials,

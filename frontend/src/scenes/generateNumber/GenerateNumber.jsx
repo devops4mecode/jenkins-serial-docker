@@ -4,14 +4,27 @@ import * as yup from "yup"
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header"
 import { useState } from "react";
+import { useAuthContext } from "hooks/useAuthContext";
+import axios from "axios";
 
 const GenerateNumber = () => {
+    const { user } = useAuthContext()
     const isNonMobile = useMediaQuery("(min-width:600px)")   //for mobile responsive
 
-    const handleFormSubmit = (values) => {
-        console.log(typeof values.amount)
-        console.log(typeof values.quantity)
-        console.log(values)
+    const handleFormSubmit = async (values) => {
+        try {
+            const response = await axios.post('/serials/generate', values, {
+                headers: { 'Authorization': `Bearer ${user.accessToken}` },
+            })
+
+            const fetchData = response.data
+
+            // This fetchData is named "serials" and it is an object of arrays
+            console.log("fetchData is")
+            console.log(fetchData)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return <Box m="20px">
@@ -33,10 +46,10 @@ const GenerateNumber = () => {
                         }}
                     >
 
-                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("amount",10)}> RM 10 </Button>
-                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("amount",30)}> RM 30 </Button>
-                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("amount",50)}> RM 50 </Button>
-                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("amount",100)}> RM 100 </Button>
+                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("givenCredit", 10)}> RM 10 </Button>
+                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("givenCredit", 30)}> RM 30 </Button>
+                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("givenCredit", 50)}> RM 50 </Button>
+                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("givenCredit", 100)}> RM 100 </Button>
 
                         {/* Reload Amount */}
                         <TextField
@@ -46,12 +59,12 @@ const GenerateNumber = () => {
                             label="Reload Amount"
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            value={values.amount}
-                            name="amount"
-                            error={!!touched.amount && !!errors.amount}
-                            helperText={touched.amount && errors.amount}
+                            value={values.givenCredit}
+                            name="givenCredit"
+                            error={!!touched.givenCredit && !!errors.givenCredit}
+                            helperText={touched.givenCredit && errors.givenCredit}
                             sx={{ gridColumn: "span 2" }}
-                            InputProps={{readOnly: true}}
+                            InputProps={{ readOnly: true }}
                         />
 
                         {/* Reload Quantity */}
@@ -62,10 +75,10 @@ const GenerateNumber = () => {
                             label="Quantity"
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            value={values.quantity}
-                            name="quantity"
-                            error={!!touched.quantity && !!errors.quantity}
-                            helperText={touched.quantity && errors.quantity}
+                            value={values.amountToGenerate}
+                            name="amountToGenerate"
+                            error={!!touched.amountToGenerate && !!errors.amountToGenerate}
+                            helperText={touched.amountToGenerate && errors.amountToGenerate}
                             sx={{ gridColumn: "span 2" }}
                         />
 
@@ -77,10 +90,10 @@ const GenerateNumber = () => {
                             label="Remark"
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            value={values.remark}
-                            name="remark"
-                            error={!!touched.remark && !!errors.remark}
-                            helperText={touched.remark && errors.remark}
+                            value={values.remarkName}
+                            name="remarkName"
+                            error={!!touched.remarkName && !!errors.remarkName}
+                            helperText={touched.remarkName && errors.remarkName}
                             sx={{ gridColumn: "span 2" }}
                         />
                     </Box>
@@ -97,15 +110,15 @@ const GenerateNumber = () => {
 }
 
 const checkoutSchema = yup.object().shape({
-    amount: yup.number().required("buy how much?"),
-    quantity: yup.number().required("buy how many?"),
-    remark: yup.string().required("who buy?"),
+    givenCredit: yup.number().required("buy how much?"),
+    amountToGenerate: yup.number().required("buy how many?"),
+    remarkName: yup.string().required("who buy?"),
 })
 
 const initialValues = {
-    amount: "",
-    quantity: "",
-    remark: "",
+    givenCredit: "",
+    amountToGenerate: "",
+    remarkName: "",
 }
 
 export default GenerateNumber
