@@ -16,6 +16,7 @@ const skipAuth = (req, res, next) => {
 // Routes
 router
     .get('/all', verifyJWT, serialController.getAllSerials)
+    .get('/detail', verifyJWT, serialController.getDetailsBySerialNo)
     .get('/status', verifyJWT, serialController.getSerialsByStatus)
     .post('/generate', verifyJWT, serialController.generateSerials)
     .get('/details', serialController.getSerialDetails)

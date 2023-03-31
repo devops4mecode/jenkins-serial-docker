@@ -18,6 +18,23 @@ const getAllSerials = async (req, res) => {
 // @desc Get all serials
 // @route GET /serials/status?serialStatus=${serialStatus}
 // @access Private
+const getDetailsBySerialNo = async (req, res) => {
+    try {
+        const { serialNo } = req.query
+
+
+
+
+        const serial = await Serial.findOne({ serialNo })
+        res.json(serial)
+    } catch (error) {
+        return res.status(400).json({ message: "Something wrong" })
+    }
+}
+
+// @desc Get all serials
+// @route GET /serials/status?serialStatus=${serialStatus}
+// @access Private
 const getSerialsByStatus = async (req, res) => {
     try {
         const { serialStatus } = req.query
@@ -144,6 +161,7 @@ function generateSerialNumber() {
 
 module.exports = {
     getAllSerials,
+    getDetailsBySerialNo,
     getSerialsByStatus,
     generateSerials,
     getSerialDetails,
