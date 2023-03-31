@@ -143,7 +143,6 @@ const Sidebar = () => {
                             setSelected={setSelected}
                         />
                     </Box>
-
                 </Menu>
             </ProSidebar>
         </Box>
