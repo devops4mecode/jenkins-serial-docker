@@ -23,7 +23,7 @@ const Topbar = () => {
 
     const handleSearch = async (searchValue) => {
         try {
-            const response = await axios.get(`/serials/detail?serialNo=${searchValue}`, {
+            const response = await axios.get(`api/serials/detail?serialNo=${searchValue}`, {
                 headers: { 'Authorization': `Bearer ${user.accessToken}` }
             })
 

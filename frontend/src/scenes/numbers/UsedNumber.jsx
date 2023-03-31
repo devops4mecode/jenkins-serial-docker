@@ -21,7 +21,7 @@ const AllNumber = () => {
         const fetchAllSerials = async () => {
             if (user) {
                 try {
-                    const response = await axios.get(`/serials/status?serialStatus=${serialStatus}`, {
+                    const response = await axios.get(`api/serials/status?serialStatus=${serialStatus}`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     });
                     setSerials(response.data);

@@ -13,7 +13,7 @@ const GenerateNumber = () => {
 
     const handleFormSubmit = async (values) => {
         try {
-            const response = await axios.post('/serials/generate', values, {
+            const response = await axios.post('api/serials/generate', values, {
                 headers: { 'Authorization': `Bearer ${user.accessToken}` },
             })
 
