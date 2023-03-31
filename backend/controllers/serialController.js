@@ -145,17 +145,9 @@ function generateSerialNumber() {
     let serial = '';
     const chars = '1234567890';
 
-    let firstDigitIsZero = true;
-    while (firstDigitIsZero || serial.length !== 16) {
-        serial = '';
-        for (let i = 0; i < 15; i++) {
-            serial += chars[Math.floor(Math.random() * chars.length)];
-        }
-        // Ensure the first digit is not '0'
-        serial = Math.floor(Math.random() * 9) + 1 + serial;
-        firstDigitIsZero = serial[0] === '0';
+    for (let i = 0; i < 16; i++) {
+        serial += chars[Math.floor(Math.random() * chars.length)];
     }
-
     return serial;
 }
 

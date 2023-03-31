@@ -8,7 +8,7 @@ const SerialSchema = new Schema(
             ref: "User"
         },
         serialNo: {
-            type: Number,
+            type: String,
             required: true,
             unique: true,
         },
