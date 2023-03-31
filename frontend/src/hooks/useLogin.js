@@ -11,7 +11,7 @@ export const useLogin = () => {
         setIsLoading(true)
         setError(null)
 
-        const response = await axios.post('/auth', values, {
+        const response = await axios.post('/auth/login', values, {
             headers: { "Content-Type": 'application/json' },
         })
 
