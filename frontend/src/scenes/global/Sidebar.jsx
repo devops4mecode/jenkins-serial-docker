@@ -2,13 +2,14 @@ import { useState } from "react"
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar"
 import "react-pro-sidebar/dist/css/styles.css"
 import { Box, IconButton, Typography, useTheme } from "@mui/material"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { tokens } from "../../theme"
+import { useLogout } from "hooks/useLogout"
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import SixteenMpIcon from '@mui/icons-material/SixteenMp';
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
+import LogoutIcon from '@mui/icons-material/Logout'
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
@@ -17,17 +18,31 @@ import { useAuthContext } from "hooks/useAuthContext"
 const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
+    const { logout } = useLogout()
+
+    const Navigate = useNavigate()
+
+    const handleOnClick = () => {
+        if (title === "Logout") {
+            logout()
+            Navigate('/login')
+        } else {
+            Navigate(to)
+            setSelected(title)
+        }
+    }
+
     return (
         <MenuItem
             active={selected === title}
             style={{
                 color: colors.grey[100]
             }}
-            onClick={() => setSelected(title)}
+            onClick={handleOnClick}
             icon={icon}
         >
             <Typography>{title}</Typography>
-            <Link to={to} />
+            {title !== "Logout" && <Link to={to} />}
         </MenuItem>
     )
 }
@@ -35,6 +50,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 const Sidebar = () => {
 
     const { user } = useAuthContext()
+    const { logout } = useLogout()
 
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
@@ -141,6 +157,13 @@ const Sidebar = () => {
                             icon={<ContactsOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
+                        />
+                        <Item
+                            title="Logout"
+                            icon={<LogoutIcon />}
+                            selected={selected}
+                            setSelected={setSelected}
+                            logout={logout}
                         />
                     </Box>
                 </Menu>

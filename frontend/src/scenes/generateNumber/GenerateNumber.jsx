@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { Formik } from "formik"
 import * as yup from "yup"
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -6,10 +6,29 @@ import Header from "../../components/Header"
 import { useState } from "react";
 import { useAuthContext } from "hooks/useAuthContext";
 import axios from "axios";
+import { DataGrid } from "@mui/x-data-grid";
 
 const GenerateNumber = () => {
     const { user } = useAuthContext()
     const isNonMobile = useMediaQuery("(min-width:600px)")   //for mobile responsive
+    const [serialsData, setSerialsData] = useState([])
+
+    // const handleFormSubmit = async (values) => {
+    //     try {
+    //         const response = await axios.post('/serials/generate', values, {
+    //             headers: { 'Authorization': `Bearer ${user.accessToken}` },
+    //         })
+
+    //         const fetchData = response.data.serials
+    //         setSerialsData(fetchData)
+
+    //         // This fetchData is named "serials" and it is an object of arrays
+    //         console.log("serialsData is")
+    //         console.log(serialsData)
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
     const handleFormSubmit = async (values) => {
         try {
@@ -17,15 +36,57 @@ const GenerateNumber = () => {
                 headers: { 'Authorization': `Bearer ${user.accessToken}` },
             })
 
-            const fetchData = response.data
+            const datagriddata = response.data.serials
+            console.log("datagrid data:",datagriddata)
 
-            // This fetchData is named "serials" and it is an object of arrays
-            console.log("fetchData is")
-            console.log(fetchData)
+            const da = datagriddata.map(dgd => ({
+                _id: dgd._id,
+                serialNo: dgd.serialNo,
+                givenCredit: dgd.givenCredit,
+                remarkName: dgd.remarkName,
+                createdAt: dgd.createdAt
+            }))
+
+            setSerialsData(da)
+
         } catch (error) {
             console.log(error)
         }
     }
+
+    const columns = [
+        {
+            field: "serialNo",
+            headerName: "Serial No",
+            flex: 1,
+            headerAlign: "center",
+            align: "center"
+        },
+        {
+            field: "givenCredit",
+            headerName: "Given Credit",
+            flex: 1,
+            headerAlign: "center",
+            align: "center"
+        },
+        {
+            field: "remarkName",
+            headerName: "Remark",
+            width: 200,
+            flex: 1,
+            headerAlign: "center",
+            align: "center"
+        },
+        {
+            field: "createdAt",
+            headerName: "SOLD DATE",
+            flex: 1,
+            headerAlign: "center",
+            align: "center"
+        }
+    ];
+    
+    const getRowId = (row) => row._id;
 
     return <Box m="20px">
         <Header title="GENERATE SERIAL NUMBER" subtitle="Generate a New Serial Number to Top Up Credit" />
@@ -106,6 +167,17 @@ const GenerateNumber = () => {
                 </form>
             )}
         </Formik>
+
+        {serialsData.length > 0 ? (
+            <Box>
+                <DataGrid
+                    rows={serialsData}
+                    columns={columns}
+                    getRowId={getRowId}
+                />
+                {/* {console.log(serialsData)} */}
+            </Box>
+        ) : null}
     </Box>
 }
 
