@@ -10,6 +10,7 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined"
 import SearchIcon from "@mui/icons-material/Search"
 import { useState } from "react"
 import { useAuthContext } from "hooks/useAuthContext"
+import axios from "axios"
 
 const Topbar = () => {
     const { user } = useAuthContext()
@@ -20,9 +21,18 @@ const Topbar = () => {
 
     const [searchValue, setSearchValue] = useState('')
 
-    const handleSearch = () => {
-        alert(searchValue)
-        setSearchValue('')
+    const handleSearch = async (searchValue) => {
+        try {
+            const response = await axios.get(`/serials/detail?serialNo=${searchValue}`, {
+                headers: { 'Authorization': `Bearer ${user.accessToken}` }
+            })
+
+            const fetchData = await response.data
+            console.log(fetchData)
+        } catch (error) {
+
+        }
+        // setSearchValue('')
     }
 
     //box = div in mui, but more convenient because can write css directly in it
