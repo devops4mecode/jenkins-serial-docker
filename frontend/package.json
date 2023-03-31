@@ -1,5 +1,5 @@
 {
-  "proxy": "http://ec2-18-142-51-121.ap-southeast-1.compute.amazonaws.com/",
+  "proxy": "http://ec2-18-142-51-121.ap-southeast-1.compute.amazonaws.com",
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
