@@ -21,10 +21,7 @@ const getAllSerials = async (req, res) => {
 const getDetailsBySerialNo = async (req, res) => {
     try {
         const { serialNo } = req.query
-
-
-
-
+        
         const serial = await Serial.findOne({ serialNo })
         res.json(serial)
     } catch (error) {

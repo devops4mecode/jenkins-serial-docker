@@ -1,12 +1,9 @@
-import { Box, IconButton, useTheme } from "@mui/material"
+import { Box, IconButton, useTheme, Modal, Typography } from "@mui/material"
 import { useContext } from "react"
 import { ColorModeContext, tokens } from "../../theme"
 import InputBase from "@mui/material/InputBase"
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined"
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined"
-import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined"
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined"
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined"
 import SearchIcon from "@mui/icons-material/Search"
 import { useState } from "react"
 import { useAuthContext } from "hooks/useAuthContext"
@@ -21,21 +18,30 @@ const Topbar = () => {
 
     const [searchValue, setSearchValue] = useState('')
 
+    const [open, setOpen] = useState(false)
+    const [data, setData] = useState(null)
+
     const handleSearch = async (searchValue) => {
+        setOpen(true)
         try {
             const response = await axios.get(`api/serials/detail?serialNo=${searchValue}`, {
                 headers: { 'Authorization': `Bearer ${user.accessToken}` }
             })
 
             const fetchData = await response.data
+            setData(fetchData)
             console.log(fetchData)
         } catch (error) {
-
+            console.error(error)
         }
-        // setSearchValue('')
+        setSearchValue('')
     }
 
-    //box = div in mui, but more convenient because can write css directly in it
+    const handleClose = () => {
+        setOpen(false)
+        setData(null)
+    }
+
     return (<Box display="flex" justifyContent="space-between" p={2}>
         {/* Search Bar */}
         <Box display="flex" backgroundColor={colors.primary[400]} borderRadius="3px">
@@ -44,6 +50,17 @@ const Topbar = () => {
                 <SearchIcon />
             </IconButton>
         </Box>
+
+        <Modal open={open} onClose={handleClose}>
+            <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4, minWidth: '50vw' }}>
+                {data ? (
+                    <Typography variant="body1">{JSON.stringify(data)}</Typography>
+                ) : (
+                    <Typography variant="body1">fetch bu dao...</Typography>
+                )}
+            </Box>
+        </Modal>
+
 
         {/* Icons */}
         <Box display="flex">
@@ -54,18 +71,6 @@ const Topbar = () => {
                     <LightModeOutlinedIcon />
                 )}
             </IconButton>
-
-            {/* <IconButton>
-                <NotificationsOutlinedIcon />
-            </IconButton>
-
-            <IconButton>
-                <SettingsOutlinedIcon />
-            </IconButton>
-
-            <IconButton>
-                <PersonOutlinedIcon />
-            </IconButton> */}
         </Box>
 
     </Box>)
