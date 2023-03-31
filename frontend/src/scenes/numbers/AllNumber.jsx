@@ -22,7 +22,7 @@ const AllNumber = () => {
         const fetchAllSerials = async () => {
             if (user) {
                 try {
-                    const response = await axios.get(`/serials/all`, {
+                    const response = await axios.get(`api/serials/all`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     });
                     setSerials(response.data);
@@ -121,7 +121,7 @@ const AllNumber = () => {
                 "& .name-column--cell": {
                     color: colors.greenAccent[300]
                 },
-                
+
                 "& .MuiDataGrid-columnHeaders": {
                     backgroundColor: colors.blueAccent[700],
                     borderBottom: "none"
@@ -137,7 +137,7 @@ const AllNumber = () => {
                 },
                 "& .status-redeemed": {
                     color: "red",
-                  },
+                },
             }}>
                 <DataGrid
                     rows={serials}
