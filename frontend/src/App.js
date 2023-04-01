@@ -30,14 +30,34 @@ function App() {
                     <CssBaseline />
                     <Routes>
                         <Route element={<Layout />}>
-                            <Route path="/" element={user ? <Dashboard /> : <Navigate to="/login" />} />
-                            <Route path="/login" element={!user ? <LoginPage /> : <Navigate to="/dashboard" />} />
-                            <Route path="/dashboard" element={user ? < Dashboard /> : <Navigate to="/" element={<LoginPage />} />} />
-                            <Route path="/generateNumber" element={!user ? < Navigate to="/dashboard" /> : <GenerateNumber />} />
-                            <Route path="/unusedNumber" element={!user ? < Navigate to="/dashboard" /> : <UnusedNumber />} />
-                            <Route path="/usedNumber" element={!user ? < Navigate to="/dashboard" /> : <UsedNumber />} />
-                            <Route path="/allNumber" element={!user ? < Navigate to="/dashboard" /> : <AllNumber />} />
-                            <Route path="/line" element={!user ? < Navigate to="/dashboard" /> : <Line />} />
+                            <Route
+                                path="/"
+                                element={user ? <Dashboard /> : <Navigate to="/login" />}
+                            />
+                            <Route
+                                path="/login"
+                                element={!user ? <LoginPage /> : <Navigate to="/" />}
+                            />
+                            <Route
+                                path="/GenerateNumber"
+                                element={user ? <GenerateNumber /> : <Navigate to="/login" />}
+                            />
+                            <Route
+                                path="/UnusedNumber"
+                                element={user ? <UnusedNumber /> : <Navigate to="/login" />}
+                            />
+                            <Route
+                                path="/UsedNumber"
+                                element={user ? <UsedNumber /> : <Navigate to="/login" />}
+                            />
+                            <Route
+                                path="/AllNumber"
+                                element={user ? <AllNumber /> : <Navigate to="/login" />}
+                            />
+                            <Route
+                                path="/line"
+                                element={user ? <Line /> : <Navigate to="/login" />}
+                            />
                         </Route>
                     </Routes>
                 </ThemeProvider>
