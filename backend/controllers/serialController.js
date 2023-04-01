@@ -16,7 +16,7 @@ const getAllSerials = async (req, res) => {
 }
 
 // @desc Get all serials
-// @route GET /serials/status?serialStatus=${serialStatus}
+// @route GET /serials/detail?serialNo=${serialNo}
 // @access Private
 const getDetailsBySerialNo = async (req, res) => {
     try {
