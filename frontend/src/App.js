@@ -11,15 +11,11 @@ import LoginPage from "./scenes/loginPage/Page";
 import AllNumber from "./scenes/numbers/AllNumber";
 import Line from "./scenes/line";
 // import Pie from "./scenes/pie"
-
-// Samuel add
 import Layout from "./scenes/layout"
 import { useAuthContext } from "hooks/useAuthContext";
 
 function App() {
-
     const { user } = useAuthContext()
-
     const [theme, colorMode] = useMode();
 
     // anthing refer to the theme.js file
