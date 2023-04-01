@@ -21,10 +21,6 @@ const getAllSerials = async (req, res) => {
 const getDetailsBySerialNo = async (req, res) => {
     try {
         const { serialNo } = req.query
-
-
-
-
         const serial = await Serial.findOne({ serialNo })
         res.json(serial)
     } catch (error) {
@@ -93,7 +89,7 @@ const getSerialDetails = async (req, res) => {
         if (serialNo.length < 16) {
             return res.status(400).json({ message: "Length less than 16, Invalid Serial Number" })
         }
-        const foundSerialNo = await Serial.findOne({ serialNo: parseInt(serialNo) }, { _id: 0, serialStatus: 1, givenCredit: 1, serialNo: 1 })
+        const foundSerialNo = await Serial.findOne({ serialNo }, { _id: 0, serialStatus: 1, givenCredit: 1, serialNo: 1 })
         if (!foundSerialNo) {
             return res.status(400).json({ message: "Serial Number Invalid, Check your input" })
         }
@@ -117,7 +113,7 @@ const redeemSerials = async (req, res) => {
             return res.status(400).json({ message: "All fields must be provided in order to redeem" });
         }
 
-        const foundSerialNo = await Serial.findOne({ serialNo: parseInt(serialNo) }, { serialStatus: 1, givenCredit: 1, serialNo: 1 })
+        const foundSerialNo = await Serial.findOne({ serialNo }, { serialStatus: 1, givenCredit: 1, serialNo: 1 })
 
         if (foundSerialNo.serialStatus !== true) {
             return res.status(400).json({ message: "Already been redeemed" })
