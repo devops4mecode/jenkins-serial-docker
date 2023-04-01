@@ -13,23 +13,6 @@ const GenerateNumber = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)")   //for mobile responsive
     const [serialsData, setSerialsData] = useState([])
 
-    // const handleFormSubmit = async (values) => {
-    //     try {
-    //         const response = await axios.post('/serials/generate', values, {
-    //             headers: { 'Authorization': `Bearer ${user.accessToken}` },
-    //         })
-
-    //         const fetchData = response.data.serials
-    //         setSerialsData(fetchData)
-
-    //         // This fetchData is named "serials" and it is an object of arrays
-    //         console.log("serialsData is")
-    //         console.log(serialsData)
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
     const handleFormSubmit = async (values) => {
         try {
             const response = await axios.post('api/serials/generate', values, {
@@ -37,7 +20,7 @@ const GenerateNumber = () => {
             })
 
             const datagriddata = response.data.serials
-            console.log("datagrid data:",datagriddata)
+            console.log("datagrid data:", datagriddata)
 
             const da = datagriddata.map(dgd => ({
                 _id: dgd._id,
@@ -85,7 +68,7 @@ const GenerateNumber = () => {
             align: "center"
         }
     ];
-    
+
     const getRowId = (row) => row._id;
 
     return <Box m="20px">

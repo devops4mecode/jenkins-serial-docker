@@ -1,11 +1,7 @@
-import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import Sidebar from 'scenes/global/Sidebar'
 import Topbar from 'scenes/global/Topbar'
 import { useMediaQuery } from '@mui/material'
-
-
 import { useAuthContext } from 'hooks/useAuthContext'
 
 const Layout = () => {

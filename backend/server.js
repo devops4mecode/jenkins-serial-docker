@@ -23,7 +23,7 @@ app.use(express.json())
 app.use(bodyParser.json())
 app.use(cookieParser())
 
-app.use('/', express.static(path.join(__dirname, '/public')))
+// app.use('/', express.static(path.join(__dirname, '/public')))
 
 // Making Build Folder as Public 
 app.use(express.static(path.join(__dirname, 'build')));

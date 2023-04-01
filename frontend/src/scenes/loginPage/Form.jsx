@@ -5,16 +5,11 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-
-// TESTING
 import { useLogin } from "hooks/useLogin"
-
-
 
 const Form = () => {
 
     const { login, error, isLoading } = useLogin()
-
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     // const navigate = useNavigate();
@@ -41,8 +36,6 @@ const Form = () => {
                 handleBlur,
                 handleChange,
                 handleSubmit,
-                setFieldValue,
-                resetForm,
             }) => (
                 <form onSubmit={handleSubmit}>
                     <Box
@@ -91,7 +84,6 @@ const Form = () => {
                             {"LOGIN"}
                         </Button>
                         <Typography
-
                             sx={{
                                 textDecoration: "underline",
                                 color: `${colors.grey[100]} !important`
