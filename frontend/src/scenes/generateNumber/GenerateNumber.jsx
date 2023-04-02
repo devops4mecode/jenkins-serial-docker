@@ -154,7 +154,7 @@ const GenerateNumber = () => {
                     </Box>
 
                     {serialsData.length > 0 && (
-                        <TableContainer component={Paper} sx={{ mt: 4 , textAlign: "center", color: colors.greenAccent[300]}}>
+                        <TableContainer component={Paper} sx={{ mt: 4, textAlign: "center", color: colors.greenAccent[300] }}>
                             <Table>
                                 <TableHead>
                                     <TableRow>
@@ -167,10 +167,10 @@ const GenerateNumber = () => {
                                 <TableBody>
                                     {serialsData.map((serialData) => (
                                         <TableRow key={serialData._id}>
-                                            <TableCell align="center" sx={{color: colors.greenAccent[300]}}>{serialData.serialNo}</TableCell>
-                                            <TableCell align="center" sx={{color: colors.greenAccent[300]}}>{serialData.givenCredit}</TableCell>
-                                            <TableCell align="center" sx={{color: colors.greenAccent[300]}}>{serialData.remarkName}</TableCell>
-                                            <TableCell align="center" sx={{color: colors.greenAccent[300]}}>{new Date(serialData.createdAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}</TableCell>
+                                            <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.serialNo}</TableCell>
+                                            <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.givenCredit}</TableCell>
+                                            <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.remarkName}</TableCell>
+                                            <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{new Date(serialData.createdAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
