@@ -23,7 +23,7 @@ const Dashboard = () => {
             {/* Grid and Chart */}
             {/* Row 1 */}
             <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
-                <Box gridColumn="span 8" gridRow="span 3" backgroundColor={colors.primary[400]}>
+                <Box gridColumn="span 12" gridRow="span 3" backgroundColor={colors.primary[400]}>
                     <Box mt="25px" p="0 30px" display="flex " justifyContent="space-between" alignItems="center">
                         <Box>
                             <Typography
@@ -45,8 +45,11 @@ const Dashboard = () => {
                     <Box height="400px" m="-20px 0 0 0">
                         <LineChart isDashboard={true} />
                     </Box>
-                </Box>
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
+                </Box>                
+            </Box>
+
+            <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
+            <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
                         title="RM 12300"
                         subtitle="Total Redeem Count"
@@ -55,7 +58,7 @@ const Dashboard = () => {
                         }
                     />
                 </Box>
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
+                <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
                         title="RM 12300"
                         subtitle="Total Amount Redeemed"
@@ -76,7 +79,7 @@ const Dashboard = () => {
             </Box>
 
             <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
-                <Box gridColumn="span 2" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
+                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
                         title="12300"
                         subtitle="RM 10"
@@ -85,7 +88,7 @@ const Dashboard = () => {
                         }
                     />
                 </Box>
-                <Box gridColumn="span 2" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
+                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
                         title="12300"
                         subtitle="RM 30"
@@ -94,7 +97,7 @@ const Dashboard = () => {
                         }
                     />
                 </Box>
-                <Box gridColumn="span 2" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
+                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
                         title="12300"
                         subtitle="RM 50"
@@ -103,7 +106,7 @@ const Dashboard = () => {
                         }
                     />
                 </Box>
-                <Box gridColumn="span 2" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
+                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
                         title="12300"
                         subtitle="RM100"
@@ -127,7 +130,7 @@ const Dashboard = () => {
 
             <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
 
-                <Box gridColumn="span 2" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
+                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
                         title="12300"
                         subtitle="RM 10"
@@ -136,7 +139,7 @@ const Dashboard = () => {
                         }
                     />
                 </Box>
-                <Box gridColumn="span 2" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
+                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
                         title="12300"
                         subtitle="RM 30"
@@ -145,7 +148,7 @@ const Dashboard = () => {
                         }
                     />
                 </Box>
-                <Box gridColumn="span 2" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
+                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
                         title="12300"
                         subtitle="RM 50"
@@ -154,7 +157,7 @@ const Dashboard = () => {
                         }
                     />
                 </Box>
-                <Box gridColumn="span 2" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
+                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
                         title="12300"
                         subtitle="RM100"
