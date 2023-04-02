@@ -54,7 +54,33 @@ const Topbar = () => {
         <Modal open={open} onClose={handleClose}>
             <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4, minWidth: '50vw' }}>
                 {data ? (
-                    <Typography variant="body1">{JSON.stringify(data)}</Typography>
+                    <div>
+                        <Typography variant="body1">Serial Number: {data.serialNo}</Typography>
+                        <Typography variant="body1">Buyer: {data.remarkName}</Typography>
+                        <Typography variant="body1">Credit: {data.givenCredit}</Typography>
+                        <Typography variant="body1">Purchase Date: {new Date(data.createdAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })} </Typography>
+                        {data.serialStatus ? (
+                            <Typography variant="body1">
+                                Status: <span style={{ color: colors.greenAccent[300] }}>UNCLAIMED</span>
+                            </Typography>
+                        ) : (
+                            <Typography variant="body1">
+                                Status: <span style={{ color: 'red' }}>REDEEMED</span>
+                            </Typography>
+                        )}
+                        {!data.serialStatus && (
+                            <Typography variant="body1">
+                                Redemption Account: {data.redemptionAcc}
+                            </Typography>
+                        )}
+                        {data.serialStatus === false && (
+                            <Typography variant="body1">
+                                Redemption Date: {new Date(data.updatedAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}
+                            </Typography>
+                        )}
+
+
+                    </div>
                 ) : (
                     <Typography variant="body1">fetch bu dao...</Typography>
                 )}

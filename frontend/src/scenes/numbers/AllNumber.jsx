@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const AllNumber = () => {
+    const theme = useTheme()
+    const colors = tokens(theme.palette.mode)
 
     const { user } = useAuthContext()
 
@@ -33,9 +35,6 @@ const AllNumber = () => {
         };
         fetchAllSerials();
     }, [user]);
-
-    const theme = useTheme()
-    const colors = tokens(theme.palette.mode)
 
     function formatNumber(num) {
         return num.toLocaleString('en-US', { maximumFractionDigits: 0 }).toString().replace(/,/g, '')
