@@ -36,6 +36,7 @@ app.use('/', require('./routes/root'))
 app.use('/api/auth', require('./routes/authRoutes'))
 app.use('/api/users', require('./routes/userRoutes'))
 app.use('/api/serials', require('./routes/serialRoutes'))
+app.use('/api/dashboard', require('./routes/dashboardRoutes'))
 
 app.all("*", (req, res) => {
     res.status(404);

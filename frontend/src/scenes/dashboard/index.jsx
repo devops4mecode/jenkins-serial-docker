@@ -19,13 +19,14 @@ const Dashboard = () => {
     const { user } = useAuthContext()
     const [count, setCount] = useState({ 10: 0, 30: 0, 50: 0, 100: 0 })
     const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0, total: 0 })
+    const [redeemedAmount, setRedeemedAmount] = useState(0)
 
 
     useEffect(() => {
         const getTotalRedeemedCount = async () => {
             if(user) {
                 try {
-                    const response = await axios.get(`api/serials/falseCount`, {
+                    const response = await axios.get(`api/dashboard/falseCount`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                       });
                       setCount(prevCount => {
@@ -46,7 +47,7 @@ const Dashboard = () => {
         const getTotalGeneratedCount = async () => {
             if (user) {
                 try {
-                    const response = await axios.get(`api/serials/totalGenerated`, {
+                    const response = await axios.get(`api/dashboard/totalGenerated`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     })
                     setCount(prevCount => {
@@ -69,7 +70,7 @@ const Dashboard = () => {
         const getRedeemedSerialCount = async () => {
             if (user) {
                 try {
-                    const response = await axios.get(`api/serials/redeemedSerialCount`, {
+                    const response = await axios.get(`api/dashboard/redeemedSerialCount`, {
                         headers: {'Authorization': `Bearer ${user.accessToken}`}
                     })
                     setRedeemedCount(prevCount => {
@@ -86,6 +87,23 @@ const Dashboard = () => {
         }
 
         getRedeemedSerialCount()
+    }, [user])
+
+    useEffect(() => {
+        const totalAmountRedeemed = async () => {
+            if (user) {
+                try {
+                    const response = await axios.get(`/api/dashboard/totalAmount`, {
+                        headers: {'Authorization': `Bearer ${user.accessToken}`}
+                    })
+                    const total = response.data[0].sum
+                    setRedeemedAmount(total)
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        }
+        totalAmountRedeemed()
     }, [user])
 
     return (
@@ -134,7 +152,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="RM 7"
+                        title={`RM ${redeemedAmount}`}
                         subtitle="Total Amount Redeemed"
                         icon={
                             <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
