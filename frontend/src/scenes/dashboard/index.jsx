@@ -130,7 +130,7 @@ const Dashboard = () => {
                                 fontWeight="bold"
                                 color={colors.greenAccent[500]}
                             >
-                                RM 7
+                                {`RM ${redeemedAmount}`}
                             </Typography>
                         </Box>
                     </Box>
