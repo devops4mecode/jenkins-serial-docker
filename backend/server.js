@@ -17,25 +17,24 @@ console.log(process.env.NODE_ENV)
 connectDB();
 
 app.use(logger)
-// app.use(cors(corsOptions))
 app.use(cors())
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(cookieParser())
 
-// app.use('/', express.static(path.join(__dirname, '/public')))
-
-// Making Build Folder as Public 
-app.use(express.static(path.join(__dirname, 'build')));
-
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+app.use('/', express.static(path.join(__dirname, '/public')))
 
 app.use('/', require('./routes/root'))
 app.use('/api/auth', require('./routes/authRoutes'))
 app.use('/api/users', require('./routes/userRoutes'))
 app.use('/api/serials', require('./routes/serialRoutes'))
+
+// Making Build Folder as Public 
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.all("*", (req, res) => {
     res.status(404);
