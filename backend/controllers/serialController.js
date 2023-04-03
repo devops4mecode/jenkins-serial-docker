@@ -90,6 +90,9 @@ const getSerialDetails = async (req, res) => {
         if (serialNo.length < 16) {
             return res.status(400).json({ message: "Length less than 16, Invalid Serial Number" })
         }
+        if (serialNo.length > 16) {
+            return res.status(400).json({ message: "Maximum length is 16" })
+        }
         const foundSerialNo = await Serial.findOne({ serialNo }, { _id: 0, serialStatus: 1, givenCredit: 1, serialNo: 1 })
         if (!foundSerialNo) {
             return res.status(400).json({ message: "Serial Number Invalid, Check your input" })
