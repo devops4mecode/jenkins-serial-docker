@@ -29,16 +29,63 @@ const getDetailsBySerialNo = async (req, res) => {
     }
 };
 
-// @desc Get all count for each credit respectively (10, 30, 50, 100)
-// @route GET /serials//count
+// @desc Get ALL count for all the credit 
+// @route GET /serials/count?status=false
 // @access Private
 const getTotalRedeemedCount = async (req, res) => {
+    try {
+        const counts = await Serial.aggregate([
+            {
+                $match: {
+                    serialStatus: req.query.status === 'true' ? true : false,
+                },
+            },
+            {
+                $count: "count",
+            },
+        ]);
+        res.json(counts);
+    } catch (error) {
+        return res.status(400).json({ message: "Something wrong" });
+    }
+};
+
+// @desc Get ALL count for each credit respectively (10, 30, 50, 100)
+// @route GET /serials/totalGenerated
+// @access Private
+const getTotalGeneratedCount = async (req, res) => {
     try {
         const counts = await Serial.aggregate([
             {
                 $group: {
                     _id: "$givenCredit",
                     count: { $sum: 1 },
+                },
+            },
+        ]);
+        res.json(counts);
+    } catch (error) {
+        return res.status(400).json({ message: "Something wrong" });
+    }
+};
+
+// @desc Get count FOR REDEEMED SERIAL ONLY (10, 30, 50, 100)
+// @route GET /serials/totalGenerated
+// @access Private
+const getRedeemedSerialCount = async (req, res) => {
+    try {
+        const counts = await Serial.aggregate([
+            {
+                $match: {
+                    serialStatus: false,
+                },
+            },
+            {
+                $group: {
+                    _id: "$givenCredit",
+                    count: {
+                        $sum: 1,
+                    },
                 },
             },
         ]);
@@ -111,11 +158,9 @@ const getSerialDetails = async (req, res) => {
                 .json({ message: "All fields must be provided" });
         }
         if (serialNo.length < 16) {
-            return res
-                .status(400)
-                .json({
-                    message: "Length less than 16, Invalid Serial Number",
-                });
+            return res.status(400).json({
+                message: "Length less than 16, Invalid Serial Number",
+            });
         }
         const foundSerialNo = await Serial.findOne(
             { serialNo },
@@ -127,12 +172,10 @@ const getSerialDetails = async (req, res) => {
                 .json({ message: "Serial Number Invalid, Check your input" });
         }
         if (foundSerialNo.serialStatus !== true) {
-            return res
-                .status(400)
-                .json({
-                    message:
-                        "Invalid code, check your input or this code already been redeemed",
-                });
+            return res.status(400).json({
+                message:
+                    "Invalid code, check your input or this code already been redeemed",
+            });
         }
         return res.json(foundSerialNo);
     } catch (error) {
@@ -148,11 +191,9 @@ const redeemSerials = async (req, res) => {
         const { redemptionAcc, serialNo } = req.query;
 
         if (!redemptionAcc || !serialNo) {
-            return res
-                .status(400)
-                .json({
-                    message: "All fields must be provided in order to redeem",
-                });
+            return res.status(400).json({
+                message: "All fields must be provided in order to redeem",
+            });
         }
 
         const foundSerialNo = await Serial.findOne(
@@ -175,13 +216,11 @@ const redeemSerials = async (req, res) => {
             // save the updated document
             await foundSerialNo.save();
 
-            return res
-                .status(200)
-                .json({
-                    message: `Successfully redeem, your wallet will be topup RM${foundSerialNo.givenCredit.toFixed(
-                        2
-                    )}`,
-                });
+            return res.status(200).json({
+                message: `Successfully redeem, your wallet will be topup RM${foundSerialNo.givenCredit.toFixed(
+                    2
+                )}`,
+            });
         }
     } catch (error) {
         console.error(error);
@@ -207,5 +246,7 @@ module.exports = {
     generateSerials,
     getSerialDetails,
     redeemSerials,
-    getTotalRedeemedCount
+    getTotalRedeemedCount,
+    getTotalGeneratedCount,
+    getRedeemedSerialCount,
 };

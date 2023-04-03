@@ -22,7 +22,9 @@ router
     .get('/details', serialController.getSerialDetails)
     .patch('/redeem', serialController.redeemSerials)
 
-    .get('/count', verifyJWT, serialController.getTotalRedeemedCount)
+    .get('/falseCount', verifyJWT, serialController.getTotalRedeemedCount)
+    .get('/totalGenerated', verifyJWT, serialController.getTotalGeneratedCount)
+    .get('/redeemedSerialCount', verifyJWT, serialController.getRedeemedSerialCount)
 
 
 // Use middleware function to skip authentication for certain routes

@@ -18,12 +18,35 @@ const Dashboard = () => {
 
     const { user } = useAuthContext()
     const [count, setCount] = useState({ 10: 0, 30: 0, 50: 0, 100: 0 })
+    const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0, total: 0 })
+
 
     useEffect(() => {
         const getTotalRedeemedCount = async () => {
+            if(user) {
+                try {
+                    const response = await axios.get(`api/serials/falseCount`, {
+                        headers: { 'Authorization': `Bearer ${user.accessToken}` }
+                      });
+                      setCount(prevCount => {
+                        const newCount = { ...prevCount };
+                        newCount.total = response.data[0].count;
+                        return newCount;
+                      });
+                } catch (error) {
+                    console.log(error)
+                }
+            } 
+        }
+
+        getTotalRedeemedCount()
+    }, [user])
+
+    useEffect(() => {
+        const getTotalGeneratedCount = async () => {
             if (user) {
                 try {
-                    const response = await axios.get(`api/serials/count`, {
+                    const response = await axios.get(`api/serials/totalGenerated`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     })
                     setCount(prevCount => {
@@ -38,8 +61,37 @@ const Dashboard = () => {
                 }
             }
         }
-        getTotalRedeemedCount()
+
+        getTotalGeneratedCount()
     }, [user])
+
+    useEffect(() => {
+        const getRedeemedSerialCount = async () => {
+            if (user) {
+                try {
+                    const response = await axios.get(`api/serials/redeemedSerialCount`, {
+                        headers: {'Authorization': `Bearer ${user.accessToken}`}
+                    })
+                    setRedeemedCount(prevCount => {
+                        const newCount = { ...prevCount }
+                        response.data.forEach(({ _id, count }) => {
+                            newCount[_id] = count
+                        })
+                        return newCount
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        }
+
+        getRedeemedSerialCount()
+    }, [user])
+
+
+    const totalAmount = count.reduce((total, item) => {
+        return total + (item.givenCredit * item.count)
+    }, 0)
 
     return (
         <Box m="20px">
@@ -65,7 +117,7 @@ const Dashboard = () => {
                                 fontWeight="bold"
                                 color={colors.greenAccent[500]}
                             >
-                                RM 10000
+                                RM 7
                             </Typography>
                         </Box>
                     </Box>
@@ -78,7 +130,7 @@ const Dashboard = () => {
             <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
                 <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="RM 12300"
+                        title={count.total}
                         subtitle="Total Redeem Count"
                         icon={
                             <CallReceivedIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -87,7 +139,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="RM 12300"
+                        title={`$${totalAmount}`}
                         subtitle="Total Amount Redeemed"
                         icon={
                             <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -109,7 +161,7 @@ const Dashboard = () => {
             <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="12300"
+                        title={redeemedCount[10]}
                         subtitle="RM 10"
                         icon={
                             <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -118,7 +170,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="12300"
+                        title={redeemedCount[30]}
                         subtitle="RM 30"
                         icon={
                             <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -127,7 +179,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="12300"
+                        title={redeemedCount[50]}
                         subtitle="RM 50"
                         icon={
                             <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -136,7 +188,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="12300"
+                        title={redeemedCount[100]}
                         subtitle="RM100"
                         icon={
                             <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -158,7 +210,7 @@ const Dashboard = () => {
             <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title={count[10]}
+                        title={count['10']}
                         subtitle="RM 10"
                         icon={
                             <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -167,7 +219,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title={count[30]}
+                        title={count['30']}
                         subtitle="RM 30"
                         icon={
                             <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -176,7 +228,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title={count[50]}
+                        title={count['50']}
                         subtitle="RM 50"
                         icon={
                             <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -185,7 +237,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title={count[100]}
+                        title={count['100']}
                         subtitle="RM100"
                         icon={
                             <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -207,7 +259,7 @@ const Dashboard = () => {
             <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="50%"
+                        title="7%"
                         subtitle="RM 10"
                         icon={
                             <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -216,7 +268,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="21.30%"
+                        title="7%"
                         subtitle="RM 30"
                         icon={
                             <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -225,7 +277,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="10.50%"
+                        title="7%"
                         subtitle="RM 50"
                         icon={
                             <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -234,7 +286,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="18.20%"
+                        title="7%"
                         subtitle="RM100"
                         icon={
                             <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
