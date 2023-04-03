@@ -88,11 +88,6 @@ const Dashboard = () => {
         getRedeemedSerialCount()
     }, [user])
 
-
-    const totalAmount = count.reduce((total, item) => {
-        return total + (item.givenCredit * item.count)
-    }, 0)
-
     return (
         <Box m="20px">
             <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -139,7 +134,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title={`$${totalAmount}`}
+                        title="RM 7"
                         subtitle="Total Amount Redeemed"
                         icon={
                             <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
