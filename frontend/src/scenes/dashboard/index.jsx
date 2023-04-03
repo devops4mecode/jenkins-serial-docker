@@ -8,6 +8,7 @@ import StatBox from "../../components/StatBox";
 import CallReceivedIcon from '@mui/icons-material/CallReceived';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import AddIcon from '@mui/icons-material/Add';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 const Dashboard = () => {
 
@@ -45,11 +46,11 @@ const Dashboard = () => {
                     <Box height="400px" m="-20px 0 0 0">
                         <LineChart isDashboard={true} />
                     </Box>
-                </Box>                
+                </Box>
             </Box>
 
             <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
-            <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
+                <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
                         title="RM 12300"
                         subtitle="Total Redeem Count"
@@ -73,7 +74,8 @@ const Dashboard = () => {
             <Box display="grid" sx={{ pb: 3, pl: 2 }}>
                 <Typography variant="h4"
                     fontWeight="600"
-                    color={colors.grey[100]}>
+                    color={colors.grey[100]}
+                >
                     Total Redeemed
                 </Typography>
             </Box>
@@ -117,19 +119,17 @@ const Dashboard = () => {
                 </Box>
             </Box>
 
-            
-
             {/* Row 3 */}
             <Box display="grid" sx={{ pb: 3, pl: 2 }}>
                 <Typography variant="h4"
                     fontWeight="600"
-                    color={colors.grey[100]}>
+                    color={colors.grey[100]}
+                >
                     Total Generated
                 </Typography>
             </Box>
 
             <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
-
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
                         title="12300"
@@ -167,6 +167,55 @@ const Dashboard = () => {
                     />
                 </Box>
             </Box>
+
+            {/* Row 4 */}
+            <Box display="grid" sx={{ pb: 3, pl: 2 }}>
+                <Typography variant="h4"
+                    fontWeight="600"
+                    color={colors.grey[100]}
+                >
+                    Most Redeemed
+                </Typography>
+            </Box>
+
+            <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
+                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
+                    <StatBox
+                        title="12300"
+                        subtitle="RM 10"
+                        icon={
+                            <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                        }
+                    />
+                </Box>
+                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
+                    <StatBox
+                        title="12300"
+                        subtitle="RM 30"
+                        icon={
+                            <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                        }
+                    />
+                </Box>
+                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
+                    <StatBox
+                        title="12300"
+                        subtitle="RM 50"
+                        icon={
+                            <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                        }
+                    />
+                </Box>
+                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
+                    <StatBox
+                        title="12300"
+                        subtitle="RM100"
+                        icon={
+                            <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                        }
+                    />
+                </Box>
+            </Box>            
         </Box>
     )
 }
