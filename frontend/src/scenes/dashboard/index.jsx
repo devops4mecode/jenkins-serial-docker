@@ -1,8 +1,9 @@
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
-import { mockTransactions } from "../../data/mockData";
-import CalculateOutlinedIcon from '@mui/icons-material/CalculateOutlined';
+import { useAuthContext } from "hooks/useAuthContext";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import LineChart from "../../components/LineChart";
 import StatBox from "../../components/StatBox";
 import CallReceivedIcon from '@mui/icons-material/CallReceived';
@@ -14,6 +15,31 @@ const Dashboard = () => {
 
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
+
+    const { user } = useAuthContext()
+    const [count, setCount] = useState({ 10: 0, 30: 0, 50: 0, 100: 0 })
+
+    useEffect(() => {
+        const getTotalRedeemedCount = async () => {
+            if (user) {
+                try {
+                    const response = await axios.get(`api/serials/count`, {
+                        headers: { 'Authorization': `Bearer ${user.accessToken}` }
+                    })
+                    setCount(prevCount => {
+                        const newCount = { ...prevCount }
+                        response.data.forEach(({ _id, count }) => {
+                            newCount[_id] = count
+                        })
+                        return newCount
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        }
+        getTotalRedeemedCount()
+    }, [user])
 
     return (
         <Box m="20px">
@@ -86,7 +112,7 @@ const Dashboard = () => {
                         title="12300"
                         subtitle="RM 10"
                         icon={
-                            <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
                         }
                     />
                 </Box>
@@ -95,7 +121,7 @@ const Dashboard = () => {
                         title="12300"
                         subtitle="RM 30"
                         icon={
-                            <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
                         }
                     />
                 </Box>
@@ -104,7 +130,7 @@ const Dashboard = () => {
                         title="12300"
                         subtitle="RM 50"
                         icon={
-                            <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
                         }
                     />
                 </Box>
@@ -113,7 +139,7 @@ const Dashboard = () => {
                         title="12300"
                         subtitle="RM100"
                         icon={
-                            <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
                         }
                     />
                 </Box>
@@ -132,37 +158,37 @@ const Dashboard = () => {
             <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="12300"
+                        title={count[10]}
                         subtitle="RM 10"
                         icon={
-                            <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
                         }
                     />
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="12300"
+                        title={count[30]}
                         subtitle="RM 30"
                         icon={
-                            <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
                         }
                     />
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="12300"
+                        title={count[50]}
                         subtitle="RM 50"
                         icon={
-                            <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
                         }
                     />
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="12300"
+                        title={count[100]}
                         subtitle="RM100"
                         icon={
-                            <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
                         }
                     />
                 </Box>
@@ -181,7 +207,7 @@ const Dashboard = () => {
             <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="12300"
+                        title="50%"
                         subtitle="RM 10"
                         icon={
                             <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -190,7 +216,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="12300"
+                        title="21.30%"
                         subtitle="RM 30"
                         icon={
                             <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -199,7 +225,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="12300"
+                        title="10.50%"
                         subtitle="RM 50"
                         icon={
                             <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -208,14 +234,14 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="12300"
+                        title="18.20%"
                         subtitle="RM100"
                         icon={
                             <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
                         }
                     />
                 </Box>
-            </Box>            
+            </Box>
         </Box>
     )
 }

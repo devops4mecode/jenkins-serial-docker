@@ -1,7 +1,6 @@
 import { Box, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid"
 import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData"
 import Header from "../../components/Header";
 import DownloadIcon from '@mui/icons-material/Download';
 import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
