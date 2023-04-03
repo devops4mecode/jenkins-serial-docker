@@ -35,19 +35,19 @@ function App() {
                                 element={!user ? <LoginPage /> : <Navigate to="/" />}
                             />
                             <Route
-                                path="/GenerateNumber"
+                                path="/generateNumber"
                                 element={user ? <GenerateNumber /> : <Navigate to="/login" />}
                             />
                             <Route
-                                path="/UnusedNumber"
+                                path="/unusedNumber"
                                 element={user ? <UnusedNumber /> : <Navigate to="/login" />}
                             />
                             <Route
-                                path="/UsedNumber"
+                                path="/usedNumber"
                                 element={user ? <UsedNumber /> : <Navigate to="/login" />}
                             />
                             <Route
-                                path="/AllNumber"
+                                path="/allNumber"
                                 element={user ? <AllNumber /> : <Navigate to="/login" />}
                             />
                             <Route
