@@ -14,6 +14,120 @@ const Dashboard = () => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
 
+<<<<<<< Updated upstream
+=======
+    const { user } = useAuthContext()
+    const [count, setCount] = useState({ 10: 0, 30: 0, 50: 0, 100: 0 })
+    const [totalRedeemedAmount, setTotalRedeemedAmount] = useState(0)
+    const [totalRedeemedCount, setTotalRedeemedCount] = useState(0)
+
+    const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0, total: 0 })
+    const [generatedCount, setGeneratedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0, total: 0 })
+    const [mostRedeemedCount, setmostRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0, total: 0 })
+
+    useEffect(() => {
+        const getSerialsData = async () => {
+            if (user) {
+                try {
+                    const { data } = await axios.get(`api/dashboard/serialsData`, {
+                        headers: { 'Authorization': `Bearer ${user.accessToken}` }
+                    });
+                    console.log(data)
+                    setTotalRedeemedAmount(data?.totalAmountRedeemed[0].sum)
+                    setTotalRedeemedCount(data?.totalRedeemedCount[0].count)
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        }
+        getSerialsData()
+    }, [user])
+
+    // useEffect(() => {
+    //     const getTotalRedeemedCount = async () => {
+    //         if (user) {
+    //             try {
+    //                 const response = await axios.get(`api/dashboard/falseCount`, {
+    //                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
+    //                 });
+    //                 setCount(prevCount => {
+    //                     const newCount = { ...prevCount };
+    //                     newCount.total = response.data[0].count;
+    //                     return newCount;
+    //                 });
+    //             } catch (error) {
+    //                 console.log(error)
+    //             }
+    //         }
+    //     }
+
+    //     getTotalRedeemedCount()
+    // }, [user])
+
+    // useEffect(() => {
+    //     const getTotalGeneratedCount = async () => {
+    //         if (user) {
+    //             try {
+    //                 const response = await axios.get(`api/dashboard/totalGenerated`, {
+    //                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
+    //                 })
+    //                 setCount(prevCount => {
+    //                     const newCount = { ...prevCount }
+    //                     response.data.forEach(({ _id, count }) => {
+    //                         newCount[_id] = count
+    //                     })
+    //                     return newCount
+    //                 })
+    //             } catch (error) {
+    //                 console.log(error)
+    //             }
+    //         }
+    //     }
+
+    //     getTotalGeneratedCount()
+    // }, [user])
+
+    // useEffect(() => {
+    //     const getRedeemedSerialCount = async () => {
+    //         if (user) {
+    //             try {
+    //                 const response = await axios.get(`api/dashboard/redeemedSerialCount`, {
+    //                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
+    //                 })
+    //                 setRedeemedCount(prevCount => {
+    //                     const newCount = { ...prevCount }
+    //                     response.data.forEach(({ _id, count }) => {
+    //                         newCount[_id] = count
+    //                     })
+    //                     return newCount
+    //                 })
+    //             } catch (error) {
+    //                 console.log(error)
+    //             }
+    //         }
+    //     }
+
+    //     getRedeemedSerialCount()
+    // }, [user])
+
+    // useEffect(() => {
+    //     const totalAmountRedeemed = async () => {
+    //         if (user) {
+    //             try {
+    //                 const response = await axios.get(`/api/dashboard/totalAmount`, {
+    //                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
+    //                 })
+    //                 const total = response.data[0].sum
+    //                 setTotalRedeemedAmount(total)
+    //             } catch (error) {
+    //                 console.log(error)
+    //             }
+    //         }
+    //     }
+    //     totalAmountRedeemed()
+    // }, [user])
+
+>>>>>>> Stashed changes
     return (
         <Box m="20px">
             <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -38,7 +152,11 @@ const Dashboard = () => {
                                 fontWeight="bold"
                                 color={colors.greenAccent[500]}
                             >
+<<<<<<< Updated upstream
                                 RM 10000
+=======
+                                {`RM ${totalRedeemedAmount}`}
+>>>>>>> Stashed changes
                             </Typography>
                         </Box>
                     </Box>
@@ -51,7 +169,11 @@ const Dashboard = () => {
             <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
             <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
+<<<<<<< Updated upstream
                         title="RM 12300"
+=======
+                        title={totalRedeemedCount}
+>>>>>>> Stashed changes
                         subtitle="Total Redeem Count"
                         icon={
                             <CallReceivedIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -60,7 +182,11 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
+<<<<<<< Updated upstream
                         title="RM 12300"
+=======
+                        title={`RM ${totalRedeemedAmount}`}
+>>>>>>> Stashed changes
                         subtitle="Total Amount Redeemed"
                         icon={
                             <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
