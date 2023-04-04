@@ -1,4 +1,5 @@
 import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField } from "@mui/material";
+import { CSVLink } from 'react-csv'
 import { tokens } from "theme";
 import { Formik } from "formik"
 import * as yup from "yup"
@@ -41,6 +42,30 @@ const GenerateNumber = () => {
             console.log(error)
         }
     }
+
+    const headers = [
+        { label: 'Serial Number', key: 'serialNo' },
+        { label: 'Given Credit', key: 'givenCredit' },
+        { label: 'Buyer', key: 'remarkName' },
+        { label: 'Buy Date', key: 'createdAt' },
+    ];
+
+    const data = serialsData.map(serialData => {
+        return {
+            serialNo: serialData.serialNo,
+            givenCredit: serialData.givenCredit,
+            remarkName: serialData.remarkName,
+            createdAt: new Date(serialData.createdAt).toLocaleString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                hour12: true,
+            }),
+        };
+    });
 
     // const columns = [
     //     {
@@ -154,28 +179,36 @@ const GenerateNumber = () => {
                     </Box>
 
                     {serialsData.length > 0 && (
-                        <TableContainer component={Paper} sx={{ mt: 4, textAlign: "center", color: colors.greenAccent[300] }}>
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell align="center">Serial Number</TableCell>
-                                        <TableCell align="center">Given Credit</TableCell>
-                                        <TableCell align="center">Buyer</TableCell>
-                                        <TableCell align="center">Buy Date</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {serialsData.map((serialData) => (
-                                        <TableRow key={serialData._id}>
-                                            <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.serialNo}</TableCell>
-                                            <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.givenCredit}</TableCell>
-                                            <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.remarkName}</TableCell>
-                                            <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{new Date(serialData.createdAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}</TableCell>
+                        <>
+                            <CSVLink data={data} headers={headers} filename={'code.csv'}>
+                                <Button variant="contained" color="secondary">
+                                    Export to CSV
+                                </Button>
+                            </CSVLink>
+
+                            <TableContainer component={Paper} sx={{ mt: 4, textAlign: "center", color: colors.greenAccent[300] }}>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell align="center">Serial Number</TableCell>
+                                            <TableCell align="center">Given Credit</TableCell>
+                                            <TableCell align="center">Buyer</TableCell>
+                                            <TableCell align="center">Buy Date</TableCell>
                                         </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                                    </TableHead>
+                                    <TableBody>
+                                        {serialsData.map((serialData) => (
+                                            <TableRow key={serialData._id}>
+                                                <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.serialNo}</TableCell>
+                                                <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.givenCredit}</TableCell>
+                                                <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.remarkName}</TableCell>
+                                                <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{new Date(serialData.createdAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </>
                     )}
                 </form>
             )}

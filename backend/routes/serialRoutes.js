@@ -20,7 +20,7 @@ router
     .get('/status', verifyJWT, serialController.getSerialsByStatus)
     .post('/generate', verifyJWT, serialController.generateSerials)
     .get('/details', serialController.getSerialDetails)
-    .patch('/redeem', serialController.redeemSerials);
+    .patch('/redeem', serialController.redeemSerials)
 
 // Use middleware function to skip authentication for certain routes
 router.use(skipAuth);

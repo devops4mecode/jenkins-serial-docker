@@ -55,26 +55,34 @@ const Topbar = () => {
             <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4, minWidth: '50vw' }}>
                 {data ? (
                     <Box sx={{ pl: '30%' }}>
-                        <Typography variant="h4">Serial Number: {data.serialNo}</Typography>
-                        <Typography variant="h4">Buyer: {data.remarkName}</Typography>
-                        <Typography variant="h4">Credit: {data.givenCredit}</Typography>
-                        <Typography variant="h4">Purchase Date: {new Date(data.createdAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })} </Typography>
+                        <Typography variant="h5">
+                            Serial Number: {data.serialNo}
+                        </Typography>
+                        <Typography variant="h5">
+                            Buyer: {data.remarkName}
+                        </Typography>
+                        <Typography variant="h5">
+                            Credit: {data.givenCredit}
+                        </Typography>
+                        <Typography variant="h5">
+                            Purchase Date: {new Date(data.createdAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })} 
+                            </Typography>
                         {data.serialStatus ? (
-                            <Typography variant="h4">
+                            <Typography variant="h5">
                                 Status: <span style={{ color: colors.greenAccent[300] }}>UNCLAIMED</span>
                             </Typography>
                         ) : (
-                            <Typography variant="h4">
+                            <Typography variant="h5">
                                 Status: <span style={{ color: 'red' }}>REDEEMED</span>
                             </Typography>
                         )}
                         {!data.serialStatus && (
-                            <Typography variant="h4">
+                            <Typography variant="h5">
                                 Redemption Account: {data.redemptionAcc}
                             </Typography>
                         )}
                         {data.serialStatus === false && (
-                            <Typography variant="h4">
+                            <Typography variant="h5">
                                 Redemption Date: {new Date(data.updatedAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}
                             </Typography>
                         )}
@@ -82,7 +90,7 @@ const Topbar = () => {
 
                     </Box>
                 ) : (
-                    <Typography variant="body1">fetch bu dao...</Typography>
+                    <Typography variant="h5">Entry doesnt exist</Typography>
                 )}
             </Box>
         </Modal>
