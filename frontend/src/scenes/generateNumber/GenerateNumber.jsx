@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useAuthContext } from "hooks/useAuthContext";
 import axios from "axios";
 import { useTheme } from "@emotion/react";
+import CreditButton from "components/CreditButton";
 // import { DataGrid } from "@mui/x-data-grid";
 
 const GenerateNumber = () => {
@@ -67,42 +68,8 @@ const GenerateNumber = () => {
         };
     });
 
-    // const columns = [
-    //     {
-    //         field: "serialNo",
-    //         headerName: "Serial No",
-    //         flex: 1,
-    //         headerAlign: "center",
-    //         align: "center"
-    //     },
-    //     {
-    //         field: "givenCredit",
-    //         headerName: "Given Credit",
-    //         flex: 1,
-    //         headerAlign: "center",
-    //         align: "center"
-    //     },
-    //     {
-    //         field: "remarkName",
-    //         headerName: "Remark",
-    //         width: 200,
-    //         flex: 1,
-    //         headerAlign: "center",
-    //         align: "center"
-    //     },
-    //     {
-    //         field: "createdAt",
-    //         headerName: "SOLD DATE",
-    //         flex: 1,
-    //         headerAlign: "center",
-    //         align: "center"
-    //     }
-    // ];
-
-    // const getRowId = (row) => row._id;
-
     return <Box m="20px">
-        <Header title="GENERATE SERIAL NUMBER" subtitle="Generate a New Serial Number to Top Up Credit" />
+        <Header title="GENERATE SERIAL NUMBER" subtitle="Top Up Credit" />
 
         <Formik
             onSubmit={handleFormSubmit}
@@ -113,17 +80,40 @@ const GenerateNumber = () => {
                 <form onSubmit={handleSubmit}>
                     <Box
                         display="grid"
+                        rowGap={{
+                            xs: "15px"
+                        }}
+                        columnGap={{
+                            lg: "30px"
+                        }}
+                        gridTemplateColumns={{
+                            xs: "repeat(1, minmax(0, 1fr))",
+                            sm: "repeat(2, minmax(0, 1fr))",
+                            lg: "repeat(4, minmax(0, 1fr))"
+                        }}
+                        gridTemplateRows={{
+                            xs: "repeat(4, minmax(0, 1fr))",
+                            lg: "repeat(1, minmax(0, 1fr))",
+                        }}
+                        sx={{
+                            "& > div": { gridColumn: isNonMobile ? undefined : "span 4" }
+                        }}
+                    >
+
+                        <CreditButton onClick={() => setFieldValue("givenCredit", 10)} title="RM10" />
+                        <CreditButton onClick={() => setFieldValue("givenCredit", 30)} title="RM30" />
+                        <CreditButton onClick={() => setFieldValue("givenCredit", 50)} title="RM50" />
+                        <CreditButton onClick={() => setFieldValue("givenCredit", 100)} title="RM100" />
+                    </Box>
+
+                    <Box
+                        display="grid"
                         gap="30px"
                         gridTemplateColumns="repeat(4, minmax(0, 1fr))"
                         sx={{
                             "& > div": { gridColumn: isNonMobile ? undefined : "span 4" }
                         }}
                     >
-
-                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("givenCredit", 10)}> RM 10 </Button>
-                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("givenCredit", 30)}> RM 30 </Button>
-                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("givenCredit", 50)}> RM 50 </Button>
-                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("givenCredit", 100)}> RM 100 </Button>
 
                         {/* Reload Amount */}
                         <TextField
@@ -172,8 +162,27 @@ const GenerateNumber = () => {
                         />
                     </Box>
 
-                    <Box display="flex" justifyContent="end" mt="20px">
-                        <Button type="submit" color="secondary" variant="contained">
+                    <Box
+                        display="flex"
+                        mt="20px"
+                        sx={{
+                            justifyContent: {
+                                xs: "center",
+                                lg: "end"
+                            }
+                        }}
+                    >
+                        <Button
+                            type="submit"
+                            color="secondary"
+                            variant="contained"
+                            sx={{
+                                fontSize: {
+                                    xs: "12px",
+                                    lg: "32px"
+                                },
+                            }}
+                        >
                             GENERATE
                         </Button>
                     </Box>
@@ -213,17 +222,6 @@ const GenerateNumber = () => {
                 </form>
             )}
         </Formik>
-
-        {/* {serialsData.length > 0 ? ( */}
-        {/* <Box> */}
-        {/* <DataGrid */}
-        {/* rows={serialsData} */}
-        {/* columns={columns} */}
-        {/* getRowId={getRowId} */}
-        {/* /> */}
-        {/* {console.log(serialsData)} */}
-        {/* </Box> */}
-        {/* ) : null} */}
     </Box>
 }
 

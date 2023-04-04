@@ -198,6 +198,14 @@ export const themeSettings = (mode) => {
                 fontFamily: ['Noto Serif SC', "serif"].join(","),
                 fontSize: 14,
             },
+            h7: {
+                fontFamily: ['Noto Serif SC', "serif"].join(","),
+                fontSize: 12,
+            },
+            h8: {
+                fontFamily: ['Noto Serif SC', "serif"].join(","),
+                fontSize: 9,
+            },
         },
     };
 };
