@@ -2,7 +2,7 @@ import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useAuthContext } from "hooks/useAuthContext";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import LineChart from "../../components/LineChart";
 import StatBox from "../../components/StatBox";
@@ -13,17 +13,14 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 const Dashboard = () => {
 
+    const { user } = useAuthContext()
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
-
-    const { user } = useAuthContext()
-    const [count, setCount] = useState({ 10: 0, 30: 0, 50: 0, 100: 0 })
     const [totalRedeemedAmount, setTotalRedeemedAmount] = useState(0)
     const [totalRedeemedCount, setTotalRedeemedCount] = useState(0)
-
-    const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0, total: 0 })
-    const [generatedCount, setGeneratedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0, total: 0 })
-    const [mostRedeemedCount, setmostRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0, total: 0 })
+    const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
+    const [generatedCount, setGeneratedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
+    const [mostRedeemedCount, setmostRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
 
     useEffect(() => {
         const getSerialsData = async () => {
@@ -32,9 +29,29 @@ const Dashboard = () => {
                     const { data } = await axios.get(`api/dashboard/serialsData`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     });
-                    console.log(data)
                     setTotalRedeemedAmount(data?.totalAmountRedeemed[0].sum)
                     setTotalRedeemedCount(data?.totalRedeemedCount[0].count)
+                    setRedeemedCount(prevCount => {
+                        const newRedeemedCount = { ...prevCount }
+                        data?.redeemedSerialCount.forEach(({ _id, count }) => {
+                            newRedeemedCount[_id] = count
+                        })
+                        return newRedeemedCount
+                    })
+                    setGeneratedCount(prevCount => {
+                        const newRedeemedCount = { ...prevCount }
+                        data?.totalGeneratedCount.forEach(({ _id, count }) => {
+                            newRedeemedCount[_id] = count
+                        })
+                        return newRedeemedCount
+                    })
+                    setmostRedeemedCount(prevCount => {
+                        const newRedeemedCount = { ...prevCount }
+                        data?.mostRedeemed.forEach(({ _id, percentage }) => {
+                            newRedeemedCount[_id] = percentage
+                        })
+                        return newRedeemedCount
+                    })
                 } catch (error) {
                     console.log(error)
                 }
@@ -42,90 +59,6 @@ const Dashboard = () => {
         }
         getSerialsData()
     }, [user])
-
-    // useEffect(() => {
-    //     const getTotalRedeemedCount = async () => {
-    //         if (user) {
-    //             try {
-    //                 const response = await axios.get(`api/dashboard/falseCount`, {
-    //                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
-    //                 });
-    //                 setCount(prevCount => {
-    //                     const newCount = { ...prevCount };
-    //                     newCount.total = response.data[0].count;
-    //                     return newCount;
-    //                 });
-    //             } catch (error) {
-    //                 console.log(error)
-    //             }
-    //         }
-    //     }
-
-    //     getTotalRedeemedCount()
-    // }, [user])
-
-    // useEffect(() => {
-    //     const getTotalGeneratedCount = async () => {
-    //         if (user) {
-    //             try {
-    //                 const response = await axios.get(`api/dashboard/totalGenerated`, {
-    //                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
-    //                 })
-    //                 setCount(prevCount => {
-    //                     const newCount = { ...prevCount }
-    //                     response.data.forEach(({ _id, count }) => {
-    //                         newCount[_id] = count
-    //                     })
-    //                     return newCount
-    //                 })
-    //             } catch (error) {
-    //                 console.log(error)
-    //             }
-    //         }
-    //     }
-
-    //     getTotalGeneratedCount()
-    // }, [user])
-
-    // useEffect(() => {
-    //     const getRedeemedSerialCount = async () => {
-    //         if (user) {
-    //             try {
-    //                 const response = await axios.get(`api/dashboard/redeemedSerialCount`, {
-    //                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
-    //                 })
-    //                 setRedeemedCount(prevCount => {
-    //                     const newCount = { ...prevCount }
-    //                     response.data.forEach(({ _id, count }) => {
-    //                         newCount[_id] = count
-    //                     })
-    //                     return newCount
-    //                 })
-    //             } catch (error) {
-    //                 console.log(error)
-    //             }
-    //         }
-    //     }
-
-    //     getRedeemedSerialCount()
-    // }, [user])
-
-    // useEffect(() => {
-    //     const totalAmountRedeemed = async () => {
-    //         if (user) {
-    //             try {
-    //                 const response = await axios.get(`/api/dashboard/totalAmount`, {
-    //                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
-    //                 })
-    //                 const total = response.data[0].sum
-    //                 setTotalRedeemedAmount(total)
-    //             } catch (error) {
-    //                 console.log(error)
-    //             }
-    //         }
-    //     }
-    //     totalAmountRedeemed()
-    // }, [user])
 
     return (
         <Box m="20px">
@@ -151,7 +84,7 @@ const Dashboard = () => {
                                 fontWeight="bold"
                                 color={colors.greenAccent[500]}
                             >
-                                RM 10000
+                                {`RM ${totalRedeemedAmount}`}
                             </Typography>
                         </Box>
                     </Box>
@@ -164,7 +97,7 @@ const Dashboard = () => {
             <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
                 <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="RM 12300"
+                        title={totalRedeemedCount}
                         subtitle="Total Redeem Count"
                         icon={
                             <CallReceivedIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -173,7 +106,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="RM 12300"
+                        title={`RM ${totalRedeemedAmount}`}
                         subtitle="Total Amount Redeemed"
                         icon={
                             <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -182,7 +115,7 @@ const Dashboard = () => {
                 </Box>
             </Box>
 
-            {/* Row 2 */}
+            {/* Row 2 - Total Redeemed*/}
             <Box display="grid" sx={{ pb: 3, pl: 2 }}>
                 <Typography variant="h4"
                     fontWeight="600"
@@ -231,7 +164,7 @@ const Dashboard = () => {
                 </Box>
             </Box>
 
-            {/* Row 3 */}
+            {/* Row 3 - Total Generated*/}
             <Box display="grid" sx={{ pb: 3, pl: 2 }}>
                 <Typography variant="h4"
                     fontWeight="600"
@@ -244,7 +177,7 @@ const Dashboard = () => {
             <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title={count['10']}
+                        title={generatedCount['10']}
                         subtitle="RM 10"
                         icon={
                             <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -253,7 +186,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title={count['30']}
+                        title={generatedCount['30']}
                         subtitle="RM 30"
                         icon={
                             <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -262,7 +195,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title={count['50']}
+                        title={generatedCount['50']}
                         subtitle="RM 50"
                         icon={
                             <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -271,7 +204,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title={count['100']}
+                        title={generatedCount['100']}
                         subtitle="RM100"
                         icon={
                             <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -293,7 +226,7 @@ const Dashboard = () => {
             <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="7%"
+                        title={`${mostRedeemedCount['10'].toFixed(2)}%`}
                         subtitle="RM 10"
                         icon={
                             <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -302,7 +235,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="7%"
+                        title={`${mostRedeemedCount['30'].toFixed(2)}%`}
                         subtitle="RM 30"
                         icon={
                             <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -311,7 +244,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="7%"
+                        title={`${mostRedeemedCount['50'].toFixed(2)}%`}
                         subtitle="RM 50"
                         icon={
                             <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
@@ -320,7 +253,7 @@ const Dashboard = () => {
                 </Box>
                 <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
-                        title="7%"
+                        title={`${mostRedeemedCount['100'].toFixed(2)}%`}
                         subtitle="RM100"
                         icon={
                             <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
