@@ -11,6 +11,8 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import AddIcon from '@mui/icons-material/Add';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
+import { FormattedMessage } from "react-intl";
+
 const Dashboard = () => {
 
     const { user } = useAuthContext()
@@ -63,7 +65,10 @@ const Dashboard = () => {
     return (
         <Box m="20px">
             <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Header title="DASHBOARD" subtitle="Welcome to your Dashboard" />
+                <Header
+                    title={<FormattedMessage id="dashboard" />}
+                    subtitle="Welcome to your Dashboard"
+                />
             </Box>
 
             {/* Grid and Chart */}
@@ -77,7 +82,7 @@ const Dashboard = () => {
                                 fontWeight="600"
                                 color={colors.grey[100]}
                             >
-                                Revenue Generated
+                                <FormattedMessage id="revenue.generated" />
                             </Typography>
                             <Typography
                                 variant="h3"
@@ -98,7 +103,7 @@ const Dashboard = () => {
                 <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
                         title={totalRedeemedCount}
-                        subtitle="Total Redeem Count"
+                        subtitle={<FormattedMessage id="total.redeem.count" />}
                         icon={
                             <CallReceivedIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
                         }
@@ -107,7 +112,7 @@ const Dashboard = () => {
                 <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
                         title={`RM ${totalRedeemedAmount}`}
-                        subtitle="Total Amount Redeemed"
+                        subtitle={<FormattedMessage id="total.amount.redeemed" />}
                         icon={
                             <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
                         }
@@ -121,7 +126,7 @@ const Dashboard = () => {
                     fontWeight="600"
                     color={colors.grey[100]}
                 >
-                    Total Redeemed
+                    <FormattedMessage id="total.redeemed" />
                 </Typography>
             </Box>
 
@@ -170,7 +175,7 @@ const Dashboard = () => {
                     fontWeight="600"
                     color={colors.grey[100]}
                 >
-                    Total Generated
+                    <FormattedMessage id="total.generated" />
                 </Typography>
             </Box>
 
@@ -219,7 +224,7 @@ const Dashboard = () => {
                     fontWeight="600"
                     color={colors.grey[100]}
                 >
-                    Most Redeemed
+                    <FormattedMessage id="most.redeemed" />
                 </Typography>
             </Box>
 

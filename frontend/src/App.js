@@ -2,8 +2,6 @@ import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import Dashboard from "./scenes/dashboard";
-import Topbar from "./scenes/global/Topbar";
-import Sidebar from "./scenes/global/Sidebar"
 import GenerateNumber from "./scenes/generateNumber/GenerateNumber";
 import UnusedNumber from "./scenes/numbers/UnusedNumber"
 import UsedNumber from "./scenes/numbers/UsedNumber";

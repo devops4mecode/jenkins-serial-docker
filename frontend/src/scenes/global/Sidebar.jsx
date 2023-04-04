@@ -15,6 +15,8 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
 import { useAuthContext } from "hooks/useAuthContext"
 
+import { FormattedMessage } from "react-intl"
+
 const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
@@ -112,7 +114,7 @@ const Sidebar = () => {
 
                             <Box textAlign="center">
                                 <Typography variant="h3" color={colors.grey[100]} fontWeight="bold" sx={{ m: "10px 0 0 0" }}>
-                                    Number Generator
+                                    <FormattedMessage id="serial.generator" />
                                 </Typography>
                                 <Typography variant="h5" color={colors.greenAccent[500]} >
                                     Generate Number
@@ -124,41 +126,43 @@ const Sidebar = () => {
                     {/* Menu Items */}
                     <Box paddingLeft={isCollapsed ? undefined : "10%"}>
                         <Item
-                            title="Dashboard"
+                            // title="Dashboard"
+                            title={<FormattedMessage id="dashboard" />}
                             to="/"
                             icon={<HomeOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
                         <Item
-                            title="Generate Serial"
+                            title={<FormattedMessage id="generate.serial" />}
                             to="/generateNumber"
                             icon={<ReceiptOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
                         <Item
-                            title="All Serial Number"
+                            title={<FormattedMessage id="all.serial" />}
                             to="/allNumber"
                             icon={<FormatListBulletedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
                         <Item
-                            title="Unclaimed"
+                            title={<FormattedMessage id="valid.serials" />}
                             to="/unusedNumber"
                             icon={<SixteenMpIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
                         <Item
-                            title="Redeemed"
+                            title={<FormattedMessage id="invalid.serials" />}
                             to="/usedNumber"
                             icon={<ContactsOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
                         <Item
+                            // title={<FormattedMessage id="logout.button" />}
                             title="Logout"
                             icon={<LogoutIcon />}
                             selected={selected}

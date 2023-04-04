@@ -11,6 +11,8 @@ import axios from "axios";
 import { useTheme } from "@emotion/react";
 // import { DataGrid } from "@mui/x-data-grid";
 
+import { FormattedMessage } from "react-intl";
+
 const GenerateNumber = () => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
@@ -44,10 +46,10 @@ const GenerateNumber = () => {
     }
 
     const headers = [
-        { label: 'Serial Number', key: 'serialNo' },
-        { label: 'Given Credit', key: 'givenCredit' },
-        { label: 'Buyer', key: 'remarkName' },
-        { label: 'Buy Date', key: 'createdAt' },
+        { label: <FormattedMessage id="serial.number" />, key: 'serialNo' },
+        { label: <FormattedMessage id="given.credit" />, key: 'givenCredit' },
+        { label: <FormattedMessage id="buyer" />, key: 'remarkName' },
+        { label: <FormattedMessage id="buy.date" />, key: 'createdAt' },
     ];
 
     const data = serialsData.map(serialData => {
@@ -102,8 +104,10 @@ const GenerateNumber = () => {
     // const getRowId = (row) => row._id;
 
     return <Box m="20px">
-        <Header title="GENERATE SERIAL NUMBER" subtitle="Generate a New Serial Number to Top Up Credit" />
-
+        <Header
+            title="GENERATE SERIAL NUMBER"
+            subtitle="Generate a New Serial Number to Top Up Credit"
+        />
         <Formik
             onSubmit={handleFormSubmit}
             initialValues={initialValues}
@@ -130,7 +134,7 @@ const GenerateNumber = () => {
                             fullWidth
                             variant="filled"
                             type="number"
-                            label="Reload Amount"
+                            label={<FormattedMessage id="reload.amount" />}
                             onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.givenCredit}
@@ -146,7 +150,7 @@ const GenerateNumber = () => {
                             fullWidth
                             variant="filled"
                             type="number"
-                            label="Quantity"
+                            label={<FormattedMessage id="reload.quantity" />}
                             onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.amountToGenerate}
@@ -161,7 +165,7 @@ const GenerateNumber = () => {
                             fullWidth
                             variant="filled"
                             type="text"
-                            label="Remark"
+                            label={<FormattedMessage id="reload.remark" />}
                             onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.remarkName}
@@ -174,7 +178,7 @@ const GenerateNumber = () => {
 
                     <Box display="flex" justifyContent="end" mt="20px">
                         <Button type="submit" color="secondary" variant="contained">
-                            GENERATE
+                            <FormattedMessage id="generate.button" />
                         </Button>
                     </Box>
 
@@ -182,7 +186,7 @@ const GenerateNumber = () => {
                         <>
                             <CSVLink data={data} headers={headers} filename={'code.csv'}>
                                 <Button variant="contained" color="secondary">
-                                    Export to CSV
+                                    <FormattedMessage id="export.csv" />
                                 </Button>
                             </CSVLink>
 
@@ -190,10 +194,10 @@ const GenerateNumber = () => {
                                 <Table>
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell align="center">Serial Number</TableCell>
-                                            <TableCell align="center">Given Credit</TableCell>
-                                            <TableCell align="center">Buyer</TableCell>
-                                            <TableCell align="center">Buy Date</TableCell>
+                                            <TableCell align="center"><FormattedMessage id="serial.number" /></TableCell>
+                                            <TableCell align="center"><FormattedMessage id="serial.credit" /></TableCell>
+                                            <TableCell align="center"><FormattedMessage id="serial.buyer" /></TableCell>
+                                            <TableCell align="center"><FormattedMessage id="serial.purchase.date" /></TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -228,9 +232,9 @@ const GenerateNumber = () => {
 }
 
 const checkoutSchema = yup.object().shape({
-    givenCredit: yup.number().required("buy how much?"),
-    amountToGenerate: yup.number().required("buy how many?"),
-    remarkName: yup.string().required("who buy?"),
+    givenCredit: yup.number().required(<FormattedMessage id="credit.error" />),
+    amountToGenerate: yup.number().required(<FormattedMessage id="amount.error" />),
+    remarkName: yup.string().required(<FormattedMessage id="remark.error" />),
 })
 
 const initialValues = {
