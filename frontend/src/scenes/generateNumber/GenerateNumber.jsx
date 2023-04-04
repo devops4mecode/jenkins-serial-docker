@@ -180,11 +180,11 @@ const GenerateNumber = () => {
 
                     {serialsData.length > 0 && (
                         <>
-                            <Button variant="contained" color="secondary">
-                                <CSVLink data={data} headers={headers} filename={'code.csv'}>
+                            <CSVLink data={data} headers={headers} filename={'code.csv'}>
+                                <Button variant="contained" color="secondary">
                                     Export to CSV
-                                </CSVLink>
-                            </Button>
+                                </Button>
+                            </CSVLink>
 
                             <TableContainer component={Paper} sx={{ mt: 4, textAlign: "center", color: colors.greenAccent[300] }}>
                                 <Table>
