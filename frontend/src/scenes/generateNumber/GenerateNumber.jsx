@@ -96,7 +96,8 @@ const GenerateNumber = () => {
                             lg: "repeat(1, minmax(0, 1fr))",
                         }}
                         sx={{
-                            "& > div": { gridColumn: isNonMobile ? undefined : "span 4" }
+                            "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+                            paddingBottom: "20px"
                         }}
                     >
 
@@ -108,8 +109,21 @@ const GenerateNumber = () => {
 
                     <Box
                         display="grid"
-                        gap="30px"
-                        gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                        rowGap={{
+                            xs: "15px"
+                        }}
+                        columnGap={{
+                            lg: "30px"
+                        }}
+                        gridTemplateColumns={{
+                            xs: "repeat(1, minmax(0, 1fr))",
+                            sm: "repeat(2, minmax(0, 1fr))",
+                            lg: "repeat(4, minmax(0, 1fr))"
+                        }}
+                        gridTemplateRows={{
+                            xs: "repeat(3, minmax(0, 1fr))",
+                            lg: "repeat(1, minmax(0, 1fr))",
+                        }}
                         sx={{
                             "& > div": { gridColumn: isNonMobile ? undefined : "span 4" }
                         }}
@@ -127,8 +141,29 @@ const GenerateNumber = () => {
                             name="givenCredit"
                             error={!!touched.givenCredit && !!errors.givenCredit}
                             helperText={touched.givenCredit && errors.givenCredit}
-                            sx={{ gridColumn: "span 2" }}
                             InputProps={{ readOnly: true }}
+                            sx={{
+                                gridColumn: "span 2",
+                                "& .MuiInputLabel-root": {
+                                  fontSize: {
+                                    xs: "12px",
+                                    sm: "14px",
+                                    md: "16px",
+                                  },
+                                },
+                                "& .MuiInputBase-root": {
+                                  height: {
+                                    xs: "45px",
+                                    sm: "40px",
+                                    md: "48px",
+                                  },
+                                  fontSize: {
+                                    xs: "12px",
+                                    sm: "14px",
+                                    md: "16px",
+                                  },
+                                },
+                              }}
                         />
 
                         {/* Reload Quantity */}
