@@ -6,16 +6,16 @@ const CreditText = (props) => {
     const colors = tokens(theme.palette.mode)
 
     const {
-        handleBlur,
-        handleChange,
-        values,
-        touched,
-        errors,
         label,
-        type,
         name,
+        value,
+        error,
+        helperText,
         sx,
-      } = props;
+        onChange,
+        onBlur,
+        type,
+    } = props;
 
     return (
         <TextField
@@ -23,13 +23,13 @@ const CreditText = (props) => {
             variant="filled"
             type={type}
             label={label}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            value={values[name]}
+            onBlur={onBlur}
+            onChange={onChange}
+            value={value}
             name={name}
-            error={!!touched[name] && !!errors[name]}
-            helperText={touched[name] && errors[name]}
-            sx={sx}
+            error={error}
+            helperText={helperText}
+            sx={ }
         />
 
     )

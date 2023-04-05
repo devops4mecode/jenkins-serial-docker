@@ -14,12 +14,12 @@ const Header = ({ title, subtitle }) => {
             }}
         >
             <Typography
-                variant="h2"
+                // variant="h2"
                 color={colors.grey[100]}
                 fontWeight="bold"
                 sx={{
                     fontSize: {
-                        xs: "17px",
+                        xs: "19px",
                         lg: "32px"
                     },
                     paddingBottom: {
@@ -31,15 +31,18 @@ const Header = ({ title, subtitle }) => {
             </Typography>
 
             <Typography
-                variant={{
-                    sm: "h7",
-                    lg: "h5"
-                }}
+                // variant={{
+                //     sm: "h7",
+                //     lg: "h5"
+                // }}
                 color={colors.greenAccent[400]}
                 sx={{
                     fontSize: {
                         xs: "15px",
-                        lg: "32px"
+                        lg: "25px"
+                    },
+                    paddingBottom: {
+                        xs: "3px"
                     }
                 }}
             >

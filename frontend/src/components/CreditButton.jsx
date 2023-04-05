@@ -10,13 +10,13 @@ const CreditButton = ({ title }) => {
         color="secondary"
         >
             <Typography
-                variant="h2"
+                // variant="h2"
                 color={colors.grey[100]}
                 fontWeight="bold"
                 sx={{
                     fontSize: {
                         xs: "12px",
-                        lg: "32px"
+                        lg: "20px"
                     },
                     paddingBottom: {
                         xs: "2px"

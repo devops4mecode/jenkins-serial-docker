@@ -11,6 +11,7 @@ import axios from "axios";
 import { useTheme } from "@emotion/react";
 import CreditButton from "components/CreditButton";
 // import { DataGrid } from "@mui/x-data-grid";
+import TextField from "../../components/TextField";
 
 const GenerateNumber = () => {
     const theme = useTheme()
@@ -142,28 +143,7 @@ const GenerateNumber = () => {
                             error={!!touched.givenCredit && !!errors.givenCredit}
                             helperText={touched.givenCredit && errors.givenCredit}
                             InputProps={{ readOnly: true }}
-                            sx={{
-                                gridColumn: "span 2",
-                                "& .MuiInputLabel-root": {
-                                  fontSize: {
-                                    xs: "12px",
-                                    sm: "14px",
-                                    md: "16px",
-                                  },
-                                },
-                                "& .MuiInputBase-root": {
-                                  height: {
-                                    xs: "45px",
-                                    sm: "40px",
-                                    md: "48px",
-                                  },
-                                  fontSize: {
-                                    xs: "12px",
-                                    sm: "14px",
-                                    md: "16px",
-                                  },
-                                },
-                              }}
+                            sx={{ gridColumn: "span 2" }}
                         />
 
                         {/* Reload Quantity */}
@@ -214,7 +194,7 @@ const GenerateNumber = () => {
                             sx={{
                                 fontSize: {
                                     xs: "12px",
-                                    lg: "32px"
+                                    lg: "18px"
                                 },
                             }}
                         >
