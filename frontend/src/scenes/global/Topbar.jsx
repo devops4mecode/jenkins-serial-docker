@@ -4,10 +4,49 @@ import { ColorModeContext, tokens } from "../../theme"
 import InputBase from "@mui/material/InputBase"
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined"
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined"
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
 import SearchIcon from "@mui/icons-material/Search"
 import { useState } from "react"
 import { useAuthContext } from "hooks/useAuthContext"
 import axios from "axios"
+import { Menu, MenuItem } from "react-pro-sidebar"
+import { useLogout } from "hooks/useLogout"
+import { Link, useNavigate } from "react-router-dom"
+
+
+
+const Item = ({ title, to, icon, selected, setSelected, className }) => {
+    const theme = useTheme()
+    const colors = tokens(theme.palette.mode)
+    const { logout } = useLogout()
+
+    const Navigate = useNavigate()
+
+    const handleOnClick = () => {
+        if (title === "Logout") {
+            logout()
+            Navigate('/login')
+        } else {
+            Navigate(to)
+            setSelected(title)
+        }
+    }
+
+    return (
+        <MenuItem
+            active={selected === title}
+            style={{
+                color: colors.grey[100]
+            }}
+            onClick={handleOnClick}
+            icon={icon}
+            className={className}
+        >
+            <Typography>{title}</Typography>
+            {title !== "Logout" && <Link to={to} />}
+        </MenuItem>
+    )
+}
 
 const Topbar = () => {
     const { user } = useAuthContext()
@@ -43,6 +82,12 @@ const Topbar = () => {
     }
 
     return (<Box display="flex" justifyContent="space-between" p={2}>
+
+        {/* Menu Button */}
+        <MenuOutlinedIcon></MenuOutlinedIcon>
+
+
+
         {/* Search Bar */}
         <Box display="flex" backgroundColor={colors.primary[400]} borderRadius="3px">
             <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
@@ -65,8 +110,8 @@ const Topbar = () => {
                             Credit: {data.givenCredit}
                         </Typography>
                         <Typography variant="h5">
-                            Purchase Date: {new Date(data.createdAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })} 
-                            </Typography>
+                            Purchase Date: {new Date(data.createdAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}
+                        </Typography>
                         {data.serialStatus ? (
                             <Typography variant="h5">
                                 Status: <span style={{ color: colors.greenAccent[300] }}>UNCLAIMED</span>

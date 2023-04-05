@@ -14,8 +14,9 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
 import { useAuthContext } from "hooks/useAuthContext"
+import '../../index.css'
 
-const Item = ({ title, to, icon, selected, setSelected }) => {
+const Item = ({ title, to, icon, selected, setSelected, className }) => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     const { logout } = useLogout()
@@ -40,6 +41,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
             }}
             onClick={handleOnClick}
             icon={icon}
+            className={className}
         >
             <Typography>{title}</Typography>
             {title !== "Logout" && <Link to={to} />}
@@ -73,6 +75,16 @@ const Sidebar = () => {
             },
             "& .pro-menu-item.active": {
                 color: "#6870fa !important"
+            },
+            // "& .hiddenIcon": {
+            //     "@media only screen and (max-width: 768px)": {
+            //         // display: isCollapsed ? "none" : "block",
+            //         display: "none"
+            //     }
+            // }
+
+            [theme.breakpoints.down("sm")]: {
+                display: "none"
             }
         }}>
             <ProSidebar collapsed={isCollapsed}>
@@ -122,13 +134,14 @@ const Sidebar = () => {
                     )}
 
                     {/* Menu Items */}
-                    <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+                    <Box paddingLeft={isCollapsed ? undefined : "10%"} >
                         <Item
                             title="Dashboard"
                             to="/"
                             icon={<HomeOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
+                            className="hiddenIcon"
                         />
                         <Item
                             title="Generate Serial"
@@ -136,6 +149,7 @@ const Sidebar = () => {
                             icon={<ReceiptOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
+                            className="hiddenIcon"
                         />
                         <Item
                             title="All Serial Number"
@@ -143,6 +157,7 @@ const Sidebar = () => {
                             icon={<FormatListBulletedIcon />}
                             selected={selected}
                             setSelected={setSelected}
+                            className="hiddenIcon"
                         />
                         <Item
                             title="Unclaimed"
@@ -150,6 +165,7 @@ const Sidebar = () => {
                             icon={<SixteenMpIcon />}
                             selected={selected}
                             setSelected={setSelected}
+                            className="hiddenIcon"
                         />
                         <Item
                             title="Redeemed"
@@ -157,12 +173,14 @@ const Sidebar = () => {
                             icon={<ContactsOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
+                            className="hiddenIcon"
                         />
                         <Item
                             title="Logout"
                             icon={<LogoutIcon />}
                             selected={selected}
                             setSelected={setSelected}
+                            className="hiddenIcon"
                             logout={logout}
                         />
                     </Box>

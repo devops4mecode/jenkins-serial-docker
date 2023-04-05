@@ -11,7 +11,7 @@ import axios from "axios";
 import { useTheme } from "@emotion/react";
 import CreditButton from "components/CreditButton";
 // import { DataGrid } from "@mui/x-data-grid";
-import TextField from "../../components/TextField";
+import CreditTextField from "../../components/TextField";
 
 const GenerateNumber = () => {
     const theme = useTheme()
@@ -131,7 +131,7 @@ const GenerateNumber = () => {
                     >
 
                         {/* Reload Amount */}
-                        <TextField
+                        <CreditTextField
                             fullWidth
                             variant="filled"
                             type="number"
@@ -147,7 +147,7 @@ const GenerateNumber = () => {
                         />
 
                         {/* Reload Quantity */}
-                        <TextField
+                        <CreditTextField
                             fullWidth
                             variant="filled"
                             type="number"
@@ -162,7 +162,7 @@ const GenerateNumber = () => {
                         />
 
                         {/* Remark */}
-                        <TextField
+                        <CreditTextField
                             fullWidth
                             variant="filled"
                             type="text"
