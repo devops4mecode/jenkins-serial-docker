@@ -28,7 +28,7 @@ const GenerateNumber = () => {
             })
 
             const datagriddata = response.data.serials
-            console.log("datagrid data:", datagriddata)
+            // console.log("datagrid data:", datagriddata)
 
             const da = datagriddata.map(dgd => ({
                 _id: dgd._id,
@@ -46,15 +46,18 @@ const GenerateNumber = () => {
     }
 
     const headers = [
-        { label: <FormattedMessage id="serial.number" />, key: 'serialNo' },
-        { label: <FormattedMessage id="given.credit" />, key: 'givenCredit' },
-        { label: <FormattedMessage id="buyer" />, key: 'remarkName' },
-        { label: <FormattedMessage id="buy.date" />, key: 'createdAt' },
+        { label: "Serial Number", key: 'serialNo' },
+        { label: "Given Credit", key: 'givenCredit' },
+        { label: "Buyer", key: 'remarkName' },
+        { label: "Purchase Date", key: 'createdAt' },
     ];
 
     const data = serialsData.map(serialData => {
+
+        const serialNo = serialData.serialNo
+        const formattedSerialNo = `${serialNo.substring(0, 4)}-${serialNo.substring(4, 8)}-${serialNo.substring(8, 12)}-${serialNo.substring(12)}`;
         return {
-            serialNo: serialData.serialNo,
+            serialNo: formattedSerialNo,
             givenCredit: serialData.givenCredit,
             remarkName: serialData.remarkName,
             createdAt: new Date(serialData.createdAt).toLocaleString('en-US', {
@@ -158,6 +161,7 @@ const GenerateNumber = () => {
                             error={!!touched.amountToGenerate && !!errors.amountToGenerate}
                             helperText={touched.amountToGenerate && errors.amountToGenerate}
                             sx={{ gridColumn: "span 2" }}
+                            inputProps={{ min: 0 }}
                         />
 
                         {/* Remark */}
@@ -217,17 +221,6 @@ const GenerateNumber = () => {
                 </form>
             )}
         </Formik>
-
-        {/* {serialsData.length > 0 ? ( */}
-        {/* <Box> */}
-        {/* <DataGrid */}
-        {/* rows={serialsData} */}
-        {/* columns={columns} */}
-        {/* getRowId={getRowId} */}
-        {/* /> */}
-        {/* {console.log(serialsData)} */}
-        {/* </Box> */}
-        {/* ) : null} */}
     </Box>
 }
 

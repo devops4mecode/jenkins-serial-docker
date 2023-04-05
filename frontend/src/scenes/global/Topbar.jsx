@@ -11,7 +11,7 @@ import axios from "axios"
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-const Topbar = () => {
+const Topbar = (props) => {
     const { user } = useAuthContext()
     const intl = useIntl();
     //use the theme set up in theme.js
