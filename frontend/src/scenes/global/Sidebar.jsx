@@ -55,7 +55,7 @@ const Sidebar = () => {
 
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
-    const [isCollapsed, setIsCollapsed] = useState(true)
+    const [isCollapsed, setIsCollapsed] = useState(false)
     const [selected, setSelected] = useState("Dashboard")
 
     return (
@@ -75,14 +75,7 @@ const Sidebar = () => {
             "& .pro-menu-item.active": {
                 color: "#6870fa !important"
             },
-            // "& .hiddenIcon": {
-            //     "@media only screen and (max-width: 768px)": {
-            //         // display: isCollapsed ? "none" : "block",
-            //         display: "none"
-            //     }
-            // }
-
-            [theme.breakpoints.down("sm")]: {
+            [theme.breakpoints.down("md")]: {
                 display: "none"
             }
         }}>

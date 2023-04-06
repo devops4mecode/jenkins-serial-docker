@@ -44,12 +44,22 @@ const Item = ({ title, to, icon, selected, setSelected, className }) => {
             <MenuItem
                 active={selected === title}
                 style={{
-                    color: colors.grey[100],
-                    backgroundColor: "#a4a9fc"
+                    color: colors.grey[100],                    
                 }}
                 onClick={handleOnClick}
                 icon={icon}
                 className={className}
+                sx={{
+                    "& .pro-inner-item:hover": {
+                        color: "#868dfb !important"
+                    },
+                    "& .pro-menu-item.active": {
+                        color: "#6870fa !important"
+                    },
+                    "& .pro-menu-item-inner": {
+                        color: "#adadad !important" 
+                    }
+                }}
             >
                 <Typography>{title}</Typography>
                 {title !== "Logout" && <Link to={to} />}
@@ -106,7 +116,7 @@ const Topbar = () => {
                 <Box
                     display="flex"
                     sx={{
-                        [theme.breakpoints.up("xl")]: {
+                        [theme.breakpoints.up("md")]: {
                             display: "none"
                         },
 
