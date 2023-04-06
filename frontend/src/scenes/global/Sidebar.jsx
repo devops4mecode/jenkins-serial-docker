@@ -75,7 +75,7 @@ const Sidebar = () => {
             "& .pro-menu-item.active": {
                 color: "#6870fa !important"
             },
-            [theme.breakpoints.down("md")]: {
+            [theme.breakpoints.down("lg")]: {
                 display: "none"
             }
         }}>

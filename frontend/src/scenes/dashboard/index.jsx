@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Button, IconButton, Typography, useTheme, Grid } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useAuthContext } from "hooks/useAuthContext";
@@ -10,6 +10,7 @@ import CallReceivedIcon from '@mui/icons-material/CallReceived';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import AddIcon from '@mui/icons-material/Add';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import "../../css/dashboard.css"
 
 const Dashboard = () => {
 
@@ -24,20 +25,20 @@ const Dashboard = () => {
 
     useEffect(() => {
         const getTotalRedeemedCount = async () => {
-            if(user) {
+            if (user) {
                 try {
                     const response = await axios.get(`api/dashboard/falseCount`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
-                      });
-                      setCount(prevCount => {
+                    });
+                    setCount(prevCount => {
                         const newCount = { ...prevCount };
                         newCount.total = response.data[0].count;
                         return newCount;
-                      });
+                    });
                 } catch (error) {
                     console.log(error)
                 }
-            } 
+            }
         }
 
         getTotalRedeemedCount()
@@ -71,7 +72,7 @@ const Dashboard = () => {
             if (user) {
                 try {
                     const response = await axios.get(`api/dashboard/redeemedSerialCount`, {
-                        headers: {'Authorization': `Bearer ${user.accessToken}`}
+                        headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     })
                     setRedeemedCount(prevCount => {
                         const newCount = { ...prevCount }
@@ -94,7 +95,7 @@ const Dashboard = () => {
             if (user) {
                 try {
                     const response = await axios.get(`/api/dashboard/totalAmount`, {
-                        headers: {'Authorization': `Bearer ${user.accessToken}`}
+                        headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     })
                     const total = response.data[0].sum
                     setRedeemedAmount(total)
@@ -114,8 +115,8 @@ const Dashboard = () => {
 
             {/* Grid and Chart */}
             {/* Row 1 */}
-            <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
-                <Box gridColumn="span 12" gridRow="span 3" backgroundColor={colors.primary[400]}>
+            <Box display="grid" gridTemplateColumns="repeat(6, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
+                <Box gridColumn="span 6" gridRow="span 3" backgroundColor={colors.primary[400]}>
                     <Box mt="25px" p="0 30px" display="flex " justifyContent="space-between" alignItems="center">
                         <Box>
                             <Typography
@@ -140,7 +141,7 @@ const Dashboard = () => {
                 </Box>
             </Box>
 
-            <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
+            <Box display="grid" gridTemplateColumns="repeat(6, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
                 <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
                     <StatBox
                         title={count.total}
@@ -171,44 +172,63 @@ const Dashboard = () => {
                 </Typography>
             </Box>
 
-            <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-                    <StatBox
-                        title={redeemedCount[10]}
-                        subtitle="RM 10"
-                        icon={
-                            <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                        }
-                    />
-                </Box>
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-                    <StatBox
-                        title={redeemedCount[30]}
-                        subtitle="RM 30"
-                        icon={
-                            <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                        }
-                    />
-                </Box>
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-                    <StatBox
-                        title={redeemedCount[50]}
-                        subtitle="RM 50"
-                        icon={
-                            <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                        }
-                    />
-                </Box>
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-                    <StatBox
-                        title={redeemedCount[100]}
-                        subtitle="RM100"
-                        icon={
-                            <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                        }
-                    />
-                </Box>
-            </Box>
+            <Grid container spacing={2}>
+                <Grid item xs={6} sm={6} md={3}>
+                    <Box sx={{ bgcolor: colors.primary[400] }}>
+                        <StatBox
+                            className="statBox"
+                            title={redeemedCount[10]}
+                            subtitle="RM 10"
+                            icon={
+                                <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            }
+                        />
+                    </Box>
+                </Grid>
+
+
+                <Grid item xs={6} sm={6} md={3}>
+                    <Box sx={{ bgcolor: colors.primary[400] }}>
+                        <StatBox
+                            className="statBox"
+                            title={redeemedCount[30]}
+                            subtitle="RM 30"
+                            icon={
+                                <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            }
+                        />
+                    </Box>
+                </Grid>
+
+                <Grid item xs={6} sm={6} md={3}>
+                    <Box sx={{ bgcolor: colors.primary[400] }}>
+                        <StatBox
+                            className="statBox"
+                            title={redeemedCount[50]}
+                            subtitle="RM 50"
+                            icon={
+                                <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            }
+                        />
+                    </Box>
+                </Grid>
+
+                <Grid item xs={6} sm={6} md={3}>
+                    <Box sx={{ bgcolor: colors.primary[400] }}>
+                        <StatBox
+                            className="statBox"
+                            title={redeemedCount[100]}
+                            subtitle="RM100"
+                            icon={
+                                <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            }
+                        />
+                    </Box>
+                </Grid>
+            </Grid>
+
+
+
 
             {/* Row 3 */}
             <Box display="grid" sx={{ pb: 3, pl: 2 }}>
@@ -220,44 +240,52 @@ const Dashboard = () => {
                 </Typography>
             </Box>
 
-            <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-                    <StatBox
-                        title={count['10']}
-                        subtitle="RM 10"
-                        icon={
-                            <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                        }
-                    />
-                </Box>
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-                    <StatBox
-                        title={count['30']}
-                        subtitle="RM 30"
-                        icon={
-                            <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                        }
-                    />
-                </Box>
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-                    <StatBox
-                        title={count['50']}
-                        subtitle="RM 50"
-                        icon={
-                            <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                        }
-                    />
-                </Box>
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-                    <StatBox
+            <Grid container spacing={2}>
+                <Grid item xs={6} sm={6} md={3}>
+                    <Box sx={{ bgcolor: colors.primary[400] }}>
+                        <StatBox
+                            title={count['10']}
+                            subtitle="RM 10"
+                            icon={
+                                <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            }
+                        />
+                    </Box>
+                </Grid>
+                <Grid item xs={6} sm={6} md={3}>
+                    <Box sx={{ bgcolor: colors.primary[400] }}>
+                        <StatBox
+                            title={count['30']}
+                            subtitle="RM 30"
+                            icon={
+                                <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            }
+                        />
+                    </Box>
+                </Grid>
+                <Grid item xs={6} sm={6} md={3}>
+                    <Box sx={{ bgcolor: colors.primary[400] }}>
+                        <StatBox
+                            title={count['50']}
+                            subtitle="RM 50"
+                            icon={
+                                <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            }
+                        />
+
+                    </Box>
+                </Grid>
+                <Grid item xs={6} sm={6} md={3}>
+                    <Box sx={{ bgcolor: colors.primary[400] }}><StatBox
                         title={count['100']}
                         subtitle="RM100"
                         icon={
                             <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
                         }
                     />
-                </Box>
-            </Box>
+                    </Box>
+                </Grid>
+            </Grid>
 
             {/* Row 4 */}
             <Box display="grid" sx={{ pb: 3, pl: 2 }}>
@@ -269,45 +297,53 @@ const Dashboard = () => {
                 </Typography>
             </Box>
 
-            <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-                    <StatBox
-                        title="7%"
-                        subtitle="RM 10"
-                        icon={
-                            <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                        }
-                    />
-                </Box>
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-                    <StatBox
-                        title="7%"
-                        subtitle="RM 30"
-                        icon={
-                            <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                        }
-                    />
-                </Box>
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-                    <StatBox
-                        title="7%"
-                        subtitle="RM 50"
-                        icon={
-                            <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                        }
-                    />
-                </Box>
-                <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-                    <StatBox
-                        title="7%"
-                        subtitle="RM100"
-                        icon={
-                            <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                        }
-                    />
-                </Box>
-            </Box>
-        </Box>
+            <Grid container spacing={2}>
+                <Grid item xs={6} sm={6} md={3}>
+                    <Box sx={{ bgcolor: colors.primary[400] }}>
+                        <StatBox
+                            title="7%"
+                            subtitle="RM 10"
+                            icon={
+                                <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            }
+                        />
+                    </Box>
+                </Grid>
+                <Grid item xs={6} sm={6} md={3}>
+                    <Box sx={{ bgcolor: colors.primary[400] }}>
+                        <StatBox
+                            title="7%"
+                            subtitle="RM 30"
+                            icon={
+                                <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            }
+                        />
+                    </Box>
+                </Grid>
+                <Grid item xs={6} sm={6} md={3}>
+                    <Box sx={{ bgcolor: colors.primary[400] }}>
+                        <StatBox
+                            title="7%"
+                            subtitle="RM 50"
+                            icon={
+                                <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            }
+                        />
+                    </Box>
+                </Grid>
+                <Grid item xs={6} sm={6} md={3}>
+                    <Box sx={{ bgcolor: colors.primary[400] }}>
+                        <StatBox
+                            title="7%"
+                            subtitle="RM100"
+                            icon={
+                                <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                            }
+                        />
+                    </Box>
+                </Grid>
+            </Grid>
+        </Box >
     )
 }
 

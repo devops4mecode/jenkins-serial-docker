@@ -12,6 +12,7 @@ import { useTheme } from "@emotion/react";
 import CreditButton from "components/CreditButton";
 // import { DataGrid } from "@mui/x-data-grid";
 import CreditTextField from "../../components/TextField";
+import '../../css/generateNumber.css'
 
 const GenerateNumber = () => {
     const theme = useTheme()
@@ -132,6 +133,7 @@ const GenerateNumber = () => {
 
                         {/* Reload Amount */}
                         <CreditTextField
+                            className="credit_field"
                             fullWidth
                             variant="filled"
                             type="number"
@@ -142,7 +144,7 @@ const GenerateNumber = () => {
                             name="givenCredit"
                             error={!!touched.givenCredit && !!errors.givenCredit}
                             helperText={touched.givenCredit && errors.givenCredit}
-                            InputProps={{ readOnly: true }}
+                            InputProps={{ readOnly: true, }}
                             sx={{ gridColumn: "span 2" }}
                         />
 
@@ -206,11 +208,30 @@ const GenerateNumber = () => {
 
                     {serialsData.length > 0 && (
                         <>
-                            <CSVLink data={data} headers={headers} filename={'code.csv'}>
-                                <Button variant="contained" color="secondary">
-                                    Export to CSV
-                                </Button>
-                            </CSVLink>
+                            {/* <Box display="flex"
+                                mt="20px"
+                                sx={{
+                                    justifyContent: {
+                                        xs: "end",
+                                    },
+                                    [theme.breakpoints.up("md")]: {
+                                        display: "none"
+                                    }
+                                }}>
+                                <CSVLink data={data} headers={headers} filename={'code.csv'}>
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        sx={{
+                                            fontSize: {
+                                                xs: "12px",
+                                                lg: "18px"
+                                            },
+                                        }}>
+                                        Export to CSV
+                                    </Button>
+                                </CSVLink>
+                            </Box> */}
 
                             <TableContainer component={Paper} sx={{ mt: 4, textAlign: "center", color: colors.greenAccent[300] }}>
                                 <Table>
@@ -234,6 +255,28 @@ const GenerateNumber = () => {
                                     </TableBody>
                                 </Table>
                             </TableContainer>
+
+                            <Box display="flex"
+                                mt="20px"
+                                sx={{
+                                    justifyContent: {
+                                        xs: "end",
+                                    },
+                                }}>
+                                <CSVLink data={data} headers={headers} filename={'code.csv'}>
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        sx={{
+                                            fontSize: {
+                                                xs: "12px",
+                                                lg: "18px"
+                                            },
+                                        }}>
+                                        Export to CSV
+                                    </Button>
+                                </CSVLink>
+                            </Box>
                         </>
                     )}
                 </form>

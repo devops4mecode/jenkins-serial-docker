@@ -1,0 +1,19 @@
+@media (max-width: 576px) {
+    .credit_field .css-q0jfn1-MuiFormLabel-root-MuiInputLabel-root {
+        font-size: 0.8rem !important;
+    }
+
+    .credit_field .MuiFilledInput-root {
+        font-size: 0.8rem !important;
+        height: 48px;
+    }
+
+    .css-q0jfn1-MuiFormLabel-root-MuiInputLabel-root {
+        font-size: 0.8rem !important;
+    }
+
+}
+
+a:-webkit-any-link{
+    text-decoration: none !important;
+}

@@ -172,38 +172,38 @@ export const themeSettings = (mode) => {
                   }),
         },
         typography: {
-            fontFamily: ['Noto Serif SC', "serif"].join(","),
+            fontFamily: ['Roboto', 'sans-serif'].join(","),
             fontSize: 14,
             h1: {
-                fontFamily: ['Noto Serif SC', "serif"].join(","),
+                fontFamily: ['Roboto', 'sans-serif'].join(","),
                 fontSize: 40,
             },
             h2: {
-                fontFamily: ['Noto Serif SC', "serif"].join(","),
+                fontFamily: ['Roboto', 'sans-serif'].join(","),
                 fontSize: 32,
             },
             h3: {
-                fontFamily: ['Noto Serif SC', "serif"].join(","),
+                fontFamily: ['Roboto', 'sans-serif'].join(","),
                 fontSize: 24,
             },
             h4: {
-                fontFamily: ['Noto Serif SC', "serif"].join(","),
+                fontFamily: ['Roboto', 'sans-serif'].join(","),
                 fontSize: 20,
             },
             h5: {
-                fontFamily: ['Noto Serif SC', "serif"].join(","),
+                fontFamily: ['Roboto', 'sans-serif'].join(","),
                 fontSize: 16,
             },
             h6: {
-                fontFamily: ['Noto Serif SC', "serif"].join(","),
+                fontFamily: ['Roboto', 'sans-serif'].join(","),
                 fontSize: 14,
             },
             h7: {
-                fontFamily: ['Noto Serif SC', "serif"].join(","),
+                fontFamily: ['Roboto', 'sans-serif'].join(","),
                 fontSize: 12,
             },
             h8: {
-                fontFamily: ['Noto Serif SC', "serif"].join(","),
+                fontFamily: ['Roboto', 'sans-serif'].join(","),
                 fontSize: 9,
             },
         },

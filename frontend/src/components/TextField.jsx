@@ -15,24 +15,40 @@ const CreditTextField = (props) => {
         onChange,
         onBlur,
         type,
-        InputProps
+        InputProps,
+        className
     } = props;
 
     return (
-        <TextField
-            fullWidth
-            variant="filled"
-            type={type}
-            label={label}
-            onBlur={onBlur}
-            onChange={onChange}
-            value={value}
-            name={name}
-            error={error}
-            helperText={helperText}
-            InputProps={InputProps}
-        />
-
+        <Box
+            className="credit_field"
+        >
+            <TextField
+                fullWidth
+                variant="filled"
+                type={type}
+                label={label}
+                onBlur={onBlur}
+                onChange={onChange}
+                value={value}
+                name={name}
+                error={error}
+                helperText={helperText}
+                InputProps={InputProps}
+                className={className}
+                InputLabelProps={{
+                    sx: {
+                        fontSize: {
+                            xs: 12,
+                            xl: 18
+                        },
+                        '& .MuiInputBase-input': {
+                            height: '12px'
+                        },
+                    }
+                }}
+            />
+        </Box>
     )
 }
 

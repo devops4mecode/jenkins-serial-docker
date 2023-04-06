@@ -17,7 +17,7 @@ const CreditButton = ({ onClick, title }) => {
                 sx={{
                     fontSize: {
                         xs: "12px",
-                        lg: "20px"
+                        lg: "18px"
                     },
                     paddingBottom: {
                         xs: "2px"

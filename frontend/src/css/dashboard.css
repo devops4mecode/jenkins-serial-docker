@@ -1,0 +1,32 @@
+/* .custom-button {
+    background-color: #008CBA;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+}
+
+@media (min-width: 768px) {
+    .custom-button {
+        font-size: 20px;
+        padding: 12px 24px;
+    }
+}
+ */
+
+
+
+@media (max-width: 576px) {
+    .statBox {
+        padding-top: 10px;
+    }
+
+    .pb-statbox {
+        padding-bottom: 10px;
+    }
+    .statBox-center {
+        align-items: center;
+    }
+    .css-1960bxs-MuiTypography-root {
+        color: #4cceac !important;
+    }
+}
