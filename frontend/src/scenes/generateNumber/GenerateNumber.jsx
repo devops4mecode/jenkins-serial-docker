@@ -158,6 +158,7 @@ const GenerateNumber = () => {
                             name="amountToGenerate"
                             error={!!touched.amountToGenerate && !!errors.amountToGenerate}
                             helperText={touched.amountToGenerate && errors.amountToGenerate}
+                            InputProps={{ readOnly: false }}
                             sx={{ gridColumn: "span 2" }}
                         />
 
@@ -173,6 +174,7 @@ const GenerateNumber = () => {
                             name="remarkName"
                             error={!!touched.remarkName && !!errors.remarkName}
                             helperText={touched.remarkName && errors.remarkName}
+                            InputProps={{ readOnly: false }}
                             sx={{ gridColumn: "span 2" }}
                         />
                     </Box>

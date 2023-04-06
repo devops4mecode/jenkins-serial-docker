@@ -33,3 +33,15 @@ body,
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.pro-menu-item {
+  list-style: none;
+}
+
+.pro-inner-item {
+  display: flex;
+  justify-content: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid white;
+}

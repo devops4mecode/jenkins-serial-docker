@@ -40,18 +40,21 @@ const Item = ({ title, to, icon, selected, setSelected, className }) => {
     }
 
     return (
-        <MenuItem
-            active={selected === title}
-            style={{
-                color: colors.grey[100]
-            }}
-            onClick={handleOnClick}
-            icon={icon}
-            className={className}
-        >
-            <Typography>{title}</Typography>
-            {title !== "Logout" && <Link to={to} />}
-        </MenuItem>
+        <Box>
+            <MenuItem
+                active={selected === title}
+                style={{
+                    color: colors.grey[100],
+                    backgroundColor: "#a4a9fc"
+                }}
+                onClick={handleOnClick}
+                icon={icon}
+                className={className}
+            >
+                <Typography>{title}</Typography>
+                {title !== "Logout" && <Link to={to} />}
+            </MenuItem>
+        </Box>
     )
 }
 
@@ -105,7 +108,8 @@ const Topbar = () => {
                     sx={{
                         [theme.breakpoints.up("xl")]: {
                             display: "none"
-                        }
+                        },
+
                     }}
                     onClick={handleClick}>
                     {!nav ? <MenuOutlinedIcon /> : <CloseIcon />}
@@ -180,20 +184,15 @@ const Topbar = () => {
 
             </Box>
 
-            {/* <ul style={{ display: nav ? 'block' : 'none' }}>
-                <li>home</li>
-                <li>about</li>
-                <li>support</li>
-            </ul> */}
-
-            <Box sx={{ display: nav ? 'block' : 'none' }}>
+            <Box sx={{
+                display: nav ? 'block' : 'none'
+            }}>
                 <Item
                     title="Dashboard"
                     to="/"
                     icon={<HomeOutlinedIcon />}
                     selected={selected}
                     setSelected={setSelected}
-                    className="hiddenIcon"
                 />
                 <Item
                     title="Generate Serial"
@@ -201,7 +200,6 @@ const Topbar = () => {
                     icon={<ReceiptOutlinedIcon />}
                     selected={selected}
                     setSelected={setSelected}
-                    className="hiddenIcon"
                 />
                 <Item
                     title="All Serial Number"
@@ -209,7 +207,6 @@ const Topbar = () => {
                     icon={<FormatListBulletedIcon />}
                     selected={selected}
                     setSelected={setSelected}
-                    className="hiddenIcon"
                 />
                 <Item
                     title="Unclaimed"
@@ -217,7 +214,6 @@ const Topbar = () => {
                     icon={<SixteenMpIcon />}
                     selected={selected}
                     setSelected={setSelected}
-                    className="hiddenIcon"
                 />
                 <Item
                     title="Redeemed"
@@ -225,14 +221,12 @@ const Topbar = () => {
                     icon={<ContactsOutlinedIcon />}
                     selected={selected}
                     setSelected={setSelected}
-                    className="hiddenIcon"
                 />
                 <Item
                     title="Logout"
                     icon={<LogoutIcon />}
                     selected={selected}
                     setSelected={setSelected}
-                    className="hiddenIcon"
                     logout={logout}
                 />
             </Box>

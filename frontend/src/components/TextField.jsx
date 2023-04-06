@@ -15,6 +15,7 @@ const CreditTextField = (props) => {
         onChange,
         onBlur,
         type,
+        InputProps
     } = props;
 
     return (
@@ -29,7 +30,7 @@ const CreditTextField = (props) => {
             name={name}
             error={error}
             helperText={helperText}
-            // sx={ }
+            InputProps={InputProps}
         />
 
     )

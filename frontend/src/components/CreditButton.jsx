@@ -1,13 +1,14 @@
 import { Typography, Box, useTheme, Button } from "@mui/material";
 import { tokens } from "../theme";
 
-const CreditButton = ({ title }) => {
+const CreditButton = ({ onClick, title }) => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     return (
-        <Button 
-        variant="contained" 
-        color="secondary"
+        <Button
+            variant="contained"
+            color="secondary"
+            onClick={onClick}
         >
             <Typography
                 // variant="h2"
