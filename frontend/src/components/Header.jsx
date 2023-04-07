@@ -31,11 +31,7 @@ const Header = ({ title, subtitle }) => {
             </Typography>
 
             <Typography
-                // variant={{
-                //     sm: "h7",
-                //     lg: "h5"
-                // }}
-                color={colors.greenAccent[400]}
+                color={colors.purple[100]}
                 sx={{
                     fontSize: {
                         xs: "15px",

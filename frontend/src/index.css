@@ -68,6 +68,10 @@ body,
   .nav-wording {
     font-size: 14px !important;
   }
+
+  .nav-wording:active {
+    color: 
+  }
 }
 
 @media (min-width: 768px) {
@@ -76,6 +80,6 @@ body,
   }
 
   .nav-wording {
-
+    color: #6200EE;
   }
 }
