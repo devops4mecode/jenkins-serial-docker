@@ -14,7 +14,7 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { useAuthContext } from "hooks/useAuthContext"
 import '../../index.css'
-import Item from "./Item"
+import WebItem from "./WebItem"
 
 const Sidebar = () => {
 
@@ -95,7 +95,7 @@ const Sidebar = () => {
 
                     {/* Menu Items */}
                     <Box paddingLeft={isCollapsed ? undefined : "10%"} >
-                        <Item
+                        <WebItem
                             title="Dashboard"
                             to="/"
                             icon={<HomeOutlinedIcon />}
@@ -103,7 +103,7 @@ const Sidebar = () => {
                             setSelected={setSelected}
                             className="hiddenIcon"
                         />
-                        <Item
+                        <WebItem
                             title="Generate Serial"
                             to="/generateNumber"
                             icon={<ReceiptOutlinedIcon />}
@@ -111,7 +111,7 @@ const Sidebar = () => {
                             setSelected={setSelected}
                             className="hiddenIcon"
                         />
-                        <Item
+                        <WebItem
                             title="All Serial Number"
                             to="/allNumber"
                             icon={<FormatListBulletedIcon />}
@@ -119,7 +119,7 @@ const Sidebar = () => {
                             setSelected={setSelected}
                             className="hiddenIcon"
                         />
-                        <Item
+                        <WebItem
                             title="Unclaimed"
                             to="/unusedNumber"
                             icon={<SixteenMpIcon />}
@@ -127,7 +127,7 @@ const Sidebar = () => {
                             setSelected={setSelected}
                             className="hiddenIcon"
                         />
-                        <Item
+                        <WebItem
                             title="Redeemed"
                             to="/usedNumber"
                             icon={<ContactsOutlinedIcon />}
@@ -135,7 +135,7 @@ const Sidebar = () => {
                             setSelected={setSelected}
                             className="hiddenIcon"
                         />
-                        <Item
+                        <WebItem
                             title="Logout"
                             icon={<LogoutIcon />}
                             selected={selected}

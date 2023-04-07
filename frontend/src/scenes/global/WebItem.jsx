@@ -6,8 +6,7 @@ import '../../index.css'
 import { useState } from "react"
 
 
-
-const MobileItem = ({ title, to, icon, selected, setSelected, toggleNav }) => {
+const WebItem = ({ title, to, icon, selected, setSelected }) => {
 
     const { logout } = useLogout()
 
@@ -20,7 +19,6 @@ const MobileItem = ({ title, to, icon, selected, setSelected, toggleNav }) => {
         } else {
             Navigate(to)
             setSelected(title)
-            toggleNav()
         }
     }
 
@@ -41,4 +39,4 @@ const MobileItem = ({ title, to, icon, selected, setSelected, toggleNav }) => {
     )
 }
 
-export default MobileItem
+export default WebItem

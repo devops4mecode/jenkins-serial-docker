@@ -40,6 +40,9 @@ body,
 
 
 
+
+
+
 .pro-inner-item {
   display: inline-flex;
   padding-left: 20px;
@@ -57,7 +60,6 @@ body,
 @media (max-width: 576px) {
   .navItem-style {
     color: #666666;
-
   }
 
   .navbaritem {
@@ -70,8 +72,13 @@ body,
   }
 
   .nav-wording:active {
-    color: 
+    color: #6200EE !important;
   }
+
+  .navbar-menuitem {
+    background-color: #6200EE15;
+  }
+
 }
 
 @media (min-width: 768px) {
@@ -79,7 +86,4 @@ body,
     color: #666666;
   }
 
-  .nav-wording {
-    color: #6200EE;
-  }
 }

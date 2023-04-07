@@ -149,7 +149,7 @@ const Dashboard = () => {
                             title={count.total}
                             subtitle="Total Redeem Count"
                             icon={
-                                <TrendingDownIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                <TrendingDownIcon className="iconSize" />
                             }
                         />
                     </Box>
@@ -160,7 +160,7 @@ const Dashboard = () => {
                             title={`RM ${redeemedAmount}`}
                             subtitle="Total Amount Redeemed"
                             icon={
-                                <AttachMoneyIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                <AttachMoneyIcon className="iconSize" />
                             }
                         />
                     </Box>
@@ -185,7 +185,7 @@ const Dashboard = () => {
                                 title={redeemedCount[10]}
                                 subtitle="RM 10"
                                 icon={
-                                    <RedeemIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                    <RedeemIcon className="iconSize" />
                                 }
                             />
                         </Box>
@@ -198,7 +198,7 @@ const Dashboard = () => {
                                 title={redeemedCount[30]}
                                 subtitle="RM 30"
                                 icon={
-                                    <RedeemIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                    <RedeemIcon className="iconSize" />
                                 }
                             />
                         </Box>
@@ -210,7 +210,7 @@ const Dashboard = () => {
                                 title={redeemedCount[50]}
                                 subtitle="RM 50"
                                 icon={
-                                    <RedeemIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                    <RedeemIcon className="iconSize" />
                                 }
                             />
                         </Box>
@@ -222,7 +222,7 @@ const Dashboard = () => {
                                 title={redeemedCount[100]}
                                 subtitle="RM100"
                                 icon={
-                                    <RedeemIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                    <RedeemIcon className="iconSize" />
                                 }
                             />
                         </Box>
@@ -247,7 +247,7 @@ const Dashboard = () => {
                                 title={count['10']}
                                 subtitle="RM 10"
                                 icon={
-                                    <TrendingUpIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                    <TrendingUpIcon className="iconSize" />
                                 }
                             />
                         </Box>
@@ -258,7 +258,7 @@ const Dashboard = () => {
                                 title={count['30']}
                                 subtitle="RM 30"
                                 icon={
-                                    <TrendingUpIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                    <TrendingUpIcon className="iconSize" />
                                 }
                             />
                         </Box>
@@ -269,7 +269,7 @@ const Dashboard = () => {
                                 title={count['50']}
                                 subtitle="RM 50"
                                 icon={
-                                    <TrendingUpIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                    <TrendingUpIcon className="iconSize" />
                                 }
                             />
 
@@ -280,7 +280,7 @@ const Dashboard = () => {
                             title={count['100']}
                             subtitle="RM100"
                             icon={
-                                <TrendingUpIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                <TrendingUpIcon  className="iconSize" />
                             }
                         />
                         </Box>

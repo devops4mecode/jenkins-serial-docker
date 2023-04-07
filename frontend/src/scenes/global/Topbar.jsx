@@ -17,7 +17,8 @@ import axios from "axios"
 import { useLogout } from "hooks/useLogout"
 import WidgetsOutlinedIcon from '@mui/icons-material/WidgetsOutlined';
 import RedeemIcon from '@mui/icons-material/Redeem';
-import Item from "./Item"
+import MobileItem from "./Item"
+import '../../index.css'
 
 
 const Topbar = () => {
@@ -150,16 +151,15 @@ const Topbar = () => {
                         )}
                     </IconButton>
                 </Box>
-
-
             </Box>
 
             <Box
                 sx={{
                     display: nav ? 'block' : 'none',
                 }}
+                className="navbar-menuitem"
             >
-                <Item
+                <MobileItem
                     title="Dashboard"
                     to="/"
                     icon={<WidgetsOutlinedIcon />}
@@ -167,7 +167,7 @@ const Topbar = () => {
                     setSelected={setSelected}
                     toggleNav={toggleNav}
                 />
-                <Item
+                <MobileItem
                     title="Generate Serial"
                     to="/generateNumber"
                     icon={<ReceiptOutlinedIcon />}
@@ -175,7 +175,7 @@ const Topbar = () => {
                     setSelected={setSelected}
                     toggleNav={toggleNav}
                 />
-                <Item
+                <MobileItem
                     title="All Serial Number"
                     to="/allNumber"
                     icon={<FormatListBulletedIcon />}
@@ -183,7 +183,7 @@ const Topbar = () => {
                     setSelected={setSelected}
                     toggleNav={toggleNav}
                 />
-                <Item
+                <MobileItem
                     title="Unclaimed"
                     to="/unusedNumber"
                     icon={<RedeemIcon />}
@@ -191,7 +191,7 @@ const Topbar = () => {
                     setSelected={setSelected}
                     toggleNav={toggleNav}
                 />
-                <Item
+                <MobileItem
                     title="Redeemed"
                     to="/usedNumber"
                     icon={<ContactsOutlinedIcon />}
@@ -199,7 +199,7 @@ const Topbar = () => {
                     setSelected={setSelected}
                     toggleNav={toggleNav}
                 />
-                <Item
+                <MobileItem
                     title="Logout"
                     icon={<LogoutIcon />}
                     selected={selected}
