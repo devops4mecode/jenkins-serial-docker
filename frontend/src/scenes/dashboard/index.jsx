@@ -6,9 +6,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import LineChart from "../../components/LineChart";
 import StatBox from "../../components/StatBox";
-import CallReceivedIcon from '@mui/icons-material/CallReceived';
+import RedeemIcon from '@mui/icons-material/Redeem';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import AddIcon from '@mui/icons-material/Add';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import "../../css/dashboard.css"
 
@@ -18,7 +19,7 @@ const Dashboard = () => {
     const colors = tokens(theme.palette.mode)
 
     const { user } = useAuthContext()
-    const [count, setCount] = useState({ 10: 0, 30: 0, 50: 0, 100: 0 })
+    const [count, setCount] = useState({ 10: 0, 30: 0, 50: 0, 100: 0, total: 0 })
     const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0, total: 0 })
     const [redeemedAmount, setRedeemedAmount] = useState(0)
 
@@ -141,208 +142,207 @@ const Dashboard = () => {
                 </Box>
             </Box>
 
-            <Box display="grid" gridTemplateColumns="repeat(6, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
-                <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-                    <StatBox
-                        title={count.total}
-                        subtitle="Total Redeem Count"
-                        icon={
-                            <CallReceivedIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                        }
-                    />
-                </Box>
-                <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
-                    <StatBox
-                        title={`RM ${redeemedAmount}`}
-                        subtitle="Total Amount Redeemed"
-                        icon={
-                            <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                        }
-                    />
-                </Box>
-            </Box>
-
-            {/* Row 2 */}
-            <Box display="grid" sx={{ pb: 3, pl: 2 }}>
-                <Typography variant="h4"
-                    fontWeight="600"
-                    color={colors.grey[100]}
-                >
-                    Total Redeemed
-                </Typography>
-            </Box>
-
             <Grid container spacing={2}>
-                <Grid item xs={6} sm={6} md={3}>
-                    <Box sx={{ bgcolor: colors.primary[400] }}>
+                <Grid item xs={6} sm={6} md={6}>
+                    <Box className="style-statbox">
                         <StatBox
-                            className="statBox"
-                            title={redeemedCount[10]}
-                            subtitle="RM 10"
+                            title={count.total}
+                            subtitle="Total Redeem Count"
                             icon={
-                                <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                                <TrendingDownIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
                             }
                         />
                     </Box>
                 </Grid>
-
-
-                <Grid item xs={6} sm={6} md={3}>
-                    <Box sx={{ bgcolor: colors.primary[400] }}>
+                <Grid item xs={6} sm={6} md={6}>
+                    <Box className="style-statbox">
                         <StatBox
-                            className="statBox"
-                            title={redeemedCount[30]}
-                            subtitle="RM 30"
+                            title={`RM ${redeemedAmount}`}
+                            subtitle="Total Amount Redeemed"
                             icon={
-                                <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                            }
-                        />
-                    </Box>
-                </Grid>
-
-                <Grid item xs={6} sm={6} md={3}>
-                    <Box sx={{ bgcolor: colors.primary[400] }}>
-                        <StatBox
-                            className="statBox"
-                            title={redeemedCount[50]}
-                            subtitle="RM 50"
-                            icon={
-                                <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                            }
-                        />
-                    </Box>
-                </Grid>
-
-                <Grid item xs={6} sm={6} md={3}>
-                    <Box sx={{ bgcolor: colors.primary[400] }}>
-                        <StatBox
-                            className="statBox"
-                            title={redeemedCount[100]}
-                            subtitle="RM100"
-                            icon={
-                                <AddIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                                <AttachMoneyIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
                             }
                         />
                     </Box>
                 </Grid>
             </Grid>
 
+
+
+
+            {/* Row 2 */}
+            <Box className="category">
+                <Box>
+                    <Typography className="sub-header">
+                        Total Redeemed
+                    </Typography>
+                </Box>
+
+                <Grid container spacing={2}>
+                    <Grid item xs={6} sm={6} md={3}>
+                        <Box className="style-statbox">
+                            <StatBox
+                                title={redeemedCount[10]}
+                                subtitle="RM 10"
+                                icon={
+                                    <RedeemIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                }
+                            />
+                        </Box>
+                    </Grid>
+
+
+                    <Grid item xs={6} sm={6} md={3}>
+                        <Box className="style-statbox">
+                            <StatBox
+                                title={redeemedCount[30]}
+                                subtitle="RM 30"
+                                icon={
+                                    <RedeemIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                }
+                            />
+                        </Box>
+                    </Grid>
+
+                    <Grid item xs={6} sm={6} md={3}>
+                        <Box className="style-statbox">
+                            <StatBox
+                                title={redeemedCount[50]}
+                                subtitle="RM 50"
+                                icon={
+                                    <RedeemIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                }
+                            />
+                        </Box>
+                    </Grid>
+
+                    <Grid item xs={6} sm={6} md={3}>
+                        <Box className="style-statbox">
+                            <StatBox
+                                title={redeemedCount[100]}
+                                subtitle="RM100"
+                                icon={
+                                    <RedeemIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                }
+                            />
+                        </Box>
+                    </Grid>
+                </Grid>
+            </Box>
 
 
 
             {/* Row 3 */}
-            <Box display="grid" sx={{ pb: 3, pl: 2 }}>
-                <Typography variant="h4"
-                    fontWeight="600"
-                    color={colors.grey[100]}
-                >
-                    Total Generated
-                </Typography>
-            </Box>
+            <Box className="category">
+                <Box>
+                    <Typography className="sub-header">
+                        Total Generated
+                    </Typography>
+                </Box>
 
-            <Grid container spacing={2}>
-                <Grid item xs={6} sm={6} md={3}>
-                    <Box sx={{ bgcolor: colors.primary[400] }}>
-                        <StatBox
-                            title={count['10']}
-                            subtitle="RM 10"
-                            icon={
-                                <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                            }
-                        />
-                    </Box>
-                </Grid>
-                <Grid item xs={6} sm={6} md={3}>
-                    <Box sx={{ bgcolor: colors.primary[400] }}>
-                        <StatBox
-                            title={count['30']}
-                            subtitle="RM 30"
-                            icon={
-                                <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                            }
-                        />
-                    </Box>
-                </Grid>
-                <Grid item xs={6} sm={6} md={3}>
-                    <Box sx={{ bgcolor: colors.primary[400] }}>
-                        <StatBox
-                            title={count['50']}
-                            subtitle="RM 50"
-                            icon={
-                                <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                            }
-                        />
+                <Grid container spacing={2}>
+                    <Grid item xs={6} sm={6} md={3}>
+                        <Box className="style-statbox">
+                            <StatBox
+                                title={count['10']}
+                                subtitle="RM 10"
+                                icon={
+                                    <TrendingUpIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                }
+                            />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={3}>
+                        <Box className="style-statbox">
+                            <StatBox
+                                title={count['30']}
+                                subtitle="RM 30"
+                                icon={
+                                    <TrendingUpIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                }
+                            />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={3}>
+                        <Box className="style-statbox">
+                            <StatBox
+                                title={count['50']}
+                                subtitle="RM 50"
+                                icon={
+                                    <TrendingUpIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                }
+                            />
 
-                    </Box>
-                </Grid>
-                <Grid item xs={6} sm={6} md={3}>
-                    <Box sx={{ bgcolor: colors.primary[400] }}><StatBox
-                        title={count['100']}
-                        subtitle="RM100"
-                        icon={
-                            <AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                        }
-                    />
-                    </Box>
-                </Grid>
-            </Grid>
-
-            {/* Row 4 */}
-            <Box display="grid" sx={{ pb: 3, pl: 2 }}>
-                <Typography variant="h4"
-                    fontWeight="600"
-                    color={colors.grey[100]}
-                >
-                    Most Redeemed
-                </Typography>
-            </Box>
-
-            <Grid container spacing={2}>
-                <Grid item xs={6} sm={6} md={3}>
-                    <Box sx={{ bgcolor: colors.primary[400] }}>
-                        <StatBox
-                            title="7%"
-                            subtitle="RM 10"
-                            icon={
-                                <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                            }
-                        />
-                    </Box>
-                </Grid>
-                <Grid item xs={6} sm={6} md={3}>
-                    <Box sx={{ bgcolor: colors.primary[400] }}>
-                        <StatBox
-                            title="7%"
-                            subtitle="RM 30"
-                            icon={
-                                <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                            }
-                        />
-                    </Box>
-                </Grid>
-                <Grid item xs={6} sm={6} md={3}>
-                    <Box sx={{ bgcolor: colors.primary[400] }}>
-                        <StatBox
-                            title="7%"
-                            subtitle="RM 50"
-                            icon={
-                                <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
-                            }
-                        />
-                    </Box>
-                </Grid>
-                <Grid item xs={6} sm={6} md={3}>
-                    <Box sx={{ bgcolor: colors.primary[400] }}>
-                        <StatBox
-                            title="7%"
+                        </Box>
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={3}>
+                        <Box className="style-statbox"><StatBox
+                            title={count['100']}
                             subtitle="RM100"
                             icon={
-                                <ArrowUpwardIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
+                                <TrendingUpIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
                             }
                         />
-                    </Box>
+                        </Box>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </Box>
+
+            {/* Row 4 */}
+            <Box className="category">
+                <Box>
+                    <Typography className="sub-header">
+                        Most Redeemed
+                    </Typography>
+                </Box>
+
+                <Grid container spacing={2}>
+                    <Grid item xs={6} sm={6} md={3}>
+                        <Box className="style-statbox">
+                            <StatBox
+                                title="7%"
+                                subtitle="RM 10"
+                                icon={
+                                    <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                }
+                            />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={3}>
+                        <Box className="style-statbox">
+                            <StatBox
+                                title="7%"
+                                subtitle="RM 30"
+                                icon={
+                                    <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                }
+                            />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={3}>
+                        <Box className="style-statbox">
+                            <StatBox
+                                title="7%"
+                                subtitle="RM 50"
+                                icon={
+                                    <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                }
+                            />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={3}>
+                        <Box className="style-statbox">
+                            <StatBox
+                                title="7%"
+                                subtitle="RM100"
+                                icon={
+                                    <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                }
+                            />
+                        </Box>
+                    </Grid>
+                </Grid>
+            </Box>
         </Box >
     )
 }

@@ -14,7 +14,7 @@ const LoginPage = () => {
                 fontSize="32px"
                 color={colors.grey[100]}
             >
-                SN Generator
+                Lucky Serial
             </Typography>
         </Box>
 
@@ -26,7 +26,7 @@ const LoginPage = () => {
             backgroundColor={theme.palette.mode}
         >
             <Typography fontWeight="500" variant="h5" sx={{ mb: "1.5rem" }}>
-                Welcome to SN Generator
+                Welcome to Lucky Serial
             </Typography>
             <Form />
         </Box>

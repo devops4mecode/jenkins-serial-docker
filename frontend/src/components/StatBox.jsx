@@ -2,22 +2,30 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { tokens } from "../theme";
 import "../css/dashboard.css"
 
-const StatBox = ({ title, subtitle, icon, total_redeem_count, className }) => {
+const StatBox = ({ title, subtitle, icon}) => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
 
     return (
-        <Box width="100%" className={className}>
-            <Box display="flex" justifyContent="space-between" className="statBox-center">
-                <Box className="statBox pb-statbox">
-                    {icon}
-                    <Typography variant="h5" sx={{ color: colors.greenAccent[500] }}>
-                        {subtitle}
-                    </Typography>
-                    <Typography variant="h4" fontWeight="bold" sx={{ color: colors.grey[100] }}>
-                        {title}
-                    </Typography>
-                </Box>
+        <Box width="100%" className="statbox-content">
+
+            <Box>
+                <Typography className="subtitle-font">
+                    {subtitle}
+                </Typography>
+            </Box>
+
+
+            <Box display="inline-flex" >
+
+                {/* icon colour is in index.jsx (dashboard) */}
+                {icon}
+
+                <Typography className="title-font">
+                    {/* data fetched */}
+                    {title}
+                </Typography>
+
             </Box>
 
         </Box>

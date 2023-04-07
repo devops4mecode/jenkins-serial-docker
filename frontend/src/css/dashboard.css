@@ -16,17 +16,72 @@
 
 
 @media (max-width: 576px) {
-    .statBox {
-        padding-top: 10px;
+    .statbox-content {
+        padding-left: 17px;
+        padding-top: 11px;
+        padding-bottom: 11px;
     }
 
-    .pb-statbox {
-        padding-bottom: 10px;
+    .subtitle-font {
+        font-size: 12px !important;
+        color: #00000099 !important;
     }
-    .statBox-center {
-        align-items: center;
+
+    .title-font {
+        font-size: 16px !important;
+        font-weight: bold !important;
+        color: black !important;
+        padding-left: 5px;
     }
-    .css-1960bxs-MuiTypography-root {
-        color: #4cceac !important;
+
+    .sub-header {
+        font-size: 16px !important;
+        font-weight: bold !important;
+        color: #141414 !important;
+    }
+
+    .category {
+        padding-top: 15px;
+    }
+
+    .style-statbox {
+        border: 1px solid #00000010;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+    }
+}
+
+@media(min-width: 768px) {
+    .statbox-content {
+        padding-left: 17px;
+        padding-top: 11px;
+        padding-bottom: 11px;
+    }
+
+    .subtitle-font {
+        font-size: 16px !important;
+        color: #00000099 !important;
+    }
+
+    .title-font {
+        font-size: 20px !important;
+        font-weight: bold;
+        color: black;
+    }
+
+    .sub-header {
+        font-size: 20px !important;
+        font-weight: bold !important;
+        color: #141414 !important;
+    }
+
+    .category {
+        padding-top: 15px;
+    }
+
+    .style-statbox {
+        border: 1px solid #00000010;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
     }
 }

@@ -14,39 +14,7 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { useAuthContext } from "hooks/useAuthContext"
 import '../../index.css'
-
-const Item = ({ title, to, icon, selected, setSelected, className }) => {
-    const theme = useTheme()
-    const colors = tokens(theme.palette.mode)
-    const { logout } = useLogout()
-
-    const Navigate = useNavigate()
-
-    const handleOnClick = () => {
-        if (title === "Logout") {
-            logout()
-            Navigate('/login')
-        } else {
-            Navigate(to)
-            setSelected(title)
-        }
-    }
-
-    return (
-        <MenuItem
-            active={selected === title}
-            style={{
-                color: colors.grey[100]
-            }}
-            onClick={handleOnClick}
-            icon={icon}
-            className={className}
-        >
-            <Typography>{title}</Typography>
-            {title !== "Logout" && <Link to={to} />}
-        </MenuItem>
-    )
-}
+import Item from "./Item"
 
 const Sidebar = () => {
 
@@ -116,10 +84,10 @@ const Sidebar = () => {
 
                             <Box textAlign="center">
                                 <Typography variant="h3" color={colors.grey[100]} fontWeight="bold" sx={{ m: "10px 0 0 0" }}>
-                                    Number Generator
+                                    Lucky Serial
                                 </Typography>
                                 <Typography variant="h5" color={colors.greenAccent[500]} >
-                                    Generate Number
+                                    
                                 </Typography>
                             </Box>
                         </Box>

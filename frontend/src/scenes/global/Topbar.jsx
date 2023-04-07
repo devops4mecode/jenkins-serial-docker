@@ -5,10 +5,8 @@ import InputBase from "@mui/material/InputBase"
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined"
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined"
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import SixteenMpIcon from '@mui/icons-material/SixteenMp';
 import LogoutIcon from '@mui/icons-material/Logout'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import CloseIcon from '@mui/icons-material/Close';
@@ -16,46 +14,11 @@ import SearchIcon from "@mui/icons-material/Search"
 import { useState } from "react"
 import { useAuthContext } from "hooks/useAuthContext"
 import axios from "axios"
-import { Menu, MenuItem } from "react-pro-sidebar"
 import { useLogout } from "hooks/useLogout"
-import { Link, useNavigate } from "react-router-dom"
+import WidgetsOutlinedIcon from '@mui/icons-material/WidgetsOutlined';
+import RedeemIcon from '@mui/icons-material/Redeem';
+import Item from "./Item"
 
-
-
-const Item = ({ title, to, icon, selected, setSelected, className }) => {
-    const theme = useTheme()
-    const colors = tokens(theme.palette.mode)
-    const { logout } = useLogout()
-
-    const Navigate = useNavigate()
-
-    const handleOnClick = () => {
-        if (title === "Logout") {
-            logout()
-            Navigate('/login')
-        } else {
-            Navigate(to)
-            setSelected(title)
-        }
-    }
-
-    return (
-        <Box>
-            <MenuItem
-                active={selected === title}
-                style={{
-                    color: colors.grey[100],
-                }}
-                onClick={handleOnClick}
-                icon={icon}
-                className={className}
-            >
-                <Typography>{title}</Typography>
-                {title !== "Logout" && <Link to={to} />}
-            </MenuItem>
-        </Box>
-    )
-}
 
 const Topbar = () => {
     const { user } = useAuthContext()
@@ -74,6 +37,9 @@ const Topbar = () => {
     const handleClick = () => setNav(!nav)
     const [selected, setSelected] = useState("Dashboard")
     const { logout } = useLogout()
+    const toggleNav = () => {
+        setNav(!nav)
+    }
 
     // for search
     const handleSearch = async (searchValue) => {
@@ -104,7 +70,7 @@ const Topbar = () => {
                 justifyContent="space-between"
                 p={2}
                 sx={{
-                    background: `${colors.greenAccent[600]} !important`
+                    background: `${colors.purple[100]} !important`
                 }}
             >
 
@@ -118,7 +84,6 @@ const Topbar = () => {
                     }}
                     onClick={handleClick}>
                     {!nav ? <MenuOutlinedIcon /> : <CloseIcon />}
-
                 </Box>
 
 
@@ -189,15 +154,18 @@ const Topbar = () => {
 
             </Box>
 
-            <Box sx={{
-                display: nav ? 'block' : 'none'
-            }}>
-                <Item className="navbaritem"
+            <Box
+                sx={{
+                    display: nav ? 'block' : 'none',
+                }}
+            >
+                <Item
                     title="Dashboard"
                     to="/"
-                    icon={<HomeOutlinedIcon />}
+                    icon={<WidgetsOutlinedIcon />}
                     selected={selected}
                     setSelected={setSelected}
+                    toggleNav={toggleNav}
                 />
                 <Item
                     title="Generate Serial"
@@ -205,6 +173,7 @@ const Topbar = () => {
                     icon={<ReceiptOutlinedIcon />}
                     selected={selected}
                     setSelected={setSelected}
+                    toggleNav={toggleNav}
                 />
                 <Item
                     title="All Serial Number"
@@ -212,13 +181,15 @@ const Topbar = () => {
                     icon={<FormatListBulletedIcon />}
                     selected={selected}
                     setSelected={setSelected}
+                    toggleNav={toggleNav}
                 />
                 <Item
                     title="Unclaimed"
                     to="/unusedNumber"
-                    icon={<SixteenMpIcon />}
+                    icon={<RedeemIcon />}
                     selected={selected}
                     setSelected={setSelected}
+                    toggleNav={toggleNav}
                 />
                 <Item
                     title="Redeemed"
@@ -226,12 +197,14 @@ const Topbar = () => {
                     icon={<ContactsOutlinedIcon />}
                     selected={selected}
                     setSelected={setSelected}
+                    toggleNav={toggleNav}
                 />
                 <Item
                     title="Logout"
                     icon={<LogoutIcon />}
                     selected={selected}
                     setSelected={setSelected}
+                    toggleNav={toggleNav}
                     logout={logout}
                 />
             </Box>

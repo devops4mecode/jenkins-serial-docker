@@ -38,11 +38,44 @@ body,
   list-style: none;
 }
 
+
+
 .pro-inner-item {
-  display: flex;
-  justify-content: center;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  
+  display: inline-flex;
+  padding-left: 20px;
 }
 
+.pro-inner-item:active {
+  color: #6200EE;
+}
+
+.pro-item-content {
+  padding-left: 10px;
+}
+
+
+@media (max-width: 576px) {
+  .navItem-style {
+    color: #666666;
+
+  }
+
+  .navbaritem {
+    padding-top: 10px;
+    /* padding-bottom: 10px; */
+  }
+
+  .nav-wording {
+    font-size: 14px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .navItem-style {
+    color: #666666;
+  }
+
+  .nav-wording {
+
+  }
+}
