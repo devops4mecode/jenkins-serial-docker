@@ -58,9 +58,10 @@ const Sidebar = () => {
                         }}
                     >
                         {!isCollapsed && (
-                            <Box display="flex" justifyContent="space-between" alignItems="center" ml="15px">
+                            <Box display="flex" justifyContent="space-between" alignItems="center" ml="7px">
                                 <Typography variant="h3" color={colors.grey[100]}>
-                                    {user?.username.toUpperCase()}
+                                    {/* {user?.username.toUpperCase()} */}
+                                    LUCKY SERIAL
                                 </Typography>
                                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                                     <MenuOutlinedIcon />
@@ -70,7 +71,7 @@ const Sidebar = () => {
                     </MenuItem>
 
                     {/* USER */}
-                    {!isCollapsed && (
+                    {/* {!isCollapsed && (
                         <Box mb="25px">
                             <Box display="flex" justifyContent="center" alignItems="center">
                                 <img
@@ -91,7 +92,7 @@ const Sidebar = () => {
                                 </Typography>
                             </Box>
                         </Box>
-                    )}
+                    )} */}
 
                     {/* Menu Items */}
                     <Box paddingLeft={isCollapsed ? undefined : "10%"} >

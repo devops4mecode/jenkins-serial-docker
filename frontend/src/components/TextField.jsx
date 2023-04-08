@@ -1,5 +1,6 @@
 import { Typography, Box, useTheme, Button, TextField } from "@mui/material";
 import { tokens } from "../theme";
+import '../css/generateNumber.css'
 
 const CreditTextField = (props) => {
     const theme = useTheme()
@@ -24,6 +25,7 @@ const CreditTextField = (props) => {
             className="credit_field"
         >
             <TextField
+                className="credit-input-field"
                 fullWidth
                 variant="filled"
                 type={type}
@@ -35,18 +37,16 @@ const CreditTextField = (props) => {
                 error={error}
                 helperText={helperText}
                 InputProps={InputProps}
-                className={className}
                 InputLabelProps={{
                     sx: {
                         fontSize: {
                             xs: 12,
+                            md: 18,
                             xl: 18
-                        },
-                        '& .MuiInputBase-input': {
-                            height: '12px'
                         },
                     }
                 }}
+
             />
         </Box>
     )

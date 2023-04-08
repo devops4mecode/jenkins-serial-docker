@@ -76,7 +76,7 @@ body,
   }
 
   .navbar-menuitem {
-    background-color: #6200EE15;
+    background-color: #6200EE15 !important;
   }
 
 }

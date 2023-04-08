@@ -81,28 +81,8 @@ const GenerateNumber = () => {
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue }) => (
                 <form onSubmit={handleSubmit}>
                     <Box
-                        display="grid"
-                        rowGap={{
-                            xs: "15px"
-                        }}
-                        columnGap={{
-                            lg: "30px"
-                        }}
-                        gridTemplateColumns={{
-                            xs: "repeat(1, minmax(0, 1fr))",
-                            sm: "repeat(2, minmax(0, 1fr))",
-                            lg: "repeat(4, minmax(0, 1fr))"
-                        }}
-                        gridTemplateRows={{
-                            xs: "repeat(4, minmax(0, 1fr))",
-                            lg: "repeat(1, minmax(0, 1fr))",
-                        }}
-                        sx={{
-                            "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-                            paddingBottom: "20px"
-                        }}
+                        className="credit-button-component"
                     >
-
                         <CreditButton onClick={() => setFieldValue("givenCredit", 10)} title="RM10" />
                         <CreditButton onClick={() => setFieldValue("givenCredit", 30)} title="RM30" />
                         <CreditButton onClick={() => setFieldValue("givenCredit", 50)} title="RM50" />
@@ -110,30 +90,11 @@ const GenerateNumber = () => {
                     </Box>
 
                     <Box
-                        display="grid"
-                        rowGap={{
-                            xs: "15px"
-                        }}
-                        columnGap={{
-                            lg: "30px"
-                        }}
-                        gridTemplateColumns={{
-                            xs: "repeat(1, minmax(0, 1fr))",
-                            sm: "repeat(2, minmax(0, 1fr))",
-                            lg: "repeat(4, minmax(0, 1fr))"
-                        }}
-                        gridTemplateRows={{
-                            xs: "repeat(3, minmax(0, 1fr))",
-                            lg: "repeat(1, minmax(0, 1fr))",
-                        }}
-                        sx={{
-                            "& > div": { gridColumn: isNonMobile ? undefined : "span 4" }
-                        }}
+                        className="credit-field-component"
                     >
 
                         {/* Reload Amount */}
                         <CreditTextField
-                            className="credit_field"
                             fullWidth
                             variant="filled"
                             type="number"
@@ -182,25 +143,12 @@ const GenerateNumber = () => {
                     </Box>
 
                     <Box
-                        display="flex"
-                        mt="20px"
-                        sx={{
-                            justifyContent: {
-                                xs: "center",
-                                lg: "end"
-                            }
-                        }}
+                        className="generate-button-component"
                     >
                         <Button
+                            className="generate-button-text"
                             type="submit"
-                            color="secondary"
                             variant="contained"
-                            sx={{
-                                fontSize: {
-                                    xs: "12px",
-                                    lg: "18px"
-                                },
-                            }}
                         >
                             GENERATE
                         </Button>
@@ -261,9 +209,9 @@ const GenerateNumber = () => {
 }
 
 const checkoutSchema = yup.object().shape({
-    givenCredit: yup.number().required("buy how much?"),
-    amountToGenerate: yup.number().required("buy how many?"),
-    remarkName: yup.string().required("who buy?"),
+    givenCredit: yup.number().required("This field must not be empty."),
+    amountToGenerate: yup.number().required("This field must not be empty."),
+    remarkName: yup.string().required("This field must not be empty."),
 })
 
 const initialValues = {

@@ -14,13 +14,12 @@ const Header = ({ title, subtitle }) => {
             }}
         >
             <Typography
-                // variant="h2"
                 color={colors.grey[100]}
                 fontWeight="bold"
                 sx={{
                     fontSize: {
                         xs: "19px",
-                        lg: "32px"
+                        lg: "25px"
                     },
                     paddingBottom: {
                         xs: "2px"
@@ -35,7 +34,7 @@ const Header = ({ title, subtitle }) => {
                 sx={{
                     fontSize: {
                         xs: "15px",
-                        lg: "25px"
+                        lg: "19px"
                     },
                     paddingBottom: {
                         xs: "3px"

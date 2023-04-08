@@ -112,7 +112,7 @@ const AllNumber = () => {
     return (
         <Box m="20px">
             <Header title="All Serial Number" subtitle="All Serial Number" />
-            <Box m="40px 0 0 0" height="75vh" sx={{
+            <Box m="0px 0 0 0" height="70vh" sx={{
                 "& .MuiDataGrid-root": {
                     // border: "none"
                 },
@@ -142,6 +142,24 @@ const AllNumber = () => {
                     columns={columns}
                     components={{ Toolbar: GridToolbar }}
                     getRowId={getRowId}
+                    pageSize={30}
+                    rowsPerPageOptions={[10, 30, 50]} 
+                    // sx={{
+                    //     "& .MuiDataGrid-colCellTitle": {
+                    //         fontSize: { xs: "14px", md: "inherit" },
+                    //     },
+                    //     "& .MuiDataGrid-cell": {
+                    //         fontSize: { xs: "12px", md: "inherit" },
+                    //         whiteSpace: { xs: "nowrap", md: "inherit" },
+                    //     },
+                    //     "& .MuiDataGrid-columnSeparator": {
+                    //         display: { xs: "none", md: "inherit" },
+                    //     },
+                    //     "& .MuiDataGrid-row": {
+                    //         borderBottom: { xs: "1px solid #ddd", md: "inherit" },
+                    //         flexDirection: { xs: "column", md: "inherit" },
+                    //     },
+                    // }}
                 />
             </Box>
         </Box>
