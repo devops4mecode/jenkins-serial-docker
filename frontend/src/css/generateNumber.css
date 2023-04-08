@@ -1,3 +1,21 @@
+
+
+
+a:-webkit-any-link{
+    text-decoration: none !important;
+}
+
+
+.credit-button-text {
+    color: #6200EE !important;
+    font-weight: bold !important;
+}
+
+.credit-button-button {
+    background-color: #6200EE15 !important;
+}
+
+
 @media (max-width: 576px) {
     .credit_field .css-q0jfn1-MuiFormLabel-root-MuiInputLabel-root {
         font-size: 0.8rem !important;
@@ -12,8 +30,16 @@
         font-size: 0.8rem !important;
     }
 
+    .credit-button-text {
+        font-size: 12px !important;
+        padding-bottom: 2px !important;
+    }
+
 }
 
-a:-webkit-any-link{
-    text-decoration: none !important;
+
+@media (min-width: 600px) {
+    .credit-button-text {
+        font-size: 18px !important;
+    }
 }

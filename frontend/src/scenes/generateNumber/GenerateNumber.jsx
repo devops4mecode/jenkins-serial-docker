@@ -208,31 +208,6 @@ const GenerateNumber = () => {
 
                     {serialsData.length > 0 && (
                         <>
-                            {/* <Box display="flex"
-                                mt="20px"
-                                sx={{
-                                    justifyContent: {
-                                        xs: "end",
-                                    },
-                                    [theme.breakpoints.up("md")]: {
-                                        display: "none"
-                                    }
-                                }}>
-                                <CSVLink data={data} headers={headers} filename={'code.csv'}>
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        sx={{
-                                            fontSize: {
-                                                xs: "12px",
-                                                lg: "18px"
-                                            },
-                                        }}>
-                                        Export to CSV
-                                    </Button>
-                                </CSVLink>
-                            </Box> */}
-
                             <TableContainer component={Paper} sx={{ mt: 4, textAlign: "center", color: colors.greenAccent[300] }}>
                                 <Table>
                                     <TableHead>
