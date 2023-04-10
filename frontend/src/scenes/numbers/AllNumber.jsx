@@ -1,16 +1,14 @@
-import { Box, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
+import Box from "@mui/material/Box";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid"
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
-import DownloadIcon from '@mui/icons-material/Download';
-import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
 import moment from "moment"
-
-// TESTING
 import { useAuthContext } from "hooks/useAuthContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FormattedMessage } from "react-intl";
+import '../../css/allNumberTable.css'
 
 const AllNumber = () => {
     const theme = useTheme()
@@ -49,7 +47,8 @@ const AllNumber = () => {
             align: "center",
             valueGetter: (params) =>
                 formatNumber(params.row.serialNo),
-            flex: 1
+            className: "datagrid-column-serialNo",
+            // width: 350
         },
         {
             field: "givenCredit",
@@ -57,43 +56,48 @@ const AllNumber = () => {
             type: "number",
             headerAlign: "center",
             align: "center",
-            flex: 1
+            className: "datagrid-column-givenCredit",
+            // width: 150
         },
         {
             field: "remarkName",
             headerName: "WHO BUY",
-            flex: 1,
             cellClassName: "name-column--cell",
             headerAlign: "center",
-            align: "center"
+            align: "center",
+            className: "datagrid-column-remarkName",
+            // width: 250
         },
         {
             field: "createdAt",
             headerName: "SOLD DATE",
             valueFormatter: (params) =>
                 moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
-            flex: 1,
             headerAlign: "center",
-            align: "center"
+            align: "center",
+            className: "datagrid-column-createdAt",
+            // width: 250
         },
         {
             field: "redemptionAcc",
             headerName: "WHO USE",
             valueGetter: (params) =>
                 params.row.redemptionAcc || "----",
-            flex: 1,
             cellClassName: "name-column--cell",
             headerAlign: "center",
-            align: "center"
+            align: "center",
+            className: "datagrid-column-redemptionAcc",
+            // width: 250
         },
         {
             field: "updatedAt",
             headerName: "REDEEMED DATE",
             valueGetter: (params) =>
                 params.row.serialStatus ? "---" : moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
-            flex: 1,
             headerAlign: "center",
-            align: "center"
+            align: "center",
+            className: "datagrid-column-updatedAt",
+            // width: 250
         },
         {
             field: "serialStatus",
@@ -102,9 +106,10 @@ const AllNumber = () => {
                 params.row.serialStatus ? "UNCLAIMED" : "REDEEMED",
             cellClassName: (params) =>
                 params.value === "REDEEMED" ? "status-redeemed" : "name-column--cell",
-            flex: 1,
             headerAlign: "center",
-            align: "center"
+            align: "center",
+            className: "datagrid-column-serialStatus",
+            // width: 250
         },
     ]
 
@@ -113,57 +118,53 @@ const AllNumber = () => {
     return (
         <Box m="20px">
             <Header
-                title={<FormattedMessage id="all.serial"/>}
-                subtitle={<FormattedMessage id="all.serial"/>}
+                title={<FormattedMessage id="all.serial" />}
+                subtitle={<FormattedMessage id="all.serial" />}
             />
-            <Box m="0px 0 0 0" height="70vh" sx={{
-                "& .MuiDataGrid-root": {
-                    // border: "none"
-                },
-                "& .name-column--cell": {
-                    color: colors.greenAccent[300]
-                },
+            {/* <Box m="0px 0 0 0" height="70vh" width='100%' sx={{ */}
+            <Box
 
-                "& .MuiDataGrid-columnHeaders": {
-                    backgroundColor: colors.blueAccent[700],
-                    borderBottom: "none"
-                },
-                "& .MuiDataGrid-virtualScroller": {
-                    // backgroundColor: colors.primary[400]
-                },
-                "& .MuiDataGrid-footerContainer": {
-                    backgroundColor: colors.blueAccent[700]
-                },
-                "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                    color: `${colors.grey[100]} !important`
-                },
-                "& .status-redeemed": {
-                    color: "red",
-                },
-            }}>
+                sx={{
+                    height: '70vh', width: '100%',
+                    "& .MuiDataGrid-root": {
+                        // border: "none"
+                    },
+                    "& .name-column--cell": {
+                        color: colors.greenAccent[300]
+                    },
+
+                    "& .MuiDataGrid-columnHeaders": {
+                        backgroundColor: colors.blueAccent[700],
+                        borderBottom: "none"
+                    },
+                    "& .MuiDataGrid-virtualScroller": {
+                        // backgroundColor: colors.primary[400]
+                    },
+                    "& .MuiDataGrid-footerContainer": {
+                        backgroundColor: colors.blueAccent[700]
+                    },
+                    "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                        color: `${colors.grey[100]} !important`
+                    },
+                    "& .status-redeemed": {
+                        color: "red",
+                    },
+                }}>
                 <DataGrid
                     rows={serials}
                     columns={columns}
                     components={{ Toolbar: GridToolbar }}
                     getRowId={getRowId}
-                    pageSize={30}
-                    rowsPerPageOptions={[10, 30, 50]}
-                // sx={{
-                //     "& .MuiDataGrid-colCellTitle": {
-                //         fontSize: { xs: "14px", md: "inherit" },
-                //     },
-                //     "& .MuiDataGrid-cell": {
-                //         fontSize: { xs: "12px", md: "inherit" },
-                //         whiteSpace: { xs: "nowrap", md: "inherit" },
-                //     },
-                //     "& .MuiDataGrid-columnSeparator": {
-                //         display: { xs: "none", md: "inherit" },
-                //     },
-                //     "& .MuiDataGrid-row": {
-                //         borderBottom: { xs: "1px solid #ddd", md: "inherit" },
-                //         flexDirection: { xs: "column", md: "inherit" },
-                //     },
-                // }}
+
+                    initialState={{
+                        pagination: {
+                            paginationModel: {
+                                pageSize: 20,
+                            },
+                        },
+                    }}
+                    rowsPerPageOptions={[20, 50, 100]}
+                    disableRowSelectionOnClick
                 />
             </Box>
         </Box>
