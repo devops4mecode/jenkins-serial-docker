@@ -15,10 +15,7 @@ const skipAuth = (req, res, next) => {
 
 // Routes
 router
-    .get('/falseCount', verifyJWT, dashboardController.getTotalRedeemedCount)
-    .get('/totalGenerated', verifyJWT, dashboardController.getTotalGeneratedCount)
-    .get('/redeemedSerialCount', verifyJWT, dashboardController.getRedeemedSerialCount)
-    .get('/totalAmount', verifyJWT, dashboardController.calculateTotalAmountRedeemed)
+    .get('/serialsData', verifyJWT, dashboardController.getSerialsData)
 
 
 // Use middleware function to skip authentication for certain routes

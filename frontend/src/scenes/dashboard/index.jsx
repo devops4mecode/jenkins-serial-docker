@@ -19,93 +19,49 @@ const Dashboard = () => {
     const colors = tokens(theme.palette.mode)
 
     const { user } = useAuthContext()
-    const [count, setCount] = useState({ 10: 0, 30: 0, 50: 0, 100: 0, total: 0 })
-    const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0, total: 0 })
-    const [redeemedAmount, setRedeemedAmount] = useState(0)
+    const [totalRedeemedAmount, setTotalRedeemedAmount] = useState(0)
+    const [totalRedeemedCount, setTotalRedeemedCount] = useState(0)
+    const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
+    const [generatedCount, setGeneratedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
+    const [mostRedeemedCount, setmostRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
 
 
     useEffect(() => {
-        const getTotalRedeemedCount = async () => {
+        const getSerialsData = async () => {
             if (user) {
                 try {
-                    const response = await axios.get(`api/dashboard/falseCount`, {
+                    const { data } = await axios.get(`api/dashboard/serialsData`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     });
-                    setCount(prevCount => {
-                        const newCount = { ...prevCount };
-                        newCount.total = response.data[0].count;
-                        return newCount;
-                    });
-                } catch (error) {
-                    console.log(error)
-                }
-            }
-        }
-
-        getTotalRedeemedCount()
-    }, [user])
-
-    useEffect(() => {
-        const getTotalGeneratedCount = async () => {
-            if (user) {
-                try {
-                    const response = await axios.get(`api/dashboard/totalGenerated`, {
-                        headers: { 'Authorization': `Bearer ${user.accessToken}` }
-                    })
-                    setCount(prevCount => {
-                        const newCount = { ...prevCount }
-                        response.data.forEach(({ _id, count }) => {
-                            newCount[_id] = count
-                        })
-                        return newCount
-                    })
-                } catch (error) {
-                    console.log(error)
-                }
-            }
-        }
-
-        getTotalGeneratedCount()
-    }, [user])
-
-    useEffect(() => {
-        const getRedeemedSerialCount = async () => {
-            if (user) {
-                try {
-                    const response = await axios.get(`api/dashboard/redeemedSerialCount`, {
-                        headers: { 'Authorization': `Bearer ${user.accessToken}` }
-                    })
+                    setTotalRedeemedAmount(data?.totalAmountRedeemed[0].sum)
+                    setTotalRedeemedCount(data?.totalRedeemedCount[0].count)
                     setRedeemedCount(prevCount => {
-                        const newCount = { ...prevCount }
-                        response.data.forEach(({ _id, count }) => {
-                            newCount[_id] = count
+                        const newRedeemedCount = { ...prevCount }
+                        data?.redeemedSerialCount.forEach(({ _id, count }) => {
+                            newRedeemedCount[_id] = count
                         })
-                        return newCount
+                        return newRedeemedCount
+                    })
+                    setGeneratedCount(prevCount => {
+                        const newRedeemedCount = { ...prevCount }
+                        data?.totalGeneratedCount.forEach(({ _id, count }) => {
+                            newRedeemedCount[_id] = count
+                        })
+                        return newRedeemedCount
+                    })
+                    setmostRedeemedCount(prevCount => {
+                        const newRedeemedCount = { ...prevCount }
+                        data?.mostRedeemed.forEach(({ _id, percentage }) => {
+                            newRedeemedCount[_id] = percentage
+                        })
+                        return newRedeemedCount
                     })
                 } catch (error) {
                     console.log(error)
                 }
             }
         }
-
-        getRedeemedSerialCount()
-    }, [user])
-
-    useEffect(() => {
-        const totalAmountRedeemed = async () => {
-            if (user) {
-                try {
-                    const response = await axios.get(`/api/dashboard/totalAmount`, {
-                        headers: { 'Authorization': `Bearer ${user.accessToken}` }
-                    })
-                    const total = response.data[0].sum
-                    setRedeemedAmount(total)
-                } catch (error) {
-                    console.log(error)
-                }
-            }
-        }
-        totalAmountRedeemed()
+        getSerialsData()
     }, [user])
 
     return (
@@ -132,7 +88,7 @@ const Dashboard = () => {
                                 fontWeight="bold"
                                 color={colors.greenAccent[500]}
                             >
-                                {`RM ${redeemedAmount}`}
+                                {`RM ${totalRedeemedAmount}`}
                             </Typography>
                         </Box>
                     </Box>
@@ -146,7 +102,7 @@ const Dashboard = () => {
                 <Grid item xs={6} sm={6} md={6}>
                     <Box className="style-statbox">
                         <StatBox
-                            title={count.total}
+                            title={totalRedeemedCount}
                             subtitle="Total Redeem Count"
                             icon={
                                 <TrendingDownIcon className="iconSize" />
@@ -157,7 +113,7 @@ const Dashboard = () => {
                 <Grid item xs={6} sm={6} md={6}>
                     <Box className="style-statbox">
                         <StatBox
-                            title={`RM ${redeemedAmount}`}
+                            title={`RM ${totalRedeemedAmount}`}
                             subtitle="Total Amount Redeemed"
                             icon={
                                 <AttachMoneyIcon className="iconSize" />
@@ -166,9 +122,6 @@ const Dashboard = () => {
                     </Box>
                 </Grid>
             </Grid>
-
-
-
 
             {/* Row 2 */}
             <Box className="category">
@@ -230,8 +183,6 @@ const Dashboard = () => {
                 </Grid>
             </Box>
 
-
-
             {/* Row 3 */}
             <Box className="category">
                 <Box>
@@ -244,7 +195,7 @@ const Dashboard = () => {
                     <Grid item xs={6} sm={6} md={3}>
                         <Box className="style-statbox">
                             <StatBox
-                                title={count['10']}
+                                title={generatedCount['10']}
                                 subtitle="RM 10"
                                 icon={
                                     <TrendingUpIcon className="iconSize" />
@@ -255,7 +206,7 @@ const Dashboard = () => {
                     <Grid item xs={6} sm={6} md={3}>
                         <Box className="style-statbox">
                             <StatBox
-                                title={count['30']}
+                                title={generatedCount['30']}
                                 subtitle="RM 30"
                                 icon={
                                     <TrendingUpIcon className="iconSize" />
@@ -266,7 +217,7 @@ const Dashboard = () => {
                     <Grid item xs={6} sm={6} md={3}>
                         <Box className="style-statbox">
                             <StatBox
-                                title={count['50']}
+                                title={generatedCount['50']}
                                 subtitle="RM 50"
                                 icon={
                                     <TrendingUpIcon className="iconSize" />
@@ -277,7 +228,7 @@ const Dashboard = () => {
                     </Grid>
                     <Grid item xs={6} sm={6} md={3}>
                         <Box className="style-statbox"><StatBox
-                            title={count['100']}
+                            title={generatedCount['100']}
                             subtitle="RM100"
                             icon={
                                 <TrendingUpIcon  className="iconSize" />
@@ -300,7 +251,7 @@ const Dashboard = () => {
                     <Grid item xs={6} sm={6} md={3}>
                         <Box className="style-statbox">
                             <StatBox
-                                title="7%"
+                                title={`${mostRedeemedCount['10'].toFixed(2)}%`}
                                 subtitle="RM 10"
                                 icon={
                                     <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
@@ -311,7 +262,7 @@ const Dashboard = () => {
                     <Grid item xs={6} sm={6} md={3}>
                         <Box className="style-statbox">
                             <StatBox
-                                title="7%"
+                                title={`${mostRedeemedCount['30'].toFixed(2)}%`}
                                 subtitle="RM 30"
                                 icon={
                                     <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
@@ -322,7 +273,7 @@ const Dashboard = () => {
                     <Grid item xs={6} sm={6} md={3}>
                         <Box className="style-statbox">
                             <StatBox
-                                title="7%"
+                                title={`${mostRedeemedCount['50'].toFixed(2)}%`}
                                 subtitle="RM 50"
                                 icon={
                                     <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
@@ -333,7 +284,7 @@ const Dashboard = () => {
                     <Grid item xs={6} sm={6} md={3}>
                         <Box className="style-statbox">
                             <StatBox
-                                title="7%"
+                                title={`${mostRedeemedCount['100'].toFixed(2)}%`}
                                 subtitle="RM100"
                                 icon={
                                     <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
