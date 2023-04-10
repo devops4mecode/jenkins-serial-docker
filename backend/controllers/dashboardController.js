@@ -1,7 +1,6 @@
 const Serial = require("../models/SerialModel");
 const User = require("../models/UserModel");
 
-
 const getSerialsData = async (req, res) => {
     try {
         const totalRedeemedCount = await Serial.aggregate([
@@ -49,3 +48,4 @@ const getSerialsData = async (req, res) => {
 module.exports = {
     getSerialsData
 };
+

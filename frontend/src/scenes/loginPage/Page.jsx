@@ -2,6 +2,8 @@ import { Box, Typography, useTheme, useMediaQuery } from "@mui/material"
 import Form from "./Form"
 import { tokens } from "../../theme";
 
+import { FormattedMessage } from "react-intl";
+
 const LoginPage = () => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
@@ -14,7 +16,7 @@ const LoginPage = () => {
                 fontSize="32px"
                 color={colors.grey[100]}
             >
-                Lucky Serial
+                <FormattedMessage id="logo.name" />
             </Typography>
         </Box>
 
@@ -26,7 +28,7 @@ const LoginPage = () => {
             backgroundColor={theme.palette.mode}
         >
             <Typography fontWeight="500" variant="h5" sx={{ mb: "1.5rem" }}>
-                Welcome to Lucky Serial
+                <FormattedMessage id="greeting" />
             </Typography>
             <Form />
         </Box>

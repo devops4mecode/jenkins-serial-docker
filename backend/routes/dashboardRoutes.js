@@ -17,7 +17,6 @@ const skipAuth = (req, res, next) => {
 router
     .get('/serialsData', verifyJWT, dashboardController.getSerialsData)
 
-
 // Use middleware function to skip authentication for certain routes
 router.use(skipAuth);
 
