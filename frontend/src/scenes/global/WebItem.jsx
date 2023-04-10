@@ -4,16 +4,22 @@ import { Link, useNavigate } from "react-router-dom"
 import { MenuItem } from "react-pro-sidebar"
 import '../../index.css'
 import { useState } from "react"
+import { useIntl } from 'react-intl'
+
+
 
 
 const WebItem = ({ title, to, icon, selected, setSelected }) => {
-
-    const { logout } = useLogout()
-
+    
     const Navigate = useNavigate()
+    const { logout } = useLogout()
+    
+    const intl = useIntl()
 
     const handleOnClick = () => {
-        if (title === "Logout") {
+        
+
+        if (title.props.id === "logout.button" || title === "Logout") {
             logout()
             Navigate('/login')
         } else {
@@ -33,7 +39,7 @@ const WebItem = ({ title, to, icon, selected, setSelected }) => {
                 <Typography className="nav-wording">
                     {title}
                 </Typography>
-                {title !== "Logout" && <Link to={to} />}
+                {title.props.id !== "logout.button" && <Link to={to} />}
             </MenuItem>
         </Box>
     )

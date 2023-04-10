@@ -1,5 +1,6 @@
 {
     "logo.name": "Lucky Serial",
+    "login": "Login",
     "greeting": "Welcome to Lucky Serial",
     "login.button": "Login",
     "login.username": "Username",

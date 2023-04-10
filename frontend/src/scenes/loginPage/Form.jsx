@@ -1,12 +1,8 @@
 import { Box, Typography, useTheme, useMediaQuery, Button, TextField } from "@mui/material"
-import { useState } from "react";
 import { tokens } from "../../theme";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
 import { useLogin } from "hooks/useLogin"
-
 import { FormattedMessage } from "react-intl";
 
 const Form = () => {
@@ -40,14 +36,7 @@ const Form = () => {
                 handleSubmit,
             }) => (
                 <form onSubmit={handleSubmit}>
-                    <Box
-                        display="grid"
-                        gap="30px"
-                        gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-                        sx={{
-                            "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-                        }}
-                    >
+                    <Box className="login-field-component" >
                         <TextField
                             label={<FormattedMessage id="login.username" />}
                             onBlur={handleBlur}
@@ -71,27 +60,14 @@ const Form = () => {
                         />
                     </Box>
 
-                    <Box>
+                    <Box className="login-button-component">
                         <Button
                             disabled={isLoading}
-                            fullWidth
                             type="submit"
-                            sx={{
-                                m: "2rem 0",
-                                p: "1rem",
-                                backgroundColor: colors.blueAccent[700],
-                                color: `${colors.grey[100]} !important`
-                            }}
+                            className="login-field-button"
                         >
                             <FormattedMessage id="login.button" />
-                        </Button>
-                        <Typography
-                            sx={{
-                                textDecoration: "underline",
-                                color: `${colors.grey[100]} !important`
-                            }}
-                        >
-                        </Typography>
+                        </Button>                        
                     </Box>
                 </form>
             )}

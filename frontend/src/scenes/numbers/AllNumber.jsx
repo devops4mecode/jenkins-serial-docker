@@ -97,7 +97,7 @@ const AllNumber = () => {
         },
         {
             field: "serialStatus",
-            headerName: "Serial Number Status",
+            headerName: "STATUS",
             valueGetter: (params) =>
                 params.row.serialStatus ? "UNCLAIMED" : "REDEEMED",
             cellClassName: (params) =>
