@@ -43,7 +43,7 @@ function App() {
 
     // anthing refer to the theme.js file
     return (
-        <IntlProvider locale={locale} messages={Chinese}>
+        <IntlProvider locale={locale} messages={Malay}>
             <ColorModeContext.Provider value={colorMode}>
                 <BrowserRouter>
                     <ThemeProvider theme={theme}>

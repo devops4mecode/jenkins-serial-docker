@@ -10,7 +10,7 @@ import { useAuthContext } from "hooks/useAuthContext";
 import axios from "axios";
 import { useTheme } from "@emotion/react";
 import CreditButton from "components/CreditButton";
-// import { DataGrid } from "@mui/x-data-grid";
+import { FormattedMessage } from "react-intl";
 import CreditTextField from "../../components/TextField";
 import '../../css/generateNumber.css'
 
@@ -71,7 +71,10 @@ const GenerateNumber = () => {
     });
 
     return <Box m="20px">
-        <Header title="GENERATE SERIAL NUMBER" subtitle="Top Up Credit" />
+        <Header
+            title={<FormattedMessage id="generate.serial" />}
+            subtitle={<FormattedMessage id="top.up.credit" />}
+        />
 
         <Formik
             onSubmit={handleFormSubmit}
@@ -98,7 +101,7 @@ const GenerateNumber = () => {
                             fullWidth
                             variant="filled"
                             type="number"
-                            label="Reload Amount"
+                            label={<FormattedMessage id="reload.amount" />}
                             onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.givenCredit}
@@ -114,7 +117,7 @@ const GenerateNumber = () => {
                             fullWidth
                             variant="filled"
                             type="number"
-                            label="Quantity"
+                            label={<FormattedMessage id="reload.quantity" />}
                             onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.amountToGenerate}
@@ -130,7 +133,7 @@ const GenerateNumber = () => {
                             fullWidth
                             variant="filled"
                             type="text"
-                            label="Remark"
+                            label={<FormattedMessage id="reload.remark" />}
                             onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.remarkName}
@@ -150,7 +153,7 @@ const GenerateNumber = () => {
                             type="submit"
                             variant="contained"
                         >
-                            GENERATE
+                            <FormattedMessage id="generate.button" />
                         </Button>
                     </Box>
 
@@ -160,10 +163,10 @@ const GenerateNumber = () => {
                                 <Table>
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell align="center">Serial Number</TableCell>
-                                            <TableCell align="center">Given Credit</TableCell>
-                                            <TableCell align="center">Buyer</TableCell>
-                                            <TableCell align="center">Buy Date</TableCell>
+                                            <TableCell align="center"><FormattedMessage id="serial.number" /></TableCell>
+                                            <TableCell align="center"><FormattedMessage id="serial.credit" /></TableCell>
+                                            <TableCell align="center"><FormattedMessage id="serial.buyer" /></TableCell>
+                                            <TableCell align="center"><FormattedMessage id="serial.purchase.date" /></TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -179,24 +182,13 @@ const GenerateNumber = () => {
                                 </Table>
                             </TableContainer>
 
-                            <Box display="flex"
-                                mt="20px"
-                                sx={{
-                                    justifyContent: {
-                                        xs: "end",
-                                    },
-                                }}>
+                            <Box className="generate-button-component">
                                 <CSVLink data={data} headers={headers} filename={'code.csv'}>
                                     <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        sx={{
-                                            fontSize: {
-                                                xs: "12px",
-                                                lg: "18px"
-                                            },
-                                        }}>
-                                        Export to CSV
+                                        className="generate-button-text"
+                                        type="submit"
+                                        variant="contained">
+                                        <FormattedMessage id="export.csv" />
                                     </Button>
                                 </CSVLink>
                             </Box>
@@ -209,9 +201,9 @@ const GenerateNumber = () => {
 }
 
 const checkoutSchema = yup.object().shape({
-    givenCredit: yup.number().required("This field must not be empty."),
-    amountToGenerate: yup.number().required("This field must not be empty."),
-    remarkName: yup.string().required("This field must not be empty."),
+    givenCredit: yup.number().required(<FormattedMessage id="credit.error" />),
+    amountToGenerate: yup.number().required(<FormattedMessage id="amount.error" />),
+    remarkName: yup.string().required(<FormattedMessage id="remark.error" />),
 })
 
 const initialValues = {

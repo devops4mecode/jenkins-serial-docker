@@ -10,6 +10,7 @@ import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
 import { useAuthContext } from "hooks/useAuthContext";
 import { useEffect, useState } from "react"
 import axios from "axios";
+import { FormattedMessage } from "react-intl";
 
 const AllNumber = () => {
 
@@ -102,8 +103,11 @@ const AllNumber = () => {
 
     return (
         <Box m="20px">
-            <Header title="Used Serial Number" subtitle="Used Serial Number" />
-            <Box m="40px 0 0 0" height="75vh" sx={{
+            <Header
+                title={<FormattedMessage id="invalid.serials"/>}
+                subtitle={<FormattedMessage id="invalid.serials"/>}
+            />
+            <Box m="0px 0 0 0" height="70vh" sx={{
                 "& .MuiDataGrid-root": {
                     // border: "none"
                 },

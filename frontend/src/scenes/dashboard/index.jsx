@@ -12,6 +12,7 @@ import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import "../../css/dashboard.css"
+import { FormattedMessage } from "react-intl";
 
 const Dashboard = () => {
 
@@ -67,7 +68,10 @@ const Dashboard = () => {
     return (
         <Box m="20px">
             <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Header title="DASHBOARD" subtitle="Welcome to your Dashboard" />
+                <Header
+                    title={<FormattedMessage id="dashboard" />}
+                    subtitle={<FormattedMessage id="greeting" />}
+                />
             </Box>
 
             {/* Grid and Chart */}
@@ -81,7 +85,7 @@ const Dashboard = () => {
                                 fontWeight="600"
                                 color={colors.grey[100]}
                             >
-                                Revenue Generated
+                                <FormattedMessage id="revenue.generated" />
                             </Typography>
                             <Typography
                                 variant="h3"
@@ -103,7 +107,7 @@ const Dashboard = () => {
                     <Box className="style-statbox">
                         <StatBox
                             title={totalRedeemedCount}
-                            subtitle="Total Redeem Count"
+                            subtitle={<FormattedMessage id="total.redeem.count" />}
                             icon={
                                 <TrendingDownIcon className="iconSize" />
                             }
@@ -114,7 +118,7 @@ const Dashboard = () => {
                     <Box className="style-statbox">
                         <StatBox
                             title={`RM ${totalRedeemedAmount}`}
-                            subtitle="Total Amount Redeemed"
+                            subtitle={<FormattedMessage id="total.amount.redeemed" />}
                             icon={
                                 <AttachMoneyIcon className="iconSize" />
                             }
@@ -127,7 +131,7 @@ const Dashboard = () => {
             <Box className="category">
                 <Box>
                     <Typography className="sub-header">
-                        Total Redeemed
+                        <FormattedMessage id="total.redeemed" />
                     </Typography>
                 </Box>
 
@@ -187,7 +191,7 @@ const Dashboard = () => {
             <Box className="category">
                 <Box>
                     <Typography className="sub-header">
-                        Total Generated
+                        <FormattedMessage id="total.generated" />
                     </Typography>
                 </Box>
 
@@ -231,7 +235,7 @@ const Dashboard = () => {
                             title={generatedCount['100']}
                             subtitle="RM100"
                             icon={
-                                <TrendingUpIcon  className="iconSize" />
+                                <TrendingUpIcon className="iconSize" />
                             }
                         />
                         </Box>
@@ -243,7 +247,7 @@ const Dashboard = () => {
             <Box className="category">
                 <Box>
                     <Typography className="sub-header">
-                        Most Redeemed
+                        <FormattedMessage id="most.redeemed" />
                     </Typography>
                 </Box>
 

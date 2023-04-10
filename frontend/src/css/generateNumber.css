@@ -106,6 +106,7 @@ a:-webkit-any-link {
 
     .generate-button-component {
         justify-content: flex-end;
+        padding-top: 40px;
     }
 
     .generate-button-text {

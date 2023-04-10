@@ -2,7 +2,7 @@ import { useState } from "react"
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar"
 import "react-pro-sidebar/dist/css/styles.css"
 import { Box, IconButton, Typography, useTheme } from "@mui/material"
-import { Link, useNavigate } from "react-router-dom"
+import { FormattedMessage } from "react-intl"
 import { tokens } from "../../theme"
 import { useLogout } from "hooks/useLogout"
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -60,8 +60,7 @@ const Sidebar = () => {
                         {!isCollapsed && (
                             <Box display="flex" justifyContent="space-between" alignItems="center" ml="7px">
                                 <Typography variant="h3" color={colors.grey[100]}>
-                                    {/* {user?.username.toUpperCase()} */}
-                                    LUCKY SERIAL
+                                    {<FormattedMessage id="logo.name" />}
                                 </Typography>
                                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                                     <MenuOutlinedIcon />
@@ -70,34 +69,10 @@ const Sidebar = () => {
                         )}
                     </MenuItem>
 
-                    {/* USER */}
-                    {/* {!isCollapsed && (
-                        <Box mb="25px">
-                            <Box display="flex" justifyContent="center" alignItems="center">
-                                <img
-                                    alt="profile-user"
-                                    width="100px"
-                                    height="100px"
-                                    src={`../../assets/user.png`}
-                                    style={{ cursor: "pointer", borderRadius: "50%" }}
-                                />
-                            </Box>
-
-                            <Box textAlign="center">
-                                <Typography variant="h3" color={colors.grey[100]} fontWeight="bold" sx={{ m: "10px 0 0 0" }}>
-                                    Lucky Serial
-                                </Typography>
-                                <Typography variant="h5" color={colors.greenAccent[500]} >
-                                    
-                                </Typography>
-                            </Box>
-                        </Box>
-                    )} */}
-
                     {/* Menu Items */}
                     <Box paddingLeft={isCollapsed ? undefined : "10%"} >
                         <WebItem
-                            title="Dashboard"
+                            title={<FormattedMessage id="dashboard" />}
                             to="/"
                             icon={<HomeOutlinedIcon />}
                             selected={selected}
@@ -105,7 +80,7 @@ const Sidebar = () => {
                             className="hiddenIcon"
                         />
                         <WebItem
-                            title="Generate Serial"
+                            title={<FormattedMessage id="generate.serial" />}
                             to="/generateNumber"
                             icon={<ReceiptOutlinedIcon />}
                             selected={selected}
@@ -113,7 +88,7 @@ const Sidebar = () => {
                             className="hiddenIcon"
                         />
                         <WebItem
-                            title="All Serial Number"
+                            title={<FormattedMessage id="all.serial" />}
                             to="/allNumber"
                             icon={<FormatListBulletedIcon />}
                             selected={selected}
@@ -121,7 +96,7 @@ const Sidebar = () => {
                             className="hiddenIcon"
                         />
                         <WebItem
-                            title="Unclaimed"
+                            title={<FormattedMessage id="valid.serials" />}
                             to="/unusedNumber"
                             icon={<SixteenMpIcon />}
                             selected={selected}
@@ -129,7 +104,7 @@ const Sidebar = () => {
                             className="hiddenIcon"
                         />
                         <WebItem
-                            title="Redeemed"
+                            title={<FormattedMessage id="invalid.serials" />}
                             to="/usedNumber"
                             icon={<ContactsOutlinedIcon />}
                             selected={selected}
@@ -137,7 +112,7 @@ const Sidebar = () => {
                             className="hiddenIcon"
                         />
                         <WebItem
-                            title="Logout"
+                            title={<FormattedMessage id="logout.button" />}
                             icon={<LogoutIcon />}
                             selected={selected}
                             setSelected={setSelected}
