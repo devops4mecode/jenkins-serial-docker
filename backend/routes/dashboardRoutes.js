@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const serialController = require('../controllers/serialController');
+const dashboardController = require('../controllers/dashboardController');
 const verifyJWT = require('../middleware/verifyJWT');
 
 // Middleware function to skip authentication for certain routes
@@ -15,12 +15,7 @@ const skipAuth = (req, res, next) => {
 
 // Routes
 router
-    .get('/all', verifyJWT, serialController.getAllSerials)
-    .get('/detail', verifyJWT, serialController.getDetailsBySerialNo)
-    .get('/status', verifyJWT, serialController.getSerialsByStatus)
-    .post('/generate', verifyJWT, serialController.generateSerials)
-    .get('/details', serialController.getSerialDetails)
-    .patch('/redeem', serialController.redeemSerials)
+    .get('/serialsData', verifyJWT, dashboardController.getSerialsData)
 
 // Use middleware function to skip authentication for certain routes
 router.use(skipAuth);

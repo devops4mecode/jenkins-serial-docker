@@ -33,3 +33,57 @@ body,
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.pro-menu-item {
+  list-style: none;
+}
+
+
+
+
+
+
+.pro-inner-item {
+  display: inline-flex;
+  padding-left: 20px;
+}
+
+.pro-inner-item:active {
+  color: #6200EE;
+}
+
+.pro-item-content {
+  padding-left: 10px;
+}
+
+
+@media (max-width: 576px) {
+  .navItem-style {
+    color: #666666;
+  }
+
+  .navbaritem {
+    padding-top: 10px;
+    /* padding-bottom: 10px; */
+  }
+
+  .nav-wording {
+    font-size: 14px !important;
+  }
+
+  .nav-wording:active {
+    color: #6200EE !important;
+  }
+
+  .navbar-menuitem {
+    background-color: #6200EE15 !important;
+  }
+
+}
+
+@media (min-width: 768px) {
+  .navItem-style {
+    color: #666666;
+  }
+
+}

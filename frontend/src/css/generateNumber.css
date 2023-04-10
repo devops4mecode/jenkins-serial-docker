@@ -1,0 +1,115 @@
+a:-webkit-any-link {
+    text-decoration: none !important;
+}
+
+
+.credit-button-text {
+    color: #6200EE !important;
+    font-weight: bold !important;
+}
+
+.credit-button-button {
+    background-color: #6200EE15 !important;
+}
+
+.credit-button-component {
+    display: grid;
+}
+
+.credit-field-component {
+    display: grid;
+    row-gap: 15px;
+    column-gap: 30px;
+}
+
+.generate-button-component {
+    display: flex;
+}
+
+.generate-button-text {
+    color: #6200EE !important;
+    font-weight: bold !important;
+    background-color: #6200EE15 !important;
+}
+
+
+
+@media (max-width: 576px) {
+    .credit-button-text {
+        font-size: 12px !important;
+        padding-bottom: 2px !important;
+    }
+
+    .credit-button-component {
+        row-gap: 15px;
+        column-gap: 30px;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        grid-template-rows: repeat(4, minmax(0, 1fr));
+        padding-bottom: 40px;
+    }
+
+    .credit-field-component {
+        row-gap: 25px;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+        padding-bottom: 40px;
+    }
+    
+    .credit-input-field {
+        font-size: 12px !important;
+        height: 48px;
+    }
+
+    /* credit-input-field height */
+    .MuiFilledInput-root {
+        height: 48px;
+    }
+
+    .generate-button-component {
+        justify-content: center;
+    }
+
+    .generate-button-text {
+        font-size: 12px !important;
+    }
+}
+
+
+@media (min-width: 600px) {
+    .credit-input-field {
+        font-size: 18px !important;
+        height: 48px;
+    }
+
+    /* credit-input-field height */
+    .MuiFilledInput-root {
+        height: 60px;
+    }
+
+    .credit-button-text {
+        font-size: 18px !important;
+    }
+
+    .credit-button-component {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-rows: repeat(1, minmax(0, 1fr));
+        column-gap: 30px;
+    }
+
+    .credit-field-component {
+        row-gap: 40px;
+        column-gap: 30px;
+        padding-top: 25px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+    }
+
+    .generate-button-component {
+        justify-content: flex-end;
+        padding-top: 40px;
+    }
+
+    .generate-button-text {
+        font-size: 18px !important;
+    }
+}

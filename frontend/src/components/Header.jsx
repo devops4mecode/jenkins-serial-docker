@@ -5,19 +5,41 @@ const Header = ({ title, subtitle }) => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     return (
-        <Box mb="30px">
+        <Box
+            sx={{
+                paddingBottom: {
+                    xs: "10px",
+                    lg: "20px"
+                }
+            }}
+        >
             <Typography
-                variant="h2"
                 color={colors.grey[100]}
                 fontWeight="bold"
-                sx={{ m: "0 0 5px 0" }}
+                sx={{
+                    fontSize: {
+                        xs: "19px",
+                        lg: "25px"
+                    },
+                    paddingBottom: {
+                        xs: "2px"
+                    }
+                }}
             >
                 {title}
             </Typography>
 
             <Typography
-                variant="h5"
-                color={colors.greenAccent[400]}
+                color={colors.purple[100]}
+                sx={{
+                    fontSize: {
+                        xs: "15px",
+                        lg: "19px"
+                    },
+                    paddingBottom: {
+                        xs: "3px"
+                    }
+                }}
             >
                 {subtitle}
             </Typography>

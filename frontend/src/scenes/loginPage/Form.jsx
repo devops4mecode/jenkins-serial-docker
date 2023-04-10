@@ -7,6 +7,8 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "hooks/useLogin"
 
+import { FormattedMessage } from "react-intl";
+
 const Form = () => {
 
     const { login, error, isLoading } = useLogin()
@@ -47,7 +49,7 @@ const Form = () => {
                         }}
                     >
                         <TextField
-                            label="Username"
+                            label={<FormattedMessage id="login.username" />}
                             onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.username}
@@ -57,7 +59,7 @@ const Form = () => {
                             sx={{ gridColumn: "span 4" }}
                         />
                         <TextField
-                            label="Password"
+                            label={<FormattedMessage id="login.password" />}
                             type="password"
                             onBlur={handleBlur}
                             onChange={handleChange}
@@ -81,7 +83,7 @@ const Form = () => {
                                 color: `${colors.grey[100]} !important`
                             }}
                         >
-                            {"LOGIN"}
+                            <FormattedMessage id="login.button" />
                         </Button>
                         <Typography
                             sx={{

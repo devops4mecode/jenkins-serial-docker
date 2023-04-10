@@ -1,4 +1,5 @@
 import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField } from "@mui/material";
+import { CSVLink } from 'react-csv'
 import { tokens } from "theme";
 import { Formik } from "formik"
 import * as yup from "yup"
@@ -8,7 +9,10 @@ import { useState } from "react";
 import { useAuthContext } from "hooks/useAuthContext";
 import axios from "axios";
 import { useTheme } from "@emotion/react";
-// import { DataGrid } from "@mui/x-data-grid";
+import CreditButton from "components/CreditButton";
+import { FormattedMessage } from "react-intl";
+import CreditTextField from "../../components/TextField";
+import '../../css/generateNumber.css'
 
 const GenerateNumber = () => {
     const theme = useTheme()
@@ -42,42 +46,35 @@ const GenerateNumber = () => {
         }
     }
 
-    // const columns = [
-    //     {
-    //         field: "serialNo",
-    //         headerName: "Serial No",
-    //         flex: 1,
-    //         headerAlign: "center",
-    //         align: "center"
-    //     },
-    //     {
-    //         field: "givenCredit",
-    //         headerName: "Given Credit",
-    //         flex: 1,
-    //         headerAlign: "center",
-    //         align: "center"
-    //     },
-    //     {
-    //         field: "remarkName",
-    //         headerName: "Remark",
-    //         width: 200,
-    //         flex: 1,
-    //         headerAlign: "center",
-    //         align: "center"
-    //     },
-    //     {
-    //         field: "createdAt",
-    //         headerName: "SOLD DATE",
-    //         flex: 1,
-    //         headerAlign: "center",
-    //         align: "center"
-    //     }
-    // ];
+    const headers = [
+        { label: 'Serial Number', key: 'serialNo' },
+        { label: 'Given Credit', key: 'givenCredit' },
+        { label: 'Buyer', key: 'remarkName' },
+        { label: 'Buy Date', key: 'createdAt' },
+    ];
 
-    // const getRowId = (row) => row._id;
+    const data = serialsData.map(serialData => {
+        return {
+            serialNo: serialData.serialNo,
+            givenCredit: serialData.givenCredit,
+            remarkName: serialData.remarkName,
+            createdAt: new Date(serialData.createdAt).toLocaleString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                hour12: true,
+            }),
+        };
+    });
 
     return <Box m="20px">
-        <Header title="GENERATE SERIAL NUMBER" subtitle="Generate a New Serial Number to Top Up Credit" />
+        <Header
+            title={<FormattedMessage id="generate.serial" />}
+            subtitle={<FormattedMessage id="top.up.credit" />}
+        />
 
         <Formik
             onSubmit={handleFormSubmit}
@@ -87,117 +84,126 @@ const GenerateNumber = () => {
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue }) => (
                 <form onSubmit={handleSubmit}>
                     <Box
-                        display="grid"
-                        gap="30px"
-                        gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-                        sx={{
-                            "& > div": { gridColumn: isNonMobile ? undefined : "span 4" }
-                        }}
+                        className="credit-button-component"
+                    >
+                        <CreditButton onClick={() => setFieldValue("givenCredit", 10)} title="RM10" />
+                        <CreditButton onClick={() => setFieldValue("givenCredit", 30)} title="RM30" />
+                        <CreditButton onClick={() => setFieldValue("givenCredit", 50)} title="RM50" />
+                        <CreditButton onClick={() => setFieldValue("givenCredit", 100)} title="RM100" />
+                    </Box>
+
+                    <Box
+                        className="credit-field-component"
                     >
 
-                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("givenCredit", 10)}> RM 10 </Button>
-                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("givenCredit", 30)}> RM 30 </Button>
-                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("givenCredit", 50)}> RM 50 </Button>
-                        <Button variant="contained" color="secondary" onClick={() => setFieldValue("givenCredit", 100)}> RM 100 </Button>
-
                         {/* Reload Amount */}
-                        <TextField
+                        <CreditTextField
                             fullWidth
                             variant="filled"
                             type="number"
-                            label="Reload Amount"
+                            label={<FormattedMessage id="reload.amount" />}
                             onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.givenCredit}
                             name="givenCredit"
                             error={!!touched.givenCredit && !!errors.givenCredit}
                             helperText={touched.givenCredit && errors.givenCredit}
+                            InputProps={{ readOnly: true, }}
                             sx={{ gridColumn: "span 2" }}
-                            InputProps={{ readOnly: true }}
                         />
 
                         {/* Reload Quantity */}
-                        <TextField
+                        <CreditTextField
                             fullWidth
                             variant="filled"
                             type="number"
-                            label="Quantity"
+                            label={<FormattedMessage id="reload.quantity" />}
                             onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.amountToGenerate}
                             name="amountToGenerate"
                             error={!!touched.amountToGenerate && !!errors.amountToGenerate}
                             helperText={touched.amountToGenerate && errors.amountToGenerate}
+                            InputProps={{ readOnly: false }}
                             sx={{ gridColumn: "span 2" }}
                         />
 
                         {/* Remark */}
-                        <TextField
+                        <CreditTextField
                             fullWidth
                             variant="filled"
                             type="text"
-                            label="Remark"
+                            label={<FormattedMessage id="reload.remark" />}
                             onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.remarkName}
                             name="remarkName"
                             error={!!touched.remarkName && !!errors.remarkName}
                             helperText={touched.remarkName && errors.remarkName}
+                            InputProps={{ readOnly: false }}
                             sx={{ gridColumn: "span 2" }}
                         />
                     </Box>
 
-                    <Box display="flex" justifyContent="end" mt="20px">
-                        <Button type="submit" color="secondary" variant="contained">
-                            GENERATE
+                    <Box
+                        className="generate-button-component"
+                    >
+                        <Button
+                            className="generate-button-text"
+                            type="submit"
+                            variant="contained"
+                        >
+                            <FormattedMessage id="generate.button" />
                         </Button>
                     </Box>
 
                     {serialsData.length > 0 && (
-                        <TableContainer component={Paper} sx={{ mt: 4, textAlign: "center", color: colors.greenAccent[300] }}>
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell align="center">Serial Number</TableCell>
-                                        <TableCell align="center">Given Credit</TableCell>
-                                        <TableCell align="center">Buyer</TableCell>
-                                        <TableCell align="center">Buy Date</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {serialsData.map((serialData) => (
-                                        <TableRow key={serialData._id}>
-                                            <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.serialNo}</TableCell>
-                                            <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.givenCredit}</TableCell>
-                                            <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.remarkName}</TableCell>
-                                            <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{new Date(serialData.createdAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}</TableCell>
+                        <>
+                            <TableContainer component={Paper} sx={{ mt: 4, textAlign: "center", color: colors.greenAccent[300] }}>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell align="center"><FormattedMessage id="serial.number" /></TableCell>
+                                            <TableCell align="center"><FormattedMessage id="serial.credit" /></TableCell>
+                                            <TableCell align="center"><FormattedMessage id="serial.buyer" /></TableCell>
+                                            <TableCell align="center"><FormattedMessage id="serial.purchase.date" /></TableCell>
                                         </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                                    </TableHead>
+                                    <TableBody>
+                                        {serialsData.map((serialData) => (
+                                            <TableRow key={serialData._id}>
+                                                <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.serialNo}</TableCell>
+                                                <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.givenCredit}</TableCell>
+                                                <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.remarkName}</TableCell>
+                                                <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{new Date(serialData.createdAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+
+                            <Box className="generate-button-component">
+                                <CSVLink data={data} headers={headers} filename={'code.csv'}>
+                                    <Button
+                                        className="generate-button-text"
+                                        type="submit"
+                                        variant="contained">
+                                        <FormattedMessage id="export.csv" />
+                                    </Button>
+                                </CSVLink>
+                            </Box>
+                        </>
                     )}
                 </form>
             )}
         </Formik>
-
-        {/* {serialsData.length > 0 ? ( */}
-        {/* <Box> */}
-        {/* <DataGrid */}
-        {/* rows={serialsData} */}
-        {/* columns={columns} */}
-        {/* getRowId={getRowId} */}
-        {/* /> */}
-        {/* {console.log(serialsData)} */}
-        {/* </Box> */}
-        {/* ) : null} */}
     </Box>
 }
 
 const checkoutSchema = yup.object().shape({
-    givenCredit: yup.number().required("buy how much?"),
-    amountToGenerate: yup.number().required("buy how many?"),
-    remarkName: yup.string().required("who buy?"),
+    givenCredit: yup.number().required(<FormattedMessage id="credit.error" />),
+    amountToGenerate: yup.number().required(<FormattedMessage id="amount.error" />),
+    remarkName: yup.string().required(<FormattedMessage id="remark.error" />),
 })
 
 const initialValues = {

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar"
 import "react-pro-sidebar/dist/css/styles.css"
 import { Box, IconButton, Typography, useTheme } from "@mui/material"
-import { Link, useNavigate } from "react-router-dom"
+import { FormattedMessage } from "react-intl"
 import { tokens } from "../../theme"
 import { useLogout } from "hooks/useLogout"
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -12,40 +12,9 @@ import SixteenMpIcon from '@mui/icons-material/SixteenMp';
 import LogoutIcon from '@mui/icons-material/Logout'
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-
 import { useAuthContext } from "hooks/useAuthContext"
-
-const Item = ({ title, to, icon, selected, setSelected }) => {
-    const theme = useTheme()
-    const colors = tokens(theme.palette.mode)
-    const { logout } = useLogout()
-
-    const Navigate = useNavigate()
-
-    const handleOnClick = () => {
-        if (title === "Logout") {
-            logout()
-            Navigate('/login')
-        } else {
-            Navigate(to)
-            setSelected(title)
-        }
-    }
-
-    return (
-        <MenuItem
-            active={selected === title}
-            style={{
-                color: colors.grey[100]
-            }}
-            onClick={handleOnClick}
-            icon={icon}
-        >
-            <Typography>{title}</Typography>
-            {title !== "Logout" && <Link to={to} />}
-        </MenuItem>
-    )
-}
+import '../../index.css'
+import WebItem from "./WebItem"
 
 const Sidebar = () => {
 
@@ -73,6 +42,9 @@ const Sidebar = () => {
             },
             "& .pro-menu-item.active": {
                 color: "#6870fa !important"
+            },
+            [theme.breakpoints.down("lg")]: {
+                display: "none"
             }
         }}>
             <ProSidebar collapsed={isCollapsed}>
@@ -86,9 +58,9 @@ const Sidebar = () => {
                         }}
                     >
                         {!isCollapsed && (
-                            <Box display="flex" justifyContent="space-between" alignItems="center" ml="15px">
+                            <Box display="flex" justifyContent="space-between" alignItems="center" ml="7px">
                                 <Typography variant="h3" color={colors.grey[100]}>
-                                    {user?.username.toUpperCase()}
+                                    {<FormattedMessage id="logo.name" />}
                                 </Typography>
                                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                                     <MenuOutlinedIcon />
@@ -97,72 +69,54 @@ const Sidebar = () => {
                         )}
                     </MenuItem>
 
-                    {/* USER */}
-                    {!isCollapsed && (
-                        <Box mb="25px">
-                            <Box display="flex" justifyContent="center" alignItems="center">
-                                <img
-                                    alt="profile-user"
-                                    width="100px"
-                                    height="100px"
-                                    src={`../../assets/user.png`}
-                                    style={{ cursor: "pointer", borderRadius: "50%" }}
-                                />
-                            </Box>
-
-                            <Box textAlign="center">
-                                <Typography variant="h3" color={colors.grey[100]} fontWeight="bold" sx={{ m: "10px 0 0 0" }}>
-                                    Number Generator
-                                </Typography>
-                                <Typography variant="h5" color={colors.greenAccent[500]} >
-                                    Generate Number
-                                </Typography>
-                            </Box>
-                        </Box>
-                    )}
-
                     {/* Menu Items */}
-                    <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-                        <Item
-                            title="Dashboard"
+                    <Box paddingLeft={isCollapsed ? undefined : "10%"} >
+                        <WebItem
+                            title={<FormattedMessage id="dashboard" />}
                             to="/"
                             icon={<HomeOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
+                            className="hiddenIcon"
                         />
-                        <Item
-                            title="Generate Serial"
+                        <WebItem
+                            title={<FormattedMessage id="generate.serial" />}
                             to="/generateNumber"
                             icon={<ReceiptOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
+                            className="hiddenIcon"
                         />
-                        <Item
-                            title="All Serial Number"
+                        <WebItem
+                            title={<FormattedMessage id="all.serial" />}
                             to="/allNumber"
                             icon={<FormatListBulletedIcon />}
                             selected={selected}
                             setSelected={setSelected}
+                            className="hiddenIcon"
                         />
-                        <Item
-                            title="Unclaimed"
+                        <WebItem
+                            title={<FormattedMessage id="valid.serials" />}
                             to="/unusedNumber"
                             icon={<SixteenMpIcon />}
                             selected={selected}
                             setSelected={setSelected}
+                            className="hiddenIcon"
                         />
-                        <Item
-                            title="Redeemed"
+                        <WebItem
+                            title={<FormattedMessage id="invalid.serials" />}
                             to="/usedNumber"
                             icon={<ContactsOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
+                            className="hiddenIcon"
                         />
-                        <Item
-                            title="Logout"
+                        <WebItem
+                            title={<FormattedMessage id="logout.button" />}
                             icon={<LogoutIcon />}
                             selected={selected}
                             setSelected={setSelected}
+                            className="hiddenIcon"
                             logout={logout}
                         />
                     </Box>
