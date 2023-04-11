@@ -32,6 +32,16 @@ a:-webkit-any-link {
     background-color: #6200EE15 !important;
 }
 
+.export-button-component {
+    display: flex;
+}
+
+.export-button-text {
+    color: #6200EE !important;
+    /* font-weight: bold !important; */
+    background-color: #6200EE15 !important;
+}
+
 
 
 @media (max-width: 576px) {
@@ -72,6 +82,16 @@ a:-webkit-any-link {
     .generate-button-text {
         font-size: 12px !important;
     }
+
+    .export-button-component {
+        justify-content: center;
+        padding-top: 40px;
+        padding-bottom: 30px;
+    }
+
+    .export-button-text {
+        font-size: 12px !important;
+    }
 }
 
 
@@ -110,6 +130,15 @@ a:-webkit-any-link {
     }
 
     .generate-button-text {
+        font-size: 14px !important;
+    }
+
+    .export-button-component {
+        justify-content: flex-end;
+        padding-top: 40px;
+    }
+
+    .export-button-text {
         font-size: 14px !important;
     }
 }
