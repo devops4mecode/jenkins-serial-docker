@@ -182,10 +182,10 @@ const GenerateNumber = () => {
                                 </Table>
                             </TableContainer>
 
-                            <Box className="generate-button-component">
+                            <Box className="export-button-component">
                                 <CSVLink data={data} headers={headers} filename={'code.csv'}>
                                     <Button
-                                        className="generate-button-text"
+                                        className="export-button-text"
                                         type="submit"
                                         variant="contained">
                                         <FormattedMessage id="export.csv" />
