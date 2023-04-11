@@ -47,8 +47,8 @@ const AllNumber = () => {
             align: "center",
             valueGetter: (params) =>
                 formatNumber(params.row.serialNo),
-            className: "datagrid-column-serialNo",
-            // width: 350
+            width: 250,
+            xs: "100px"
         },
         {
             field: "givenCredit",
@@ -56,8 +56,8 @@ const AllNumber = () => {
             type: "number",
             headerAlign: "center",
             align: "center",
-            className: "datagrid-column-givenCredit",
-            // width: 150
+            width: 100,
+            xs: 100
         },
         {
             field: "remarkName",
@@ -65,8 +65,8 @@ const AllNumber = () => {
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center",
-            className: "datagrid-column-remarkName",
-            // width: 250
+            width: 200,
+            xs: 100
         },
         {
             field: "createdAt",
@@ -75,8 +75,8 @@ const AllNumber = () => {
                 moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
             headerAlign: "center",
             align: "center",
-            className: "datagrid-column-createdAt",
-            // width: 250
+            width: 200,
+            xs: 100
         },
         {
             field: "redemptionAcc",
@@ -86,8 +86,8 @@ const AllNumber = () => {
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center",
-            className: "datagrid-column-redemptionAcc",
-            // width: 250
+            width: 200,
+            xs: 100
         },
         {
             field: "updatedAt",
@@ -96,8 +96,8 @@ const AllNumber = () => {
                 params.row.serialStatus ? "---" : moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
             headerAlign: "center",
             align: "center",
-            className: "datagrid-column-updatedAt",
-            // width: 250
+            width: 200,
+            xs: 100
         },
         {
             field: "serialStatus",
@@ -108,8 +108,8 @@ const AllNumber = () => {
                 params.value === "REDEEMED" ? "status-redeemed" : "name-column--cell",
             headerAlign: "center",
             align: "center",
-            className: "datagrid-column-serialStatus",
-            // width: 250
+            width: 200,
+            xs: 100
         },
     ]
 
@@ -123,9 +123,9 @@ const AllNumber = () => {
             />
             {/* <Box m="0px 0 0 0" height="70vh" width='100%' sx={{ */}
             <Box
-
                 sx={{
-                    height: '70vh', width: '100%',
+                    height: '70vh',
+                    width: '100%',
                     "& .MuiDataGrid-root": {
                         // border: "none"
                     },
@@ -155,16 +155,6 @@ const AllNumber = () => {
                     columns={columns}
                     components={{ Toolbar: GridToolbar }}
                     getRowId={getRowId}
-
-                    initialState={{
-                        pagination: {
-                            paginationModel: {
-                                pageSize: 20,
-                            },
-                        },
-                    }}
-                    rowsPerPageOptions={[20, 50, 100]}
-                    disableRowSelectionOnClick
                 />
             </Box>
         </Box>
