@@ -186,7 +186,6 @@ const GenerateNumber = () => {
                                 <CSVLink data={data} headers={headers} filename={'code.csv'}>
                                     <Button
                                         className="export-button-text"
-                                        type="submit"
                                         variant="contained">
                                         <FormattedMessage id="export.csv" />
                                     </Button>

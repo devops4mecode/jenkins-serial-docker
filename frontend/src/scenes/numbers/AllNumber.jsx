@@ -10,6 +10,7 @@ import axios from "axios";
 import { FormattedMessage } from "react-intl";
 import '../../css/allNumberTable.css'
 
+
 const AllNumber = () => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
@@ -156,6 +157,8 @@ const AllNumber = () => {
                     components={{ Toolbar: GridToolbar }}
                     getRowId={getRowId}
                 />
+
+                <Box className="footer"></Box>
             </Box>
         </Box>
 

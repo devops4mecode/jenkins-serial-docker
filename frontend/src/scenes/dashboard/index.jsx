@@ -299,7 +299,7 @@ const Dashboard = () => {
                 </Grid>
             </Box>
 
-            <Box className="dashboard-footer"></Box>
+            <Box className="footer"></Box>
         </Box >
     )
 }

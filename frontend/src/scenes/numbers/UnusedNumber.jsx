@@ -86,8 +86,8 @@ const AllNumber = () => {
     return (
         <Box m="20px">
             <Header
-                title={<FormattedMessage id="valid.serials"/>}
-                subtitle={<FormattedMessage id="valid.serials"/>}
+                title={<FormattedMessage id="valid.serials" />}
+                subtitle={<FormattedMessage id="valid.serials" />}
             />
             <Box m="0px 0 0 0" height="70vh" sx={{
                 "& .MuiDataGrid-root": {
@@ -122,8 +122,9 @@ const AllNumber = () => {
                     columns={columns}
                     components={{ Toolbar: GridToolbar }}
                     getRowId={getRowId}
-                // checkboxSelection
                 />
+
+                <Box className="footer"></Box>
             </Box>
         </Box>
 

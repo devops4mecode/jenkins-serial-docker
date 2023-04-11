@@ -100,8 +100,8 @@ const AllNumber = () => {
     return (
         <Box m="20px">
             <Header
-                title={<FormattedMessage id="invalid.serials"/>}
-                subtitle={<FormattedMessage id="invalid.serials"/>}
+                title={<FormattedMessage id="invalid.serials" />}
+                subtitle={<FormattedMessage id="invalid.serials" />}
             />
             <Box height="70vh" width='100%' sx={{
                 "& .name-column--cell": {
@@ -122,8 +122,9 @@ const AllNumber = () => {
                     columns={columns}
                     components={{ Toolbar: GridToolbar }}
                     getRowId={getRowId}
-                // checkboxSelection
                 />
+
+                <Box className="footer"></Box>
             </Box>
         </Box>
 
