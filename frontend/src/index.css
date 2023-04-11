@@ -88,6 +88,10 @@ body,
   .css-iqie2n {
     padding-left: 0 !important;
   }
+
+  .footer {
+      padding-top: 30px;
+  }
 }
 
 @media (min-width: 768px) {
