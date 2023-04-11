@@ -47,8 +47,8 @@ const AllNumber = () => {
             align: "center",
             valueGetter: (params) =>
                 formatNumber(params.row.serialNo),
-            width: 250,
-            xs: "100px"
+            width: 300,
+            xs: 100,
         },
         {
             field: "givenCredit",
@@ -65,7 +65,7 @@ const AllNumber = () => {
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center",
-            width: 200,
+            width: 230,
             xs: 100
         },
         {
@@ -75,7 +75,7 @@ const AllNumber = () => {
                 moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
             headerAlign: "center",
             align: "center",
-            width: 200,
+            width: 230,
             xs: 100
         },
         {
@@ -86,7 +86,7 @@ const AllNumber = () => {
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center",
-            width: 200,
+            width: 230,
             xs: 100
         },
         {
@@ -96,7 +96,7 @@ const AllNumber = () => {
                 params.row.serialStatus ? "---" : moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
             headerAlign: "center",
             align: "center",
-            width: 200,
+            width: 230,
             xs: 100
         },
         {
@@ -108,7 +108,7 @@ const AllNumber = () => {
                 params.value === "REDEEMED" ? "status-redeemed" : "name-column--cell",
             headerAlign: "center",
             align: "center",
-            width: 200,
+            width: 230,
             xs: 100
         },
     ]

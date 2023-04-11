@@ -34,7 +34,7 @@ const Dashboard = () => {
                     const { data } = await axios.get(`api/dashboard/serialsData`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     });
-                    setTotalRedeemedAmount(data?.totalAmountRedeemed[0].sum)
+                    setTotalRedeemedAmount(data?.totalAmountRedeemed[0]?.sum)
                     setTotalRedeemedCount(data?.totalRedeemedCount[0].count)
                     setRedeemedCount(prevCount => {
                         const newRedeemedCount = { ...prevCount }
@@ -298,6 +298,8 @@ const Dashboard = () => {
                     </Grid>
                 </Grid>
             </Box>
+
+            <Box className="dashboard-footer"></Box>
         </Box >
     )
 }

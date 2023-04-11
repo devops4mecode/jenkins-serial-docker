@@ -52,7 +52,7 @@ const AllNumber = () => {
             align: "center",
             valueGetter: (params) =>
                 formatNumber(params.row.serialNo),
-            flex: 1
+            width: 400
         },
         {
             field: "givenCredit",
@@ -60,12 +60,12 @@ const AllNumber = () => {
             type: "number",
             headerAlign: "center",
             align: "center",
-            flex: 1
+            width: 400
         },
         {
             field: "remarkName",
             headerName: "WHO BUY",
-            flex: 1,
+            width: 400,
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center"
@@ -75,7 +75,7 @@ const AllNumber = () => {
             headerName: "SOLD DATE",
             valueFormatter: (params) =>
                 moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
-            flex: 1,
+            width: 400,
             headerAlign: "center",
             align: "center"
         },

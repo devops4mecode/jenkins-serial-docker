@@ -1,0 +1,5 @@
+@media (max-width: 567px) {
+    .MuiDataGrid-menuIcon .MuiDataGrid-menuOpen {
+        display: none;
+    }
+}
