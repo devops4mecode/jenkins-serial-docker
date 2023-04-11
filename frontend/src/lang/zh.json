@@ -1,5 +1,6 @@
 {
     "logo.name": "幸运序号",
+    "login": "登录",
     "greeting": "欢迎来到幸运序号",
     "login.button": "登入",
     "login.username": "用户名",

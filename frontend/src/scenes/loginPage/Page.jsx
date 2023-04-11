@@ -1,7 +1,7 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material"
 import Form from "./Form"
 import { tokens } from "../../theme";
-
+import '../../css/loginPage.css'
 import { FormattedMessage } from "react-intl";
 
 const LoginPage = () => {
@@ -9,30 +9,19 @@ const LoginPage = () => {
     const colors = tokens(theme.palette.mode)
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)")
 
-    return <Box>
-        <Box width="100%" backgroundColor={theme.palette.mode} p="1rem 6%" textAlign="center">
-            <Typography
-                fontWeight="bold"
-                fontSize="32px"
-                color={colors.grey[100]}
-            >
-                <FormattedMessage id="logo.name" />
-            </Typography>
-        </Box>
+    return (
+        <Box className="container">
+            <Box className="title-component" >
+                <Typography className="title-text" >
+                    <FormattedMessage id="logo.name" />
+                </Typography>
+            </Box>
 
-        <Box
-            width={isNonMobileScreens ? "50%" : "93%"}
-            p="2rem"
-            m="2rem auto"
-            borderRadius="1.5rem"
-            backgroundColor={theme.palette.mode}
-        >
-            <Typography fontWeight="500" variant="h5" sx={{ mb: "1.5rem" }}>
-                <FormattedMessage id="greeting" />
-            </Typography>
-            <Form />
+            <Box className="login-form-component" >
+                <Form />
+            </Box>
         </Box>
-    </Box>
+    )
 }
 
 export default LoginPage

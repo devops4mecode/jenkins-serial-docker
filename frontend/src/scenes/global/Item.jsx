@@ -14,7 +14,7 @@ const MobileItem = ({ title, to, icon, selected, setSelected, toggleNav }) => {
     const Navigate = useNavigate()
 
     const handleOnClick = () => {
-        if (title === "Logout") {
+        if (title.props.id === "logout.button" || title === "Logout") {
             logout()
             Navigate('/login')
         } else {
@@ -35,7 +35,7 @@ const MobileItem = ({ title, to, icon, selected, setSelected, toggleNav }) => {
                 <Typography className="nav-wording">
                     {title}
                 </Typography>
-                {title !== "Logout" && <Link to={to} />}
+                {title.props.id !== "logout.button" && <Link to={to} />}
             </MenuItem>
         </Box>
     )
