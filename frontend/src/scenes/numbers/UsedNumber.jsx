@@ -1,12 +1,8 @@
 import { Box, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid"
 import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData"
 import Header from "../../components/Header";
 import moment from "moment";
-import DownloadIcon from '@mui/icons-material/Download';
-import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
-
 import { useAuthContext } from "hooks/useAuthContext";
 import { useEffect, useState } from "react"
 import axios from "axios";
@@ -52,7 +48,7 @@ const AllNumber = () => {
             align: "center",
             valueGetter: (params) =>
                 formatNumber(params.row.serialNo),
-            flex: 1
+            width: 300
         },
         {
             field: "givenCredit",
@@ -60,12 +56,12 @@ const AllNumber = () => {
             type: "number",
             headerAlign: "center",
             align: "center",
-            flex: 1
+            width: 200
         },
         {
             field: "remarkName",
             headerName: "WHO BUY",
-            flex: 1,
+            width: 250,
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center"
@@ -75,14 +71,14 @@ const AllNumber = () => {
             headerName: "SOLD DATE",
             valueFormatter: (params) =>
                 moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
-            flex: 1,
+            width: 250,
             headerAlign: "center",
             align: "center"
         },
         {
             field: "redemptionAcc",
             headerName: "WHO USE",
-            flex: 1,
+            width: 250,
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center"
@@ -92,7 +88,7 @@ const AllNumber = () => {
             headerName: "REDEEMED DATE",
             valueFormatter: (params) =>
                 moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
-            flex: 1,
+            width: 250,
             headerAlign: "center",
             align: "center"
         }
@@ -107,33 +103,19 @@ const AllNumber = () => {
                 title={<FormattedMessage id="invalid.serials"/>}
                 subtitle={<FormattedMessage id="invalid.serials"/>}
             />
-            <Box m="0px 0 0 0" height="70vh" sx={{
-                "& .MuiDataGrid-root": {
-                    // border: "none"
-                },
-                "& .MuiDataGrid-cell": {
-                    // border: "none"
-                },
+            <Box height="70vh" width='100%' sx={{
                 "& .name-column--cell": {
                     color: colors.greenAccent[300]
                 },
                 "& .MuiDataGrid-columnHeaders": {
                     backgroundColor: colors.blueAccent[700],
-                    // borderBottom: "none"
-                },
-                "& .MuiDataGrid-virtualScroller": {
-                    // backgroundColor: colors.primary[400]
                 },
                 "& .MuiDataGrid-footerContainer": {
-                    // borderTop: "none",
                     backgroundColor: colors.blueAccent[700]
                 },
                 "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
                     color: `${colors.grey[100]} !important`
                 },
-                // "& .MuiCheckbox-root": {
-                //     color: `${colors.greenAccent[200]} !important`
-                // }
             }}>
                 <DataGrid
                     rows={serials}

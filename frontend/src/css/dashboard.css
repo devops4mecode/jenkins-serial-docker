@@ -55,6 +55,10 @@
         color: #6200EE;
         font-size: 23px !important;
     }
+
+    .dashboard-footer {
+        padding-top: 30px;
+    }
 }
 
 @media(min-width: 600px) {

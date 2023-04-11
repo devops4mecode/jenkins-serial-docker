@@ -28,7 +28,7 @@ a:-webkit-any-link {
 
 .generate-button-text {
     color: #6200EE !important;
-    font-weight: bold !important;
+    /* font-weight: bold !important; */
     background-color: #6200EE15 !important;
 }
 
@@ -110,6 +110,6 @@ a:-webkit-any-link {
     }
 
     .generate-button-text {
-        font-size: 18px !important;
+        font-size: 14px !important;
     }
 }

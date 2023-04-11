@@ -79,6 +79,15 @@ body,
     background-color: #6200EE15 !important;
   }
 
+
+  .css-1ohg3qd {
+    width: 90%;
+  }
+
+  /* search result isi kandungan */
+  .css-iqie2n {
+    padding-left: 0 !important;
+  }
 }
 
 @media (min-width: 768px) {
