@@ -1,26 +1,27 @@
-import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField } from "@mui/material";
-import { CSVLink } from 'react-csv'
-import { tokens } from "theme";
-import { Formik } from "formik"
+import axios from "axios"
 import * as yup from "yup"
-import useMediaQuery from "@mui/material/useMediaQuery";
+import { useState } from "react"
+import { useAuthContext } from "hooks/useAuthContext"
+import { useTheme } from "@emotion/react"
+import { FormattedMessage } from "react-intl"
+import { tokens } from "theme"
+import { Formik } from "formik"
+import { CSVLink } from 'react-csv'
+import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material"
 import Header from "../../components/Header"
-import { useState } from "react";
-import { useAuthContext } from "hooks/useAuthContext";
-import axios from "axios";
-import { useTheme } from "@emotion/react";
-import CreditButton from "components/CreditButton";
-import { FormattedMessage } from "react-intl";
-import CreditTextField from "../../components/TextField";
+import CreditButton from "components/CreditButton"
+import CreditTextField from "../../components/TextField"
 import '../../css/generateNumber.css'
 
+
 const GenerateNumber = () => {
+
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
-
     const { user } = useAuthContext()
-    const isNonMobile = useMediaQuery("(min-width:600px)")   //for mobile responsive
+
     const [serialsData, setSerialsData] = useState([])
+
 
     const handleFormSubmit = async (values) => {
         try {

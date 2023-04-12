@@ -1,9 +1,8 @@
-import { Box, Typography } from "@mui/material"
 import { useLogout } from "hooks/useLogout"
+import { Box, Typography } from "@mui/material"
 import { Link, useNavigate } from "react-router-dom"
 import { MenuItem } from "react-pro-sidebar"
 import '../../index.css'
-import { useState } from "react"
 
 
 

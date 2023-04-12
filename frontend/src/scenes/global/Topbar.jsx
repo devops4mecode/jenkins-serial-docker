@@ -1,34 +1,33 @@
-import { Box, IconButton, useTheme, Modal, Typography, AppBar } from "@mui/material"
-import { useContext } from "react"
-import { ColorModeContext, tokens } from "../../theme"
-import InputBase from "@mui/material/InputBase"
+import axios from "axios"
+import { useContext, useState, useEffect } from "react"
+import { useAuthContext } from "hooks/useAuthContext"
+import { useLogout } from "hooks/useLogout"
 import { FormattedMessage, useIntl } from "react-intl"
+import { Box, IconButton, useTheme, Modal, Typography } from "@mui/material"
+import { tokens } from "../../theme"
+import InputBase from "@mui/material/InputBase"
+import LogoutIcon from '@mui/icons-material/Logout'
+import CloseIcon from '@mui/icons-material/Close';
+import SearchIcon from "@mui/icons-material/Search"
+import RedeemIcon from '@mui/icons-material/Redeem';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import LogoutIcon from '@mui/icons-material/Logout'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import CloseIcon from '@mui/icons-material/Close';
-import SearchIcon from "@mui/icons-material/Search"
-import { useState } from "react"
-import { useAuthContext } from "hooks/useAuthContext"
-import axios from "axios"
-import { useLogout } from "hooks/useLogout"
 import WidgetsOutlinedIcon from '@mui/icons-material/WidgetsOutlined';
-import RedeemIcon from '@mui/icons-material/Redeem';
 import MobileItem from "./Item"
-import '../../index.css'
 import logo from '../../assets/logo.png'
+import '../../index.css'
 
 
 const Topbar = () => {
-    const { user } = useAuthContext()
-    const intl = useIntl();
 
     //use the theme set up in theme.js
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
-    const colorMode = useContext(ColorModeContext)
+    const { user } = useAuthContext()
+
+    const intl = useIntl();
 
     // for search 
     const [searchValue, setSearchValue] = useState('')
@@ -66,39 +65,62 @@ const Topbar = () => {
         setData(null)
     }
 
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            // check if the clicked element is inside the navbar
+            if (event.target.closest(".navbar-menuitem")) {
+                return;
+            }
+            // if clicked outside the navbar, close it
+            setNav(false);
+        };
+        // add event listener to document object
+        document.addEventListener("mousedown", handleOutsideClick);
+        // cleanup function to remove the event listener
+        return () => {
+            document.removeEventListener("mousedown", handleOutsideClick);
+        };
+    }, [nav]);
+
     return (
         <Box>
             <Box
                 display="flex"
                 justifyContent="space-between"
+                alignItems="center"
                 p={2}
                 sx={{
                     background: `${colors.purple[100]} !important`
                 }}
             >
 
-                {/* Menu Button */}
-                <Box
-                    display="flex"
-                    sx={{
-                        [theme.breakpoints.up("lg")]: {
-                            display: "none"
-                        },
-                    }}
-                    onClick={handleClick}>
-                    {!nav ? <MenuOutlinedIcon /> : <CloseIcon />}
+                <Box display="flex" sx={{ alignItems: 'center' }}>
+                    {/* Menu Button */}
+                    <Box
+                        sx={{
+                            [theme.breakpoints.up("lg")]: {
+                                display: "none"
+                            },
+                        }}
+                        onClick={handleClick}>
+
+                        {!nav ? <MenuOutlinedIcon /> : <CloseIcon />}
+                    </Box>
+
+                    {/* logo */}
+                    <Box display="flex" paddingLeft='5px'>
+                        <a href="/">
+                            <img src={logo} alt="logo" style={{ width: '50px', height: '50px' }} />
+                        </a>
+                    </Box>
                 </Box>
 
-                <Box>
-                    <a href="/">
-                        <img src={logo} alt="logo" style={{ width: '50px', height: '50px' }} />
-                    </a>
-                </Box>
 
                 {/* Search Bar */}
-                <Box display="flex"
-                    backgroundColor={colors.primary[400]}
-                    borderRadius="3px"
+                <Box className="search-box"
+                    sx={{
+                        width: { xs: '40%', sm: 'auto' }
+                    }}
                 >
                     <InputBase
                         sx={{ ml: 2, flex: 1 }}
@@ -106,7 +128,9 @@ const Topbar = () => {
                         value={searchValue}
                         onChange={(e) => setSearchValue(e.target.value)}
                     />
-                    <IconButton type="button" sx={{ p: 1 }}
+                    <IconButton
+                        type="button"
+                        sx={{ p: 1 }}
                         onClick={() => handleSearch(searchValue)}>
                         <SearchIcon />
                     </IconButton>

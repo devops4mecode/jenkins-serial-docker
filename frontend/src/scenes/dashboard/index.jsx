@@ -1,25 +1,26 @@
-import { Box, Button, IconButton, Typography, useTheme, Grid } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "hooks/useAuthContext";
+import { FormattedMessage } from "react-intl";
+import { Box, Typography, useTheme, Grid } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
-import { useAuthContext } from "hooks/useAuthContext";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import LineChart from "../../components/LineChart";
 import StatBox from "../../components/StatBox";
+import LineChart from "../../components/LineChart";
 import RedeemIcon from '@mui/icons-material/Redeem';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import "../../css/dashboard.css"
-import { FormattedMessage } from "react-intl";
+
 
 const Dashboard = () => {
 
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
-
     const { user } = useAuthContext()
+
     const [totalRedeemedAmount, setTotalRedeemedAmount] = useState(0)
     const [totalRedeemedCount, setTotalRedeemedCount] = useState(0)
     const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
