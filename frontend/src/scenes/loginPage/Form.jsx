@@ -1,24 +1,26 @@
-import { Box, Typography, useTheme, useMediaQuery, Button, TextField } from "@mui/material"
-import { tokens } from "../../theme";
-import { Formik } from "formik";
 import * as yup from "yup";
 import { useLogin } from "hooks/useLogin"
+import { Box, Button, TextField, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material"
+import { Formik } from "formik";
 import { FormattedMessage } from "react-intl";
+import { useState } from "react";
+
 
 const Form = () => {
 
-    const { login, error, isLoading } = useLogin()
-    const theme = useTheme()
-    const colors = tokens(theme.palette.mode)
-    // const navigate = useNavigate();
-    const isNonMobile = useMediaQuery("(min-width:600px)");
+    const { login, isLoading } = useLogin()
+    const [error, setError] = useState(null)
 
     const handleFormSubmit = async (values) => {
         try {
             await login(values)
         } catch (error) {
-            console.log(error);
+            setError(error.message);
         }
+    }
+
+    const handleCloseErrorDialog = () => {
+        setError(null)
     }
 
     return (
@@ -67,8 +69,22 @@ const Form = () => {
                             className="login-field-button"
                         >
                             <FormattedMessage id="login.button" />
-                        </Button>                        
+                        </Button>
                     </Box>
+
+                    <Dialog open={Boolean(error)} onClose={handleCloseErrorDialog}>
+                        <DialogTitle>
+                            Error
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                These credentials do not match our records.
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleCloseErrorDialog}>ok</Button>
+                        </DialogActions>
+                    </Dialog>
                 </form>
             )}
         </Formik>
@@ -76,8 +92,8 @@ const Form = () => {
 }
 
 const loginSchema = yup.object().shape({
-    username: yup.string().required("required"),
-    password: yup.string().required("required")
+    username: yup.string().required(<FormattedMessage id="login.username.error" />),
+    password: yup.string().required(<FormattedMessage id="login.password.error" />)
 })
 
 const initialValuesLogin = {

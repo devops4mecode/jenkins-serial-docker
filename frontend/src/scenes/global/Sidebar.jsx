@@ -1,36 +1,37 @@
-import { useState } from "react"
-import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar"
 import "react-pro-sidebar/dist/css/styles.css"
-import { Box, IconButton, Typography, useTheme } from "@mui/material"
-import { FormattedMessage } from "react-intl"
-import { tokens } from "../../theme"
+import { useState } from "react"
 import { useLogout } from "hooks/useLogout"
+import { FormattedMessage } from "react-intl"
+import { Box, IconButton, Typography, useTheme } from "@mui/material"
+import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar"
+import { tokens } from "../../theme"
+import LogoutIcon from '@mui/icons-material/Logout'
+import SixteenMpIcon from '@mui/icons-material/SixteenMp';
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import SixteenMpIcon from '@mui/icons-material/SixteenMp';
-import LogoutIcon from '@mui/icons-material/Logout'
-import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import { useAuthContext } from "hooks/useAuthContext"
-import '../../index.css'
 import WebItem from "./WebItem"
+import logo from '../../assets/logo.png'
+import '../../index.css'
 
 
 const Sidebar = () => {
 
-    const { user } = useAuthContext()
-    const { logout } = useLogout()
-
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
+    const { logout } = useLogout()
+
     const [isCollapsed, setIsCollapsed] = useState(false)
     const [selected, setSelected] = useState("Dashboard")
 
     return (
         <Box sx={{
+            width: "370px",
             "& .pro-sidebar-inner": {
-                background: `${colors.primary[400]} !important`
+                background: `${colors.primary[400]} !important`,
+                width: '310px'
             },
             "& .pro-icon-wrapper": {
                 backgroundColor: "transparent !important"
@@ -46,6 +47,9 @@ const Sidebar = () => {
             },
             [theme.breakpoints.down("lg")]: {
                 display: "none"
+            },
+            [theme.breakpoints.down("xl")]: {
+                width: "410px !important"
             }
         }}>
             <ProSidebar collapsed={isCollapsed}>
@@ -60,6 +64,9 @@ const Sidebar = () => {
                     >
                         {!isCollapsed && (
                             <Box display="flex" justifyContent="space-between" alignItems="center" ml="7px">
+                                <a href="/">
+                                    <img src={logo} alt="logo" style={{ width: '50px', height: '50px' }} />
+                                </a>
                                 <Typography variant="h3" color={colors.grey[100]}>
                                     {<FormattedMessage id="logo.name" />}
                                 </Typography>

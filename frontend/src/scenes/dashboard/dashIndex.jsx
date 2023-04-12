@@ -1,32 +1,35 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useAuthContext } from "hooks/useAuthContext";
-import { FormattedMessage } from "react-intl";
-import { Box, Typography, useTheme, Grid } from "@mui/material";
+import { Box, Button, IconButton, Typography, useTheme, Grid } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
-import StatBox from "../../components/StatBox";
+import { useAuthContext } from "hooks/useAuthContext";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import LineChart from "../../components/LineChart";
+import StatBox from "../../components/StatBox";
 import RedeemIcon from '@mui/icons-material/Redeem';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import "../../css/dashboard.css"
+import { FormattedMessage } from "react-intl";
+import { dashboardReducer, INITIAL_STATE, ACTIONS } from "./dashboardReducer";
+import { useReducer } from "react";
 
-
-const Dashboard = () => {
+const DashboardIndex = () => {
 
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     const { user } = useAuthContext()
 
-    const [totalRedeemedAmount, setTotalRedeemedAmount] = useState(0)
-    const [totalRedeemedCount, setTotalRedeemedCount] = useState(0)
-    const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
-    const [generatedCount, setGeneratedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
-    const [mostRedeemedCount, setmostRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
 
+    // const [totalRedeemedAmount, setTotalRedeemedAmount] = useState(0)
+    // const [totalRedeemedCount, setTotalRedeemedCount] = useState(0)
+    // const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
+    // const [generatedCount, setGeneratedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
+    // const [mostRedeemedCount, setmostRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
+
+    const [state, dispatch] = useReducer(dashboardReducer, INITIAL_STATE)
 
     useEffect(() => {
         const getSerialsData = async () => {
@@ -35,29 +38,41 @@ const Dashboard = () => {
                     const { data } = await axios.get(`api/dashboard/serialsData`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     });
-                    setTotalRedeemedAmount(data?.totalAmountRedeemed[0]?.sum)
-                    setTotalRedeemedCount(data?.totalRedeemedCount[0].count)
-                    setRedeemedCount(prevCount => {
-                        const newRedeemedCount = { ...prevCount }
-                        data?.redeemedSerialCount.forEach(({ _id, count }) => {
-                            newRedeemedCount[_id] = count
+
+                    // totalredeemedamount
+                    const totalRedeemedAmount = data?.totalRedeemedAmount || 0
+                    dispatch({ type: ACTIONS.SET_TOTAL_REDEEMED_AMOUNT, payload: totalRedeemedAmount })
+
+                    // totalredeemedcount
+                    const totalRedeemedCount = data?.totalRedeemedCount || 0
+                    dispatch({ type: ACTIONS.SET_TOTAL_REDEEMED_COUNT, payload: totalRedeemedCount })
+
+                    // redeemedcount
+                    const redeemedCount = { ...state.redeemedCount }
+                    if(data?.redeemedCount) {
+                        data?.redeemedCount.forEach(({ _id, count }) => {
+                            redeemedCount[_id] = count
                         })
-                        return newRedeemedCount
-                    })
-                    setGeneratedCount(prevCount => {
-                        const newRedeemedCount = { ...prevCount }
-                        data?.totalGeneratedCount.forEach(({ _id, count }) => {
-                            newRedeemedCount[_id] = count
+                    }                    
+                    dispatch({ type: ACTIONS.SET_REDEEMED_COUNT, payload: redeemedCount })
+
+                    // generatedcount
+                    const generatedCount = { ...state.generatedCount }
+                    if(data?.generatedCount) {
+                        data?.generatedCount.forEach(({ _id, count }) => {
+                            generatedCount[_id] = count
                         })
-                        return newRedeemedCount
-                    })
-                    setmostRedeemedCount(prevCount => {
-                        const newRedeemedCount = { ...prevCount }
-                        data?.mostRedeemed.forEach(({ _id, percentage }) => {
-                            newRedeemedCount[_id] = percentage
+                    }
+                    dispatch({ type: ACTIONS.SET_GENERATED_COUNT, payload: generatedCount })
+
+                    // mostredeemedcount
+                    const mostRedeemedCount = { ...state.mostRedeemedCount }
+                    if(data?.mostRedeemedCount) {
+                        data?.mostRedeemedCount.forEach(({ _id, count }) => {
+                            mostRedeemedCount[_id] = count
                         })
-                        return newRedeemedCount
-                    })
+                    }
+                    dispatch({ type: ACTIONS.SET_MOST_REDEEMED_COUNT, payload: mostRedeemedCount })
 
                 } catch (error) {
                     console.log(error)
@@ -65,7 +80,9 @@ const Dashboard = () => {
             }
         }
         getSerialsData()
-    }, [user])
+    }, [user, dispatch])
+
+    const {totalRedeemedAmount, totalRedeemedCount, redeemedCount, generatedCount, mostRedeemedCount} = state
 
     return (
         <Box m="20px">
@@ -306,4 +323,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
+export default DashboardIndex

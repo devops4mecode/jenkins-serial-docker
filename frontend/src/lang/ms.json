@@ -4,7 +4,9 @@
     "greeting": "Selamat Datang ke Lucky Serial",
     "login.button": "Log Masuk",
     "login.username": "Nama Pengguna",
+    "login.username.error": "Tidak boleh letak kosong",
     "login.password": "Kata Laluan",
+    "login.password.error": "Tidak boleh letak kosong",
     "dashboard": "Papan Pemuka",
     "revenue.generated": "Jumlah Hasil",
     "total.redeem.count": "Bilangan Ditebus",
@@ -33,7 +35,7 @@
     "serial.generator": "Serial Generator",
     "generate.serial": "Menjana Nombor Siri",
     "all.serial": "Semua Nombor Siri",
-    "valid.serials": "Nombor Siri Belum Ditebus",
-    "invalid.serials": "Nombor Siri Ditebus",
+    "valid.serials": "Siri Belum Ditebus",
+    "invalid.serials": "Siri Ditebus",
     "logout.button": "Log Keluar"
 }

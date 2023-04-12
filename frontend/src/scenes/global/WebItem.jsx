@@ -1,24 +1,16 @@
-import { Box, Typography } from "@mui/material"
 import { useLogout } from "hooks/useLogout"
-import { Link, useNavigate } from "react-router-dom"
 import { MenuItem } from "react-pro-sidebar"
+import { Box, Typography } from "@mui/material"
+import { Link, useNavigate } from "react-router-dom"
 import '../../index.css'
-import { useState } from "react"
-import { useIntl } from 'react-intl'
-
-
 
 
 const WebItem = ({ title, to, icon, selected, setSelected }) => {
-    
+
     const Navigate = useNavigate()
     const { logout } = useLogout()
-    
-    const intl = useIntl()
 
     const handleOnClick = () => {
-        
-
         if (title.props.id === "logout.button" || title === "Logout") {
             logout()
             Navigate('/login')

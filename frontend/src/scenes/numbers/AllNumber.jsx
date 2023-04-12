@@ -1,13 +1,13 @@
+import axios from "axios";
+import moment from "moment"
+import { useEffect, useState } from "react";
 import { useTheme } from "@mui/material";
-import Box from "@mui/material/Box";
+import { useAuthContext } from "hooks/useAuthContext";
+import { FormattedMessage } from "react-intl";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid"
 import { tokens } from "../../theme";
+import Box from "@mui/material/Box";
 import Header from "../../components/Header";
-import moment from "moment"
-import { useAuthContext } from "hooks/useAuthContext";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { FormattedMessage } from "react-intl";
 import '../../css/allNumberTable.css'
 
 
@@ -36,7 +36,14 @@ const AllNumber = () => {
     }, [user]);
 
     function formatNumber(num) {
-        return num.toLocaleString('en-US', { maximumFractionDigits: 0 }).toString().replace(/,/g, '')
+        const formatted = num.toLocaleString('en-US', { maximumFractionDigits: 0 }).replace(/,/g, '');
+        const sections = [];
+
+        for (let i = 0; i < formatted.length; i += 4) {
+            sections.push(formatted.substr(i, 4));
+        }
+
+        return sections.join('-');
     }
 
     const columns = [
@@ -122,24 +129,16 @@ const AllNumber = () => {
                 title={<FormattedMessage id="all.serial" />}
                 subtitle={<FormattedMessage id="all.serial" />}
             />
-            {/* <Box m="0px 0 0 0" height="70vh" width='100%' sx={{ */}
             <Box
                 sx={{
                     height: '70vh',
                     width: '100%',
-                    "& .MuiDataGrid-root": {
-                        // border: "none"
-                    },
                     "& .name-column--cell": {
                         color: colors.greenAccent[300]
                     },
-
                     "& .MuiDataGrid-columnHeaders": {
                         backgroundColor: colors.blueAccent[700],
                         borderBottom: "none"
-                    },
-                    "& .MuiDataGrid-virtualScroller": {
-                        // backgroundColor: colors.primary[400]
                     },
                     "& .MuiDataGrid-footerContainer": {
                         backgroundColor: colors.blueAccent[700]

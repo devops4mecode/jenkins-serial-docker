@@ -1,26 +1,27 @@
-import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField } from "@mui/material";
-import { CSVLink } from 'react-csv'
-import { tokens } from "theme";
-import { Formik } from "formik"
+import axios from "axios"
 import * as yup from "yup"
-import useMediaQuery from "@mui/material/useMediaQuery";
+import { useState } from "react"
+import { useAuthContext } from "hooks/useAuthContext"
+import { useTheme } from "@emotion/react"
+import { FormattedMessage } from "react-intl"
+import { tokens } from "theme"
+import { Formik } from "formik"
+import { CSVLink } from 'react-csv'
+import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material"
 import Header from "../../components/Header"
-import { useState } from "react";
-import { useAuthContext } from "hooks/useAuthContext";
-import axios from "axios";
-import { useTheme } from "@emotion/react";
-import CreditButton from "components/CreditButton";
-import { FormattedMessage } from "react-intl";
-import CreditTextField from "../../components/TextField";
+import CreditButton from "components/CreditButton"
+import CreditTextField from "../../components/TextField"
 import '../../css/generateNumber.css'
 
+
 const GenerateNumber = () => {
+
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
-
     const { user } = useAuthContext()
-    const isNonMobile = useMediaQuery("(min-width:600px)")   //for mobile responsive
+
     const [serialsData, setSerialsData] = useState([])
+
 
     const handleFormSubmit = async (values) => {
         try {
@@ -54,8 +55,10 @@ const GenerateNumber = () => {
     ];
 
     const data = serialsData.map(serialData => {
+        const serialNo = serialData.serialNo
+        const formattedSerialNo = `${serialNo.substring(0, 4)}-${serialNo.substring(4, 8)}-${serialNo.substring(8, 12)}-${serialNo.substring(12)}`;
         return {
-            serialNo: serialData.serialNo,
+            serialNo: formattedSerialNo,
             givenCredit: serialData.givenCredit,
             remarkName: serialData.remarkName,
             createdAt: new Date(serialData.createdAt).toLocaleString('en-US', {
@@ -161,9 +164,9 @@ const GenerateNumber = () => {
                         <>
                             <TableContainer component={Paper} sx={{ mt: 4, textAlign: "center", color: colors.greenAccent[300] }}>
                                 <Table>
-                                    <TableHead>
+                                    <TableHead sx={{ backgroundColor: colors.blueAccent[700] }}>
                                         <TableRow>
-                                            <TableCell align="center"><FormattedMessage id="serial.number" /></TableCell>
+                                            <TableCell align="center" ><FormattedMessage id="serial.number" /></TableCell>
                                             <TableCell align="center"><FormattedMessage id="serial.credit" /></TableCell>
                                             <TableCell align="center"><FormattedMessage id="serial.buyer" /></TableCell>
                                             <TableCell align="center"><FormattedMessage id="serial.purchase.date" /></TableCell>
@@ -172,7 +175,7 @@ const GenerateNumber = () => {
                                     <TableBody>
                                         {serialsData.map((serialData) => (
                                             <TableRow key={serialData._id}>
-                                                <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.serialNo}</TableCell>
+                                                <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{`${serialData.serialNo.substring(0, 4)}-${serialData.serialNo.substring(4, 8)}-${serialData.serialNo.substring(8, 12)}-${serialData.serialNo.substring(12)}`}</TableCell>
                                                 <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.givenCredit}</TableCell>
                                                 <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.remarkName}</TableCell>
                                                 <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{new Date(serialData.createdAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}</TableCell>

@@ -17,6 +17,7 @@ import English from "lang/en.json"
 import Chinese from "lang/zh.json"
 import Malay from "lang/ms.json"
 import { useState } from "react";
+import DashboardIndex from "scenes/dashboard/dashIndex";
 
 const local = navigator.language
 
@@ -54,6 +55,10 @@ function App() {
                                     path="/"
                                     element={user ? <Dashboard /> : <Navigate to="/login" />}
                                 />
+                                {/* <Route
+                                    path="/"
+                                    element={user ? <DashboardIndex /> : <Navigate to="/login" />}
+                                /> */}
                                 <Route
                                     path="/login"
                                     element={!user ? <LoginPage /> : <Navigate to="/" />}

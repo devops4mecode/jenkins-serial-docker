@@ -57,9 +57,19 @@ body,
 }
 
 
+/* topbar search property */
+.search-box {
+  display: flex;
+  background-color: #f2f0f0;
+  border-radius: 3px;
+}
+
+
+
+
 @media (max-width: 576px) {
   .navItem-style {
-    color: #666666;
+    color: #292828;
   }
 
   .navbaritem {
@@ -90,7 +100,7 @@ body,
   }
 
   .footer {
-      padding-top: 30px;
+    padding-top: 30px;
   }
 }
 
@@ -98,5 +108,4 @@ body,
   .navItem-style {
     color: #666666;
   }
-
 }
