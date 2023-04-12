@@ -36,7 +36,14 @@ const AllNumber = () => {
     }, [user]);
 
     function formatNumber(num) {
-        return num.toLocaleString('en-US', { maximumFractionDigits: 0 }).toString().replace(/,/g, '')
+        const formatted = num.toLocaleString('en-US', { maximumFractionDigits: 0 }).replace(/,/g, '');
+        const sections = [];
+
+        for (let i = 0; i < formatted.length; i += 4) {
+            sections.push(formatted.substr(i, 4));
+        }
+
+        return sections.join('-');
     }
 
     const columns = [

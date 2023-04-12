@@ -33,7 +33,7 @@
     "serial.generator": "Serial Generator",
     "generate.serial": "Menjana Nombor Siri",
     "all.serial": "Semua Nombor Siri",
-    "valid.serials": "Nombor Siri Belum Ditebus",
-    "invalid.serials": "Nombor Siri Ditebus",
+    "valid.serials": "Siri Belum Ditebus",
+    "invalid.serials": "Siri Ditebus",
     "logout.button": "Log Keluar"
 }

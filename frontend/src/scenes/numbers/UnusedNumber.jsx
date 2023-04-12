@@ -1,19 +1,14 @@
 import { Box, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid"
 import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData"
 import Header from "../../components/Header";
 import moment from "moment";
-import DownloadIcon from '@mui/icons-material/Download';
-import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
-
-// TESTING
 import { useAuthContext } from "hooks/useAuthContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FormattedMessage } from "react-intl";
 
-const AllNumber = () => {
+const UnusedNumber = () => {
 
     const { user } = useAuthContext()
     const [serials, setSerials] = useState([])
@@ -39,11 +34,17 @@ const AllNumber = () => {
     const colors = tokens(theme.palette.mode)
 
     function formatNumber(num) {
-        return num.toLocaleString('en-US', { maximumFractionDigits: 0 }).toString().replace(/,/g, '')
+        const formatted = num.toLocaleString('en-US', { maximumFractionDigits: 0 }).replace(/,/g, '');
+        const sections = [];
+
+        for (let i = 0; i < formatted.length; i += 4) {
+            sections.push(formatted.substr(i, 4));
+        }
+
+        return sections.join('-');
     }
 
     const columns = [
-        // { field: "id", headerName: "ID", flex:1, headerAlign: "center", align: "center", sortable: false, filter: false },
         {
             field: "serialNo",
             headerName: "SERIAL NUMBER",
@@ -52,7 +53,7 @@ const AllNumber = () => {
             align: "center",
             valueGetter: (params) =>
                 formatNumber(params.row.serialNo),
-            width: 400
+            width: 370
         },
         {
             field: "givenCredit",
@@ -60,12 +61,12 @@ const AllNumber = () => {
             type: "number",
             headerAlign: "center",
             align: "center",
-            width: 400
+            width: 370
         },
         {
             field: "remarkName",
             headerName: "WHO BUY",
-            width: 400,
+            width: 370,
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center"
@@ -75,7 +76,7 @@ const AllNumber = () => {
             headerName: "SOLD DATE",
             valueFormatter: (params) =>
                 moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
-            width: 400,
+            width: 370,
             headerAlign: "center",
             align: "center"
         },
@@ -89,33 +90,19 @@ const AllNumber = () => {
                 title={<FormattedMessage id="valid.serials" />}
                 subtitle={<FormattedMessage id="valid.serials" />}
             />
-            <Box m="0px 0 0 0" height="70vh" sx={{
-                "& .MuiDataGrid-root": {
-                    // border: "none"
-                },
-                "& .MuiDataGrid-cell": {
-                    // border: "none"
-                },
+            <Box height="70vh" width='100%' sx={{
                 "& .name-column--cell": {
                     color: colors.greenAccent[300]
                 },
                 "& .MuiDataGrid-columnHeaders": {
                     backgroundColor: colors.blueAccent[700],
-                    // borderBottom: "none"
-                },
-                "& .MuiDataGrid-virtualScroller": {
-                    // backgroundColor: colors.primary[400]
                 },
                 "& .MuiDataGrid-footerContainer": {
-                    // borderTop: "none",
                     backgroundColor: colors.blueAccent[700]
                 },
                 "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
                     color: `${colors.grey[100]} !important`
                 },
-                // "& .MuiCheckbox-root": {
-                //     color: `${colors.greenAccent[200]} !important`
-                // }
             }}>
                 <DataGrid
                     rows={serials}
@@ -131,4 +118,4 @@ const AllNumber = () => {
     )
 }
 
-export default AllNumber
+export default UnusedNumber

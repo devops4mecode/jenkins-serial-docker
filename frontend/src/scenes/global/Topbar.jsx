@@ -18,6 +18,7 @@ import WidgetsOutlinedIcon from '@mui/icons-material/WidgetsOutlined';
 import RedeemIcon from '@mui/icons-material/Redeem';
 import MobileItem from "./Item"
 import '../../index.css'
+import logo from '../../assets/logo.png'
 
 
 const Topbar = () => {
@@ -88,6 +89,11 @@ const Topbar = () => {
                     {!nav ? <MenuOutlinedIcon /> : <CloseIcon />}
                 </Box>
 
+                <Box>
+                    <a href="/">
+                        <img src={logo} alt="logo" style={{ width: '50px', height: '50px' }} />
+                    </a>
+                </Box>
 
                 {/* Search Bar */}
                 <Box display="flex"

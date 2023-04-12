@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 import axios from "axios";
 import { FormattedMessage } from "react-intl";
 
-const AllNumber = () => {
+const UsedNumber = () => {
 
     const { user } = useAuthContext()
     const [serials, setSerials] = useState([])
@@ -35,11 +35,17 @@ const AllNumber = () => {
     const colors = tokens(theme.palette.mode)
 
     function formatNumber(num) {
-        return num.toLocaleString('en-US', { maximumFractionDigits: 0 }).toString().replace(/,/g, '')
+        const formatted = num.toLocaleString('en-US', { maximumFractionDigits: 0 }).replace(/,/g, '');
+        const sections = [];
+
+        for (let i = 0; i < formatted.length; i += 4) {
+            sections.push(formatted.substr(i, 4));
+        }
+
+        return sections.join('-');
     }
 
     const columns = [
-        // { field: "id", headerName: "ID", flex:1, headerAlign: "center", align: "center", sortable: false, filter: false },
         {
             field: "serialNo",
             headerName: "SERIAL NUMBER",
@@ -92,7 +98,6 @@ const AllNumber = () => {
             headerAlign: "center",
             align: "center"
         }
-        // { field: "serialStatus", headerName: "Serial Number Status", flex: 1, cellClassName: "name-column--cell", headerAlign: "center", align: "center" },
     ]
 
     const getRowId = (row) => row._id
@@ -131,4 +136,4 @@ const AllNumber = () => {
     )
 }
 
-export default AllNumber
+export default UsedNumber
