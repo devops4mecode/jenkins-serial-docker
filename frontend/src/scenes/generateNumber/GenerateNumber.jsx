@@ -54,8 +54,10 @@ const GenerateNumber = () => {
     ];
 
     const data = serialsData.map(serialData => {
+        const serialNo = serialData.serialNo
+        const formattedSerialNo = `${serialNo.substring(0, 4)}-${serialNo.substring(4, 8)}-${serialNo.substring(8, 12)}-${serialNo.substring(12)}`;
         return {
-            serialNo: serialData.serialNo,
+            serialNo: formattedSerialNo,
             givenCredit: serialData.givenCredit,
             remarkName: serialData.remarkName,
             createdAt: new Date(serialData.createdAt).toLocaleString('en-US', {
@@ -161,9 +163,9 @@ const GenerateNumber = () => {
                         <>
                             <TableContainer component={Paper} sx={{ mt: 4, textAlign: "center", color: colors.greenAccent[300] }}>
                                 <Table>
-                                    <TableHead>
+                                    <TableHead sx={{ backgroundColor: colors.blueAccent[700] }}>
                                         <TableRow>
-                                            <TableCell align="center"><FormattedMessage id="serial.number" /></TableCell>
+                                            <TableCell align="center" ><FormattedMessage id="serial.number" /></TableCell>
                                             <TableCell align="center"><FormattedMessage id="serial.credit" /></TableCell>
                                             <TableCell align="center"><FormattedMessage id="serial.buyer" /></TableCell>
                                             <TableCell align="center"><FormattedMessage id="serial.purchase.date" /></TableCell>
@@ -172,7 +174,7 @@ const GenerateNumber = () => {
                                     <TableBody>
                                         {serialsData.map((serialData) => (
                                             <TableRow key={serialData._id}>
-                                                <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.serialNo}</TableCell>
+                                                <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{`${serialData.serialNo.substring(0, 4)}-${serialData.serialNo.substring(4, 8)}-${serialData.serialNo.substring(8, 12)}-${serialData.serialNo.substring(12)}`}</TableCell>
                                                 <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.givenCredit}</TableCell>
                                                 <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.remarkName}</TableCell>
                                                 <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{new Date(serialData.createdAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}</TableCell>
