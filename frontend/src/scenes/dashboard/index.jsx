@@ -139,7 +139,7 @@ const Dashboard = () => {
                     <Grid item xs={6} sm={6} md={3}>
                         <Box className="style-statbox">
                             <StatBox
-                                title={redeemedCount[10]}
+                                title={redeemedCount['10']}
                                 subtitle="RM 10"
                                 icon={
                                     <RedeemIcon className="iconSize" />
@@ -152,7 +152,7 @@ const Dashboard = () => {
                     <Grid item xs={6} sm={6} md={3}>
                         <Box className="style-statbox">
                             <StatBox
-                                title={redeemedCount[30]}
+                                title={redeemedCount['30']}
                                 subtitle="RM 30"
                                 icon={
                                     <RedeemIcon className="iconSize" />
@@ -164,7 +164,7 @@ const Dashboard = () => {
                     <Grid item xs={6} sm={6} md={3}>
                         <Box className="style-statbox">
                             <StatBox
-                                title={redeemedCount[50]}
+                                title={redeemedCount['50']}
                                 subtitle="RM 50"
                                 icon={
                                     <RedeemIcon className="iconSize" />
@@ -176,7 +176,7 @@ const Dashboard = () => {
                     <Grid item xs={6} sm={6} md={3}>
                         <Box className="style-statbox">
                             <StatBox
-                                title={redeemedCount[100]}
+                                title={redeemedCount['100']}
                                 subtitle="RM100"
                                 icon={
                                     <RedeemIcon className="iconSize" />
