@@ -23,7 +23,6 @@ const local = navigator.language
 
 console.log(local)
 
-
 let lang;
 if (local === "en" || local === "en-US") {
     lang = English
@@ -41,6 +40,11 @@ function App() {
 
     const [locale, setLocale] = useState(local)
     const [messages, setMessages] = useState(lang)
+
+    const [language, setLanguage] = useState("en")
+    const handleLanguageChange = (lang) => {
+        setLanguage(lang)
+    }
 
     // anthing refer to the theme.js file
     return (

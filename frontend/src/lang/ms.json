@@ -37,5 +37,6 @@
     "all.serial": "Semua Nombor Siri",
     "valid.serials": "Siri Belum Ditebus",
     "invalid.serials": "Siri Ditebus",
-    "logout.button": "Log Keluar"
+    "logout.button": "Log Keluar",
+    "language": "bahasa"
 }

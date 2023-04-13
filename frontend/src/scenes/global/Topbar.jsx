@@ -3,13 +3,14 @@ import { useContext, useState, useEffect } from "react"
 import { useAuthContext } from "hooks/useAuthContext"
 import { useLogout } from "hooks/useLogout"
 import { FormattedMessage, useIntl } from "react-intl"
-import { Box, IconButton, useTheme, Modal, Typography } from "@mui/material"
+import { Box, IconButton, useTheme, Modal, Typography, Button, Popover, List, ListItem, ListItemText } from "@mui/material"
 import { tokens } from "../../theme"
 import InputBase from "@mui/material/InputBase"
 import LogoutIcon from '@mui/icons-material/Logout'
 import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from "@mui/icons-material/Search"
 import RedeemIcon from '@mui/icons-material/Redeem';
+import LanguageIcon from '@mui/icons-material/Language';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
@@ -20,6 +21,8 @@ import logo from '../../assets/logo.png'
 import '../../index.css'
 
 
+import React from "react"
+
 const Topbar = () => {
 
     //use the theme set up in theme.js
@@ -29,10 +32,12 @@ const Topbar = () => {
 
     const intl = useIntl();
 
+
     // for search 
     const [searchValue, setSearchValue] = useState('')
     const [open, setOpen] = useState(false)
     const [data, setData] = useState(null)
+
 
     // for navbar 
     const [nav, setNav] = useState(false)
@@ -42,6 +47,7 @@ const Topbar = () => {
     const toggleNav = () => {
         setNav(!nav)
     }
+
 
     // for search
     const handleSearch = async (searchValue) => {
@@ -60,10 +66,64 @@ const Topbar = () => {
         setSearchValue('')
     }
 
+
+    // for search result dialog box
     const handleClose = () => {
         setOpen(false)
         setData(null)
     }
+
+
+    // for language dropdown
+    function LanguageDropdown() {
+        const [anchorEl, setAnchorEl] = React.useState(null)
+        const [language, setLanguage] = React.useState('')
+
+        const handleOpen = (event) => {
+            setAnchorEl(event.currentTarget)
+        }
+
+        const handleClose = () => {
+            setAnchorEl(null)
+        }
+
+        const handleLanguageSelect = (event) => {
+            setLanguage(event.target.value)
+            handleClose()
+        }
+
+        const open = Boolean(anchorEl)
+        const id = open ? 'language-popover' : undefined
+
+        return (
+            <Box>
+                <LanguageIcon onClick={handleOpen} />
+                <Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left'
+                    }}
+                >
+                    <List>
+                        <ListItem button onClick={handleLanguageSelect} value="chinese">
+                            <ListItemText primary="Chinese" />
+                        </ListItem>
+                        <ListItem button onClick={handleLanguageSelect} value="english">
+                            <ListItemText primary="中文" />
+                        </ListItem>
+                        <ListItem button onClick={handleLanguageSelect} value="malay">
+                            <ListItemText primary="Malay" />
+                        </ListItem>
+                    </List>
+                </Popover>
+            </Box>
+        )
+    }
+
 
     useEffect(() => {
         const handleOutsideClick = (event) => {
@@ -82,18 +142,23 @@ const Topbar = () => {
         };
     }, [nav]);
 
+
+
+
     return (
         <Box>
             <Box
                 display="flex"
                 justifyContent="space-between"
-                alignItems="center"
+
                 p={2}
                 sx={{
+                    alignItems: "center",
                     background: `${colors.purple[100]} !important`
                 }}
             >
 
+                {/* left side navbar */}
                 <Box display="flex" sx={{ alignItems: 'center' }}>
                     {/* Menu Button */}
                     <Box
@@ -115,25 +180,47 @@ const Topbar = () => {
                     </Box>
                 </Box>
 
-
-                {/* Search Bar */}
-                <Box className="search-box"
+                {/* right side navbar */}
+                <Box
+                    display="flex"
                     sx={{
-                        width: { xs: '40%', sm: 'auto' }
+                        alignItems: 'center',
+                        justifyContent: { xs: 'flex-end', sm: 'auto' }
                     }}
                 >
-                    <InputBase
-                        sx={{ ml: 2, flex: 1 }}
-                        placeholder={intl.formatMessage({ id: 'search.button.text' })}
-                        value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
-                    />
-                    <IconButton
-                        type="button"
-                        sx={{ p: 1 }}
-                        onClick={() => handleSearch(searchValue)}>
-                        <SearchIcon />
-                    </IconButton>
+                    <Box
+                        display="flex"
+                        paddingRight='5px'
+                        sx={{
+                            [theme.breakpoints.up("lg")]: {
+                                display: "none"
+                            },
+                        }}>
+                        <LanguageDropdown />
+                    </Box>
+
+                    {/* Search Bar */}
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            bgcolor: '#f2f0f0',
+                            borderRadius: '3px',
+                            width: { xs: '40%', sm: 'auto' },
+                        }}
+                    >
+                        <InputBase
+                            sx={{ ml: 2, flex: 1 }}
+                            placeholder={intl.formatMessage({ id: 'search.button.text' })}
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                        />
+                        <IconButton
+                            type="button"
+                            sx={{ p: 1 }}
+                            onClick={() => handleSearch(searchValue)}>
+                            <SearchIcon />
+                        </IconButton>
+                    </Box>
                 </Box>
 
                 <Modal open={open} onClose={handleClose}>

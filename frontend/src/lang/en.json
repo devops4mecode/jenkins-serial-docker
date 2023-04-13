@@ -37,5 +37,6 @@
     "all.serial": "All Serial",
     "valid.serials": "Unclaimed Serial",
     "invalid.serials": "Claimed Serial",
-    "logout.button": "Logout"
+    "logout.button": "Logout",
+    "language": "language"
 }
