@@ -109,13 +109,13 @@ const Topbar = () => {
                     }}
                 >
                     <List>
-                        <ListItem button onClick={handleLanguageSelect} value="chinese">
-                            <ListItemText primary="Chinese" />
-                        </ListItem>
-                        <ListItem button onClick={handleLanguageSelect} value="english">
+                        <ListItem onClick={handleLanguageSelect} value="Chinese">
                             <ListItemText primary="中文" />
                         </ListItem>
-                        <ListItem button onClick={handleLanguageSelect} value="malay">
+                        <ListItem onClick={handleLanguageSelect} value="English">
+                            <ListItemText primary="English" />
+                        </ListItem>
+                        <ListItem onClick={handleLanguageSelect} value="Malay">
                             <ListItemText primary="Malay" />
                         </ListItem>
                     </List>
