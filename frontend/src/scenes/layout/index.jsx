@@ -5,43 +5,45 @@ import { useMediaQuery } from '@mui/material'
 import { useAuthContext } from 'hooks/useAuthContext'
 
 import { IntlProvider } from "react-intl";
-import English from "lang/en.json"
-import Chinese from "lang/zh.json"
-import Malay from "lang/ms.json"
+
+import { LOCALES } from "../../i18n/locales"
+import { messages } from "../../i18n/messages"
+import { useState } from 'react'
 
 
-
-const local = navigator.language
-
-console.log(local)
-
-let lang;
-if (local === "en" || local === "en-US") {
-    lang = English
-} else {
-    if (local === "zh") {
-        lang = Chinese
-    } else {
-        lang = Malay
-    }
-}
 
 
 const Layout = () => {
+    const [currentLocale, setCurrentLocale] = useState(getInitialLocal())
+
+    const handleChange = (e) => {
+        setCurrentLocale(e.target.value)
+        localStorage.setItem("locale", e.target.value)
+    }
 
     const { user } = useAuthContext()
 
     const isNonMobile = useMediaQuery("(min-width: 600px)")
 
-    console.log({IntlProvider});
+    // console.log({ IntlProvider });
+
+    function getInitialLocal() {
+        // getting stored items
+        const savedLocale = localStorage.getItem('locale')
+        return savedLocale || LOCALES.ENGLISH
+    }
 
     return (
-        <IntlProvider messages={{}} locale="en" defaultLocale="en">
+        <IntlProvider
+            messages={messages[currentLocale]}
+            locale={currentLocale}
+            defaultLocale={LOCALES.ENGLISH}
+        >
             <div className='app'>
 
                 {user && (<Sidebar isNonMobile={isNonMobile} />)}
                 <main className='content'>
-                    {user && (<Topbar />)}
+                    {user && (<Topbar currentLocale={currentLocale} handleChange={handleChange} />)}
                     <Outlet />
                 </main>
             </div>
