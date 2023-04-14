@@ -1,4 +1,6 @@
+// NEW
 import { createContext, useReducer, useEffect } from 'react'
+import jwt_decode from 'jwt-decode'
 
 const INITIAL_STATE = {
     user: JSON.parse(localStorage.getItem('user')) || null,
@@ -26,6 +28,16 @@ export const AuthContextProvider = ({ children }) => {
 
     useEffect(() => {
         localStorage.setItem('user', JSON.stringify(state.user))
+
+        // Set up a timeout function to automatically log out the user when the token expires
+        if (state.user) {
+            const decodedToken = jwt_decode(state.user.accessToken)
+            const expiresIn = (new Date(decodedToken.exp * 1000)) - (new Date())
+            setTimeout(() => {
+                alert('Session has expired. Please log in again.')
+                dispatch({ type: 'Logout' })
+            }, expiresIn)
+        }
     }, [state.user])
 
     console.log('AuthContext state: ', state)
@@ -35,5 +47,4 @@ export const AuthContextProvider = ({ children }) => {
             {children}
         </AuthContext.Provider>
     )
-
 }

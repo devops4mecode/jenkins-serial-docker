@@ -23,7 +23,6 @@ const local = navigator.language
 
 console.log(local)
 
-
 let lang;
 if (local === "en" || local === "en-US") {
     lang = English
@@ -40,11 +39,11 @@ function App() {
     const [theme, colorMode] = useMode();
 
     const [locale, setLocale] = useState(local)
-    const [messages, setMessages] = useState(lang)
+    
 
     // anthing refer to the theme.js file
     return (
-        <IntlProvider locale={locale} messages={English}>
+        // <IntlProvider locale={locale} messages={English}>
             <ColorModeContext.Provider value={colorMode}>
                 <BrowserRouter>
                     <ThemeProvider theme={theme}>
@@ -88,7 +87,7 @@ function App() {
                     </ThemeProvider>
                 </BrowserRouter>
             </ColorModeContext.Provider>
-        </IntlProvider>
+        // </IntlProvider>
     );
 }
 

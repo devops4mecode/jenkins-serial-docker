@@ -37,5 +37,6 @@
     "all.serial": "所有序号",
     "valid.serials": "未兑换序号",
     "invalid.serials": "已兑换序号",
-    "logout.button": "退出"
+    "logout.button": "退出",
+    "language": "语言"
 }

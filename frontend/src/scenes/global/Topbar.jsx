@@ -1,9 +1,11 @@
+import React from "react"
 import axios from "axios"
+import { LOCALES } from "../../i18n/locales"
 import { useContext, useState, useEffect } from "react"
 import { useAuthContext } from "hooks/useAuthContext"
 import { useLogout } from "hooks/useLogout"
 import { FormattedMessage, useIntl } from "react-intl"
-import { Box, IconButton, useTheme, Modal, Typography } from "@mui/material"
+import { Box, IconButton, useTheme, Modal, Typography, Select, MenuItem } from "@mui/material"
 import { tokens } from "../../theme"
 import InputBase from "@mui/material/InputBase"
 import LogoutIcon from '@mui/icons-material/Logout'
@@ -20,7 +22,16 @@ import logo from '../../assets/logo.png'
 import '../../index.css'
 
 
-const Topbar = () => {
+const languages = [
+    { name: "EN", code: LOCALES.ENGLISH },
+    { name: "中文", code: LOCALES.CHINESE },
+    { name: "MS", code: LOCALES.MALAY },
+]
+
+const Topbar = (props) => {
+
+    console.log("props.currentLocale is")
+    console.log(props.currentLocale)
 
     //use the theme set up in theme.js
     const theme = useTheme()
@@ -34,6 +45,7 @@ const Topbar = () => {
     const [open, setOpen] = useState(false)
     const [data, setData] = useState(null)
 
+
     // for navbar 
     const [nav, setNav] = useState(false)
     const handleClick = () => setNav(!nav)
@@ -42,6 +54,7 @@ const Topbar = () => {
     const toggleNav = () => {
         setNav(!nav)
     }
+
 
     // for search
     const handleSearch = async (searchValue) => {
@@ -60,10 +73,12 @@ const Topbar = () => {
         setSearchValue('')
     }
 
+    // for search result dialog box
     const handleClose = () => {
         setOpen(false)
         setData(null)
     }
+
 
     useEffect(() => {
         const handleOutsideClick = (event) => {
@@ -82,18 +97,22 @@ const Topbar = () => {
         };
     }, [nav]);
 
+
+
     return (
         <Box>
             <Box
                 display="flex"
                 justifyContent="space-between"
-                alignItems="center"
+
                 p={2}
                 sx={{
+                    alignItems: "center",
                     background: `${colors.purple[100]} !important`
                 }}
             >
 
+                {/* left side navbar */}
                 <Box display="flex" sx={{ alignItems: 'center' }}>
                     {/* Menu Button */}
                     <Box
@@ -115,25 +134,66 @@ const Topbar = () => {
                     </Box>
                 </Box>
 
-
-                {/* Search Bar */}
-                <Box className="search-box"
+                {/* right side navbar */}
+                <Box
+                    display="flex"
                     sx={{
-                        width: { xs: '40%', sm: 'auto' }
+                        alignItems: 'center',
+                        justifyContent: { xs: 'flex-end', sm: 'auto' }
                     }}
                 >
-                    <InputBase
-                        sx={{ ml: 2, flex: 1 }}
-                        placeholder={intl.formatMessage({ id: 'search.button.text' })}
-                        value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
-                    />
-                    <IconButton
-                        type="button"
-                        sx={{ p: 1 }}
-                        onClick={() => handleSearch(searchValue)}>
-                        <SearchIcon />
-                    </IconButton>
+                    <Box
+                        display="flex"
+                        paddingRight='5px'
+                        sx={{
+                            [theme.breakpoints.up("lg")]: {
+                                fontSize: '20px'
+                            },
+                        }}>
+
+                        <Box>
+                            <Select
+                                value={props.currentLocale}
+                                onChange={props.handleChange}
+                                style={{
+                                    border: '1px solid white',
+                                    color: 'white',
+                                    fontSize: '12px',
+                                    height: '40px'
+                                }}
+                            >
+                                {languages.map(({ name, code }) => (
+                                    <MenuItem key={code} value={code}>
+                                        {name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </Box>
+
+                    </Box>
+
+                    {/* Search Bar */}
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            bgcolor: '#f2f0f0',
+                            borderRadius: '3px',
+                            width: { xs: '40%', sm: 'auto' },
+                        }}
+                    >
+                        <InputBase
+                            sx={{ ml: 2, flex: 1 }}
+                            placeholder={intl.formatMessage({ id: 'search.button.text' })}
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                        />
+                        <IconButton
+                            type="button"
+                            sx={{ p: 1 }}
+                            onClick={() => handleSearch(searchValue)}>
+                            <SearchIcon />
+                        </IconButton>
+                    </Box>
                 </Box>
 
                 <Modal open={open} onClose={handleClose}>
@@ -179,18 +239,6 @@ const Topbar = () => {
                         )}
                     </Box>
                 </Modal>
-
-
-                {/* Icons */}
-                {/* <Box display="flex">
-                    <IconButton onClick={colorMode.toggleColorMode}>
-                        {theme.palette.mode === 'dark' ? (
-                            <DarkModeOutlinedIcon />
-                        ) : (
-                            <LightModeOutlinedIcon />
-                        )}
-                    </IconButton>
-                </Box> */}
             </Box>
 
             <Box
