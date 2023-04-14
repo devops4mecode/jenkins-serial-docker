@@ -1,9 +1,11 @@
+import React from "react"
 import axios from "axios"
+import { LOCALES } from "../../i18n/locales"
 import { useContext, useState, useEffect } from "react"
 import { useAuthContext } from "hooks/useAuthContext"
 import { useLogout } from "hooks/useLogout"
 import { FormattedMessage, useIntl } from "react-intl"
-import { Box, IconButton, useTheme, Modal, Typography, Button, Popover, List, ListItem, ListItemText } from "@mui/material"
+import { Box, IconButton, useTheme, Modal, Typography, Select, MenuItem } from "@mui/material"
 import { tokens } from "../../theme"
 import InputBase from "@mui/material/InputBase"
 import LogoutIcon from '@mui/icons-material/Logout'
@@ -21,67 +23,11 @@ import logo from '../../assets/logo.png'
 import '../../index.css'
 
 
-import React from "react"
-
-import { LOCALES } from "../../i18n/locales"
 const languages = [
-    { name: "English", code: LOCALES.ENGLISH },
+    { name: "EN", code: LOCALES.ENGLISH },
     { name: "中文", code: LOCALES.CHINESE },
     { name: "Malay", code: LOCALES.MALAY },
 ]
-
-// function LanguageDropdown(props) {
-//     const [anchorEl, setAnchorEl] = React.useState(null)
-//     const [language, setLanguage] = React.useState('')
-
-//     const handleOpen = (event) => {
-//         setAnchorEl(event.currentTarget)
-//     }
-
-//     const handleClose = () => {
-//         setAnchorEl(null)
-//     }
-
-//     const handleLanguageSelect = (props) => {
-//         setLanguage(props.currentLocale)
-//         console.log("props.currentLocale is")
-//         console.log(props.currentLocale)
-//         handleClose()
-//     }
-
-//     const open = Boolean(anchorEl)
-//     const id = open ? 'language-popover' : undefined
-
-//     return (
-// <Box Box >
-//         <LanguageIcon onClick={handleOpen} />
-//         <Popover
-//             id={id}
-//             open={open}
-//             anchorEl={anchorEl}
-//             onClose={handleClose}
-//             anchorOrigin={{
-//                 vertical: 'bottom',
-//                 horizontal: 'left'
-//             }}
-//         >
-//             {languages.map(({ name, code }) => (
-//                 <List>
-//                     <ListItem onClick={handleLanguageSelect} value={code}>
-//                         <ListItemText primary={name} />
-//                     </ListItem>
-//                     {/* <ListItem onClick={handleLanguageSelect} value={code}>
-//                             <ListItemText primary={name} />
-//                         </ListItem>
-//                         <ListItem onClick={handleLanguageSelect} value={code}>
-//                             <ListItemText primary={name} />
-//                         </ListItem> */}
-//                 </List>
-//             ))}
-//         </Popover>
-//     </Box >
-//     )
-// }
 
 const Topbar = (props) => {
 
@@ -128,88 +74,11 @@ const Topbar = (props) => {
         setSearchValue('')
     }
 
-
     // for search result dialog box
     const handleClose = () => {
         setOpen(false)
         setData(null)
     }
-
-    const [anchorEl, setAnchorEl] = React.useState(null)
-    // const [language, setLanguage] = React.useState('')
-
-    const handleOpen = (event) => {
-        setAnchorEl(event.currentTarget)
-    }
-
-    const handleLanguageClose = () => {
-        setAnchorEl(null)
-    }
-
-    const handleLanguageSelect = (e) => {
-        // setLanguage(props.currentLocale)
-        // console.log("props.currentLocale is")
-        // console.log(props.currentLocale)
-
-        // setCurrentLocale(e.target.value)
-
-        handleClose()
-    }
-
-    const languageOpen = Boolean(anchorEl)
-    const id = languageOpen ? 'language-popover' : undefined
-
-    // for language dropdown
-    // function LanguageDropdown() {
-    //     const [anchorEl, setAnchorEl] = React.useState(null)
-    //     const [language, setLanguage] = React.useState('')
-
-    //     const handleOpen = (event) => {
-    //         setAnchorEl(event.currentTarget)
-    //     }
-
-    //     const handleClose = () => {
-    //         setAnchorEl(null)
-    //     }
-
-    //     const handleLanguageSelect = (props) => {
-    //         setLanguage(props.currentLocale)
-    //         handleClose()
-    //     }
-
-    //     const open = Boolean(anchorEl)
-    //     const id = open ? 'language-popover' : undefined
-
-    //     return (
-    //         <Box>
-    //             <LanguageIcon onClick={handleOpen} />
-    //             <Popover
-    //                 id={id}
-    //                 open={open}
-    //                 anchorEl={anchorEl}
-    //                 onClose={handleClose}
-    //                 anchorOrigin={{
-    //                     vertical: 'bottom',
-    //                     horizontal: 'left'
-    //                 }}
-    //             >
-    //                 {languages.map(({ name, code }) => (
-    //                     <List>
-    //                         <ListItem onClick={handleLanguageSelect} value={code}>
-    //                             <ListItemText primary={name} />
-    //                         </ListItem>
-    //                         {/* <ListItem onClick={handleLanguageSelect} value={code}>
-    //                             <ListItemText primary={name} />
-    //                         </ListItem>
-    //                         <ListItem onClick={handleLanguageSelect} value={code}>
-    //                             <ListItemText primary={name} />
-    //                         </ListItem> */}
-    //                     </List>
-    //                 ))}
-    //             </Popover>
-    //         </Box>
-    //     )
-    // }
 
 
     useEffect(() => {
@@ -228,7 +97,6 @@ const Topbar = (props) => {
             document.removeEventListener("mousedown", handleOutsideClick);
         };
     }, [nav]);
-
 
 
 
@@ -283,42 +151,27 @@ const Topbar = (props) => {
                                 display: "none"
                             },
                         }}>
-                        {/* <LanguageDropdown /> */}
+
                         <Box>
-                            <LanguageIcon onClick={handleOpen} />
-                            <Popover
-                                id={id}
-                                open={languageOpen}
-                                anchorEl={anchorEl}
-                                onClose={handleLanguageClose}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left'
+                            {/* <LanguageIcon id="language-dropdown" /> */}
+                            <Select
+                                value={props.currentLocale}
+                                onChange={props.handleChange}
+                                style={{
+                                    border: '1px solid white',
+                                    color: 'white',
+                                    fontSize: '12px',
+                                    height: '40px'
                                 }}
                             >
-                                <>
-                                    <select onChange={props.handleChange} value={props.currentLocale}>
-                                        {languages.map(({ name, code }) => (
-                                            <option key={code} value={code}>
-                                                {name}
-                                            </option>
-                                        ))}
-                                    </select>
+                                {languages.map(({ name, code }) => (
+                                    <MenuItem key={code} value={code}>
+                                        {name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </Box>
 
-                                    {/* <List> */}
-                                    {/* <ListItem onClick={props.handleChange} value={code}>
-                                                <ListItemText primary={name} />
-                                            </ListItem> */}
-                                    {/* <ListItem onClick={handleLanguageSelect} value={code}>
-                                <ListItemText primary={name} />
-                            </ListItem>
-                            <ListItem onClick={handleLanguageSelect} value={code}>
-                                <ListItemText primary={name} />
-                            </ListItem> */}
-                                    {/* </List> */}
-                                </>
-                            </Popover>
-                        </Box >
                     </Box>
 
                     {/* Search Bar */}
@@ -388,18 +241,6 @@ const Topbar = (props) => {
                         )}
                     </Box>
                 </Modal>
-
-
-                {/* Icons */}
-                {/* <Box display="flex">
-                    <IconButton onClick={colorMode.toggleColorMode}>
-                        {theme.palette.mode === 'dark' ? (
-                            <DarkModeOutlinedIcon />
-                        ) : (
-                            <LightModeOutlinedIcon />
-                        )}
-                    </IconButton>
-                </Box> */}
             </Box>
 
             <Box
