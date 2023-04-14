@@ -21,8 +21,6 @@ import DashboardIndex from "scenes/dashboard/dashIndex";
 
 const local = navigator.language
 
-console.log(local)
-
 let lang;
 if (local === "en" || local === "en-US") {
     lang = English

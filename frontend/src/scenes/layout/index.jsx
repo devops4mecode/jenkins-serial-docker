@@ -1,15 +1,12 @@
 import { Outlet } from 'react-router-dom'
-import Sidebar from 'scenes/global/Sidebar'
-import Topbar from 'scenes/global/Topbar'
 import { useMediaQuery } from '@mui/material'
 import { useAuthContext } from 'hooks/useAuthContext'
-
 import { IntlProvider } from "react-intl";
-
 import { LOCALES } from "../../i18n/locales"
 import { messages } from "../../i18n/messages"
 import { useState } from 'react'
-
+import Sidebar from 'scenes/global/Sidebar'
+import Topbar from 'scenes/global/Topbar'
 
 
 
@@ -25,8 +22,6 @@ const Layout = () => {
 
     const isNonMobile = useMediaQuery("(min-width: 600px)")
 
-    // console.log({ IntlProvider });
-
     function getInitialLocal() {
         // getting stored items
         const savedLocale = localStorage.getItem('locale')
@@ -41,7 +36,7 @@ const Layout = () => {
         >
             <div className='app'>
 
-                {user && (<Sidebar isNonMobile={isNonMobile} />)}
+                {user && (<Sidebar isNonMobile={isNonMobile} currentLocale={currentLocale} handleChange={handleChange} />)}
                 <main className='content'>
                     {user && (<Topbar currentLocale={currentLocale} handleChange={handleChange} />)}
                     <Outlet />

@@ -1,16 +1,17 @@
+import React from "react"
 import axios from "axios"
+import { LOCALES } from "../../i18n/locales"
 import { useContext, useState, useEffect } from "react"
 import { useAuthContext } from "hooks/useAuthContext"
 import { useLogout } from "hooks/useLogout"
 import { FormattedMessage, useIntl } from "react-intl"
-import { Box, IconButton, useTheme, Modal, Typography, Button, Popover, List, ListItem, ListItemText } from "@mui/material"
+import { Box, IconButton, useTheme, Modal, Typography, Select, MenuItem } from "@mui/material"
 import { tokens } from "../../theme"
 import InputBase from "@mui/material/InputBase"
 import LogoutIcon from '@mui/icons-material/Logout'
 import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from "@mui/icons-material/Search"
 import RedeemIcon from '@mui/icons-material/Redeem';
-import LanguageIcon from '@mui/icons-material/Language';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
@@ -21,72 +22,13 @@ import logo from '../../assets/logo.png'
 import '../../index.css'
 
 
-import React from "react"
-
-import { LOCALES } from "../../i18n/locales"
 const languages = [
-    { name: "English", code: LOCALES.ENGLISH },
+    { name: "EN", code: LOCALES.ENGLISH },
     { name: "中文", code: LOCALES.CHINESE },
-    { name: "Malay", code: LOCALES.MALAY },
+    { name: "MS", code: LOCALES.MALAY },
 ]
 
-// function LanguageDropdown(props) {
-//     const [anchorEl, setAnchorEl] = React.useState(null)
-//     const [language, setLanguage] = React.useState('')
-
-//     const handleOpen = (event) => {
-//         setAnchorEl(event.currentTarget)
-//     }
-
-//     const handleClose = () => {
-//         setAnchorEl(null)
-//     }
-
-//     const handleLanguageSelect = (props) => {
-//         setLanguage(props.currentLocale)
-//         console.log("props.currentLocale is")
-//         console.log(props.currentLocale)
-//         handleClose()
-//     }
-
-//     const open = Boolean(anchorEl)
-//     const id = open ? 'language-popover' : undefined
-
-//     return (
-// <Box Box >
-//         <LanguageIcon onClick={handleOpen} />
-//         <Popover
-//             id={id}
-//             open={open}
-//             anchorEl={anchorEl}
-//             onClose={handleClose}
-//             anchorOrigin={{
-//                 vertical: 'bottom',
-//                 horizontal: 'left'
-//             }}
-//         >
-//             {languages.map(({ name, code }) => (
-//                 <List>
-//                     <ListItem onClick={handleLanguageSelect} value={code}>
-//                         <ListItemText primary={name} />
-//                     </ListItem>
-//                     {/* <ListItem onClick={handleLanguageSelect} value={code}>
-//                             <ListItemText primary={name} />
-//                         </ListItem>
-//                         <ListItem onClick={handleLanguageSelect} value={code}>
-//                             <ListItemText primary={name} />
-//                         </ListItem> */}
-//                 </List>
-//             ))}
-//         </Popover>
-//     </Box >
-//     )
-// }
-
 const Topbar = (props) => {
-
-    console.log("props.currentLocale is")
-    console.log(props.currentLocale)
 
     //use the theme set up in theme.js
     const theme = useTheme()
@@ -128,88 +70,11 @@ const Topbar = (props) => {
         setSearchValue('')
     }
 
-
     // for search result dialog box
     const handleClose = () => {
         setOpen(false)
         setData(null)
     }
-
-    const [anchorEl, setAnchorEl] = React.useState(null)
-    // const [language, setLanguage] = React.useState('')
-
-    const handleOpen = (event) => {
-        setAnchorEl(event.currentTarget)
-    }
-
-    const handleLanguageClose = () => {
-        setAnchorEl(null)
-    }
-
-    const handleLanguageSelect = (e) => {
-        // setLanguage(props.currentLocale)
-        // console.log("props.currentLocale is")
-        // console.log(props.currentLocale)
-
-        // setCurrentLocale(e.target.value)
-
-        handleClose()
-    }
-
-    const languageOpen = Boolean(anchorEl)
-    const id = languageOpen ? 'language-popover' : undefined
-
-    // for language dropdown
-    // function LanguageDropdown() {
-    //     const [anchorEl, setAnchorEl] = React.useState(null)
-    //     const [language, setLanguage] = React.useState('')
-
-    //     const handleOpen = (event) => {
-    //         setAnchorEl(event.currentTarget)
-    //     }
-
-    //     const handleClose = () => {
-    //         setAnchorEl(null)
-    //     }
-
-    //     const handleLanguageSelect = (props) => {
-    //         setLanguage(props.currentLocale)
-    //         handleClose()
-    //     }
-
-    //     const open = Boolean(anchorEl)
-    //     const id = open ? 'language-popover' : undefined
-
-    //     return (
-    //         <Box>
-    //             <LanguageIcon onClick={handleOpen} />
-    //             <Popover
-    //                 id={id}
-    //                 open={open}
-    //                 anchorEl={anchorEl}
-    //                 onClose={handleClose}
-    //                 anchorOrigin={{
-    //                     vertical: 'bottom',
-    //                     horizontal: 'left'
-    //                 }}
-    //             >
-    //                 {languages.map(({ name, code }) => (
-    //                     <List>
-    //                         <ListItem onClick={handleLanguageSelect} value={code}>
-    //                             <ListItemText primary={name} />
-    //                         </ListItem>
-    //                         {/* <ListItem onClick={handleLanguageSelect} value={code}>
-    //                             <ListItemText primary={name} />
-    //                         </ListItem>
-    //                         <ListItem onClick={handleLanguageSelect} value={code}>
-    //                             <ListItemText primary={name} />
-    //                         </ListItem> */}
-    //                     </List>
-    //                 ))}
-    //             </Popover>
-    //         </Box>
-    //     )
-    // }
 
 
     useEffect(() => {
@@ -228,7 +93,6 @@ const Topbar = (props) => {
             document.removeEventListener("mousedown", handleOutsideClick);
         };
     }, [nav]);
-
 
 
 
@@ -260,10 +124,36 @@ const Topbar = (props) => {
                     </Box>
 
                     {/* logo */}
-                    <Box display="flex" paddingLeft='5px'>
+                    <Box display="flex" paddingLeft='5px' paddingRight='10px'>
                         <a href="/">
                             <img src={logo} alt="logo" style={{ width: '50px', height: '50px' }} />
                         </a>
+                    </Box>
+
+                    {/* Search Bar */}
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            bgcolor: '#f2f0f0',
+                            borderRadius: '3px',                            
+                            width: { xs: '40%', sm: 'auto' },
+                            [theme.breakpoints.down("lg")]: {
+                                display: "none"
+                            },
+                        }}
+                    >
+                        <InputBase
+                            sx={{ ml: 2, flex: 1 }}
+                            placeholder={intl.formatMessage({ id: 'search.button.text' })}
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                        />
+                        <IconButton
+                            type="button"
+                            sx={{ p: 1 }}
+                            onClick={() => handleSearch(searchValue)}>
+                            <SearchIcon />
+                        </IconButton>
                     </Box>
                 </Box>
 
@@ -280,45 +170,29 @@ const Topbar = (props) => {
                         paddingRight='5px'
                         sx={{
                             [theme.breakpoints.up("lg")]: {
-                                display: "none"
+                                fontSize: '20px'
                             },
                         }}>
-                        {/* <LanguageDropdown /> */}
+
                         <Box>
-                            <LanguageIcon onClick={handleOpen} />
-                            <Popover
-                                id={id}
-                                open={languageOpen}
-                                anchorEl={anchorEl}
-                                onClose={handleLanguageClose}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left'
+                            <Select
+                                value={props.currentLocale}
+                                onChange={props.handleChange}
+                                style={{
+                                    border: '1px solid white',
+                                    color: 'white',
+                                    fontSize: '12px',
+                                    height: '40px'
                                 }}
                             >
-                                <>
-                                    <select onChange={props.handleChange} value={props.currentLocale}>
-                                        {languages.map(({ name, code }) => (
-                                            <option key={code} value={code}>
-                                                {name}
-                                            </option>
-                                        ))}
-                                    </select>
+                                {languages.map(({ name, code }) => (
+                                    <MenuItem key={code} value={code}>
+                                        {name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </Box>
 
-                                    {/* <List> */}
-                                    {/* <ListItem onClick={props.handleChange} value={code}>
-                                                <ListItemText primary={name} />
-                                            </ListItem> */}
-                                    {/* <ListItem onClick={handleLanguageSelect} value={code}>
-                                <ListItemText primary={name} />
-                            </ListItem>
-                            <ListItem onClick={handleLanguageSelect} value={code}>
-                                <ListItemText primary={name} />
-                            </ListItem> */}
-                                    {/* </List> */}
-                                </>
-                            </Popover>
-                        </Box >
                     </Box>
 
                     {/* Search Bar */}
@@ -328,6 +202,9 @@ const Topbar = (props) => {
                             bgcolor: '#f2f0f0',
                             borderRadius: '3px',
                             width: { xs: '40%', sm: 'auto' },
+                            [theme.breakpoints.up("lg")]: {
+                                display: "none"
+                            },
                         }}
                     >
                         <InputBase
@@ -388,18 +265,6 @@ const Topbar = (props) => {
                         )}
                     </Box>
                 </Modal>
-
-
-                {/* Icons */}
-                {/* <Box display="flex">
-                    <IconButton onClick={colorMode.toggleColorMode}>
-                        {theme.palette.mode === 'dark' ? (
-                            <DarkModeOutlinedIcon />
-                        ) : (
-                            <LightModeOutlinedIcon />
-                        )}
-                    </IconButton>
-                </Box> */}
             </Box>
 
             <Box

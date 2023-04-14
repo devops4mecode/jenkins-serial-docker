@@ -1,8 +1,9 @@
 import "react-pro-sidebar/dist/css/styles.css"
 import { useState } from "react"
 import { useLogout } from "hooks/useLogout"
+import { LOCALES } from "../../i18n/locales"
 import { FormattedMessage } from "react-intl"
-import { Box, IconButton, Typography, useTheme } from "@mui/material"
+import { Box, IconButton, Typography, useTheme, Select } from "@mui/material"
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar"
 import { tokens } from "../../theme"
 import LogoutIcon from '@mui/icons-material/Logout'
@@ -16,6 +17,13 @@ import WebItem from "./WebItem"
 import logo from '../../assets/logo.png'
 import '../../index.css'
 
+
+
+const languages = [
+    { name: "EN", code: LOCALES.ENGLISH },
+    { name: "中文", code: LOCALES.CHINESE },
+    { name: "Malay", code: LOCALES.MALAY },
+]
 
 const Sidebar = () => {
 
