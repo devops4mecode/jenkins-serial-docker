@@ -1,7 +1,6 @@
 import "react-pro-sidebar/dist/css/styles.css"
 import { useState } from "react"
 import { useLogout } from "hooks/useLogout"
-import { LOCALES } from "../../i18n/locales"
 import { FormattedMessage } from "react-intl"
 import { Box, IconButton, Typography, useTheme, Select } from "@mui/material"
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar"
@@ -19,12 +18,6 @@ import '../../index.css'
 
 
 
-const languages = [
-    { name: "EN", code: LOCALES.ENGLISH },
-    { name: "中文", code: LOCALES.CHINESE },
-    { name: "Malay", code: LOCALES.MALAY },
-]
-
 const Sidebar = () => {
 
     const theme = useTheme()
@@ -36,10 +29,12 @@ const Sidebar = () => {
 
     return (
         <Box sx={{
-            width: "370px",
+            width: isCollapsed ? undefined : "370px",
+            minHeight: "100vh",
             "& .pro-sidebar-inner": {
                 background: `${colors.primary[400]} !important`,
-                width: '310px'
+                width: isCollapsed ? undefined : "310px",
+                height: "100%"
             },
             "& .pro-icon-wrapper": {
                 backgroundColor: "transparent !important"
@@ -57,10 +52,10 @@ const Sidebar = () => {
                 display: "none"
             },
             [theme.breakpoints.down("xl")]: {
-                width: "410px !important"
+                width: isCollapsed ? "310px !important" : "410px !important",
             }
         }}>
-            <ProSidebar collapsed={isCollapsed}>
+            <ProSidebar collapsed={isCollapsed} onToggle={() => setIsCollapsed(!isCollapsed)}>
                 <Menu iconShape="square">
                     <MenuItem
                         onClick={() => setIsCollapsed(!isCollapsed)}

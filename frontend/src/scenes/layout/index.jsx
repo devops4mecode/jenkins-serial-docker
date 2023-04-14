@@ -37,7 +37,7 @@ const Layout = () => {
             <div className='app'>
 
                 {user && (<Sidebar isNonMobile={isNonMobile} currentLocale={currentLocale} handleChange={handleChange} />)}
-                <main className='content'>
+                <main className='content' style={{ overflowY: 'auto' }}>
                     {user && (<Topbar currentLocale={currentLocale} handleChange={handleChange} />)}
                     <Outlet />
                 </main>
