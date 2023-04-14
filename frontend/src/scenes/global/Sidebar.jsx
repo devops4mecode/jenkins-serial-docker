@@ -25,9 +25,7 @@ const languages = [
     { name: "Malay", code: LOCALES.MALAY },
 ]
 
-const Sidebar = (props) => {
-    console.log("props.currentLocale is")
-    console.log(props.currentLocale)
+const Sidebar = () => {
 
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)

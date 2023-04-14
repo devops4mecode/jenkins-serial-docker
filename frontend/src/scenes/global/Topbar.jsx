@@ -30,9 +30,6 @@ const languages = [
 
 const Topbar = (props) => {
 
-    console.log("props.currentLocale is")
-    console.log(props.currentLocale)
-
     //use the theme set up in theme.js
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
@@ -127,10 +124,36 @@ const Topbar = (props) => {
                     </Box>
 
                     {/* logo */}
-                    <Box display="flex" paddingLeft='5px'>
+                    <Box display="flex" paddingLeft='5px' paddingRight='10px'>
                         <a href="/">
                             <img src={logo} alt="logo" style={{ width: '50px', height: '50px' }} />
                         </a>
+                    </Box>
+
+                    {/* Search Bar */}
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            bgcolor: '#f2f0f0',
+                            borderRadius: '3px',                            
+                            width: { xs: '40%', sm: 'auto' },
+                            [theme.breakpoints.down("lg")]: {
+                                display: "none"
+                            },
+                        }}
+                    >
+                        <InputBase
+                            sx={{ ml: 2, flex: 1 }}
+                            placeholder={intl.formatMessage({ id: 'search.button.text' })}
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                        />
+                        <IconButton
+                            type="button"
+                            sx={{ p: 1 }}
+                            onClick={() => handleSearch(searchValue)}>
+                            <SearchIcon />
+                        </IconButton>
                     </Box>
                 </Box>
 
@@ -179,6 +202,9 @@ const Topbar = (props) => {
                             bgcolor: '#f2f0f0',
                             borderRadius: '3px',
                             width: { xs: '40%', sm: 'auto' },
+                            [theme.breakpoints.up("lg")]: {
+                                display: "none"
+                            },
                         }}
                     >
                         <InputBase
