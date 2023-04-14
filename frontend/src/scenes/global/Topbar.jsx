@@ -12,7 +12,6 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from "@mui/icons-material/Search"
 import RedeemIcon from '@mui/icons-material/Redeem';
-import LanguageIcon from '@mui/icons-material/Language';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
@@ -26,7 +25,7 @@ import '../../index.css'
 const languages = [
     { name: "EN", code: LOCALES.ENGLISH },
     { name: "中文", code: LOCALES.CHINESE },
-    { name: "Malay", code: LOCALES.MALAY },
+    { name: "MS", code: LOCALES.MALAY },
 ]
 
 const Topbar = (props) => {
@@ -148,12 +147,11 @@ const Topbar = (props) => {
                         paddingRight='5px'
                         sx={{
                             [theme.breakpoints.up("lg")]: {
-                                display: "none"
+                                fontSize: '20px'
                             },
                         }}>
 
                         <Box>
-                            {/* <LanguageIcon id="language-dropdown" /> */}
                             <Select
                                 value={props.currentLocale}
                                 onChange={props.handleChange}
