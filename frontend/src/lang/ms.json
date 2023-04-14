@@ -27,6 +27,16 @@
     "reload.amount": "Amaun Kredit",
     "reload.quantity": "Kuantiti",
     "reload.remark": "Nota",
+
+    "record.serial.number": "Nombor Siri",
+    "record.credit": "Kredit",
+    "record.buyer": "Siapa beli",
+    "record.sold.date": "Tarikh Beli",
+    "record.redeemer": "Siapa Guna",
+    "record.redeemed.date": "Tarikh Guna",
+    "record.status": "Status",
+
+
     "generate.button": "Menjana",
     "credit.error": "Tidak boleh letak kosong.",
     "amount.error": "Tidak boleh letak kosong.",

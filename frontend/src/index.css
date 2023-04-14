@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap');
 
-html
-body
-#root,
+html body #root,
 .app,
 .content {
   height: 100%;
@@ -75,11 +73,9 @@ body
 .navItem-style {
   color: #292828 !important;
 }
+
 .navbaritem {
   padding-top: 10px;
-}
-.nav-wording {
-  font-size: 14px !important;
 }
 
 .nav-wording:active {
@@ -95,6 +91,10 @@ body
 }
 
 @media (max-width: 576px) {
+  .nav-wording {
+    font-size: 14px !important;
+  }
+
   /* search result isi kandungan */
   .css-iqie2n {
     padding-left: 0 !important;

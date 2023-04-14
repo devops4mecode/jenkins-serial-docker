@@ -41,7 +41,18 @@ export const messages = {
         "valid.serials": "Unclaimed Serial",
         "invalid.serials": "Claimed Serial",
         "logout.button": "Logout",
-        "language": "Language"
+        "language": "Language",
+
+        // for the datagrid
+        "status.redeemed": "REDEEMED",
+        "status.unclaimed": "UNCLAIMED",
+        "record.serial.number": "Serial Number",
+        "record.credit": "Credit",
+        "record.buyer": "Buyer",
+        "record.sold.date": "Purchase Date",
+        "record.redeemer": "Redemption Account",
+        "record.redeemed.date": "Redemption Date",
+        "record.status": "Status",
     },
     [LOCALES.CHINESE]: {
         "logo.name": "幸运序号",
@@ -83,7 +94,18 @@ export const messages = {
         "valid.serials": "未兑换序号",
         "invalid.serials": "已兑换序号",
         "logout.button": "退出",
-        "language": "语言"
+        "language": "语言",
+
+        // for datagrid
+        "status.redeemed": "已领取",
+        "status.unclaimed": "未被领取",
+        "record.serial.number": "序号",
+        "record.credit": "金额",
+        "record.buyer": "买家",
+        "record.sold.date": "购买日期",
+        "record.redeemer": "兑换账号",
+        "record.redeemed.date": "兑换时间",
+        "record.status": "状态",
     },
     [LOCALES.MALAY]: {
         "logo.name": "Lucky Serial",
@@ -125,6 +147,17 @@ export const messages = {
         "valid.serials": "Siri Belum Ditebus",
         "invalid.serials": "Siri Ditebus",
         "logout.button": "Log Keluar",
-        "language": "Bahasa"
+        "language": "Bahasa",
+
+        // for datagrid
+        "status.redeemed": "DITEBUS",
+        "status.unclaimed": "BELUM DITUNTUT",
+        "record.serial.number": "Nombor Siri",
+        "record.credit": "Kredit",
+        "record.buyer": "Siapa beli",
+        "record.sold.date": "Tarikh Beli",
+        "record.redeemer": "Siapa Guna",
+        "record.redeemed.date": "Tarikh Guna",
+        "record.status": "Status",
     },
 }

@@ -27,6 +27,15 @@
     "reload.amount": "序号金额",
     "reload.quantity": "序号数量",
     "reload.remark": "买家备注",
+    
+    "record.serial.number": "序号",
+    "record.credit": "金额",
+    "record.buyer": "买家",
+    "record.sold.date": "购买日期",
+    "record.redeemer": "用户",
+    "record.redeemed.date": "使用日期",
+    "record.status": "状态",
+
     "generate.button": "生成",
     "credit.error": "须填上序号金额",
     "amount.error": "须填上序号数量",
