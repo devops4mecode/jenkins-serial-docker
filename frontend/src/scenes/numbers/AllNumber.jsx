@@ -4,12 +4,17 @@ import { useEffect, useState } from "react";
 import { useTheme } from "@mui/material";
 import { useAuthContext } from "hooks/useAuthContext";
 import { FormattedMessage } from "react-intl";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid"
+import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarExport, GridToolbarFilterButton } from "@mui/x-data-grid"
 import { tokens } from "../../theme";
 import Box from "@mui/material/Box";
 import Header from "../../components/Header";
 import '../../css/allNumberTable.css'
 
+// const localizedTextsMap = {
+//     toolbarExportCSV: '导出',
+//     toolbarFilter: 'Filter',
+//     toolbarColumns: 'Columns',
+// };
 
 const AllNumber = () => {
     const theme = useTheme()
@@ -49,7 +54,7 @@ const AllNumber = () => {
     const columns = [
         {
             field: "serialNo",
-            headerName: "SERIAL NUMBER",
+            headerName: <FormattedMessage id="record.serial.number" />,
             type: "number",
             headerAlign: "center",
             align: "center",
@@ -60,7 +65,7 @@ const AllNumber = () => {
         },
         {
             field: "givenCredit",
-            headerName: "CREDIT",
+            headerName: <FormattedMessage id="record.credit" />,
             type: "number",
             headerAlign: "center",
             align: "center",
@@ -69,7 +74,7 @@ const AllNumber = () => {
         },
         {
             field: "remarkName",
-            headerName: "WHO BUY",
+            headerName: <FormattedMessage id="record.buyer" />,
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center",
@@ -78,7 +83,7 @@ const AllNumber = () => {
         },
         {
             field: "createdAt",
-            headerName: "SOLD DATE",
+            headerName: <FormattedMessage id="record.sold.date" />,
             valueFormatter: (params) =>
                 moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
             headerAlign: "center",
@@ -88,7 +93,7 @@ const AllNumber = () => {
         },
         {
             field: "redemptionAcc",
-            headerName: "WHO USE",
+            headerName: <FormattedMessage id="record.redeemer" />,
             valueGetter: (params) =>
                 params.row.redemptionAcc || "----",
             cellClassName: "name-column--cell",
@@ -99,7 +104,7 @@ const AllNumber = () => {
         },
         {
             field: "updatedAt",
-            headerName: "REDEEMED DATE",
+            headerName: <FormattedMessage id="record.redeemed.date" />,
             valueGetter: (params) =>
                 params.row.serialStatus ? "---" : moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
             headerAlign: "center",
@@ -109,7 +114,7 @@ const AllNumber = () => {
         },
         {
             field: "serialStatus",
-            headerName: "STATUS",
+            headerName: <FormattedMessage id="record.status" />,
             valueGetter: (params) =>
                 params.row.serialStatus ? "UNCLAIMED" : "REDEEMED",
             cellClassName: (params) =>
@@ -122,6 +127,16 @@ const AllNumber = () => {
     ]
 
     const getRowId = (row) => row._id
+
+    const CustomToolbar = () => {
+        return (
+            <GridToolbarContainer>
+                <GridToolbarColumnsButton />
+                <GridToolbarFilterButton />
+                <GridToolbarExport />
+            </GridToolbarContainer>
+        )
+    }
 
     return (
         <Box m="20px">
@@ -153,8 +168,10 @@ const AllNumber = () => {
                 <DataGrid
                     rows={serials}
                     columns={columns}
-                    components={{ Toolbar: GridToolbar }}
+                    components={{ Toolbar: CustomToolbar }}
                     getRowId={getRowId}
+                    // localeText={localizedTextsMap}
+                    disableColumnMenu
                 />
 
                 <Box className="footer"></Box>

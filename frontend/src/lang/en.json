@@ -27,6 +27,15 @@
     "reload.amount": "Reload Amount",
     "reload.quantity": "Quantity",
     "reload.remark": "Remark",
+
+    "record.serial.number": "Serial Number",
+    "record.credit": "Credit",
+    "record.buyer": "Buyer",
+    "record.sold.date": "Purchase Date",
+    "record.redeemer": "Redeemer",
+    "record.redeemed.date": "Redeemed Date",
+    "record.status": "Status",
+
     "generate.button": "Generate",
     "credit.error": "This field must not be empty.",
     "amount.error": "This field must not be empty.",

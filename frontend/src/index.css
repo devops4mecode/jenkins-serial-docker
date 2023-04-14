@@ -72,7 +72,6 @@ html body #root,
   padding-top: 10px;
 }
 
-
 .nav-wording:active {
   color: #6200EE !important;
 }
@@ -87,13 +86,13 @@ html body #root,
 
 @media (max-width: 576px) {
 
+  .nav-wording {
+    font-size: 14px !important;
+  }
+
   /* search result isi kandungan */
   .css-iqie2n {
     padding-left: 0 !important;
-  }
-
-  .nav-wording {
-    font-size: 14px !important;
   }
 
   .footer {
@@ -101,8 +100,24 @@ html body #root,
   }
 }
 
+
+
 @media (min-width: 768px) {
   .navItem-style {
     color: #666666;
   }
+
+    /* search result isi kandungan */
+    .css-iqie2n {
+      padding-left: 15% !important;
+    }
+}
+
+
+@media (min-width: 1024px) {
+
+    /* search result isi kandungan */
+    .css-iqie2n {
+      padding-left: 30% !important;
+    }
 }

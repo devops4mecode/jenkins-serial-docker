@@ -1,45 +1,118 @@
 const Serial = require("../models/SerialModel");
 const User = require("../models/UserModel");
+const moment = require("moment");
 
+// const { startDate, endDate } = req.body
+// TESTING
 const getSerialsData = async (req, res) => {
     try {
-        const totalRedeemedCount = await Serial.aggregate([
-            { $match: { serialStatus: req.query.status === "true" ? true : false } },
-            { $count: "count" },
-        ]);
+        const startDate = moment().startOf('year').toDate();
+        const endDate = moment().endOf('day').toDate();
 
-        const totalGeneratedCount = await Serial.aggregate([
-            { $group: { _id: "$givenCredit", count: { $sum: 1 } } },
-        ]);
-
-        const redeemedSerialCount = await Serial.aggregate([
-            { $match: { serialStatus: false } },
-            { $group: { _id: "$givenCredit", count: { $sum: 1 } } },
-        ]);
-
-        const totalAmountRedeemed = await Serial.aggregate([
-            { $match: { serialStatus: false } },
-            { $group: { _id: "givenCredit", sum: { $sum: "$givenCredit" } } },
-        ]);
-
-        const mostRedeemed = [{ _id: 10 }, { _id: 30 }, { _id: 50 }, { _id: 100 },]
-
-        const percentages = mostRedeemed.map(({ _id }) => {
-            const count = redeemedSerialCount.flat().find((obj) => obj._id === _id)?.count || 0;
-            const total = totalRedeemedCount[0]?.count || 0;
-            return {
-                _id,
-                percentage: total > 0 ? (count / total) * 100 : 0,
-            };
-        });
-
-        res.json({
-            totalRedeemedCount,
-            totalGeneratedCount,
-            redeemedSerialCount,
+        const [
+            overallRedeemedCount,
+            redeemedCounts,
+            overallGeneratedCount,
             totalAmountRedeemed,
-            mostRedeemed: percentages,
-        });
+            topRedeemUser
+        ] = await Promise.all([
+            // overallRedeemedCount
+            Serial.aggregate([
+                {
+                    $match: {
+                        serialStatus: false,
+                        updatedAt: { $gte: startDate, $lte: endDate }
+                    }
+                },
+                { $count: "count" }
+            ]),
+            // redeemedCounts
+            Serial.aggregate([
+                {
+                    $match: {
+                        serialStatus: false,
+                        updatedAt: { $gte: startDate, $lt: endDate }
+                    }
+                },
+                { $group: { _id: "$givenCredit", count: { $sum: 1 } } },
+            ]),
+            // overallGeneratedCount
+            Serial.aggregate([
+                {
+                    $match: {
+                        createdAt: { $gte: startDate, $lt: endDate }
+                    }
+                },
+                { $group: { _id: "$givenCredit", count: { $sum: 1 } } },
+            ]),
+            // totalAmountRedeemed
+            Serial.aggregate([
+                {
+                    $match: {
+                        serialStatus: false,
+                        updatedAt: { $gte: startDate, $lt: endDate }
+                    }
+                },
+                { $group: { _id: "givenCredit", sum: { $sum: "$givenCredit" } } },
+            ]),
+            // topRedeemUser
+            Serial.aggregate([
+                {
+                    $match: {
+                        serialStatus: false,
+                        updatedAt: { $gte: startDate, $lt: endDate }
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$redemptionAcc",
+                        count: { $sum: 1 }
+                    }
+                },
+                {
+                    $sort: { count: -1 }
+                },
+                { $limit: 10 }
+            ]),
+        ]);
+
+        const mostRedeemed = [10, 30, 50, 100];
+
+        const percentages = await Serial.aggregate([
+            {
+                $match: {
+                    serialStatus: false,
+                    updatedAt: { $gte: startDate, $lt: endDate },
+                    givenCredit: { $in: mostRedeemed }
+                }
+            },
+            {
+                $group: {
+                    _id: "$givenCredit",
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $project: {
+                    _id: 1,
+                    percentage: { $multiply: [{ $divide: ["$count", overallRedeemedCount[0].count] }, 100] }
+                }
+            }
+        ]);
+
+        const percentagesMap = new Map(percentages.map(({ _id, percentage }) => [_id, percentage]));
+
+        const result = {
+            overallRedeemedCount: overallRedeemedCount[0].count,
+            redeemedCount: redeemedCounts,
+            overallGeneratedCount,
+            totalAmountRedeemed: totalAmountRedeemed[0].sum,
+            mostRedeemed: mostRedeemed.map(_id => ({ _id, percentage: percentagesMap.get(_id) || 0 })),
+            topRedeemUser
+        };
+
+        res.json(result);
+
     } catch (error) {
         return res.status(400).json({ message: "Something wrong" });
     }
@@ -48,4 +121,3 @@ const getSerialsData = async (req, res) => {
 module.exports = {
     getSerialsData
 };
-

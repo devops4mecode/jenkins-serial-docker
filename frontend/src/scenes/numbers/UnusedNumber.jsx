@@ -3,7 +3,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "hooks/useAuthContext";
 import { FormattedMessage } from "react-intl";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid"
+import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarExport, GridToolbarFilterButton } from "@mui/x-data-grid"
 import { Box, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
@@ -48,7 +48,7 @@ const UnusedNumber = () => {
     const columns = [
         {
             field: "serialNo",
-            headerName: "SERIAL NUMBER",
+            headerName: <FormattedMessage id="record.serial.number" />,
             type: "number",
             headerAlign: "center",
             align: "center",
@@ -58,7 +58,7 @@ const UnusedNumber = () => {
         },
         {
             field: "givenCredit",
-            headerName: "CREDIT",
+            headerName: <FormattedMessage id="record.credit" />,
             type: "number",
             headerAlign: "center",
             align: "center",
@@ -66,7 +66,7 @@ const UnusedNumber = () => {
         },
         {
             field: "remarkName",
-            headerName: "WHO BUY",
+            headerName: <FormattedMessage id="record.buyer" />,
             width: 370,
             cellClassName: "name-column--cell",
             headerAlign: "center",
@@ -74,7 +74,7 @@ const UnusedNumber = () => {
         },
         {
             field: "createdAt",
-            headerName: "SOLD DATE",
+            headerName: <FormattedMessage id="record.sold.date" />,
             valueFormatter: (params) =>
                 moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
             width: 370,
@@ -84,6 +84,16 @@ const UnusedNumber = () => {
     ]
 
     const getRowId = (row) => row._id
+
+    const CustomToolbar = () => {
+        return (
+            <GridToolbarContainer>
+                <GridToolbarColumnsButton />
+                <GridToolbarFilterButton />
+                <GridToolbarExport />
+            </GridToolbarContainer>
+        )
+    }
 
     return (
         <Box m="20px">
@@ -108,8 +118,9 @@ const UnusedNumber = () => {
                 <DataGrid
                     rows={serials}
                     columns={columns}
-                    components={{ Toolbar: GridToolbar }}
+                    components={{ Toolbar: CustomToolbar }}
                     getRowId={getRowId}
+                    disableColumnMenu
                 />
 
                 <Box className="footer"></Box>
