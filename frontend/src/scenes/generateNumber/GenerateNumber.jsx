@@ -12,6 +12,7 @@ import Header from "../../components/Header"
 import CreditButton from "components/CreditButton"
 import CreditTextField from "../../components/TextField"
 import '../../css/generateNumber.css'
+import '../../index.css'
 
 
 const GenerateNumber = () => {
@@ -194,6 +195,8 @@ const GenerateNumber = () => {
                                     </Button>
                                 </CSVLink>
                             </Box>
+
+                            <Box className="footer"></Box>
                         </>
                     )}
                 </form>

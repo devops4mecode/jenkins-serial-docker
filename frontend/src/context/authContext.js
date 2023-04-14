@@ -30,14 +30,14 @@ export const AuthContextProvider = ({ children }) => {
         localStorage.setItem('user', JSON.stringify(state.user))
 
         // Set up a timeout function to automatically log out the user when the token expires
-        if (state.user) {
-            const decodedToken = jwt_decode(state.user.accessToken)
-            const expiresIn = (new Date(decodedToken.exp * 1000)) - (new Date())
-            setTimeout(() => {
-                alert('Session has expired. Please log in again.')
-                dispatch({ type: 'Logout' })
-            }, expiresIn)
-        }
+        // if (state.user) {
+        //     const decodedToken = jwt_decode(state.user.accessToken)
+        //     const expiresIn = (new Date(decodedToken.exp * 1000)) - (new Date())
+        //     setTimeout(() => {
+        //         alert('Session has expired. Please log in again.')
+        //         dispatch({ type: 'Logout' })
+        //     }, expiresIn)
+        // }
     }, [state.user])
 
     console.log('AuthContext state: ', state)

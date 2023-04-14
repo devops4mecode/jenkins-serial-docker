@@ -22,7 +22,7 @@ const login = async (req, res) => {
                 username: foundUser.username
             },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: "7d" }
+            // { expiresIn: "7d" }
         );
 
         // Send accessToken containing username and roles

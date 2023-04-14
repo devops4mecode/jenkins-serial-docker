@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap');
 
-html,
-body,
+html
+body
 #root,
 .app,
 .content {
@@ -41,7 +41,9 @@ body,
 
 
 
-
+.footer {
+  padding-top: 30px;
+}
 
 .pro-inner-item {
   display: inline-flex;
@@ -67,33 +69,32 @@ body,
 
 
 
+
+
+
+.navItem-style {
+  color: #292828 !important;
+}
+.navbaritem {
+  padding-top: 10px;
+}
+.nav-wording {
+  font-size: 14px !important;
+}
+
+.nav-wording:active {
+  color: #6200EE !important;
+}
+
+.navbar-menuitem {
+  background-color: #6200EE15 !important;
+}
+
+.css-1ohg3qd {
+  width: 90%;
+}
+
 @media (max-width: 576px) {
-  .navItem-style {
-    color: #292828;
-  }
-
-  .navbaritem {
-    padding-top: 10px;
-    /* padding-bottom: 10px; */
-  }
-
-  .nav-wording {
-    font-size: 14px !important;
-  }
-
-  .nav-wording:active {
-    color: #6200EE !important;
-  }
-
-  .navbar-menuitem {
-    background-color: #6200EE15 !important;
-  }
-
-
-  .css-1ohg3qd {
-    width: 90%;
-  }
-
   /* search result isi kandungan */
   .css-iqie2n {
     padding-left: 0 !important;
