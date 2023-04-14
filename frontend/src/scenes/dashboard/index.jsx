@@ -14,19 +14,15 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import "../../css/dashboard.css"
 
-
 const Dashboard = () => {
-
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     const { user } = useAuthContext()
-
     const [totalRedeemedAmount, setTotalRedeemedAmount] = useState(0)
     const [totalRedeemedCount, setTotalRedeemedCount] = useState(0)
     const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
     const [generatedCount, setGeneratedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
     const [mostRedeemedCount, setmostRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
-
 
     useEffect(() => {
         const getSerialsData = async () => {
@@ -35,18 +31,18 @@ const Dashboard = () => {
                     const { data } = await axios.get(`api/dashboard/serialsData`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     });
-                    setTotalRedeemedAmount(data?.totalAmountRedeemed[0]?.sum)
-                    setTotalRedeemedCount(data?.totalRedeemedCount[0].count)
+                    setTotalRedeemedAmount(data?.totalAmountRedeemed)
+                    setTotalRedeemedCount(data?.overallRedeemedCount)
                     setRedeemedCount(prevCount => {
                         const newRedeemedCount = { ...prevCount }
-                        data?.redeemedSerialCount.forEach(({ _id, count }) => {
+                        data?.redeemedCount.forEach(({ _id, count }) => {
                             newRedeemedCount[_id] = count
                         })
                         return newRedeemedCount
                     })
                     setGeneratedCount(prevCount => {
                         const newRedeemedCount = { ...prevCount }
-                        data?.totalGeneratedCount.forEach(({ _id, count }) => {
+                        data?.overallGeneratedCount.forEach(({ _id, count }) => {
                             newRedeemedCount[_id] = count
                         })
                         return newRedeemedCount
@@ -58,6 +54,8 @@ const Dashboard = () => {
                         })
                         return newRedeemedCount
                     })
+
+                    // console.log(data)
 
                 } catch (error) {
                     console.log(error)
@@ -138,54 +136,17 @@ const Dashboard = () => {
                 </Box>
 
                 <Grid container spacing={2}>
-                    <Grid item xs={6} sm={6} md={3}>
-                        <Box className="style-statbox">
-                            <StatBox
-                                title={redeemedCount['10']}
-                                subtitle="RM 10"
-                                icon={
-                                    <RedeemIcon className="iconSize" />
-                                }
-                            />
-                        </Box>
-                    </Grid>
-
-
-                    <Grid item xs={6} sm={6} md={3}>
-                        <Box className="style-statbox">
-                            <StatBox
-                                title={redeemedCount['30']}
-                                subtitle="RM 30"
-                                icon={
-                                    <RedeemIcon className="iconSize" />
-                                }
-                            />
-                        </Box>
-                    </Grid>
-
-                    <Grid item xs={6} sm={6} md={3}>
-                        <Box className="style-statbox">
-                            <StatBox
-                                title={redeemedCount['50']}
-                                subtitle="RM 50"
-                                icon={
-                                    <RedeemIcon className="iconSize" />
-                                }
-                            />
-                        </Box>
-                    </Grid>
-
-                    <Grid item xs={6} sm={6} md={3}>
-                        <Box className="style-statbox">
-                            <StatBox
-                                title={redeemedCount['100']}
-                                subtitle="RM100"
-                                icon={
-                                    <RedeemIcon className="iconSize" />
-                                }
-                            />
-                        </Box>
-                    </Grid>
+                    {Object.keys(redeemedCount).map((key) => (
+                        <Grid item xs={6} sm={6} md={3} key={key}>
+                            <Box className="style-statbox">
+                                <StatBox
+                                    title={redeemedCount[key]}
+                                    subtitle={`RM ${key}`}
+                                    icon={<RedeemIcon className="iconSize" />}
+                                />
+                            </Box>
+                        </Grid>
+                    ))}
                 </Grid>
             </Box>
 
@@ -198,50 +159,19 @@ const Dashboard = () => {
                 </Box>
 
                 <Grid container spacing={2}>
-                    <Grid item xs={6} sm={6} md={3}>
-                        <Box className="style-statbox">
-                            <StatBox
-                                title={generatedCount['10']}
-                                subtitle="RM 10"
-                                icon={
-                                    <TrendingUpIcon className="iconSize" />
-                                }
-                            />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={6} sm={6} md={3}>
-                        <Box className="style-statbox">
-                            <StatBox
-                                title={generatedCount['30']}
-                                subtitle="RM 30"
-                                icon={
-                                    <TrendingUpIcon className="iconSize" />
-                                }
-                            />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={6} sm={6} md={3}>
-                        <Box className="style-statbox">
-                            <StatBox
-                                title={generatedCount['50']}
-                                subtitle="RM 50"
-                                icon={
-                                    <TrendingUpIcon className="iconSize" />
-                                }
-                            />
-
-                        </Box>
-                    </Grid>
-                    <Grid item xs={6} sm={6} md={3}>
-                        <Box className="style-statbox"><StatBox
-                            title={generatedCount['100']}
-                            subtitle="RM100"
-                            icon={
-                                <TrendingUpIcon className="iconSize" />
-                            }
-                        />
-                        </Box>
-                    </Grid>
+                    {Object.keys(generatedCount).map((key) => (
+                        <Grid item xs={6} sm={6} md={3} key={key}>
+                            <Box className="style-statbox">
+                                <StatBox
+                                    title={`${generatedCount[key]}`}
+                                    subtitle={`RM ${key}`}
+                                    icon={
+                                        <TrendingUpIcon className="iconSize" />
+                                    }
+                                />
+                            </Box>
+                        </Grid>
+                    ))}
                 </Grid>
             </Box>
 
@@ -254,53 +184,21 @@ const Dashboard = () => {
                 </Box>
 
                 <Grid container spacing={2}>
-                    <Grid item xs={6} sm={6} md={3}>
-                        <Box className="style-statbox">
-                            <StatBox
-                                title={`${mostRedeemedCount['10'].toFixed(2)}%`}
-                                subtitle="RM 10"
-                                icon={
-                                    <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
-                                }
-                            />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={6} sm={6} md={3}>
-                        <Box className="style-statbox">
-                            <StatBox
-                                title={`${mostRedeemedCount['30'].toFixed(2)}%`}
-                                subtitle="RM 30"
-                                icon={
-                                    <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
-                                }
-                            />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={6} sm={6} md={3}>
-                        <Box className="style-statbox">
-                            <StatBox
-                                title={`${mostRedeemedCount['50'].toFixed(2)}%`}
-                                subtitle="RM 50"
-                                icon={
-                                    <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
-                                }
-                            />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={6} sm={6} md={3}>
-                        <Box className="style-statbox">
-                            <StatBox
-                                title={`${mostRedeemedCount['100'].toFixed(2)}%`}
-                                subtitle="RM100"
-                                icon={
-                                    <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
-                                }
-                            />
-                        </Box>
-                    </Grid>
+                    {Object.keys(mostRedeemedCount).map((key) => (
+                        <Grid item xs={6} sm={6} md={3} key={key}>
+                            <Box className="style-statbox">
+                                <StatBox
+                                    title={`${mostRedeemedCount[key].toFixed(2)}%`}
+                                    subtitle={`RM ${key}`}
+                                    icon={
+                                        <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                    }
+                                />
+                            </Box>
+                        </Grid>
+                    ))}
                 </Grid>
             </Box>
-
             <Box className="footer"></Box>
         </Box >
     )
