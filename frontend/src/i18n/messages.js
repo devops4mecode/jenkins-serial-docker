@@ -41,18 +41,17 @@ export const messages = {
         "valid.serials": "Unclaimed Serial",
         "invalid.serials": "Claimed Serial",
         "logout.button": "Logout",
-        "language": "Language",
 
         // for the datagrid
         "status.redeemed": "REDEEMED",
         "status.unclaimed": "UNCLAIMED",
-        "record.serial.number": "Serial Number",
-        "record.credit": "Credit",
-        "record.buyer": "Buyer",
-        "record.sold.date": "Purchase Date",
-        "record.redeemer": "Redemption Account",
-        "record.redeemed.date": "Redemption Date",
-        "record.status": "Status",
+        "record.serial.number": "SERIAL NUMBER",
+        "record.credit": "CREDIT",
+        "record.buyer": "BUYER",
+        "record.sold.date": "PURCHASE DATE",
+        "record.redeemer": "REDEMPTION ACCOUNT",
+        "record.redeemed.date": "REDEMPTION DATE",
+        "record.status": "STATUS",
     },
     [LOCALES.CHINESE]: {
         "logo.name": "幸运序号",
@@ -94,7 +93,6 @@ export const messages = {
         "valid.serials": "未兑换序号",
         "invalid.serials": "已兑换序号",
         "logout.button": "退出",
-        "language": "语言",
 
         // for datagrid
         "status.redeemed": "已领取",
@@ -147,17 +145,16 @@ export const messages = {
         "valid.serials": "Siri Belum Ditebus",
         "invalid.serials": "Siri Ditebus",
         "logout.button": "Log Keluar",
-        "language": "Bahasa",
 
         // for datagrid
         "status.redeemed": "DITEBUS",
         "status.unclaimed": "BELUM DITUNTUT",
-        "record.serial.number": "Nombor Siri",
-        "record.credit": "Kredit",
-        "record.buyer": "Siapa beli",
-        "record.sold.date": "Tarikh Beli",
-        "record.redeemer": "Siapa Guna",
-        "record.redeemed.date": "Tarikh Guna",
-        "record.status": "Status",
+        "record.serial.number": "NOMBOR SIRI",
+        "record.credit": "KREDIT",
+        "record.buyer": "PEMBELI",
+        "record.sold.date": "TARIKH PEMBELIAN",
+        "record.redeemer": "AKAUN PENEBUSAN",
+        "record.redeemed.date": "TARIKH PENEBUSAN",
+        "record.status": "TARAF",
     },
 }

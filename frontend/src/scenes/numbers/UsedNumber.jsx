@@ -92,7 +92,7 @@ const UsedNumber = () => {
         },
         {
             field: "updatedAt",
-            headerName: "REDEEMED DATE",
+            headerName: <FormattedMessage id="record.redeemed.date" />,
             valueFormatter: (params) =>
                 moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
             width: 250,
