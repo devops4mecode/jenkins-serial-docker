@@ -3,7 +3,6 @@ import { tokens } from "../theme"
 import { useTheme } from "@mui/material"
 import { mockLineData as data } from "../data/mockData"
 
-
 const LineChart = ({ isDashboard, monthlyGenerated, monthlyRedeemed }) => {
 
     const theme = useTheme()
@@ -65,26 +64,15 @@ const LineChart = ({ isDashboard, monthlyGenerated, monthlyRedeemed }) => {
             data={chartData}
             theme={{
                 axis: {
-                    domain: {
-                        line: { stroke: colors.grey[100] }
-                    },
-                    legend: {
-                        text: { fill: colors.grey[100] }
-                    },
+                    domain: { line: { stroke: colors.grey[100] } },
+                    legend: { text: { fill: colors.grey[100] } },
                     ticks: {
-                        line: {
-                            stroke: colors.grey[100],
-                            strokeWidth: 1
-                        },
+                        line: { stroke: colors.grey[100], strokeWidth: 1 },
                         text: { fill: colors.grey[100] }
                     }
                 },
-                legends: {
-                    text: { fill: colors.grey[100] }
-                },
-                tooltip: {
-                    container: { color: colors.primary[500] }
-                }
+                legends: { text: { fill: colors.grey[100] } },
+                tooltip: { container: { color: colors.primary[500] } }
             }}
             colors={isDashboard ? { datum: "color" } : { scheme: "nivo" }}
             margin={{ top: 50, right: 30, bottom: 50, left: 40 }}
@@ -96,8 +84,6 @@ const LineChart = ({ isDashboard, monthlyGenerated, monthlyRedeemed }) => {
                 // stacked: true,
             }}
             yFormat=" >-.2f"
-            axisTop={null}
-            axisRight={null}
             axisBottom={{
                 orient: 'bottom',
                 tickSize: 5,
@@ -151,7 +137,6 @@ const LineChart = ({ isDashboard, monthlyGenerated, monthlyRedeemed }) => {
                 }
             ]}
         />
-
     )
 }
 
