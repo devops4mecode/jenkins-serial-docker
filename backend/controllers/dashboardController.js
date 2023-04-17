@@ -2,19 +2,26 @@ const Serial = require("../models/SerialModel");
 const User = require("../models/UserModel");
 const moment = require("moment");
 
-// const { startDate, endDate } = req.body
 // TESTING
 const getSerialsData = async (req, res) => {
+    // const { startDate, endDate } = req.body
     try {
-        const startDate = moment().startOf('year').toDate();
-        const endDate = moment().endOf('day').toDate();
+        // TEST 2023
+        // const startDate = moment().startOf('year').toDate();
+        // const endDate = moment().endOf('day').toDate();
+
+        // 2022
+        const startDate = moment().year(2022).startOf('year').toDate();
+        const endDate = moment().year(2022).endOf('year').toDate();
 
         const [
             overallRedeemedCount,
             redeemedCounts,
             overallGeneratedCount,
             totalAmountRedeemed,
-            topRedeemUser
+            topRedeemUser,
+            totalRedeemedThroughYear,
+            totalGeneratedThroughYear,
         ] = await Promise.all([
             // overallRedeemedCount
             Serial.aggregate([
@@ -31,7 +38,7 @@ const getSerialsData = async (req, res) => {
                 {
                     $match: {
                         serialStatus: false,
-                        updatedAt: { $gte: startDate, $lt: endDate }
+                        updatedAt: { $gte: startDate, $lte: endDate }
                     }
                 },
                 { $group: { _id: "$givenCredit", count: { $sum: 1 } } },
@@ -40,7 +47,7 @@ const getSerialsData = async (req, res) => {
             Serial.aggregate([
                 {
                     $match: {
-                        createdAt: { $gte: startDate, $lt: endDate }
+                        createdAt: { $gte: startDate, $lte: endDate }
                     }
                 },
                 { $group: { _id: "$givenCredit", count: { $sum: 1 } } },
@@ -50,7 +57,7 @@ const getSerialsData = async (req, res) => {
                 {
                     $match: {
                         serialStatus: false,
-                        updatedAt: { $gte: startDate, $lt: endDate }
+                        updatedAt: { $gte: startDate, $lte: endDate }
                     }
                 },
                 { $group: { _id: "givenCredit", sum: { $sum: "$givenCredit" } } },
@@ -60,19 +67,84 @@ const getSerialsData = async (req, res) => {
                 {
                     $match: {
                         serialStatus: false,
-                        updatedAt: { $gte: startDate, $lt: endDate }
+                        updatedAt: { $gte: startDate, $lte: endDate }
                     }
                 },
                 {
                     $group: {
                         _id: "$redemptionAcc",
-                        count: { $sum: 1 }
+                        count: { $sum: 1 },
+                        totalGivenCredit: { $sum: "$givenCredit" }
                     }
                 },
                 {
-                    $sort: { count: -1 }
+                    $sort: { totalGivenCredit: -1 }
                 },
                 { $limit: 10 }
+            ]),
+            // totalRedeemedThroughYear
+            Serial.aggregate([
+                {
+                    $match: {
+                        serialStatus: false,
+                        updatedAt: { $gte: startDate, $lte: endDate }
+                    }
+                },
+                {
+                    $group: {
+                        _id: {
+                            year: { $year: "$updatedAt" },
+                            month: { $month: "$updatedAt" },
+                        },
+                        givenCredit: { $sum: "$givenCredit" }
+                    }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        month: "$_id.month",
+                        year: "$_id.year",
+                        givenCredit: 1
+                    }
+                },
+                {
+                    $sort: {
+                        year: 1,
+                        month: 1
+                    }
+                }
+            ]),
+            // totalGeneratedThroughYear
+            Serial.aggregate([
+                {
+                    $match: {
+                        // serialStatus: true,
+                        createdAt: { $gte: startDate, $lte: endDate }
+                    }
+                },
+                {
+                    $group: {
+                        _id: {
+                            year: { $year: "$createdAt" },
+                            month: { $month: "$createdAt" },
+                        },
+                        givenCredit: { $sum: "$givenCredit" }
+                    }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        month: "$_id.month",
+                        year: "$_id.year",
+                        givenCredit: 1
+                    }
+                },
+                {
+                    $sort: {
+                        year: 1,
+                        month: 1
+                    }
+                }
             ]),
         ]);
 
@@ -82,7 +154,7 @@ const getSerialsData = async (req, res) => {
             {
                 $match: {
                     serialStatus: false,
-                    updatedAt: { $gte: startDate, $lt: endDate },
+                    updatedAt: { $gte: startDate, $lte: endDate },
                     givenCredit: { $in: mostRedeemed }
                 }
             },
@@ -108,7 +180,9 @@ const getSerialsData = async (req, res) => {
             overallGeneratedCount,
             totalAmountRedeemed: totalAmountRedeemed[0].sum,
             mostRedeemed: mostRedeemed.map(_id => ({ _id, percentage: percentagesMap.get(_id) || 0 })),
-            topRedeemUser
+            topRedeemUser,
+            totalRedeemedThroughYear,
+            totalGeneratedThroughYear,
         };
 
         res.json(result);
