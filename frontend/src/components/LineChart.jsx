@@ -89,7 +89,7 @@ const LineChart = ({ isDashboard = false }) => {
                     direction: 'row',
                     justify: false,
                     translateX: -20,
-                    translateY: 52,
+                    translateY: 60,
                     itemsSpacing: 0,
                     itemDirection: 'left-to-right',
                     itemWidth: 50,
