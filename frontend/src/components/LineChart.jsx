@@ -109,7 +109,7 @@ const LineChart = ({ isDashboard, monthlyGenerated, monthlyRedeemed }) => {
             pointBorderColor={{ from: 'serieColor' }}
             pointLabelYOffset={-12}
             useMesh={true}
-            debugMesh={true}
+            // debugMesh={true}
             legends={[
                 {
                     anchor: 'bottom-right',
