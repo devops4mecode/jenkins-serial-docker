@@ -1,9 +1,8 @@
 import axios from "axios";
-import React from "react"
 import { useEffect, useState } from "react";
 import { useAuthContext } from "hooks/useAuthContext";
 import { FormattedMessage } from "react-intl";
-import { Box, Typography, useTheme, Grid, Select, MenuItem } from "@mui/material";
+import { Box, Typography, useTheme, Grid, Select, MenuItem, Button, TextField } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import StatBox from "../../components/StatBox";
@@ -14,14 +13,17 @@ import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
-import InputLabel from '@mui/material/InputLabel';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 import "../../css/dashboard.css"
 
 const Dashboard = () => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     const { user } = useAuthContext()
-    const [year, setYear] = React.useState(2023);
+    const [year, setYear] = useState(2023);
     const [totalRedeemedAmount, setTotalRedeemedAmount] = useState(0)
     const [totalRedeemedCount, setTotalRedeemedCount] = useState(0)
     const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
@@ -29,11 +31,17 @@ const Dashboard = () => {
     const [mostRedeemedCount, setmostRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
     const [topRedeemUser, setTopRedeemUser] = useState("")
 
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+
+    const [monthlyGenerated, setMonthlyGenerated] = useState([])
+    const [monthlyRedeemed, setMonthlyRedeemed] = useState([])
+
     useEffect(() => {
         const getSerialsData = async () => {
             if (user) {
                 try {
-                    const { data } = await axios.get(`api/dashboard/serialsData`, {
+                    const { data } = await axios.get(`api/dashboard/serialsData?year=${year}`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     });
                     setTotalRedeemedAmount(data?.totalAmountRedeemed)
@@ -60,13 +68,16 @@ const Dashboard = () => {
                         return newRedeemedCount
                     })
                     setTopRedeemUser(data?.topRedeemUser)
+                    setMonthlyGenerated(data?.totalGeneratedThroughYear)
+                    setMonthlyRedeemed(data?.totalRedeemedThroughYear)
+
                 } catch (error) {
                     console.log(error)
                 }
             }
         }
         getSerialsData()
-    }, [user])
+    }, [user, year])
 
     const handleChange = (event) => {
         setYear(event.target.value);
@@ -83,9 +94,9 @@ const Dashboard = () => {
 
             {/* Grid and Chart */}
             {/* Row 1 */}
-            <Box display="grid" gridTemplateColumns="repeat(6, 1fr)" gridAutoRows="140px" gap="20px" sx={{ pb: 3 }}>
+            <Box display="grid" gridTemplateColumns="repeat(6, 1fr)" gridAutoRows="170px" gap="20px" sx={{ pb: 3 }}>
                 <Box gridColumn="span 6" gridRow="span 3" backgroundColor={colors.primary[400]}>
-                    <Box mt="25px" p="0 30px" display="flex " justifyContent="space-between" alignItems="center">
+                    <Box mt="25px" p="0 30px" display="flex" flexDirection="column" justifyContent="space-between" >
                         <Box>
                             <Select
                                 value={year}
@@ -94,14 +105,15 @@ const Dashboard = () => {
                                 style={{
                                     border: '1px solid white',
                                     color: '#6200EE',
-                                    fontSize: '12px',
+                                    fontSize: '16px',
                                     height: '40px'
                                 }}
                             >
                                 <MenuItem value={2023}>2023</MenuItem>
-                                <MenuItem value={2024}>2024</MenuItem>
+                                <MenuItem value={2022}>2022</MenuItem>
                             </Select>
-
+                        </Box>
+                        <Box pt='10px' pl='5px'>
                             <Typography
                                 variant="h5"
                                 fontWeight="600"
@@ -109,10 +121,12 @@ const Dashboard = () => {
                             >
                                 <FormattedMessage id="revenue.generated" />
                             </Typography>
+                        </Box>
+                        <Box pt='10px' pl='5px'>
                             <Typography
                                 variant="h3"
                                 fontWeight="bold"
-                                color={colors.greenAccent[500]}
+                                color={colors.purple[100]}
                             >
                                 {`RM ${totalRedeemedAmount}`}
                             </Typography>
@@ -120,7 +134,7 @@ const Dashboard = () => {
 
                     </Box>
                     <Box height="400px" m="-20px 0 0 0">
-                        <LineChart isDashboard={true} />
+                        <LineChart isDashboard={true} monthlyGenerated={monthlyGenerated} monthlyRedeemed={monthlyRedeemed} />
                     </Box>
                 </Box>
             </Box>
@@ -149,6 +163,45 @@ const Dashboard = () => {
                     </Box>
                 </Grid>
             </Grid>
+
+            {/* filter row */}
+            <Box>
+                <Box className="category">
+                    <Box className="apply-filter" display='flex'>
+                        <Box className="button-container">
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />}>All Time</Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />}>This Year</Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />}>This Month</Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />}>Last Week</Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />}>This Week</Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />}>Yesterday</Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />}>Today</Button>
+                        </Box>
+                    </Box>
+
+
+
+                    <Box className="date-range" display='flex'>
+                        <Box >
+                            <label>Start Date:</label>
+                            <DatePicker
+                                selected={startDate}
+                                onChange={date => setStartDate(date)}
+                                dateFormat="MM/dd/yyyy"
+                            />
+                        </Box>
+                        <Box>
+                            <label>End Date:</label>
+                            <DatePicker
+                                selected={endDate}
+                                onChange={date => setEndDate(date)}
+                                dateFormat="MM/dd/yyyy"
+                            />
+                        </Box>
+                    </Box>
+                </Box>
+            </Box>
+
 
             {/* Row 2 */}
             <Box className="category">
