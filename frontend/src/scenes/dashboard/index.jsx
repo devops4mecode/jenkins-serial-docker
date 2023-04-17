@@ -176,8 +176,8 @@ const Dashboard = () => {
 
 
 
-                    <Box className="apply-filter" display='flex'>
-                        <Box marginRight={2}>
+                    <Box className="date-range" display='flex'>
+                        <Box >
                             <label>Start Date:</label>
                             <DatePicker
                                 selected={startDate}

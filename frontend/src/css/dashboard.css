@@ -26,6 +26,11 @@
     border: 1px solid #6200EE !important;
 }
 
+.date-range {
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
 
 @media (max-width: 576px) {
     .statbox-content {
@@ -77,6 +82,15 @@
 
     .filter-button {
         font-size: 12px !important;
+    }
+
+    .date-range {
+        display: grid;
+        /* grid-template-columns: 1fr; */
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto auto;
+        grid-gap: 10px;
+        font-size: 12px;
     }
 }
 
@@ -134,6 +148,9 @@
         font-size: 14px !important;
     }
 
+    .date-range {
+        padding-top: 20px;
+    }
 }
 
 @media (min-width: 1200px) {
