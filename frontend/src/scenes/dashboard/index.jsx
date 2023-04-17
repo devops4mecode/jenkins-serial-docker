@@ -34,6 +34,9 @@ const Dashboard = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
 
+    const [monthlyGenerated, setMonthlyGenerated] = useState([])
+    const [monthlyRedeemed, setMonthlyRedeemed] = useState([])
+
     useEffect(() => {
         const getSerialsData = async () => {
             if (user) {
@@ -65,8 +68,8 @@ const Dashboard = () => {
                         return newRedeemedCount
                     })
                     setTopRedeemUser(data?.topRedeemUser)
-
-                    console.log(data)
+                    setMonthlyGenerated(data?.totalGeneratedThroughYear)
+                    setMonthlyRedeemed(data?.totalRedeemedThroughYear)
 
                 } catch (error) {
                     console.log(error)
@@ -131,7 +134,7 @@ const Dashboard = () => {
 
                     </Box>
                     <Box height="400px" m="-20px 0 0 0">
-                        <LineChart isDashboard={true} />
+                        <LineChart isDashboard={true} monthlyGenerated={monthlyGenerated} monthlyRedeemed={monthlyRedeemed} />
                     </Box>
                 </Box>
             </Box>
