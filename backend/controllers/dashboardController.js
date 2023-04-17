@@ -186,9 +186,6 @@ const getSerialsData = async (req, res) => {
             topRedeemUser,
             totalRedeemedThroughYear,
             totalGeneratedThroughYear,
-            year,
-            startDate,
-            endDate
         };
 
         res.json(result);
