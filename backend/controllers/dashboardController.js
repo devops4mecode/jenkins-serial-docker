@@ -10,9 +10,11 @@ const getSerialsData = async (req, res) => {
         // const startDate = moment().startOf('year').toDate();
         // const endDate = moment().endOf('day').toDate();
 
+        const { year } = req.query
+
         // 2022
-        const startDate = moment().year(2022).startOf('year').toDate();
-        const endDate = moment().year(2022).endOf('year').toDate();
+        const startDate = moment().year(year).startOf('year').toDate();
+        const endDate = moment().year(year).endOf('year').toDate();
 
         const [
             overallRedeemedCount,
@@ -74,7 +76,7 @@ const getSerialsData = async (req, res) => {
                     $group: {
                         _id: "$redemptionAcc",
                         count: { $sum: 1 },
-                        totalGivenCredit: { $sum: "$givenCredit" } ,
+                        totalGivenCredit: { $sum: "$givenCredit" },
                         totalGivenCredit: { $sum: "$givenCredit" }
                     }
                 },
@@ -184,6 +186,9 @@ const getSerialsData = async (req, res) => {
             topRedeemUser,
             totalRedeemedThroughYear,
             totalGeneratedThroughYear,
+            year,
+            startDate,
+            endDate
         };
 
         res.json(result);
