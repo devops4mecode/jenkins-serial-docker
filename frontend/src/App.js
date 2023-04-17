@@ -44,10 +44,6 @@ function App() {
                                 path="/"
                                 element={user ? <Dashboard /> : <Navigate to="/login" />}
                             />
-                            {/* <Route
-                                    path="/"
-                                    element={user ? <DashboardIndex /> : <Navigate to="/login" />}
-                                /> */}
                             <Route
                                 path="/login"
                                 element={!user ? <LoginPage /> : <Navigate to="/" />}
@@ -67,10 +63,6 @@ function App() {
                             <Route
                                 path="/allNumber"
                                 element={user ? <AllNumber /> : <Navigate to="/login" />}
-                            />
-                            <Route
-                                path="/line"
-                                element={user ? <Line /> : <Navigate to="/login" />}
                             />
                         </Route>
                     </Routes>

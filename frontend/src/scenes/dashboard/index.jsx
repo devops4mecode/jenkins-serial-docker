@@ -1,8 +1,9 @@
 import axios from "axios";
+import React from "react"
 import { useEffect, useState } from "react";
 import { useAuthContext } from "hooks/useAuthContext";
 import { FormattedMessage } from "react-intl";
-import { Box, Typography, useTheme, Grid } from "@mui/material";
+import { Box, Typography, useTheme, Grid, Select, MenuItem } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import StatBox from "../../components/StatBox";
@@ -12,17 +13,21 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import InputLabel from '@mui/material/InputLabel';
 import "../../css/dashboard.css"
 
 const Dashboard = () => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     const { user } = useAuthContext()
+    const [year, setYear] = React.useState(2023);
     const [totalRedeemedAmount, setTotalRedeemedAmount] = useState(0)
     const [totalRedeemedCount, setTotalRedeemedCount] = useState(0)
     const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
     const [generatedCount, setGeneratedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
     const [mostRedeemedCount, setmostRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
+    const [topRedeemUser, setTopRedeemUser] = useState("")
 
     useEffect(() => {
         const getSerialsData = async () => {
@@ -54,9 +59,7 @@ const Dashboard = () => {
                         })
                         return newRedeemedCount
                     })
-
-                    // console.log(data)
-
+                    setTopRedeemUser(data?.topRedeemUser)
                 } catch (error) {
                     console.log(error)
                 }
@@ -64,6 +67,10 @@ const Dashboard = () => {
         }
         getSerialsData()
     }, [user])
+
+    const handleChange = (event) => {
+        setYear(event.target.value);
+    };
 
     return (
         <Box m="20px">
@@ -80,6 +87,21 @@ const Dashboard = () => {
                 <Box gridColumn="span 6" gridRow="span 3" backgroundColor={colors.primary[400]}>
                     <Box mt="25px" p="0 30px" display="flex " justifyContent="space-between" alignItems="center">
                         <Box>
+                            <Select
+                                value={year}
+                                label="Year"
+                                onChange={handleChange}
+                                style={{
+                                    border: '1px solid white',
+                                    color: '#6200EE',
+                                    fontSize: '12px',
+                                    height: '40px'
+                                }}
+                            >
+                                <MenuItem value={2023}>2023</MenuItem>
+                                <MenuItem value={2024}>2024</MenuItem>
+                            </Select>
+
                             <Typography
                                 variant="h5"
                                 fontWeight="600"
@@ -95,6 +117,7 @@ const Dashboard = () => {
                                 {`RM ${totalRedeemedAmount}`}
                             </Typography>
                         </Box>
+
                     </Box>
                     <Box height="400px" m="-20px 0 0 0">
                         <LineChart isDashboard={true} />
@@ -199,6 +222,33 @@ const Dashboard = () => {
                     ))}
                 </Grid>
             </Box>
+
+            {/* Row 4 */}
+            <Box className="category">
+                <Box>
+                    <Typography className="sub-header">
+                        <FormattedMessage id="top10.account" />
+                    </Typography>
+                </Box>
+
+                <Grid container spacing={2}>
+                    {Object.keys(topRedeemUser).map((key) => (
+                        <Grid item xs={6} sm={6} md={3} key={key}>
+                            <Box className="style-statbox">
+                                <StatBox
+                                    title={topRedeemUser[key]._id}
+                                    subtitle={`RM ${topRedeemUser[key].totalGivenCredit}`}
+                                    icon={
+                                        <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                    }
+                                />
+                            </Box>
+                        </Grid>
+                    ))}
+                </Grid>
+            </Box>
+
+
             <Box className="footer"></Box>
         </Box >
     )
