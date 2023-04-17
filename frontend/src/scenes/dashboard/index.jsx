@@ -1,8 +1,9 @@
 import axios from "axios";
+import React from "react"
 import { useEffect, useState } from "react";
 import { useAuthContext } from "hooks/useAuthContext";
 import { FormattedMessage } from "react-intl";
-import { Box, Typography, useTheme, Grid } from "@mui/material";
+import { Box, Typography, useTheme, Grid, Select, MenuItem } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import StatBox from "../../components/StatBox";
@@ -13,12 +14,14 @@ import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import InputLabel from '@mui/material/InputLabel';
 import "../../css/dashboard.css"
 
 const Dashboard = () => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     const { user } = useAuthContext()
+    const [year, setYear] = React.useState(2023);
     const [totalRedeemedAmount, setTotalRedeemedAmount] = useState(0)
     const [totalRedeemedCount, setTotalRedeemedCount] = useState(0)
     const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
@@ -65,6 +68,10 @@ const Dashboard = () => {
         getSerialsData()
     }, [user])
 
+    const handleChange = (event) => {
+        setYear(event.target.value);
+    };
+
     return (
         <Box m="20px">
             <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -80,6 +87,21 @@ const Dashboard = () => {
                 <Box gridColumn="span 6" gridRow="span 3" backgroundColor={colors.primary[400]}>
                     <Box mt="25px" p="0 30px" display="flex " justifyContent="space-between" alignItems="center">
                         <Box>
+                            <Select
+                                value={year}
+                                label="Year"
+                                onChange={handleChange}
+                                style={{
+                                    border: '1px solid white',
+                                    color: '#6200EE',
+                                    fontSize: '12px',
+                                    height: '40px'
+                                }}
+                            >
+                                <MenuItem value={2023}>2023</MenuItem>
+                                <MenuItem value={2024}>2024</MenuItem>
+                            </Select>
+
                             <Typography
                                 variant="h5"
                                 fontWeight="600"
@@ -95,6 +117,7 @@ const Dashboard = () => {
                                 {`RM ${totalRedeemedAmount}`}
                             </Typography>
                         </Box>
+
                     </Box>
                     <Box height="400px" m="-20px 0 0 0">
                         <LineChart isDashboard={true} />
