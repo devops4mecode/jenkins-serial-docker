@@ -74,6 +74,7 @@ const getSerialsData = async (req, res) => {
                     $group: {
                         _id: "$redemptionAcc",
                         count: { $sum: 1 },
+                        totalGivenCredit: { $sum: "$givenCredit" } ,
                         totalGivenCredit: { $sum: "$givenCredit" }
                     }
                 },
