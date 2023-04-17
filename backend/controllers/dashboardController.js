@@ -13,8 +13,8 @@ const getSerialsData = async (req, res) => {
         const { year } = req.query
 
         // 2022
-        const startDate = moment().year(year).startOf('year').toDate();
-        const endDate = moment().year(year).endOf('year').toDate();
+        const startDate = moment(year).startOf('year').toDate();
+        const endDate = moment(year).endOf('year').toDate();
 
         const [
             overallRedeemedCount,
