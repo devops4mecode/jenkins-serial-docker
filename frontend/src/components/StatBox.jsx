@@ -1,10 +1,7 @@
-import { Box, Typography, useTheme } from "@mui/material";
-import { tokens } from "../theme";
+import { Box, Typography } from "@mui/material";
 import "../css/dashboard.css"
 
 const StatBox = ({ title, subtitle, icon}) => {
-    const theme = useTheme()
-    const colors = tokens(theme.palette.mode)
 
     return (
         <Box width="100%" className="statbox-content">

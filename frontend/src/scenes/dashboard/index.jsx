@@ -12,6 +12,7 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import "../../css/dashboard.css"
 
 const Dashboard = () => {
@@ -23,6 +24,7 @@ const Dashboard = () => {
     const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
     const [generatedCount, setGeneratedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
     const [mostRedeemedCount, setmostRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
+    const [topRedeemUser, setTopRedeemUser] = useState("")
 
     useEffect(() => {
         const getSerialsData = async () => {
@@ -54,9 +56,7 @@ const Dashboard = () => {
                         })
                         return newRedeemedCount
                     })
-
-                    // console.log(data)
-
+                    setTopRedeemUser(data?.topRedeemUser)
                 } catch (error) {
                     console.log(error)
                 }
@@ -199,6 +199,33 @@ const Dashboard = () => {
                     ))}
                 </Grid>
             </Box>
+
+            {/* Row 4 */}
+            <Box className="category">
+                <Box>
+                    <Typography className="sub-header">
+                        <FormattedMessage id="top10.account" />
+                    </Typography>
+                </Box>
+
+                <Grid container spacing={2}>
+                    {Object.keys(topRedeemUser).map((key) => (
+                        <Grid item xs={6} sm={6} md={3} key={key}>
+                            <Box className="style-statbox">
+                                <StatBox
+                                    title={topRedeemUser[key]._id}
+                                    subtitle={`RM ${topRedeemUser[key].totalGivenCredit}`}
+                                    icon={
+                                        <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                    }
+                                />
+                            </Box>
+                        </Grid>
+                    ))}
+                </Grid>
+            </Box>
+
+
             <Box className="footer"></Box>
         </Box >
     )

@@ -66,11 +66,12 @@ const getSerialsData = async (req, res) => {
                 {
                     $group: {
                         _id: "$redemptionAcc",
-                        count: { $sum: 1 }
+                        count: { $sum: 1 },
+                        totalGivenCredit: { $sum: "$givenCredit" } 
                     }
                 },
                 {
-                    $sort: { count: -1 }
+                    $sort: { totalGivenCredit: -1 }
                 },
                 { $limit: 10 }
             ]),
