@@ -172,6 +172,7 @@ const AllNumber = () => {
                     getRowId={getRowId}
                     // localeText={localizedTextsMap}
                     disableColumnMenu
+                    loading={true}
                 />
 
                 <Box className="footer"></Box>
