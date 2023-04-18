@@ -24,7 +24,10 @@ const Dashboard = () => {
     const colors = tokens(theme.palette.mode)
     const { user } = useAuthContext()
 
+    // Chart
     const [year, setYear] = useState(2023);
+
+    // Other
     const [totalRedeemedAmount, setTotalRedeemedAmount] = useState(0)
     const [totalRedeemedCount, setTotalRedeemedCount] = useState(0)
     const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
@@ -37,6 +40,17 @@ const Dashboard = () => {
 
     const [monthlyGenerated, setMonthlyGenerated] = useState([])
     const [monthlyRedeemed, setMonthlyRedeemed] = useState([])
+
+    // Chart Data useEffect
+    useEffect(() => {
+
+    }, [user, year])
+
+    // Other
+    useEffect(() => {
+
+    }, [user, year])
+
 
     useEffect(() => {
         const getChartData = async () => {
