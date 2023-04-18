@@ -23,6 +23,7 @@ const Dashboard = () => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     const { user } = useAuthContext()
+
     const [year, setYear] = useState(2023);
     const [totalRedeemedAmount, setTotalRedeemedAmount] = useState(0)
     const [totalRedeemedCount, setTotalRedeemedCount] = useState(0)
@@ -38,7 +39,7 @@ const Dashboard = () => {
     const [monthlyRedeemed, setMonthlyRedeemed] = useState([])
 
     useEffect(() => {
-        const getSerialsData = async () => {
+        const getChartData = async () => {
             if (user) {
                 try {
                     const { data } = await axios.get(`api/dashboard/serialsData?year=${year}`, {
@@ -76,7 +77,7 @@ const Dashboard = () => {
                 }
             }
         }
-        getSerialsData()
+        getChartData()
     }, [user, year])
 
     const handleChange = (event) => {

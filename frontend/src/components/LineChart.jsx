@@ -1,48 +1,49 @@
 import { ResponsiveLine } from "@nivo/line"
 import { tokens } from "../theme"
 import { useTheme } from "@mui/material"
-import { mockLineData as data } from "../data/mockData"
+import { useIntl } from "react-intl"
 
 const LineChart = ({ isDashboard, monthlyGenerated, monthlyRedeemed }) => {
 
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
+    const intl = useIntl();
 
     const chartData = [
         {
-            id: "Redeemed",
+            id: intl.formatMessage({ id: "chart.redeemed" }),
             color: tokens("dark").greenAccent[500],
             data: [
-                { x: "Jan", y: 0, },
-                { x: "Feb", y: 0, },
-                { x: "Mar", y: 0, },
-                { x: "Apr", y: 0, },
-                { x: "May", y: 0, },
-                { x: "Jun", y: 0, },
-                { x: "Jul", y: 0, },
-                { x: "Aug", y: 0, },
-                { x: "Sep", y: 0, },
-                { x: "Oct", y: 0, },
-                { x: "Nov", y: 0, },
-                { x: "Dec", y: 0, },
+                { x: intl.formatMessage({ id: 'chart.jan' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.feb' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.mar' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.apr' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.may' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.jun' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.jul' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.aug' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.sep' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.oct' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.nov' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.dec' }), y: 0 },
             ],
         },
         {
-            id: "Sold",
+            id: intl.formatMessage({ id: "chart.sold" }),
             color: tokens("dark").blueAccent[300],
             data: [
-                { x: "Jan", y: 0, },
-                { x: "Feb", y: 0, },
-                { x: "Mar", y: 0, },
-                { x: "Apr", y: 0, },
-                { x: "May", y: 0, },
-                { x: "Jun", y: 0, },
-                { x: "Jul", y: 0, },
-                { x: "Aug", y: 0, },
-                { x: "Sep", y: 0, },
-                { x: "Oct", y: 0, },
-                { x: "Nov", y: 0, },
-                { x: "Dec", y: 0, },
+                { x: intl.formatMessage({ id: 'chart.jan' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.feb' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.mar' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.apr' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.may' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.jun' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.jul' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.aug' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.sep' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.oct' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.nov' }), y: 0 },
+                { x: intl.formatMessage({ id: 'chart.dec' }), y: 0 },
             ],
         },
     ];
@@ -109,7 +110,7 @@ const LineChart = ({ isDashboard, monthlyGenerated, monthlyRedeemed }) => {
             pointBorderColor={{ from: 'serieColor' }}
             pointLabelYOffset={-12}
             useMesh={true}
-            // debugMesh={true}
+            debugMesh={true}
             legends={[
                 {
                     anchor: 'bottom-right',
