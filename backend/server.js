@@ -25,6 +25,7 @@ app.use('/api/auth', require('./routes/authRoutes'))
 app.use('/api/users', require('./routes/userRoutes'))
 app.use('/api/serials', require('./routes/serialRoutes'))
 app.use('/api/dashboard', require('./routes/dashboardRoutes'))
+app.use('/api/lucky', require('./routes/globalRoutes'))
 
 const buildPath = path.join(__dirname, 'build')
 app.use(express.static(buildPath))

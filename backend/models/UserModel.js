@@ -13,13 +13,6 @@ const UserSchema = new Schema({
     },
 })
 
-// Static login method
-// UserSchema.statics.login = async function (username, password) {
-//     if (!username || !password) {
-//         throw Error('All Fields must be filled')
-//     }
-// }
-
 const User = mongoose.model('User', UserSchema)
 
 const createDefaultSuperadmin = async () => {
@@ -34,7 +27,10 @@ const createDefaultSuperadmin = async () => {
         }
 
         const hashedPassword = await bcrypt.hash(adminPassword, 10)
-        const newAdmin = new User({ username: adminUsername, password: hashedPassword })
+        const newAdmin = new User({
+            username: adminUsername,
+            password: hashedPassword
+        })
         await newAdmin.save()
 
         console.log('Default superadmin account created')
