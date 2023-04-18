@@ -15,8 +15,7 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import WebItem from "./WebItem"
 import logo from '../../assets/logo.png'
 import '../../index.css'
-
-
+import { Link } from "react-router-dom"
 
 const Sidebar = () => {
 
@@ -67,9 +66,12 @@ const Sidebar = () => {
                     >
                         {!isCollapsed && (
                             <Box display="flex" justifyContent="space-between" alignItems="center" ml="7px">
-                                <a href="/">
+                                <Link to="/">
                                     <img src={logo} alt="logo" style={{ width: '50px', height: '50px' }} />
-                                </a>
+                                </Link>
+                                {/* <a href="/">
+                                    <img src={logo} alt="logo" style={{ width: '50px', height: '50px' }} />
+                                </a> */}
                                 <Typography variant="h3" color={colors.grey[100]}>
                                     {<FormattedMessage id="logo.name" />}
                                 </Typography>

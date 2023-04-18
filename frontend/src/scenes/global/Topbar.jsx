@@ -20,7 +20,7 @@ import WidgetsOutlinedIcon from '@mui/icons-material/WidgetsOutlined';
 import MobileItem from "./Item"
 import logo from '../../assets/logo.png'
 import '../../index.css'
-
+import { Link } from "react-router-dom"
 
 const languages = [
     { name: "EN", code: LOCALES.ENGLISH },
@@ -125,9 +125,9 @@ const Topbar = (props) => {
 
                     {/* logo */}
                     <Box display="flex" paddingLeft='5px' paddingRight='10px'>
-                        <a href="/">
+                        <Link to="/">
                             <img src={logo} alt="logo" style={{ width: '50px', height: '50px' }} />
-                        </a>
+                        </Link>
                     </Box>
 
                     {/* Search Bar */}
@@ -135,7 +135,7 @@ const Topbar = (props) => {
                         sx={{
                             display: 'flex',
                             bgcolor: '#f2f0f0',
-                            borderRadius: '3px',                            
+                            borderRadius: '3px',
                             width: { xs: '40%', sm: 'auto' },
                             [theme.breakpoints.down("lg")]: {
                                 display: "none"
