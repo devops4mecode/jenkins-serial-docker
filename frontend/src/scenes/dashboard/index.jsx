@@ -32,8 +32,8 @@ const Dashboard = () => {
     // NEW
     const [monthlyGenerated, setMonthlyGenerated] = useState([])
     const [monthlyRedeemed, setMonthlyRedeemed] = useState([])
-    const [totalGeneratedThroughYear, setTotalGeneratedThroughYear] = useState()
-    const [totalRedeemedThroughYear, setTotalRedeemedThroughYear] = useState()
+    const [totalGeneratedThroughYear, setTotalGeneratedThroughYear] = useState(0)
+    const [totalRedeemedThroughYear, setTotalRedeemedThroughYear] = useState(0)
 
     // Chart Data
     useEffect(() => {
