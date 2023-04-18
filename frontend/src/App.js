@@ -8,25 +8,7 @@ import UnusedNumber from "./scenes/numbers/UnusedNumber"
 import UsedNumber from "./scenes/numbers/UsedNumber";
 import LoginPage from "./scenes/loginPage/Page";
 import AllNumber from "./scenes/numbers/AllNumber";
-import Line from "./scenes/line";
 import Layout from "./scenes/layout"
-import English from "lang/en.json"
-import Chinese from "lang/zh.json"
-import Malay from "lang/ms.json"
-
-
-const local = navigator.language
-
-let lang;
-if (local === "en" || local === "en-US") {
-    lang = English
-} else {
-    if (local === "zh") {
-        lang = Chinese
-    } else {
-        lang = Malay
-    }
-}
 
 function App() {
     const { user } = useAuthContext()

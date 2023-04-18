@@ -1,5 +1,4 @@
 import axios from "axios";
-import React from "react"
 import { useEffect, useState } from "react";
 import { useAuthContext } from "hooks/useAuthContext";
 import { FormattedMessage } from "react-intl";
@@ -24,7 +23,7 @@ const Dashboard = () => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     const { user } = useAuthContext()
-    const [year, setYear] = React.useState(2023);
+    const [year, setYear] = useState(2023);
     const [totalRedeemedAmount, setTotalRedeemedAmount] = useState(0)
     const [totalRedeemedCount, setTotalRedeemedCount] = useState(0)
     const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
@@ -35,11 +34,14 @@ const Dashboard = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
 
+    const [monthlyGenerated, setMonthlyGenerated] = useState([])
+    const [monthlyRedeemed, setMonthlyRedeemed] = useState([])
+
     useEffect(() => {
         const getSerialsData = async () => {
             if (user) {
                 try {
-                    const { data } = await axios.get(`api/dashboard/serialsData`, {
+                    const { data } = await axios.get(`api/dashboard/serialsData?year=${year}`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     });
                     setTotalRedeemedAmount(data?.totalAmountRedeemed)
@@ -66,13 +68,16 @@ const Dashboard = () => {
                         return newRedeemedCount
                     })
                     setTopRedeemUser(data?.topRedeemUser)
+                    setMonthlyGenerated(data?.totalGeneratedThroughYear)
+                    setMonthlyRedeemed(data?.totalRedeemedThroughYear)
+
                 } catch (error) {
                     console.log(error)
                 }
             }
         }
         getSerialsData()
-    }, [user])
+    }, [user, year])
 
     const handleChange = (event) => {
         setYear(event.target.value);
@@ -105,7 +110,7 @@ const Dashboard = () => {
                                 }}
                             >
                                 <MenuItem value={2023}>2023</MenuItem>
-                                <MenuItem value={2024}>2024</MenuItem>
+                                <MenuItem value={2022}>2022</MenuItem>
                             </Select>
                         </Box>
                         <Box pt='10px' pl='5px'>
@@ -129,7 +134,7 @@ const Dashboard = () => {
 
                     </Box>
                     <Box height="400px" m="-20px 0 0 0">
-                        <LineChart isDashboard={true} />
+                        <LineChart isDashboard={true} monthlyGenerated={monthlyGenerated} monthlyRedeemed={monthlyRedeemed} />
                     </Box>
                 </Box>
             </Box>
