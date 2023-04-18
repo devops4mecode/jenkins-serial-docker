@@ -82,7 +82,7 @@ export const messages = {
         "login.password.error": "须填上密码",
         "dashboard": "数据版",
         "revenue.generated": "{year} 年总收入",
-        "total.amount.redeemed.year": "{year} 总兑换金额",
+        "total.amount.redeemed.year": "{year} 年总兑换金额",
         "total.redeem.count": "总兑换数量",
         "total.amount.redeemed": "总兑换金额",
         "total.redeemed": "总兑换",

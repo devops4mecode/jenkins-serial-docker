@@ -218,7 +218,7 @@ const Dashboard = () => {
                             </Box>
 
 
-                            <Box display='flex' flexDirection='column' marginLeft='30px'>
+                            <Box display='flex' flexDirection='column' marginLeft='24px'>
                                 <Box pt='10px' pl='5px'>
                                     <Typography
                                         variant="h5"
