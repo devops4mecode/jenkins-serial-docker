@@ -191,51 +191,59 @@ const Dashboard = () => {
                             </Select>
                         </Box>
 
-                        <Box pt='10px' pl='5px'>
-                            <Typography
-                                variant="h5"
-                                fontWeight="600"
-                                color={colors.grey[100]}
-                            >
-                                {/* Generated */}
-                                <FormattedMessage
-                                    id="revenue.generated"
-                                    values={{ year: `${year}` }}
-                                />
-                            </Typography>
+                        <Box display='flex' flexDirection='row'>
+                            <Box display='flex' flexDirection='column'>
+                                <Box pt='10px' pl='5px'>
+                                    <Typography
+                                        variant="h5"
+                                        fontWeight="600"
+                                        color={colors.grey[100]}
+                                    >
+                                        {/* Generated */}
+                                        <FormattedMessage
+                                            id="revenue.generated"
+                                            values={{ year: `${year}` }}
+                                        />
+                                    </Typography>
+                                </Box>
+                                <Box pt='10px' pl='5px'>
+                                    <Typography
+                                        variant="h3"
+                                        fontWeight="bold"
+                                        color={colors.purple[100]}
+                                    >
+                                        {`RM ${totalGeneratedThroughYear}`}
+                                    </Typography>
+                                </Box>
+                            </Box>
+
+
+                            <Box display='flex' flexDirection='column' marginLeft='30px'>
+                                <Box pt='10px' pl='5px'>
+                                    <Typography
+                                        variant="h5"
+                                        fontWeight="600"
+                                        color={colors.grey[100]}
+                                    >
+                                        {/* Redeemed */}
+                                        <FormattedMessage
+                                            id="total.amount.redeemed.year"
+                                            values={{ year: `${year}` }}
+                                        />
+                                    </Typography>
+                                </Box>
+                                <Box pt='10px' pl='5px'>
+                                    <Typography
+                                        variant="h3"
+                                        fontWeight="bold"
+                                        color={colors.purple[100]}
+                                    >
+                                        {`RM ${totalRedeemedThroughYear}`}
+                                    </Typography>
+                                </Box>
+                            </Box>
                         </Box>
-                        <Box pt='10px' pl='5px'>
-                            <Typography
-                                variant="h3"
-                                fontWeight="bold"
-                                color={colors.purple[100]}
-                            >
-                                {`RM ${totalGeneratedThroughYear}`}
-                            </Typography>
-                        </Box>
-                        <Box pt='10px' pl='5px'>
-                            <Typography
-                                variant="h5"
-                                fontWeight="600"
-                                color={colors.grey[100]}
-                            >
-                                {/* Redeemed */}
-                                Total Redeemed (To Change)
-                                {/* <FormattedMessage
-                                    id="revenue.generated"
-                                    values={{ year: `${year}` }}
-                                /> */}
-                            </Typography>
-                        </Box>
-                        <Box pt='10px' pl='5px'>
-                            <Typography
-                                variant="h3"
-                                fontWeight="bold"
-                                color={colors.purple[100]}
-                            >
-                                {`RM ${totalRedeemedThroughYear}`}
-                            </Typography>
-                        </Box>
+
 
                     </Box>
                     <Box height="400px" m="-20px 0 0 0">
