@@ -19,13 +19,41 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import "../../css/dashboard.css"
 
+import moment from "moment";
+
 const Dashboard = () => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     const { user } = useAuthContext()
 
     // Chart
-    const [year, setYear] = useState(2023);
+    const [year, setYear] = useState(new Date().getFullYear());
+
+    // NEW
+    const [monthlyGenerated, setMonthlyGenerated] = useState([])
+    const [monthlyRedeemed, setMonthlyRedeemed] = useState([])
+    const [totalGeneratedThroughYear, setTotalGeneratedThroughYear] = useState()
+    const [totalRedeemedThroughYear, setTotalRedeemedThroughYear] = useState()
+
+    // Chart Data
+    useEffect(() => {
+        const getChartData = async () => {
+            if (user) {
+                try {
+                    const { data } = await axios.get(`api/dashboard/chartData?year=${year}`, {
+                        headers: { 'Authorization': `Bearer ${user.accessToken}` }
+                    });
+                    setMonthlyGenerated(data?.monthlyGeneratedThroughYear)
+                    setMonthlyRedeemed(data?.monthlyRedeemedThroughYear)
+                    setTotalGeneratedThroughYear(data?.totalGenerated)
+                    setTotalRedeemedThroughYear(data?.totalRedeemed)
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        }
+        getChartData()
+    }, [user, year])
 
     // Other
     const [totalRedeemedAmount, setTotalRedeemedAmount] = useState(0)
@@ -35,28 +63,64 @@ const Dashboard = () => {
     const [mostRedeemedCount, setmostRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
     const [topRedeemUser, setTopRedeemUser] = useState("")
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    // NEW
+    const [startDate, setStartDate] = useState(null)
+    const [endDate, setEndDate] = useState(new Date())
 
-    const [monthlyGenerated, setMonthlyGenerated] = useState([])
-    const [monthlyRedeemed, setMonthlyRedeemed] = useState([])
+    const handleDateRangeChange = (timeRange) => {
+        const now = moment();
+        let newStartDate, newEndDate;
 
-    // Chart Data useEffect
+        switch (timeRange) {
+            case 'all-time':
+                newStartDate = null; // or your desired start date for all time
+                newEndDate = now.toDate();
+                break;
+            case 'this-year':
+                newStartDate = moment().startOf('year').toDate();
+                newEndDate = now.toDate();
+                break;
+            case 'this-month':
+                newStartDate = moment().startOf('month').toDate();
+                newEndDate = now.toDate();
+                break;
+            case 'last-week':
+                newStartDate = moment().subtract(1, 'week').startOf('isoWeek').toDate();
+                newEndDate = moment().subtract(1, 'week').endOf('isoWeek').toDate();
+                break;
+            case 'this-week':
+                newStartDate = moment().startOf('isoWeek').toDate();
+                newEndDate = now.toDate();
+                break;
+            case 'yesterday':
+                newStartDate = moment().subtract(1, 'day').startOf('day').toDate();
+                newEndDate = moment().subtract(1, 'day').endOf('day').toDate();
+                break;
+            case 'today':
+                newStartDate = now.startOf('day').toDate();
+                newEndDate = now.endOf('day').toDate();
+                break;
+            default:
+                newStartDate = null;
+                newEndDate = null;
+                break;
+        }
+
+        setStartDate(newStartDate);
+        setEndDate(newEndDate);
+    }
+
+    // Summary
     useEffect(() => {
 
-    }, [user, year])
+        let formattedStart = startDate;
+        if (startDate) formattedStart = moment(startDate).format('YYYY-MM-DD');
+        const formattedEnd = moment(endDate).format('YYYY-MM-DD')
 
-    // Other
-    useEffect(() => {
-
-    }, [user, year])
-
-
-    useEffect(() => {
         const getChartData = async () => {
             if (user) {
                 try {
-                    const { data } = await axios.get(`api/dashboard/serialsData?year=${year}`, {
+                    const { data } = await axios.get(`api/dashboard/summary?startDate=${formattedStart}&endDate=${formattedEnd}`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     });
                     setTotalRedeemedAmount(data?.totalAmountRedeemed)
@@ -83,18 +147,16 @@ const Dashboard = () => {
                         return newRedeemedCount
                     })
                     setTopRedeemUser(data?.topRedeemUser)
-                    setMonthlyGenerated(data?.totalGeneratedThroughYear)
-                    setMonthlyRedeemed(data?.totalRedeemedThroughYear)
-
                 } catch (error) {
                     console.log(error)
                 }
             }
         }
-        getChartData()
-    }, [user, year])
+        getChartData();
+    }, [user, startDate, endDate]);
 
-    const handleChange = (event) => {
+
+    const handleYearChange = (event) => {
         setYear(event.target.value);
     };
 
@@ -116,7 +178,7 @@ const Dashboard = () => {
                             <Select
                                 value={year}
                                 label="Year"
-                                onChange={handleChange}
+                                onChange={handleYearChange}
                                 style={{
                                     border: '1px solid white',
                                     color: '#6200EE',
@@ -128,13 +190,18 @@ const Dashboard = () => {
                                 <MenuItem value={2022}>2022</MenuItem>
                             </Select>
                         </Box>
+
                         <Box pt='10px' pl='5px'>
                             <Typography
                                 variant="h5"
                                 fontWeight="600"
                                 color={colors.grey[100]}
                             >
-                                <FormattedMessage id="revenue.generated" />
+                                {/* Generated */}
+                                <FormattedMessage
+                                    id="revenue.generated"
+                                    values={{ year: `${year}` }}
+                                />
                             </Typography>
                         </Box>
                         <Box pt='10px' pl='5px'>
@@ -143,13 +210,72 @@ const Dashboard = () => {
                                 fontWeight="bold"
                                 color={colors.purple[100]}
                             >
-                                {`RM ${totalRedeemedAmount}`}
+                                {`RM ${totalGeneratedThroughYear}`}
+                            </Typography>
+                        </Box>
+                        <Box pt='10px' pl='5px'>
+                            <Typography
+                                variant="h5"
+                                fontWeight="600"
+                                color={colors.grey[100]}
+                            >
+                                {/* Redeemed */}
+                                Total Redeemed (To Change)
+                                {/* <FormattedMessage
+                                    id="revenue.generated"
+                                    values={{ year: `${year}` }}
+                                /> */}
+                            </Typography>
+                        </Box>
+                        <Box pt='10px' pl='5px'>
+                            <Typography
+                                variant="h3"
+                                fontWeight="bold"
+                                color={colors.purple[100]}
+                            >
+                                {`RM ${totalRedeemedThroughYear}`}
                             </Typography>
                         </Box>
 
                     </Box>
                     <Box height="400px" m="-20px 0 0 0">
                         <LineChart isDashboard={true} monthlyGenerated={monthlyGenerated} monthlyRedeemed={monthlyRedeemed} />
+                    </Box>
+                </Box>
+            </Box>
+
+            {/* filter row */}
+            <Box>
+                <Box className="category">
+                    <Box className="apply-filter" display='flex'>
+                        <Box className="button-container">
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('all-time')}>All Time</Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-year')}>This Year</Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-month')}>This Month</Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('last-week')}>Last Week</Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-week')}>This Week</Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('yesterday')}>Yesterday</Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('today')}>Today</Button>
+                        </Box>
+                    </Box>
+
+                    <Box className="date-range" display='flex'>
+                        <Box >
+                            <label>Start Date:</label>
+                            <DatePicker
+                                selected={startDate}
+                                onChange={date => setStartDate(date)}
+                                dateFormat="MM/dd/yyyy"
+                            />
+                        </Box>
+                        <Box>
+                            <label>End Date:</label>
+                            <DatePicker
+                                selected={endDate}
+                                onChange={date => setEndDate(date)}
+                                dateFormat="MM/dd/yyyy"
+                            />
+                        </Box>
                     </Box>
                 </Box>
             </Box>
@@ -178,45 +304,6 @@ const Dashboard = () => {
                     </Box>
                 </Grid>
             </Grid>
-
-            {/* filter row */}
-            <Box>
-                <Box className="category">
-                    <Box className="apply-filter" display='flex'>
-                        <Box className="button-container">
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />}>All Time</Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />}>This Year</Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />}>This Month</Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />}>Last Week</Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />}>This Week</Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />}>Yesterday</Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />}>Today</Button>
-                        </Box>
-                    </Box>
-
-
-
-                    <Box className="date-range" display='flex'>
-                        <Box >
-                            <label>Start Date:</label>
-                            <DatePicker
-                                selected={startDate}
-                                onChange={date => setStartDate(date)}
-                                dateFormat="MM/dd/yyyy"
-                            />
-                        </Box>
-                        <Box>
-                            <label>End Date:</label>
-                            <DatePicker
-                                selected={endDate}
-                                onChange={date => setEndDate(date)}
-                                dateFormat="MM/dd/yyyy"
-                            />
-                        </Box>
-                    </Box>
-                </Box>
-            </Box>
-
 
             {/* Row 2 */}
             <Box className="category">
@@ -323,3 +410,49 @@ const Dashboard = () => {
 }
 
 export default Dashboard
+
+    // useEffect(() => {
+    //     const getChartData = async () => {
+    //         if (user) {
+    //             try {
+    //                 const { data } = await axios.get(`api/dashboard/serialsData?year=${year}`, {
+    //                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
+    //                 });
+
+    //                 console.log("data is")
+    //                 console.log(data)
+
+    //                 setTotalRedeemedAmount(data?.totalAmountRedeemed)
+    //                 setTotalRedeemedCount(data?.overallRedeemedCount)
+    //                 setRedeemedCount(prevCount => {
+    //                     const newRedeemedCount = { ...prevCount }
+    //                     data?.redeemedCount.forEach(({ _id, count }) => {
+    //                         newRedeemedCount[_id] = count
+    //                     })
+    //                     return newRedeemedCount
+    //                 })
+    //                 setGeneratedCount(prevCount => {
+    //                     const newRedeemedCount = { ...prevCount }
+    //                     data?.overallGeneratedCount.forEach(({ _id, count }) => {
+    //                         newRedeemedCount[_id] = count
+    //                     })
+    //                     return newRedeemedCount
+    //                 })
+    //                 setmostRedeemedCount(prevCount => {
+    //                     const newRedeemedCount = { ...prevCount }
+    //                     data?.mostRedeemed.forEach(({ _id, percentage }) => {
+    //                         newRedeemedCount[_id] = percentage
+    //                     })
+    //                     return newRedeemedCount
+    //                 })
+    //                 setTopRedeemUser(data?.topRedeemUser)
+    //                 setMonthlyGenerated(data?.totalGeneratedThroughYear)
+    //                 setMonthlyRedeemed(data?.totalRedeemedThroughYear)
+
+    //             } catch (error) {
+    //                 console.log(error)
+    //             }
+    //         }
+    //     }
+    //     getChartData()
+    // }, [user, year])
