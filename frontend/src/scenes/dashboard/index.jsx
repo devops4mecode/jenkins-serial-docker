@@ -64,7 +64,7 @@ const Dashboard = () => {
     const [topRedeemUser, setTopRedeemUser] = useState("")
 
     // NEW
-    const [startDate, setStartDate] = useState(null)
+    const [startDate, setStartDate] = useState(new Date())
     const [endDate, setEndDate] = useState(new Date())
 
     const handleDateRangeChange = (timeRange) => {
