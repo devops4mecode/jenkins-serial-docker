@@ -3,11 +3,13 @@ import { tokens } from "../theme"
 import { useTheme } from "@mui/material"
 import { useIntl } from "react-intl"
 
+
 const LineChart = ({ isDashboard, monthlyGenerated, monthlyRedeemed }) => {
 
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     const intl = useIntl();
+
 
     const chartData = [
         {
@@ -144,7 +146,7 @@ const LineChart = ({ isDashboard, monthlyGenerated, monthlyRedeemed }) => {
                     translateY: 60,
                     itemsSpacing: 0,
                     itemDirection: 'left-to-right',
-                    itemWidth: 50,
+                    itemWidth: 70,
                     itemHeight: 30,
                     itemOpacity: 0.75,
                     symbolSize: 12,
