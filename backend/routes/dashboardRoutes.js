@@ -7,7 +7,6 @@ router.use(verifyJWT)
 
 // Routes
 router
-    .get('/serialsData', dashboardController.getSerialsData)
     .get('/chartData', dashboardController.getChartData)
     .get('/summary', dashboardController.getSummary)
 
