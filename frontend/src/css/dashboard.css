@@ -47,7 +47,7 @@
 }
 
 .react-datepicker__day, .react-datepicker__month-text, .react-datepicker__quarter-text, .react-datepicker__year-text {
-    background-color: rgb(249, 245, 235);
+    background-color: rgb(235, 235, 250);
 }
 
 .react-datepicker__navigation-icon::before {
@@ -58,8 +58,25 @@
     background-color: #868dfb !important;
 }
 
+.react-datepicker__day--outside-month {
+background-color: white !important;
+color: rgb(50, 50, 50) !important;
+}
+
 
 @media (max-width: 576px) {
+    .graph-header {
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        color: #141414;
+    }
+
+    .graph-statistic {
+        font-size: 20px !important;
+        font-weight: bold !important;
+        color: #6200EE;
+    }
+
     .statbox-content {
         padding-left: 17px;
         padding-top: 11px;
@@ -119,10 +136,45 @@
         grid-gap: 10px;
         font-size: 12px;
     }
+
+
+
+    /* datepicker before selecting date */
+    .react-datepicker__input-container {
+        grid-column: auto;
+        grid-row: auto;
+        padding-bottom: 30px;
+    }
+
+    .react-datepicker__input-container input {
+        font-weight: bold;
+        text-align: center;
+        border: none;
+        background-color: transparent;
+        border-bottom: 1px solid #6200EE;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .react-datepicker__input-container input .focus {
+        outline: none !important;
+    }
 }
 
 
 @media(min-width: 600px) {
+    .graph-header {
+        font-size: 20px;
+        font-weight: 600 !important;
+        color: #141414;
+    }
+
+    .graph-statistic {
+        font-size: 24px !important;
+        font-weight: bold !important;
+        color: #6200EE;
+    }
+
     .statbox-content {
         padding-left: 17px;
         padding-top: 11px;
@@ -178,6 +230,35 @@
     .date-range {
         padding-top: 20px;
     }
+
+
+    .datepicker-text {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    /* datepicker before selecting date */
+    .react-datepicker__input-container {
+        grid-column: 5/10;
+        grid-row: 2/4;     
+        padding-bottom: 30px;
+    }
+
+    .react-datepicker__input-container input {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        border: none;
+        background-color: transparent;
+        border-bottom: 1px solid #6200EE;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .react-datepicker__input-container input .focus {
+        outline: none !important;
+    }
+
 }
 
 @media (min-width: 1200px) {
