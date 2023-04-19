@@ -64,7 +64,7 @@ const Form = () => {
 
                     <Box className="login-button-component">
                         <Button
-                            disabled={isLoading}
+                            // disabled={isLoading}
                             type="submit"
                             className="login-field-button"
                         >
