@@ -115,29 +115,42 @@ const generateSerials = async (req, res) => {
         const { givenCredit, amountToGenerate, remarkName } = req.body;
 
         if (!givenCredit || !amountToGenerate || !remarkName) {
-            return res
-                .status(400)
-                .json({ message: "All fields must be provided" });
+            return res.status(400).json({ message: "All fields must be provided" });
         }
 
-        const serials = [];
+        let serials = [];
 
+        // Generate additional serials
         for (let i = 0; i < amountToGenerate; i++) {
-            const serialNo = generateSerialNumber();
-            const serial = new Serial({
+            serials.push(generateSerialNumber());
+        }
+
+        // Check for duplicates and replace them
+        const anyDuplicate = await Serial.find({ serialNo: { $in: serials } });
+        anyDuplicate.forEach(duplicate => {
+            let newSerial = generateSerialNumber();
+            while (serials.includes(newSerial) || anyDuplicate.map(d => d.serialNo).includes(newSerial)) {
+                newSerial = generateSerialNumber();
+            }
+            serials.splice(serials.indexOf(duplicate.serialNo), 1, newSerial);
+        });
+
+        // Return only the requested number of unique serials
+        serials = serials.slice(0, amountToGenerate);
+
+        const serialDocs = [];
+        for (let j = 0; j < serials.length; j++) {
+            const serialDoc = new Serial({
                 givenCredit,
                 remarkName,
-                serialNo,
+                serialNo: serials[j],
                 redemptionAcc: "",
                 serialStatus: true,
             });
-
-            const savedSerial = await serial.save(); // save the document to MongoDB
-
-            serials.push(savedSerial);
+            await serialDoc.save();
+            serialDocs.push(serialDoc);
         }
-
-        return res.status(200).json({ serials });
+        return res.json({ serialDocs });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Internal server error" });

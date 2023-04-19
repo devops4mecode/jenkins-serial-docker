@@ -30,7 +30,7 @@ const GenerateNumber = () => {
                 headers: { 'Authorization': `Bearer ${user.accessToken}` },
             })
 
-            const datagriddata = response.data.serials
+            const datagriddata = response.data.serialDocs
             console.log("datagrid data:", datagriddata)
 
             const da = datagriddata.map(dgd => ({
