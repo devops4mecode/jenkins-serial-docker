@@ -64,7 +64,7 @@ const Dashboard = () => {
     const [topRedeemUser, setTopRedeemUser] = useState("")
 
     // NEW
-    const [startDate, setStartDate] = useState(new Date())
+    const [startDate, setStartDate] = useState()
     const [endDate, setEndDate] = useState(new Date())
 
     const handleDateRangeChange = (timeRange) => {
@@ -249,19 +249,19 @@ const Dashboard = () => {
                 <Box className="category">
                     <Box className="apply-filter" display='flex'>
                         <Box className="button-container">
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('all-time')}><FormattedMessage id="all.time"/></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-year')}><FormattedMessage id="this.year"/></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-month')}><FormattedMessage id="this.month"/></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('last-week')}><FormattedMessage id="last.week"/></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-week')}><FormattedMessage id="this.week"/></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('yesterday')}><FormattedMessage id="yesterday"/></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('today')}><FormattedMessage id="today"/></Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('all-time')}><FormattedMessage id="all.time" /></Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-year')}><FormattedMessage id="this.year" /></Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-month')}><FormattedMessage id="this.month" /></Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('last-week')}><FormattedMessage id="last.week" /></Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-week')}><FormattedMessage id="this.week" /></Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('yesterday')}><FormattedMessage id="yesterday" /></Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('today')}><FormattedMessage id="today" /></Button>
                         </Box>
                     </Box>
 
                     <Box className="date-range" display='flex'>
                         <Box >
-                            <label className="datepicker-text"><FormattedMessage id="start.date"/></label>
+                            <label className="datepicker-text"><FormattedMessage id="start.date" /></label>
                             <DatePicker
                                 selected={startDate}
                                 onChange={date => setStartDate(date)}
@@ -269,7 +269,7 @@ const Dashboard = () => {
                             />
                         </Box>
                         <Box>
-                            <label className="datepicker-text"><FormattedMessage id="end.date"/></label>
+                            <label className="datepicker-text"><FormattedMessage id="end.date" /></label>
                             <DatePicker
                                 selected={endDate}
                                 onChange={date => setEndDate(date)}
