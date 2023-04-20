@@ -49,7 +49,8 @@ const UsedNumber = () => {
     const columns = [
         {
             field: "serialNo",
-            headerName: <FormattedMessage id="record.serial.number" />,
+            // headerName: <FormattedMessage id="record.serial.number" />,
+            headerName: "Serial Number",
             type: "number",
             headerAlign: "center",
             align: "center",
@@ -59,7 +60,8 @@ const UsedNumber = () => {
         },
         {
             field: "givenCredit",
-            headerName: <FormattedMessage id="record.credit" />,
+            // headerName: <FormattedMessage id="record.credit" />,
+            headerName: "Credit",
             type: "number",
             headerAlign: "center",
             align: "center",
@@ -67,7 +69,8 @@ const UsedNumber = () => {
         },
         {
             field: "remarkName",
-            headerName: <FormattedMessage id="record.buyer" />,
+            // headerName: <FormattedMessage id="record.buyer" />,
+            headerName: "Buyer",
             width: 250,
             cellClassName: "name-column--cell",
             headerAlign: "center",
@@ -75,7 +78,8 @@ const UsedNumber = () => {
         },
         {
             field: "createdAt",
-            headerName: <FormattedMessage id="record.sold.date" />,
+            // headerName: <FormattedMessage id="record.sold.date" />,
+            headerName: "Purchase Date",
             valueFormatter: (params) =>
                 moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
             width: 250,
@@ -84,7 +88,8 @@ const UsedNumber = () => {
         },
         {
             field: "redemptionAcc",
-            headerName: <FormattedMessage id="record.redeemer" /> ,
+            // headerName: <FormattedMessage id="record.redeemer" />,
+            headerName: "Redemption Account",
             width: 250,
             cellClassName: "name-column--cell",
             headerAlign: "center",
@@ -92,7 +97,8 @@ const UsedNumber = () => {
         },
         {
             field: "updatedAt",
-            headerName: <FormattedMessage id="record.redeemed.date" />,
+            // headerName: <FormattedMessage id="record.redeemed.date" />,
+            headerName: "Redemption Date",
             valueFormatter: (params) =>
                 moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
             width: 250,
