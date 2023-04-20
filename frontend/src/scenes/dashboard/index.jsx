@@ -112,34 +112,41 @@ const Dashboard = () => {
 
     // Summary
     useEffect(() => {
-
         let formattedStart = startDate;
         if (startDate) formattedStart = moment(startDate).format('YYYY-MM-DD');
         const formattedEnd = moment(endDate).format('YYYY-MM-DD')
 
-        const getChartData = async () => {
+        const getSummary = async () => {
             if (user) {
                 try {
                     const { data } = await axios.get(`api/dashboard/summary?startDate=${formattedStart}&endDate=${formattedEnd}`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     });
-
                     setTotalRedeemedAmount(data?.totalAmountRedeemed)
                     setTotalRedeemedCount(data?.overallRedeemedCount)
-                    setRedeemedCount(prevCount => {
-                        const newRedeemedCount = { ...prevCount }
-                        data?.redeemedCount.forEach(({ _id, count }) => {
-                            newRedeemedCount[_id] = count
+                    if (data?.redeemedCount.length > 0) {
+                        setRedeemedCount(prevCount => {
+                            const newRedeemedCount = { ...prevCount }
+                            data?.redeemedCount.forEach(({ _id, count }) => {
+                                newRedeemedCount[_id] = count
+                            })
+                            return newRedeemedCount
                         })
-                        return newRedeemedCount
-                    })
-                    setGeneratedCount(prevCount => {
-                        const newRedeemedCount = { ...prevCount }
-                        data?.overallGeneratedCount.forEach(({ _id, count }) => {
-                            newRedeemedCount[_id] = count
+                    } else {
+                        setRedeemedCount({ '10': 0, '30': 0, '50': 0, '100': 0 })
+
+                    }
+                    if (data?.overallGeneratedCount.length > 0) {
+                        setGeneratedCount(prevCount => {
+                            const newGeneratedCount = { ...prevCount }
+                            data?.overallGeneratedCount.forEach(({ _id, count }) => {
+                                newGeneratedCount[_id] = count
+                            })
+                            return newGeneratedCount
                         })
-                        return newRedeemedCount
-                    })
+                    } else {
+                        setGeneratedCount({ '10': 0, '30': 0, '50': 0, '100': 0 })
+                    }
                     setmostRedeemedCount(prevCount => {
                         const newRedeemedCount = { ...prevCount }
                         data?.mostRedeemed.forEach(({ _id, percentage }) => {
@@ -153,7 +160,7 @@ const Dashboard = () => {
                 }
             }
         }
-        getChartData();
+        getSummary();
     }, [user, startDate, endDate]);
 
 
@@ -411,49 +418,3 @@ const Dashboard = () => {
 }
 
 export default Dashboard
-
-    // useEffect(() => {
-    //     const getChartData = async () => {
-    //         if (user) {
-    //             try {
-    //                 const { data } = await axios.get(`api/dashboard/serialsData?year=${year}`, {
-    //                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
-    //                 });
-
-    //                 console.log("data is")
-    //                 console.log(data)
-
-    //                 setTotalRedeemedAmount(data?.totalAmountRedeemed)
-    //                 setTotalRedeemedCount(data?.overallRedeemedCount)
-    //                 setRedeemedCount(prevCount => {
-    //                     const newRedeemedCount = { ...prevCount }
-    //                     data?.redeemedCount.forEach(({ _id, count }) => {
-    //                         newRedeemedCount[_id] = count
-    //                     })
-    //                     return newRedeemedCount
-    //                 })
-    //                 setGeneratedCount(prevCount => {
-    //                     const newRedeemedCount = { ...prevCount }
-    //                     data?.overallGeneratedCount.forEach(({ _id, count }) => {
-    //                         newRedeemedCount[_id] = count
-    //                     })
-    //                     return newRedeemedCount
-    //                 })
-    //                 setmostRedeemedCount(prevCount => {
-    //                     const newRedeemedCount = { ...prevCount }
-    //                     data?.mostRedeemed.forEach(({ _id, percentage }) => {
-    //                         newRedeemedCount[_id] = percentage
-    //                     })
-    //                     return newRedeemedCount
-    //                 })
-    //                 setTopRedeemUser(data?.topRedeemUser)
-    //                 setMonthlyGenerated(data?.totalGeneratedThroughYear)
-    //                 setMonthlyRedeemed(data?.totalRedeemedThroughYear)
-
-    //             } catch (error) {
-    //                 console.log(error)
-    //             }
-    //         }
-    //     }
-    //     getChartData()
-    // }, [user, year])
