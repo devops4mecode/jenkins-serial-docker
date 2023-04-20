@@ -48,7 +48,8 @@ const UnusedNumber = () => {
     const columns = [
         {
             field: "serialNo",
-            headerName: <FormattedMessage id="record.serial.number" />,
+            // headerName: <FormattedMessage id="record.serial.number" />,
+            headerName: "Serial Number",
             type: "number",
             headerAlign: "center",
             align: "center",
@@ -58,7 +59,8 @@ const UnusedNumber = () => {
         },
         {
             field: "givenCredit",
-            headerName: <FormattedMessage id="record.credit" />,
+            // headerName: <FormattedMessage id="record.credit" />,
+            headerName: "Credit",
             type: "number",
             headerAlign: "center",
             align: "center",
@@ -66,7 +68,8 @@ const UnusedNumber = () => {
         },
         {
             field: "remarkName",
-            headerName: <FormattedMessage id="record.buyer" />,
+            // headerName: <FormattedMessage id="record.buyer" />,
+            headerName: "Buyer",
             width: 370,
             cellClassName: "name-column--cell",
             headerAlign: "center",
@@ -74,7 +77,8 @@ const UnusedNumber = () => {
         },
         {
             field: "createdAt",
-            headerName: <FormattedMessage id="record.sold.date" />,
+            // headerName: <FormattedMessage id="record.sold.date" />,
+            headerName: "Purchase Date",
             valueFormatter: (params) =>
                 moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
             width: 370,
