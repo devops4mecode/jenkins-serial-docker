@@ -114,7 +114,12 @@ const getSummary = async (req, res) => {
                         updatedAt: { $gte: new Date(isoStart), $lte: new Date(isoEnd) }
                     }
                 },
-                { $count: "count" }
+                {
+                    $group: {
+                        _id: null,
+                        count: { $sum: 1 }
+                    }
+                }
             ]),
             // redeemedCounts
             Serial.aggregate([
@@ -186,7 +191,7 @@ const getSummary = async (req, res) => {
             {
                 $project: {
                     _id: 1,
-                    percentage: { $multiply: [{ $divide: ["$count", overallRedeemedCount[0].count] }, 100] }
+                    percentage: { $multiply: [{ $divide: ["$count", overallRedeemedCount[0]?.count || 0] }, 100] }
                 }
             }
         ]);
@@ -194,16 +199,16 @@ const getSummary = async (req, res) => {
         const percentagesMap = new Map(percentages.map(({ _id, percentage }) => [_id, percentage]));
 
         const result = {
-            overallRedeemedCount: overallRedeemedCount[0].count || 0,
+            overallRedeemedCount: overallRedeemedCount[0]?.count || 0,
             redeemedCount: redeemedCounts || 0,
             overallGeneratedCount: overallGeneratedCount || 0,
-            totalAmountRedeemed: totalAmountRedeemed[0].sum || 0,
+            totalAmountRedeemed: totalAmountRedeemed[0]?.sum || 0,
             mostRedeemed: mostRedeemed.map(_id => ({ _id, percentage: percentagesMap.get(_id) || 0 })),
-            topRedeemUser: topRedeemUser || 0,
+            topRedeemUser: topRedeemUser,
         };
         res.json(result);
     } catch (error) {
-        return res.status(400).json({ message: "Something wrong" });
+        return res.status(400).json({ error: error.message });
     }
 };
 

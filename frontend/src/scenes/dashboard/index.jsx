@@ -123,6 +123,7 @@ const Dashboard = () => {
                     const { data } = await axios.get(`api/dashboard/summary?startDate=${formattedStart}&endDate=${formattedEnd}`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     });
+
                     setTotalRedeemedAmount(data?.totalAmountRedeemed)
                     setTotalRedeemedCount(data?.overallRedeemedCount)
                     setRedeemedCount(prevCount => {
@@ -249,13 +250,13 @@ const Dashboard = () => {
                 <Box className="category">
                     <Box className="apply-filter" display='flex'>
                         <Box className="button-container">
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('all-time')}><FormattedMessage id="all.time" /></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-year')}><FormattedMessage id="this.year" /></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-month')}><FormattedMessage id="this.month" /></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('last-week')}><FormattedMessage id="last.week" /></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-week')}><FormattedMessage id="this.week" /></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('yesterday')}><FormattedMessage id="yesterday" /></Button>
                             <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('today')}><FormattedMessage id="today" /></Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('yesterday')}><FormattedMessage id="yesterday" /></Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-week')}><FormattedMessage id="this.week" /></Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('last-week')}><FormattedMessage id="last.week" /></Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-month')}><FormattedMessage id="this.month" /></Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-year')}><FormattedMessage id="this.year" /></Button>
+                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('all-time')}><FormattedMessage id="all.time" /></Button>
                         </Box>
                     </Box>
 
