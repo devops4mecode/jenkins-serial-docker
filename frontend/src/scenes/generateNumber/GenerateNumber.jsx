@@ -89,11 +89,17 @@ const GenerateNumber = () => {
                 <form onSubmit={handleSubmit}>
                     <Box
                         className="credit-button-component"
-                    >
+                        >
+                        {/* TEST AFTER THIS */}
+                        <CreditButton onClick={() => setFieldValue("givenCredit", 5)} title="RM5" />
                         <CreditButton onClick={() => setFieldValue("givenCredit", 10)} title="RM10" />
+                        <CreditButton onClick={() => setFieldValue("givenCredit", 15)} title="RM15" />
+                        <CreditButton onClick={() => setFieldValue("givenCredit", 20)} title="RM20" />
                         <CreditButton onClick={() => setFieldValue("givenCredit", 30)} title="RM30" />
                         <CreditButton onClick={() => setFieldValue("givenCredit", 50)} title="RM50" />
                         <CreditButton onClick={() => setFieldValue("givenCredit", 100)} title="RM100" />
+                        <CreditButton onClick={() => setFieldValue("givenCredit", 200)} title="RM200" />
+                        <CreditButton onClick={() => setFieldValue("givenCredit", 500)} title="RM500" />
                     </Box>
 
                     <Box
