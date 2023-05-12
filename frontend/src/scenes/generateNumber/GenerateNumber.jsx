@@ -13,6 +13,7 @@ import CreditButton from "components/CreditButton"
 import CreditTextField from "../../components/TextField"
 import '../../css/generateNumber.css'
 import '../../index.css'
+import { CopyToClipboard } from "react-copy-to-clipboard"
 
 
 const GenerateNumber = () => {
@@ -22,7 +23,11 @@ const GenerateNumber = () => {
     const { user } = useAuthContext()
 
     const [serialsData, setSerialsData] = useState([])
+    const [copiedValues, setCopiedValues] = useState([])
 
+    // const handleCopy = (value) => {
+    //     setCopiedValue(value)
+    // }
 
     const handleFormSubmit = async (values) => {
         try {
@@ -89,7 +94,7 @@ const GenerateNumber = () => {
                 <form onSubmit={handleSubmit}>
                     <Box
                         className="credit-button-component"
-                        >                
+                    >
                         <CreditButton onClick={() => setFieldValue("givenCredit", 5)} title="RM5" />
                         <CreditButton onClick={() => setFieldValue("givenCredit", 10)} title="RM10" />
                         <CreditButton onClick={() => setFieldValue("givenCredit", 15)} title="RM15" />
@@ -154,9 +159,7 @@ const GenerateNumber = () => {
                         />
                     </Box>
 
-                    <Box
-                        className="generate-button-component"
-                    >
+                    <Box className="generate-button-component" >
                         <Button
                             className="generate-button-text"
                             type="submit"
@@ -168,7 +171,18 @@ const GenerateNumber = () => {
 
                     {serialsData.length > 0 && (
                         <>
-                            <TableContainer component={Paper} sx={{ mt: 4, textAlign: "center", color: colors.greenAccent[300] }}>
+                            <Box className="copy-button-component">
+                                <CopyToClipboard text={serialsData.map(d => d.serialNo.replace(/(.{4})(?!$)/g, '$1-')).join('\n')}>
+                                    <Button
+                                        className="copy-button-text"
+                                        variant="contained"
+                                    >
+                                        <FormattedMessage id="copy.serial" />
+                                    </Button>
+                                </CopyToClipboard>
+                            </Box>
+
+                            <TableContainer component={Paper} sx={{ mt: 2, textAlign: "center", color: colors.greenAccent[300] }}>
                                 <Table>
                                     <TableHead sx={{ backgroundColor: colors.blueAccent[700] }}>
                                         <TableRow>
@@ -201,13 +215,14 @@ const GenerateNumber = () => {
                                 </CSVLink>
                             </Box>
 
+
                             <Box className="footer"></Box>
                         </>
                     )}
                 </form>
             )}
         </Formik>
-    </Box>
+    </Box >
 }
 
 const checkoutSchema = yup.object().shape({

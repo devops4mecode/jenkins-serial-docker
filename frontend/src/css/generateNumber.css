@@ -42,6 +42,17 @@ a:-webkit-any-link {
     background-color: #6200EE15 !important;
 }
 
+.copy-button-component {
+    display: flex;
+}
+
+.copy-button-text {
+    color: #6200EE !important;
+    /* font-weight: bold !important; */
+    background-color: #6200EE15 !important;
+}
+
+
 
 
 @media (max-width: 576px) {
@@ -76,7 +87,8 @@ a:-webkit-any-link {
     }
 
     .generate-button-component {
-        justify-content: center;
+        justify-content: center;     
+   
     }
 
     .generate-button-text {
@@ -85,13 +97,25 @@ a:-webkit-any-link {
 
     .export-button-component {
         justify-content: center;
-        padding-top: 40px;
-        padding-bottom: 30px;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
 
     .export-button-text {
         font-size: 12px !important;
     }
+
+    .copy-button-component {
+        justify-content: start;
+        padding-top: 40px;
+        
+    }
+
+    .copy-button-text {
+        font-size: 12px !important;
+    }
+
+
 }
 
 
@@ -127,7 +151,7 @@ a:-webkit-any-link {
 
     .generate-button-component {
         justify-content: flex-end;
-        padding-top: 40px;
+        padding-top: 10px;
     }
 
     .generate-button-text {
@@ -136,10 +160,20 @@ a:-webkit-any-link {
 
     .export-button-component {
         justify-content: flex-end;
-        padding-top: 40px;
+        padding-top: 30px;
     }
 
     .export-button-text {
+        font-size: 14px !important;
+    }
+
+    .copy-button-component {
+        justify-content: start;
+        padding-top: 40px;
+        padding-bottom: 10px;
+    }
+
+    .copy-button-text {
         font-size: 14px !important;
     }
 }

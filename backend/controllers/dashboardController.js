@@ -1,7 +1,7 @@
 const Serial = require("../models/SerialModel");
 const moment = require("moment");
 
-const Report = require("../models/ReportModel")
+// const Report = require("../models/ReportModel")
 
 const getChartData = async (req, res) => {
     try {
