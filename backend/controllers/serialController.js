@@ -1,4 +1,5 @@
 const Serial = require("../models/SerialModel");
+const Receipt = require("../models/ReceiptModel");
 
 // @desc Get all serials
 // @route GET /serials/all
@@ -150,7 +151,14 @@ const generateSerials = async (req, res) => {
             await serialDoc.save();
             serialDocs.push(serialDoc);
         }
-        return res.json({ serialDocs });
+
+        // Create a new receipt and push the serial IDs to the receipt
+        const receipt = new Receipt({
+            serialID: serialDocs.map((doc) => doc._id),
+        });
+        await receipt.save();
+
+        return res.status(200).json({ serialDocs });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Internal server error" });
