@@ -52,7 +52,7 @@ app.use(errorHandler)
 
 generateChartData()
 
-// generateSummary()
+generateSummary()
 
 mongoose.connection.once("open", () => {
     console.log("Connected to MongoDB");
