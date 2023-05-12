@@ -6,6 +6,7 @@ const globalController = require('../controllers/globalController');
 router
     .get('/detail', globalController.getSerialDetails)
     .patch('/redeem', globalController.redeemSerials)
-    .post('/request', globalController.generateSerialsByPlayer)
+    // !NEW 2023-05-12
+    .post('/request', globalController.requestSerials)
 
 module.exports = router

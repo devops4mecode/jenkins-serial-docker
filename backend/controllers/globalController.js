@@ -30,7 +30,7 @@ const getSerialDetails = async (req, res) => {
         }
         return res.json(foundSerialNo);
     } catch (error) {
-        return res.status(500).json({ message: "Internal server error" });
+        return res.status(400).json({ error: error.message });
     }
 };
 
@@ -75,7 +75,15 @@ const redeemSerials = async (req, res) => {
         }
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: "Internal server error" });
+        return res.status(400).json({ error: error.message });
+    }
+};
+
+const requestSerials = async (req, res) => {
+    try {
+        const { redemptionAcc, serialNo } = req.query;
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
     }
 };
 
@@ -143,5 +151,6 @@ function generateSerialNumber() {
 module.exports = {
     generateSerialsByPlayer,
     getSerialDetails,
-    redeemSerials
+    redeemSerials,
+    requestSerials
 }
