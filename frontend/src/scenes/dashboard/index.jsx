@@ -121,10 +121,8 @@ const Dashboard = () => {
                     const { data } = await axios.get(`api/dashboard/summary?startDate=${formattedStart}&endDate=${formattedEnd}`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     });
-
-                    console.log("Summary data is")
+                    console.log("this is data summary")
                     console.log(data)
-
                     setTotalRedeemedAmount(data?.totalAmountRedeemed)
                     setTotalRedeemedCount(data?.overallRedeemedCount)
                     if (data?.redeemedCount.length > 0) {
