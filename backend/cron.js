@@ -89,9 +89,6 @@ exports.generateSummary = () => {
     const reportSummary = new CronJob('* * * * * *', async function () {
         const todayStart = moment().startOf('day').toDate()
         const todayEnd = moment().endOf('day').toDate()
-        // TEST YESTERDAY
-        // const todayStart = moment().startOf('day').subtract(2, 'day').toDate()
-        // const todayEnd = moment().endOf('day').subtract(2, 'day').toDate()
 
         const [
             overallRedeemedCount,
@@ -167,14 +164,8 @@ exports.generateSummary = () => {
         let summaryData = {
             overallRedeemedCount: overallRedeemedCount[0]?.count || 0,
             redeemedCount: redeemedCount.map(({ _id, count }) => ({ amount: _id, count })) || [],
-            overallGeneratedCount: overallGeneratedCount
-                .map(({ _id, count }) => ({ amount: _id, count }))
-                .sort((a, b) => a.amount - b.amount) // Sort by amount in ascending order
-                || [],
-            mostRedeemed: redeemedCount
-                .map(({ _id, count }) => ({ amount: _id, percentage: count / overallRedeemedCount[0]?.count * 100 }))
-                .sort((a, b) => a.amount - b.amount) // Sort by amount in ascending order
-                || [],
+            overallGeneratedCount: overallGeneratedCount.map(({ _id, count }) => ({ amount: _id, count })) || [],
+            mostRedeemed: redeemedCount.map(({ _id, count }) => ({ amount: _id, percentage: count / overallRedeemedCount[0]?.count * 100 })) || [],
             topTen: topTen.map(({ _id, count, totalGivenCredit }) => ({ name: _id, count: count, totalCredit: totalGivenCredit })),
             totalAmountRedeemed: totalAmountRedeemed[0]?.sum || 0
         }
