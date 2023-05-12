@@ -1,6 +1,8 @@
 const Serial = require("../models/SerialModel");
 const moment = require("moment");
 
+const Report = require("../models/ReportModel")
+
 const getChartData = async (req, res) => {
     try {
         const { year } = req.query
@@ -44,7 +46,9 @@ const getChartData = async (req, res) => {
             Serial.aggregate([
                 {
                     $match: {
-                        serialStatus: true,
+                        // ! MAYBE NO NEED THIS
+                        // serialStatus: true,
+                        // ! CUZ GENERATED MEANS ALL
                         createdAt: { $gte: startDate, $lte: endDate }
                     }
                 },
