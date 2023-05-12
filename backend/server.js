@@ -50,7 +50,7 @@ app.get('/*', function (req, res) {
 
 app.use(errorHandler)
 
-generateChartData()
+// generateChartData()
 
 mongoose.connection.once("open", () => {
     console.log("Connected to MongoDB");
