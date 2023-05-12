@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3500
 const mongoose = require('mongoose');
 const corsOptions = require('./config/corsOptions');
 
-const { generateChartData, generateSummary } = require('./cron')
+const { generateChartData } = require('./cron')
 
 console.log(process.env.NODE_ENV)
 
@@ -51,8 +51,6 @@ app.get('/*', function (req, res) {
 app.use(errorHandler)
 
 generateChartData()
-
-generateSummary()
 
 mongoose.connection.once("open", () => {
     console.log("Connected to MongoDB");
