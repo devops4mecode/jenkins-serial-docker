@@ -4,7 +4,6 @@ const moment = require("moment");
 const Report = require("../models/ReportModel")
 const Chart = require("../models/ChartModel")
 
-
 const getChartData = async (req, res) => {
     try {
 
