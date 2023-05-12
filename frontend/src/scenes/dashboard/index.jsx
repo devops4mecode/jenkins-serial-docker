@@ -105,7 +105,6 @@ const Dashboard = () => {
                 newEndDate = null;
                 break;
         }
-
         setStartDate(newStartDate);
         setEndDate(newEndDate);
     }
