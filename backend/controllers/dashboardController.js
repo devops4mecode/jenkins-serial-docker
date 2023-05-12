@@ -4,29 +4,6 @@ const moment = require("moment");
 const Report = require("../models/ReportModel")
 const Chart = require("../models/ChartModel")
 
-
-const getDashboardData = async (req, res) => {
-    try {
-        const { year, startDate, endDate } = req.query
-
-        const yearStart = moment(year).startOf('year').toDate()
-        const yearEnd = moment(year).endOf('year').toDate()
-        const dateStart = moment(startDate).startOf('year').toDate()
-        const dateEnd = moment(endDate).endOf('year').toDate()
-
-        const foundChart = await Chart.findOne({ createdAt: { $gte: yearStart, $lte: yearEnd } })
-
-        const foundReport = await Report.findOne({ createdAt: { $gte: dateStart, $lte: dateEnd } })
-
-
-
-
-    } catch (error) {
-
-    }
-}
-
-
 const getChartData = async (req, res) => {
     try {
 
