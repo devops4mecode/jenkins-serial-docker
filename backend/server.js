@@ -11,6 +11,8 @@ const PORT = process.env.PORT || 3500
 const mongoose = require('mongoose');
 const corsOptions = require('./config/corsOptions');
 
+const { generateChartData } = require('./cron')
+
 console.log(process.env.NODE_ENV)
 
 connectDB();
@@ -20,11 +22,16 @@ app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
 
-
+// ! Server Routes
+// !! Auth
 app.use('/api/auth', require('./routes/authRoutes'))
+// !! User
 app.use('/api/users', require('./routes/userRoutes'))
+// !! User
 app.use('/api/serials', require('./routes/serialRoutes'))
+// !! User
 app.use('/api/dashboard', require('./routes/dashboardRoutes'))
+// ! Integration Routes
 app.use('/api/lucky', require('./routes/globalRoutes'))
 
 const buildPath = path.join(__dirname, 'build')
@@ -42,6 +49,8 @@ app.get('/*', function (req, res) {
 })
 
 app.use(errorHandler)
+
+generateChartData()
 
 mongoose.connection.once("open", () => {
     console.log("Connected to MongoDB");

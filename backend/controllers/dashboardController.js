@@ -2,9 +2,13 @@ const Serial = require("../models/SerialModel");
 const moment = require("moment");
 
 const Report = require("../models/ReportModel")
+const Chart = require("../models/ChartModel")
 
 const getChartData = async (req, res) => {
     try {
+
+        // Go Chart Model Take Data
+
         const { year } = req.query
         const startDate = moment(year).startOf('year').toDate();
         const endDate = moment(year).endOf('year').toDate();
@@ -92,6 +96,8 @@ const getChartData = async (req, res) => {
 
 const getSummary = async (req, res) => {
     try {
+
+        // Go Report Model Take Data
         const { startDate, endDate } = req.query
 
         let isoStart
