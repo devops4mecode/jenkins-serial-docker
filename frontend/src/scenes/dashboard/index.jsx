@@ -114,6 +114,8 @@ const Dashboard = () => {
                 const { data } = await axios.get(`api/dashboard?year=${year}&startDate=${startFrom}&endDate=${endAt}`, {
                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
                 });
+                console.log("data is")
+                console.log(data)
                 setDashData(data)
             } catch (error) {
                 console.log(error)

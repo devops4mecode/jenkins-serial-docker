@@ -12,8 +12,8 @@ const getDashboardData = async (req, res) => {
 
         const yearStart = moment(year).startOf('year').toDate()
         const yearEnd = moment(year).endOf('year').toDate()
-        const dateStart = moment(startDate).startOf('year').toDate()
-        const dateEnd = moment(endDate).endOf('year').toDate()
+        const dateStart = moment(startDate).startOf('day').toDate()
+        const dateEnd = moment(endDate).endOf('day').toDate()
 
         // Chart Sure No Problem
         const foundChart = await Chart.findOne(
