@@ -7,7 +7,6 @@ const Chart = require('./models/ChartModel');
 // Save To
 const Report = require('./models/ReportModel')
 
-
 exports.generateChartData = () => {
     const dashChart = new CronJob('* * * * * *', async function () {
         const yearStart = moment().startOf('year').toDate()
@@ -88,73 +87,103 @@ exports.generateChartData = () => {
 exports.generateSummary = () => {
     // Daily
     const reportSummary = new CronJob('* * * * * *', async function () {
-        const yearStart = moment().startOf('year').toDate()
-        const yearEnd = moment().endOf('year').toDate()
+        const todayStart = moment().startOf('day').toDate()
+        const todayEnd = moment().endOf('day').toDate()
+        // TEST YESTERDAY
+        // const todayStart = moment().startOf('day').subtract(2, 'day').toDate()
+        // const todayEnd = moment().endOf('day').subtract(2, 'day').toDate()
 
         const [
-            monthlyRedeemedThroughYear,
-            monthlyGeneratedThroughYear,
+            overallRedeemedCount,
+            redeemedCount,
+            overallGeneratedCount,
+            topTen,
+            totalAmountRedeemed
         ] = await Promise.all([
+            // overallRedeemedCount
             Serial.aggregate([
-                { $match: { serialStatus: false, updatedAt: { $gte: yearStart, $lte: yearEnd } } },
+                {
+                    $match: {
+                        serialStatus: false,
+                        updatedAt: { $gte: todayStart, $lte: todayEnd }
+                    }
+                },
                 {
                     $group: {
-                        _id: {
-                            year: { $year: "$updatedAt" },
-                            month: { $month: "$updatedAt" }
-                        },
-                        givenCredit: { $sum: "$givenCredit" }
+                        _id: null,
+                        count: { $sum: 1 }
                     }
-                },
-                {
-                    $project: {
-                        _id: 0,
-                        givenCredit: 1,
-                        month: "$_id.month",
-                        year: "$_id.year",
-                    }
-                },
-                { $sort: { year: 1, month: 1 } }
+                }
             ]),
+            // redeemedCount,
             Serial.aggregate([
-                { $match: { createdAt: { $gte: yearStart, $lte: yearEnd } } },
+                {
+                    $match: {
+                        serialStatus: false,
+                        updatedAt: { $gte: todayStart, $lte: todayEnd }
+                    }
+                },
+                { $group: { _id: "$givenCredit", count: { $sum: 1 } } }
+            ]),
+            // overallGeneratedCount,
+            Serial.aggregate([
+                {
+                    $match: {
+                        createdAt: { $gte: todayStart, $lte: todayEnd }
+                    }
+                },
+                { $group: { _id: "$givenCredit", count: { $sum: 1 } } }
+            ]),
+            // topTen,
+            Serial.aggregate([
+                {
+                    $match: {
+                        serialStatus: false,
+                        updatedAt: { $gte: todayStart, $lte: todayEnd }
+                    }
+                },
                 {
                     $group: {
-                        _id: {
-                            year: { $year: "$createdAt" },
-                            month: { $month: "$createdAt" },
-                        },
-                        givenCredit: { $sum: "$givenCredit" }
+                        _id: "$redemptionAcc",
+                        count: { $sum: 1 },
+                        totalGivenCredit: { $sum: "$givenCredit" },
                     }
                 },
+                { $sort: { totalGivenCredit: -1 } },
+                { $limit: 10 }
+            ]),
+            // totalAmountRedeemed
+            Serial.aggregate([
                 {
-                    $project: {
-                        _id: 0,
-                        givenCredit: 1,
-                        month: "$_id.month",
-                        year: "$_id.year",
+                    $match: {
+                        serialStatus: false,
+                        updatedAt: { $gte: todayStart, $lte: todayEnd }
                     }
                 },
-                { $sort: { year: 1, month: 1 } }
+                { $group: { _id: "givenCredit", sum: { $sum: "$givenCredit" } } },
             ]),
         ])
 
-        const totalGenerated = monthlyGeneratedThroughYear.reduce((acc, curr) => acc + curr.givenCredit, 0);
-        const totalRedeemed = monthlyRedeemedThroughYear.reduce((acc, curr) => acc + curr.givenCredit, 0);
-
-        let chartData = {
-            monthlyRedeemed: monthlyRedeemedThroughYear,
-            monthlyGenerated: monthlyGeneratedThroughYear,
-            totalGenerated,
-            totalRedeemed,
+        let summaryData = {
+            overallRedeemedCount: overallRedeemedCount[0]?.count || 0,
+            redeemedCount: redeemedCount.map(({ _id, count }) => ({ amount: _id, count })) || [],
+            overallGeneratedCount: overallGeneratedCount
+                .map(({ _id, count }) => ({ amount: _id, count }))
+                .sort((a, b) => a.amount - b.amount) // Sort by amount in ascending order
+                || [],
+            mostRedeemed: redeemedCount
+                .map(({ _id, count }) => ({ amount: _id, percentage: count / overallRedeemedCount[0]?.count * 100 }))
+                .sort((a, b) => a.amount - b.amount) // Sort by amount in ascending order
+                || [],
+            topTen: topTen.map(({ _id, count, totalGivenCredit }) => ({ name: _id, count: count, totalCredit: totalGivenCredit })),
+            totalAmountRedeemed: totalAmountRedeemed[0]?.sum || 0
         }
+        const existingSummary = await Report.findOne({ createdAt: { $gte: todayStart, $lte: todayEnd } })
 
-        const existingChart = await Chart.findOne({ createdAt: { $gte: yearStart, $lte: yearEnd } })
-
-        if (existingChart) {
-            await Chart.updateOne({ _id: existingChart._id }, chartData)
+        if (existingSummary) {
+            await Report.updateOne({ _id: existingSummary._id }, summaryData)
         } else {
-            await Chart.create(chartData)
+            await Report.create(summaryData)
         }
     },
         null,
