@@ -56,14 +56,13 @@ const Topbar = (props) => {
     // for search
     const handleSearch = async (searchValue) => {
         setOpen(true)
+        const trimSerial = searchValue.replace(/-/g, "")
         try {
-            const response = await axios.get(`api/serials/detail?serialNo=${searchValue}`, {
+            const { data } = await axios.get(`api/serials/detail?serialNo=${trimSerial}`, {
                 headers: { 'Authorization': `Bearer ${user.accessToken}` }
             })
-
-            const fetchData = await response.data
-            setData(fetchData)
-            console.log(fetchData)
+            setData(data)
+            console.log(data)
         } catch (error) {
             console.error(error)
         }
