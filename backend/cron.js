@@ -90,8 +90,8 @@ exports.generateSummary = () => {
         const todayStart = moment().startOf('day').toDate()
         const todayEnd = moment().endOf('day').toDate()
         // TEST YESTERDAY
-        // const todayStart = moment().startOf('day').subtract(2, 'day').toDate()
-        // const todayEnd = moment().endOf('day').subtract(2, 'day').toDate()
+        // const todayStart = moment().startOf('day').subtract(1, 'day').toDate()
+        // const todayEnd = moment().endOf('day').subtract(1, 'day').toDate()
 
         const [
             overallRedeemedCount,

@@ -29,12 +29,10 @@ const getDashboardData = async (req, res) => {
             },
             { _id: 0 } // Exclude _id field
         )
-
         const returnData = {
             ...foundChart._doc,
             ...foundReport._doc
         }
-
         return res.json(returnData)
     } catch (error) {
         return res.status(404).json({ error: error.message })
