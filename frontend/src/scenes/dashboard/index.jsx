@@ -29,43 +29,22 @@ const Dashboard = () => {
     // Chart
     const [year, setYear] = useState(new Date().getFullYear());
 
-    // NEW
-    const [monthlyGenerated, setMonthlyGenerated] = useState([])
-    const [monthlyRedeemed, setMonthlyRedeemed] = useState([])
-    const [totalGeneratedThroughYear, setTotalGeneratedThroughYear] = useState(0)
-    const [totalRedeemedThroughYear, setTotalRedeemedThroughYear] = useState(0)
+    const handleYearChange = (e) => {
+        setYear(e.target.value);
+    };
 
-    // Chart Data
-    useEffect(() => {
-        const getChartData = async () => {
-            if (user) {
-                try {
-                    const { data } = await axios.get(`api/dashboard/chartData?year=${year}`, {
-                        headers: { 'Authorization': `Bearer ${user.accessToken}` }
-                    });
-                    setMonthlyGenerated(data?.monthlyGeneratedThroughYear)
-                    setMonthlyRedeemed(data?.monthlyRedeemedThroughYear)
-                    setTotalGeneratedThroughYear(data?.totalGenerated)
-                    setTotalRedeemedThroughYear(data?.totalRedeemed)
-                } catch (error) {
-                    console.log(error)
-                }
-            }
-        }
-        getChartData()
-    }, [user, year])
-
-    // Other
-    const [totalRedeemedAmount, setTotalRedeemedAmount] = useState(0)
-    const [totalRedeemedCount, setTotalRedeemedCount] = useState(0)
-    const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
-    const [generatedCount, setGeneratedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
-    const [mostRedeemedCount, setmostRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
-    const [topRedeemUser, setTopRedeemUser] = useState("")
-
-    // NEW
     const [startDate, setStartDate] = useState(new Date())
     const [endDate, setEndDate] = useState(new Date())
+
+    const buttonData = [
+        { label: 'today', range: 'today' },
+        { label: 'yesterday', range: 'yesterday' },
+        { label: 'this.week', range: 'this-week' },
+        { label: 'last.week', range: 'last-week' },
+        { label: 'this.month', range: 'this-month' },
+        { label: 'this.year', range: 'this-year' },
+        { label: 'all.time', range: 'all-time' },
+    ]
 
     const handleDateRangeChange = (timeRange) => {
         const now = moment();
@@ -109,315 +88,666 @@ const Dashboard = () => {
         setEndDate(newEndDate);
     }
 
-    // Summary
+    const [dashData, setDashData] = useState({
+        // Before Chart
+        totalGenerated: "",
+        totalRedeemed: "",
+        // Chart
+        monthlyRedeemed: [],
+        monthlyGenerated: [],
+        // Summary
+        overallRedeemedCount: "",
+        totalAmountRedeemed: "",
+        redeemedCount: [],
+        overallGeneratedCount: [],
+        mostRedeemed: [],
+        topTen: [],
+    });
+
     useEffect(() => {
-        let formattedStart = startDate;
-        if (startDate) formattedStart = moment(startDate).format('YYYY-MM-DD');
-        const formattedEnd = moment(endDate).format('YYYY-MM-DD')
+        let startFrom = startDate;
+        if (startDate) startFrom = moment(startDate).format('YYYY-MM-DD');
+        const endAt = moment(endDate).format('YYYY-MM-DD')
 
-        const getSummary = async () => {
-            if (user) {
-                try {
-                    const { data } = await axios.get(`api/dashboard/summary?startDate=${formattedStart}&endDate=${formattedEnd}`, {
-                        headers: { 'Authorization': `Bearer ${user.accessToken}` }
-                    });
-
-                    console.log("Summary data is")
-                    console.log(data)
-
-                    setTotalRedeemedAmount(data?.totalAmountRedeemed)
-                    setTotalRedeemedCount(data?.overallRedeemedCount)
-                    if (data?.redeemedCount.length > 0) {
-                        setRedeemedCount(prevCount => {
-                            const newRedeemedCount = { ...prevCount }
-                            data?.redeemedCount.forEach(({ _id, count }) => {
-                                newRedeemedCount[_id] = count
-                            })
-                            return newRedeemedCount
-                        })
-                    } else {
-                        setRedeemedCount({ '10': 0, '30': 0, '50': 0, '100': 0 })
-
-                    }
-                    if (data?.overallGeneratedCount.length > 0) {
-                        setGeneratedCount(prevCount => {
-                            const newGeneratedCount = { ...prevCount }
-                            data?.overallGeneratedCount.forEach(({ _id, count }) => {
-                                newGeneratedCount[_id] = count
-                            })
-                            return newGeneratedCount
-                        })
-                    } else {
-                        setGeneratedCount({ '10': 0, '30': 0, '50': 0, '100': 0 })
-                    }
-                    setmostRedeemedCount(prevCount => {
-                        const newRedeemedCount = { ...prevCount }
-                        data?.mostRedeemed.forEach(({ _id, percentage }) => {
-                            newRedeemedCount[_id] = percentage
-                        })
-                        return newRedeemedCount
-                    })
-                    setTopRedeemUser(data?.topRedeemUser)
-                } catch (error) {
-                    console.log(error)
-                }
+        const getDashboard = async () => {
+            try {
+                const { data } = await axios.get(`api/dashboard?year=${year}&startDate=${startFrom}&endDate=${endAt}`, {
+                    headers: { 'Authorization': `Bearer ${user.accessToken}` }
+                });
+                console.log("data is")
+                console.log(data)
+                setDashData(data)
+            } catch (error) {
+                console.log(error)
             }
         }
-        getSummary();
-    }, [user, startDate, endDate]);
+        getDashboard()
+    }, [year, startDate, endDate])
 
-
-    const handleYearChange = (event) => {
-        setYear(event.target.value);
-    };
+    console.log("dashData is")
+    console.log(dashData)
 
     return (
         <Box m="20px">
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Header
-                    title={<FormattedMessage id="dashboard" />}
-                    subtitle={<FormattedMessage id="greeting" />}
-                />
-            </Box>
-
-            {/* Grid and Chart */}
-            {/* Row 1 */}
-            <Box display="grid" gridTemplateColumns="repeat(6, 1fr)" gridAutoRows="170px" gap="20px" sx={{ pb: 3 }}>
-                <Box gridColumn="span 6" gridRow="span 3" backgroundColor={colors.primary[400]}>
-                    <Box mt="25px" p="0 30px" display="flex" flexDirection="column" justifyContent="space-between" >
-                        <Box>
-                            <Select
-                                value={year}
-                                label="Year"
-                                onChange={handleYearChange}
-                                style={{
-                                    border: '1px solid white',
-                                    color: '#6200EE',
-                                    fontSize: '16px',
-                                    height: '40px'
-                                }}
-                            >
-                                <MenuItem value={2023}>2023</MenuItem>
-                                <MenuItem value={2022}>2022</MenuItem>
-                            </Select>
-                        </Box>
-
-                        <Box display='flex' flexDirection='row'>
-                            <Box display='flex' flexDirection='column'>
-                                <Box pt='12px' pl='5px'>
-                                    <Typography
-                                        className="graph-header"
-                                    >
-                                        {/* Generated */}
-                                        <FormattedMessage
-                                            id="revenue.generated"
-                                            values={{ year: `${year}` }}
-                                        />
-                                    </Typography>
-                                </Box>
-                                <Box pt='5px' pl='5px'>
-                                    <Typography
-                                        className="graph-statistic"
-                                    >
-                                        {`RM ${totalGeneratedThroughYear}`}
-                                    </Typography>
-                                </Box>
-                            </Box>
-
-
-                            <Box display='flex' flexDirection='column' marginLeft='24px'>
-                                <Box pt='12px' pl='5px'>
-                                    <Typography
-                                        className="graph-header"
-                                    >
-                                        {/* Redeemed */}
-                                        <FormattedMessage
-                                            id="total.amount.redeemed.year"
-                                            values={{ year: `${year}` }}
-                                        />
-                                    </Typography>
-                                </Box>
-                                <Box pt='5px' pl='5px'>
-                                    <Typography
-                                        className="graph-statistic"
-                                    >
-                                        {`RM ${totalRedeemedThroughYear}`}
-                                    </Typography>
-                                </Box>
-                            </Box>
-                        </Box>
-
-
-                    </Box>
-                    <Box height="400px" m="-20px 0 0 0">
-                        <LineChart isDashboard={true} monthlyGenerated={monthlyGenerated} monthlyRedeemed={monthlyRedeemed} />
-                    </Box>
-                </Box>
-            </Box>
-
-            {/* filter row */}
-            <Box>
-                <Box className="category">
-                    <Box className="apply-filter" display='flex'>
-                        <Box className="button-container">
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('today')}><FormattedMessage id="today" /></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('yesterday')}><FormattedMessage id="yesterday" /></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-week')}><FormattedMessage id="this.week" /></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('last-week')}><FormattedMessage id="last.week" /></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-month')}><FormattedMessage id="this.month" /></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-year')}><FormattedMessage id="this.year" /></Button>
-                            <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('all-time')}><FormattedMessage id="all.time" /></Button>
-                        </Box>
-                    </Box>
-
-                    <Box className="date-range" display='flex'>
-                        <Box >
-                            <label className="datepicker-text"><FormattedMessage id="start.date" /></label>
-                            <DatePicker
-                                selected={startDate}
-                                onChange={date => setStartDate(date)}
-                                dateFormat="MM/dd/yyyy"
-                            />
-                        </Box>
-                        <Box>
-                            <label className="datepicker-text"><FormattedMessage id="end.date" /></label>
-                            <DatePicker
-                                selected={endDate}
-                                onChange={date => setEndDate(date)}
-                                dateFormat="MM/dd/yyyy"
-                            />
-                        </Box>
-                    </Box>
-                </Box>
-            </Box>
-
-            <Grid container spacing={2}>
-                <Grid item xs={6} sm={6} md={6}>
-                    <Box className="style-statbox">
-                        <StatBox
-                            title={totalRedeemedCount}
-                            subtitle={<FormattedMessage id="total.redeem.count" />}
-                            icon={
-                                <TrendingDownIcon className="iconSize" />
-                            }
+            {dashData ? (
+                <>
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Header
+                            title={<FormattedMessage id="dashboard" />}
+                            subtitle={<FormattedMessage id="greeting" />}
                         />
                     </Box>
-                </Grid>
-                <Grid item xs={6} sm={6} md={6}>
-                    <Box className="style-statbox">
-                        <StatBox
-                            title={`RM ${totalRedeemedAmount}`}
-                            subtitle={<FormattedMessage id="total.amount.redeemed" />}
-                            icon={
-                                <AttachMoneyIcon className="iconSize" />
-                            }
-                        />
+                    {/* Grid and Chart */}
+                    {/* Row 1 */}
+                    <Box display="grid" gridTemplateColumns="repeat(6, 1fr)" gridAutoRows="170px" gap="20px" sx={{ pb: 3 }}>
+                        <Box gridColumn="span 6" gridRow="span 3" backgroundColor={colors.primary[400]}>
+                            <Box mt="25px" p="0 30px" display="flex" flexDirection="column" justifyContent="space-between" >
+                                <Box>
+                                    <Select
+                                        value={year}
+                                        label="Year"
+                                        onChange={handleYearChange}
+                                        style={{
+                                            border: '1px solid white',
+                                            color: '#6200EE',
+                                            fontSize: '16px',
+                                            height: '40px'
+                                        }}
+                                    >
+                                        <MenuItem value={2023}>2023</MenuItem>
+                                        <MenuItem value={2022}>2022</MenuItem>
+                                    </Select>
+                                </Box>
+
+                                <Box display='flex' flexDirection='row'>
+                                    <Box display='flex' flexDirection='column'>
+                                        <Box pt='12px' pl='5px'>
+                                            <Typography className="graph-header">
+                                                {/* Generated */}
+                                                <FormattedMessage
+                                                    id="revenue.generated"
+                                                    values={{ year: `${year}` }}
+                                                />
+                                            </Typography>
+                                        </Box>
+                                        <Box pt='5px' pl='5px'>
+                                            <Typography className="graph-statistic">
+                                                {`RM ${dashData.totalGenerated}`}
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+
+
+                                    <Box display='flex' flexDirection='column' marginLeft='24px'>
+                                        <Box pt='12px' pl='5px'>
+                                            <Typography className="graph-header">
+                                                {/* Redeemed */}
+                                                <FormattedMessage
+                                                    id="total.amount.redeemed.year"
+                                                    values={{ year: `${year}` }}
+                                                />
+                                            </Typography>
+                                        </Box>
+                                        <Box pt='5px' pl='5px'>
+                                            <Typography className="graph-statistic">
+                                                {`RM ${dashData.totalRedeemed}`}
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+                                </Box>
+                            </Box>
+                            <Box height="400px" m="-20px 0 0 0">
+                                <LineChart isDashboard={true} monthlyGenerated={dashData.monthlyGenerated} monthlyRedeemed={dashData.monthlyRedeemed} />
+                            </Box>
+                        </Box>
                     </Box>
-                </Grid>
-            </Grid>
-
-            {/* Row 2 */}
-            <Box className="category">
-                <Box>
-                    <Typography className="sub-header">
-                        <FormattedMessage id="total.redeemed" />
-                    </Typography>
-                </Box>
-
-                <Grid container spacing={2}>
-                    {Object.keys(redeemedCount).map((key) => (
-                        <Grid item xs={6} sm={6} md={3} key={key}>
-                            <Box className="style-statbox">
-                                <StatBox
-                                    title={redeemedCount[key]}
-                                    subtitle={`RM ${key}`}
-                                    icon={<RedeemIcon className="iconSize" />}
-                                />
+                    {/* Filter Row */}
+                    <Box>
+                        <Box className="category">
+                            <Box className="apply-filter" display='flex'>
+                                <Box className="button-container">
+                                    {/* Button For Change Date Range */}
+                                    {buttonData.map((button, index) => (
+                                        <Button
+                                            key={index}
+                                            className="filter-button"
+                                            startIcon={<CalendarMonthIcon className="iconSize" />}
+                                            onClick={() => handleDateRangeChange(button.range)}
+                                        >
+                                            <FormattedMessage id={button.label} />
+                                        </Button>
+                                    ))}
+                                </Box>
                             </Box>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Box>
 
-            {/* Row 3 */}
-            <Box className="category">
-                <Box>
-                    <Typography className="sub-header">
-                        <FormattedMessage id="total.generated" />
-                    </Typography>
-                </Box>
-
-                <Grid container spacing={2}>
-                    {Object.keys(generatedCount).map((key) => (
-                        <Grid item xs={6} sm={6} md={3} key={key}>
+                            <Box className="date-range" display='flex'>
+                                <Box >
+                                    <label className="datepicker-text"><FormattedMessage id="start.date" /></label>
+                                    <DatePicker
+                                        selected={startDate}
+                                        onChange={date => setStartDate(date)}
+                                        dateFormat="MM/dd/yyyy"
+                                    />
+                                </Box>
+                                <Box>
+                                    <label className="datepicker-text"><FormattedMessage id="end.date" /></label>
+                                    <DatePicker
+                                        selected={endDate}
+                                        onChange={date => setEndDate(date)}
+                                        dateFormat="MM/dd/yyyy"
+                                    />
+                                </Box>
+                            </Box>
+                        </Box>
+                    </Box>
+                    <Grid container spacing={2}>
+                        <Grid item xs={6} sm={6} md={6}>
                             <Box className="style-statbox">
                                 <StatBox
-                                    title={`${generatedCount[key]}`}
-                                    subtitle={`RM ${key}`}
+                                    title={dashData.overallRedeemedCount}
+                                    subtitle={<FormattedMessage id="total.redeem.count" />}
                                     icon={
-                                        <TrendingUpIcon className="iconSize" />
+                                        <TrendingDownIcon className="iconSize" />
                                     }
                                 />
                             </Box>
                         </Grid>
-                    ))}
-                </Grid>
-            </Box>
-
-            {/* Row 4 */}
-            <Box className="category">
-                <Box>
-                    <Typography className="sub-header">
-                        <FormattedMessage id="most.redeemed" />
-                    </Typography>
-                </Box>
-
-                <Grid container spacing={2}>
-                    {Object.keys(mostRedeemedCount).map((key) => (
-                        <Grid item xs={6} sm={6} md={3} key={key}>
+                        <Grid item xs={6} sm={6} md={6}>
                             <Box className="style-statbox">
                                 <StatBox
-                                    title={`${mostRedeemedCount[key].toFixed(2)}%`}
-                                    subtitle={`RM ${key}`}
+                                    title={`RM ${dashData.totalAmountRedeemed}`}
+                                    subtitle={<FormattedMessage id="total.amount.redeemed" />}
                                     icon={
-                                        <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                        <AttachMoneyIcon className="iconSize" />
                                     }
                                 />
                             </Box>
                         </Grid>
-                    ))}
-                </Grid>
-            </Box>
-
-            {/* Row 4 */}
-            <Box className="category">
-                <Box>
-                    <Typography className="sub-header">
-                        <FormattedMessage id="top10.account" />
-                    </Typography>
-                </Box>
-
-                <Grid container spacing={2}>
-                    {Object.keys(topRedeemUser).map((key) => (
-                        <Grid item xs={6} sm={6} md={3} key={key}>
-                            <Box className="style-statbox">
-                                <StatBox
-                                    title={topRedeemUser[key]._id}
-                                    subtitle={`RM ${topRedeemUser[key].totalGivenCredit}`}
-                                    icon={
-                                        <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
-                                    }
-                                />
-                            </Box>
+                    </Grid>
+                    <Box className="category">
+                        <Box>
+                            <Typography className="sub-header">
+                                <FormattedMessage id="total.redeemed" />
+                            </Typography>
+                        </Box>
+                        {/* Row 2 */}
+                        <Grid container spacing={2}>
+                            {dashData.redeemedCount.map((item) => (
+                                <Grid item xs={6} sm={6} md={3} key={item._id}>
+                                    <Box className="style-statbox">
+                                        <StatBox
+                                            title={item.count}
+                                            subtitle={`RM ${item.amount}`}
+                                            icon={<RedeemIcon className="iconSize" />}
+                                        />
+                                    </Box>
+                                </Grid>
+                            ))}
                         </Grid>
-                    ))}
-                </Grid>
-            </Box>
+                        {/* Row 3 */}
+                        <Box className="category">
+                            <Box>
+                                <Typography className="sub-header">
+                                    <FormattedMessage id="total.generated" />
+                                </Typography>
+                            </Box>
+                            <Grid container spacing={2}>
+                                {dashData.overallGeneratedCount.map((item) => (
+                                    <Grid item xs={6} sm={6} md={3} key={item._id}>
+                                        <Box className="style-statbox">
+                                            <StatBox
+                                                title={item.count}
+                                                subtitle={`RM ${item.amount}`}
+                                                icon={<TrendingUpIcon className="iconSize" />}
+                                            />
+                                        </Box>
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </Box>
+                        {/* Row 4 */}
+                        <Box className="category">
+                            <Box>
+                                <Typography className="sub-header">
+                                    <FormattedMessage id="most.redeemed" />
+                                </Typography>
+                            </Box>
+                            <Grid container spacing={2}>
+                                {dashData.mostRedeemed.map((item) => (
+                                    <Grid item xs={6} sm={6} md={3} key={item._id}>
+                                        <Box className="style-statbox">
+                                            <StatBox
+                                                title={`${item.percentage.toFixed(2)}%`}
+                                                subtitle={`RM ${item.amount}`}
+                                                icon={
+                                                    <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                                }
+                                            />
+                                        </Box>
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </Box>
+                        {/* Row 5 */}
+                        <Box className="category">
+                            <Box>
+                                <Typography className="sub-header">
+                                    <FormattedMessage id="top10.account" />
+                                </Typography>
+                            </Box>
 
-
-            <Box className="footer"></Box>
-        </Box >
+                            <Grid container spacing={2}>
+                                {dashData.topTen.map((item) => (
+                                    <Grid item xs={6} sm={6} md={3} key={item._id}>
+                                        <Box className="style-statbox">
+                                            <StatBox
+                                                title={item.name}
+                                                subtitle={`RM ${item.totalCredit}`}
+                                                icon={
+                                                    <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+                                                }
+                                            />
+                                        </Box>
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </Box>
+                    </Box>
+                    <Box className="footer"></Box>
+                </>
+            ) : (
+                <div>Loading...</div>
+            )}
+        </Box>
     )
 }
-
 export default Dashboard
+
+// NEW
+// const [monthlyGenerated, setMonthlyGenerated] = useState([])
+// const [monthlyRedeemed, setMonthlyRedeemed] = useState([])
+// const [totalGeneratedThroughYear, setTotalGeneratedThroughYear] = useState(0)
+// const [totalRedeemedThroughYear, setTotalRedeemedThroughYear] = useState(0)
+
+
+// Chart Data
+// useEffect(() => {
+//     const getChartData = async () => {
+//         if (user) {
+//             try {
+//                 const { data } = await axios.get(`api/dashboard/chartData?year=${year}`, {
+//                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
+//                 });
+//                 setMonthlyGenerated(data?.monthlyGeneratedThroughYear)
+//                 setMonthlyRedeemed(data?.monthlyRedeemedThroughYear)
+//                 setTotalGeneratedThroughYear(data?.totalGenerated)
+//                 setTotalRedeemedThroughYear(data?.totalRedeemed)
+//             } catch (error) {
+//                 console.log(error)
+//             }
+//         }
+//     }
+//     getChartData()
+// }, [user, year])
+
+// Other
+// const [totalRedeemedAmount, setTotalRedeemedAmount] = useState(0)
+// const [totalRedeemedCount, setTotalRedeemedCount] = useState(0)
+// const [redeemedCount, setRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
+// const [generatedCount, setGeneratedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
+// const [mostRedeemedCount, setmostRedeemedCount] = useState({ '10': 0, '30': 0, '50': 0, '100': 0 })
+// const [topRedeemUser, setTopRedeemUser] = useState("")
+
+// NEW
+// const [startDate, setStartDate] = useState(new Date())
+// const [endDate, setEndDate] = useState(new Date())
+
+// const handleDateRangeChange = (timeRange) => {
+//     const now = moment();
+//     let newStartDate, newEndDate;
+
+//     switch (timeRange) {
+//         case 'all-time':
+//             newStartDate = null; // or your desired start date for all time
+//             newEndDate = now.toDate();
+//             break;
+//         case 'this-year':
+//             newStartDate = moment().startOf('year').toDate();
+//             newEndDate = now.toDate();
+//             break;
+//         case 'this-month':
+//             newStartDate = moment().startOf('month').toDate();
+//             newEndDate = now.toDate();
+//             break;
+//         case 'last-week':
+//             newStartDate = moment().subtract(1, 'week').startOf('isoWeek').toDate();
+//             newEndDate = moment().subtract(1, 'week').endOf('isoWeek').toDate();
+//             break;
+//         case 'this-week':
+//             newStartDate = moment().startOf('isoWeek').toDate();
+//             newEndDate = now.toDate();
+//             break;
+//         case 'yesterday':
+//             newStartDate = moment().subtract(1, 'day').startOf('day').toDate();
+//             newEndDate = moment().subtract(1, 'day').endOf('day').toDate();
+//             break;
+//         case 'today':
+//             newStartDate = now.startOf('day').toDate();
+//             newEndDate = now.endOf('day').toDate();
+//             break;
+//         default:
+//             newStartDate = null;
+//             newEndDate = null;
+//             break;
+//     }
+//     setStartDate(newStartDate);
+//     setEndDate(newEndDate);
+// }
+
+// Summary
+// useEffect(() => {
+//     let formattedStart = startDate;
+//     if (startDate) formattedStart = moment(startDate).format('YYYY-MM-DD');
+//     const formattedEnd = moment(endDate).format('YYYY-MM-DD')
+
+//     const getSummary = async () => {
+//         if (user) {
+//             try {
+//                 const { data } = await axios.get(`api/dashboard/summary?startDate=${formattedStart}&endDate=${formattedEnd}`, {
+//                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
+//                 });
+//                 // console.log("this is data summary")
+//                 // console.log(data)
+//                 setTotalRedeemedAmount(data?.totalAmountRedeemed)
+//                 setTotalRedeemedCount(data?.overallRedeemedCount)
+//                 if (data?.redeemedCount.length > 0) {
+//                     setRedeemedCount(prevCount => {
+//                         const newRedeemedCount = { ...prevCount }
+//                         data?.redeemedCount.forEach(({ _id, count }) => {
+//                             newRedeemedCount[_id] = count
+//                         })
+//                         return newRedeemedCount
+//                     })
+//                 } else {
+//                     setRedeemedCount({ '10': 0, '30': 0, '50': 0, '100': 0 })
+
+//                 }
+//                 if (data?.overallGeneratedCount.length > 0) {
+//                     setGeneratedCount(prevCount => {
+//                         const newGeneratedCount = { ...prevCount }
+//                         data?.overallGeneratedCount.forEach(({ _id, count }) => {
+//                             newGeneratedCount[_id] = count
+//                         })
+//                         return newGeneratedCount
+//                     })
+//                 } else {
+//                     setGeneratedCount({ '10': 0, '30': 0, '50': 0, '100': 0 })
+//                 }
+//                 setmostRedeemedCount(prevCount => {
+//                     const newRedeemedCount = { ...prevCount }
+//                     data?.mostRedeemed.forEach(({ _id, percentage }) => {
+//                         newRedeemedCount[_id] = percentage
+//                     })
+//                     return newRedeemedCount
+//                 })
+//                 setTopRedeemUser(data?.topRedeemUser)
+//             } catch (error) {
+//                 console.log(error)
+//             }
+//         }
+//     }
+//     getSummary();
+// }, [user, startDate, endDate]);
+
+
+// const handleYearChange = (event) => {
+//     setYear(event.target.value);
+// };
+
+// return (
+//     <Box m="20px">
+//         <Box display="flex" justifyContent="space-between" alignItems="center">
+//             <Header
+//                 title={<FormattedMessage id="dashboard" />}
+//                 subtitle={<FormattedMessage id="greeting" />}
+//             />
+//         </Box>
+
+//         {/* Grid and Chart */}
+//         {/* Row 1 */}
+//         <Box display="grid" gridTemplateColumns="repeat(6, 1fr)" gridAutoRows="170px" gap="20px" sx={{ pb: 3 }}>
+//             <Box gridColumn="span 6" gridRow="span 3" backgroundColor={colors.primary[400]}>
+//                 <Box mt="25px" p="0 30px" display="flex" flexDirection="column" justifyContent="space-between" >
+//                     <Box>
+//                         <Select
+//                             value={year}
+//                             label="Year"
+//                             onChange={handleYearChange}
+//                             style={{
+//                                 border: '1px solid white',
+//                                 color: '#6200EE',
+//                                 fontSize: '16px',
+//                                 height: '40px'
+//                             }}
+//                         >
+//                             <MenuItem value={2023}>2023</MenuItem>
+//                             <MenuItem value={2022}>2022</MenuItem>
+//                         </Select>
+//                     </Box>
+
+//                     <Box display='flex' flexDirection='row'>
+//                         <Box display='flex' flexDirection='column'>
+//                             <Box pt='12px' pl='5px'>
+//                                 <Typography
+//                                     className="graph-header"
+//                                 >
+//                                     {/* Generated */}
+//                                     <FormattedMessage
+//                                         id="revenue.generated"
+//                                         values={{ year: `${year}` }}
+//                                     />
+//                                 </Typography>
+//                             </Box>
+//                             <Box pt='5px' pl='5px'>
+//                                 <Typography
+//                                     className="graph-statistic"
+//                                 >
+//                                     {/* {`RM ${totalGeneratedThroughYear}`} */}
+//                                 </Typography>
+//                             </Box>
+//                         </Box>
+
+
+//                         <Box display='flex' flexDirection='column' marginLeft='24px'>
+//                             <Box pt='12px' pl='5px'>
+//                                 <Typography
+//                                     className="graph-header"
+//                                 >
+//                                     {/* Redeemed */}
+//                                     <FormattedMessage
+//                                         id="total.amount.redeemed.year"
+//                                     // values={{ year: `${year}` }}
+//                                     />
+//                                 </Typography>
+//                             </Box>
+//                             <Box pt='5px' pl='5px'>
+//                                 <Typography
+//                                     className="graph-statistic"
+//                                 >
+//                                     {/* {`RM ${totalRedeemedThroughYear}`} */}
+//                                 </Typography>
+//                             </Box>
+//                         </Box>
+//                     </Box>
+
+
+//                 </Box>
+//                 <Box height="400px" m="-20px 0 0 0">
+//                     {/* <LineChart isDashboard={true} monthlyGenerated={monthlyGenerated} monthlyRedeemed={monthlyRedeemed} /> */}
+//                 </Box>
+//             </Box>
+//         </Box>
+
+//         {/* filter row */}
+//         <Box>
+//             <Box className="category">
+//                 <Box className="apply-filter" display='flex'>
+//                     <Box className="button-container">
+//                         <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('today')}><FormattedMessage id="today" /></Button>
+//                         <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('yesterday')}><FormattedMessage id="yesterday" /></Button>
+//                         <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-week')}><FormattedMessage id="this.week" /></Button>
+//                         <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('last-week')}><FormattedMessage id="last.week" /></Button>
+//                         <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-month')}><FormattedMessage id="this.month" /></Button>
+//                         <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('this-year')}><FormattedMessage id="this.year" /></Button>
+//                         <Button className="filter-button" startIcon={<CalendarMonthIcon className="iconSize" />} onClick={() => handleDateRangeChange('all-time')}><FormattedMessage id="all.time" /></Button>
+//                     </Box>
+//                 </Box>
+
+//                 <Box className="date-range" display='flex'>
+//                     <Box >
+//                         <label className="datepicker-text"><FormattedMessage id="start.date" /></label>
+//                         <DatePicker
+//                             selected={startDate}
+//                             onChange={date => setStartDate(date)}
+//                             dateFormat="MM/dd/yyyy"
+//                         />
+//                     </Box>
+//                     <Box>
+//                         <label className="datepicker-text"><FormattedMessage id="end.date" /></label>
+//                         <DatePicker
+//                             selected={endDate}
+//                             onChange={date => setEndDate(date)}
+//                             dateFormat="MM/dd/yyyy"
+//                         />
+//                     </Box>
+//                 </Box>
+//             </Box>
+//         </Box>
+
+//         <Grid container spacing={2}>
+//             <Grid item xs={6} sm={6} md={6}>
+//                 <Box className="style-statbox">
+//                     <StatBox
+//                         // title={totalRedeemedCount}
+//                         subtitle={<FormattedMessage id="total.redeem.count" />}
+//                         icon={
+//                             <TrendingDownIcon className="iconSize" />
+//                         }
+//                     />
+//                 </Box>
+//             </Grid>
+//             <Grid item xs={6} sm={6} md={6}>
+//                 <Box className="style-statbox">
+//                     <StatBox
+//                         // title={`RM ${totalRedeemedAmount}`}
+//                         subtitle={<FormattedMessage id="total.amount.redeemed" />}
+//                         icon={
+//                             <AttachMoneyIcon className="iconSize" />
+//                         }
+//                     />
+//                 </Box>
+//             </Grid>
+//         </Grid>
+
+//         {/* Row 2 */}
+//         <Box className="category">
+//             <Box>
+//                 <Typography className="sub-header">
+//                     <FormattedMessage id="total.redeemed" />
+//                 </Typography>
+//             </Box>
+
+//             <Grid container spacing={2}>
+//                 {/* {Object.keys(redeemedCount).map((key) => (
+//                         <Grid item xs={6} sm={6} md={3} key={key}>
+//                             <Box className="style-statbox">
+//                                 <StatBox
+//                                     title={redeemedCount[key]}
+//                                     subtitle={`RM ${key}`}
+//                                     icon={<RedeemIcon className="iconSize" />}
+//                                 />
+//                             </Box>
+//                         </Grid>
+//                     ))} */}
+//             </Grid>
+//         </Box>
+
+//         {/* Row 3 */}
+//         <Box className="category">
+//             <Box>
+//                 <Typography className="sub-header">
+//                     <FormattedMessage id="total.generated" />
+//                 </Typography>
+//             </Box>
+
+//             <Grid container spacing={2}>
+//                 {/* {Object.keys(generatedCount).map((key) => (
+//                         <Grid item xs={6} sm={6} md={3} key={key}>
+//                             <Box className="style-statbox">
+//                                 <StatBox
+//                                     title={`${generatedCount[key]}`}
+//                                     subtitle={`RM ${key}`}
+//                                     icon={
+//                                         <TrendingUpIcon className="iconSize" />
+//                                     }
+//                                 />
+//                             </Box>
+//                         </Grid>
+//                     ))} */}
+//             </Grid>
+//         </Box>
+
+//         {/* Row 4 */}
+//         <Box className="category">
+//             <Box>
+//                 <Typography className="sub-header">
+//                     <FormattedMessage id="most.redeemed" />
+//                 </Typography>
+//             </Box>
+
+//             <Grid container spacing={2}>
+//                 {/* {Object.keys(mostRedeemedCount).map((key) => (
+//                         <Grid item xs={6} sm={6} md={3} key={key}>
+//                             <Box className="style-statbox">
+//                                 <StatBox
+//                                     title={`${mostRedeemedCount[key].toFixed(2)}%`}
+//                                     subtitle={`RM ${key}`}
+//                                     icon={
+//                                         <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+//                                     }
+//                                 />
+//                             </Box>
+//                         </Grid>
+//                     ))} */}
+//             </Grid>
+//         </Box>
+
+//         {/* Row 4 */}
+//         <Box className="category">
+//             <Box>
+//                 <Typography className="sub-header">
+//                     <FormattedMessage id="top10.account" />
+//                 </Typography>
+//             </Box>
+
+//             <Grid container spacing={2}>
+//                 {/* {Object.keys(topRedeemUser).map((key) => (
+//                         <Grid item xs={6} sm={6} md={3} key={key}>
+//                             <Box className="style-statbox">
+//                                 <StatBox
+//                                     title={topRedeemUser[key]._id}
+//                                     subtitle={`RM ${topRedeemUser[key].totalGivenCredit}`}
+//                                     icon={
+//                                         <ArrowUpwardIcon sx={{ color: colors.purple[100], fontSize: "23px" }} />
+//                                     }
+//                                 />
+//                             </Box>
+//                         </Grid>
+//                     ))} */}
+//             </Grid>
+//         </Box>
+
+
+//         <Box className="footer"></Box>
+//     </Box >
+// )
