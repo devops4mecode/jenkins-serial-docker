@@ -7,7 +7,8 @@ router.use(verifyJWT)
 
 // Routes
 router
-    .get('/chartData', dashboardController.getChartData)
-    .get('/summary', dashboardController.getSummary)
+    // .get('/chartData', dashboardController.getChartData)
+    // .get('/summary', dashboardController.getSummary)
+    .get('/', dashboardController.getDashboardData)
 
 module.exports = router
