@@ -66,19 +66,20 @@ color: rgb(50, 50, 50) !important;
 
 @media (max-width: 576px) {
     .graph-header {
-        font-size: 16px !important;
+        font-size: 15px !important;
         font-weight: 600 !important;
         color: #141414;
     }
 
     .graph-statistic {
-        font-size: 20px !important;
+        font-size: 18px !important;
         font-weight: bold !important;
         color: #6200EE;
     }
 
     .statbox-content {
         padding-left: 17px;
+        padding-right: 17px;
         padding-top: 11px;
         padding-bottom: 11px;
     }
@@ -89,14 +90,14 @@ color: rgb(50, 50, 50) !important;
     }
 
     .title-font {
-        font-size: 16px !important;
+        font-size: 14px !important;
         font-weight: bold !important;
         color: black !important;
         padding-left: 5px;
     }
 
     .sub-header {
-        font-size: 16px !important;
+        font-size: 14px !important;
         font-weight: bold !important;
         color: #141414 !important;
         padding-bottom: 5px;
@@ -134,10 +135,8 @@ color: rgb(50, 50, 50) !important;
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: auto auto;
         grid-gap: 10px;
-        font-size: 12px;
+        font-size: 14px;
     }
-
-
 
     /* datepicker before selecting date */
     .react-datepicker__input-container {
@@ -162,7 +161,7 @@ color: rgb(50, 50, 50) !important;
 }
 
 
-@media(min-width: 600px) {
+@media(min-width: 577px) {
     .graph-header {
         font-size: 20px;
         font-weight: 600 !important;
@@ -170,7 +169,7 @@ color: rgb(50, 50, 50) !important;
     }
 
     .graph-statistic {
-        font-size: 24px !important;
+        font-size: 20px !important;
         font-weight: bold !important;
         color: #6200EE;
     }
@@ -182,19 +181,19 @@ color: rgb(50, 50, 50) !important;
     }
 
     .subtitle-font {
-        font-size: 16px !important;
+        font-size: 13px !important;
         color: #00000099 !important;
     }
 
     .title-font {
-        font-size: 20px !important;
+        font-size: 16px !important;
         font-weight: bold !important;
         color: black;
         padding-left: 10px;
     }
 
     .sub-header {
-        font-size: 20px !important;
+        font-size: 16px !important;
         font-weight: bold !important;
         color: #141414 !important;
         padding-bottom: 8px;
@@ -224,16 +223,15 @@ color: rgb(50, 50, 50) !important;
     }
 
     .filter-button {
-        font-size: 14px !important;
+        font-size: 12px !important;
     }
 
     .date-range {
         padding-top: 20px;
     }
 
-
     .datepicker-text {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: bold;
     }
 
@@ -245,7 +243,7 @@ color: rgb(50, 50, 50) !important;
     }
 
     .react-datepicker__input-container input {
-        font-size: 18px;
+        font-size: 15px;
         font-weight: bold;
         text-align: center;
         border: none;

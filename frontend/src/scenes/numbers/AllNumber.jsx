@@ -54,8 +54,8 @@ const AllNumber = () => {
     const columns = [
         {
             field: "serialNo",
-            // headerName: <FormattedMessage id="record.serial.number" />,
-            headerName: "Serial Number",
+            headerName: <FormattedMessage id="record.serial.number" />,
+            // headerName: "Serial Number",
             type: "number",
             headerAlign: "center",
             align: "center",
@@ -66,8 +66,8 @@ const AllNumber = () => {
         },
         {
             field: "givenCredit",
-            // headerName: <FormattedMessage id="record.credit" />,
-            headerName: "Credit",
+            headerName: <FormattedMessage id="record.credit" />,
+            // headerName: "Credit",
             type: "number",
             headerAlign: "center",
             align: "center",
@@ -76,8 +76,8 @@ const AllNumber = () => {
         },
         {
             field: "remarkName",
-            // headerName: <FormattedMessage id="record.buyer" />,
-            headerName: "Buyer",
+            headerName: <FormattedMessage id="record.buyer" />,
+            // headerName: "Buyer",
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center",
@@ -86,10 +86,10 @@ const AllNumber = () => {
         },
         {
             field: "createdAt",
-            // headerName: <FormattedMessage id="record.sold.date" />,
-            headerName: "Purchase Date",
+            headerName: <FormattedMessage id="record.sold.date" />,
+            // headerName: "Purchase Date",
             valueFormatter: (params) =>
-                moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
+                moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
             headerAlign: "center",
             align: "center",
             width: 230,
@@ -97,8 +97,8 @@ const AllNumber = () => {
         },
         {
             field: "redemptionAcc",
-            // headerName: <FormattedMessage id="record.redeemer" />,
-            headerName: "Redemption Account",
+            headerName: <FormattedMessage id="record.redeemer" />,
+            // headerName: "Redemption Account",
             valueGetter: (params) =>
                 params.row.redemptionAcc || "----",
             cellClassName: "name-column--cell",
@@ -109,10 +109,10 @@ const AllNumber = () => {
         },
         {
             field: "updatedAt",
-            // headerName: <FormattedMessage id="record.redeemed.date" />,
-            headerName: "Redemption Date",
+            headerName: <FormattedMessage id="record.redeemed.date" />,
+            // headerName: "Redemption Date",
             valueGetter: (params) =>
-                params.row.serialStatus ? "---" : moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
+                params.row.serialStatus ? "---" : moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
             headerAlign: "center",
             align: "center",
             width: 230,
@@ -120,8 +120,8 @@ const AllNumber = () => {
         },
         {
             field: "serialStatus",
-            // headerName: <FormattedMessage id="record.status" />,
-            headerName: "Status",
+            headerName: <FormattedMessage id="record.status" />,
+            // headerName: "Status",
             valueGetter: (params) =>
                 params.row.serialStatus ? "UNCLAIMED" : "REDEEMED",
             cellClassName: (params) =>

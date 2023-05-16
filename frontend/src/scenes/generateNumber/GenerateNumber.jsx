@@ -77,8 +77,15 @@ const GenerateNumber = () => {
                 hour12: true,
             }),
         };
-    });
 
+
+    });
+    console.log(data)
+    
+    const CSVcreatedAt = new Date(data[0].createdAt);
+    const CSVformattedDate = `${CSVcreatedAt.getDate().toString().padStart(2, '0')}${(CSVcreatedAt.getMonth() + 1).toString().padStart(2, '0')}${CSVcreatedAt.getFullYear().toString().slice(2)}_${CSVcreatedAt.getHours().toString().padStart(2, '0')}${CSVcreatedAt.getMinutes().toString().padStart(2, '0')}${CSVcreatedAt.getSeconds().toString().padStart(2, '0')}`;
+
+    console.log(CSVformattedDate)
     return <Box m="20px">
         <Header
             title={<FormattedMessage id="generate.serial" />}
@@ -92,9 +99,7 @@ const GenerateNumber = () => {
         >
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue }) => (
                 <form onSubmit={handleSubmit}>
-                    <Box
-                        className="credit-button-component"
-                    >
+                    <Box className="credit-button-component" >
                         <CreditButton onClick={() => setFieldValue("givenCredit", 5)} title="RM5" />
                         <CreditButton onClick={() => setFieldValue("givenCredit", 10)} title="RM10" />
                         <CreditButton onClick={() => setFieldValue("givenCredit", 15)} title="RM15" />
@@ -106,9 +111,7 @@ const GenerateNumber = () => {
                         <CreditButton onClick={() => setFieldValue("givenCredit", 500)} title="RM500" />
                     </Box>
 
-                    <Box
-                        className="credit-field-component"
-                    >
+                    <Box className="credit-field-component" >
 
                         {/* Reload Amount */}
                         <CreditTextField
@@ -198,15 +201,26 @@ const GenerateNumber = () => {
                                                 <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{`${serialData.serialNo.substring(0, 4)}-${serialData.serialNo.substring(4, 8)}-${serialData.serialNo.substring(8, 12)}-${serialData.serialNo.substring(12)}`}</TableCell>
                                                 <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.givenCredit}</TableCell>
                                                 <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{serialData.remarkName}</TableCell>
-                                                <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>{new Date(serialData.createdAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}</TableCell>
+                                                <TableCell align="center" sx={{ color: colors.greenAccent[300] }}>
+                                                    {new Date(serialData.createdAt).toLocaleString('en-US', {
+                                                        day: '2-digit',
+                                                        month: '2-digit',
+                                                        year: 'numeric',
+                                                        hour: 'numeric',
+                                                        minute: 'numeric',
+                                                        second: 'numeric',
+                                                        hour12: true,
+                                                    })}
+                                                </TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
                                 </Table>
                             </TableContainer>
 
+
                             <Box className="export-button-component">
-                                <CSVLink data={data} headers={headers} filename={'code.csv'}>
+                                <CSVLink data={data} headers={headers} filename={`${data[0].remarkName}_${CSVformattedDate}.csv`}>
                                     <Button
                                         className="export-button-text"
                                         variant="contained">
@@ -214,7 +228,6 @@ const GenerateNumber = () => {
                                     </Button>
                                 </CSVLink>
                             </Box>
-
 
                             <Box className="footer"></Box>
                         </>

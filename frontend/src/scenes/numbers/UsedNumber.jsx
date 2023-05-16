@@ -81,7 +81,7 @@ const UsedNumber = () => {
             // headerName: <FormattedMessage id="record.sold.date" />,
             headerName: "Purchase Date",
             valueFormatter: (params) =>
-                moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
+                moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
             width: 250,
             headerAlign: "center",
             align: "center"

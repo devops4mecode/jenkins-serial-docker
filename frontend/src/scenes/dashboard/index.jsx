@@ -186,7 +186,6 @@ const Dashboard = () => {
                                     </Box>
                                 </Box>
 
-
                                 <Box display='flex' flexDirection='column' marginLeft='24px'>
                                     <Box pt='12px' pl='5px'>
                                         <Typography className="graph-header">
@@ -196,6 +195,7 @@ const Dashboard = () => {
                                                 values={{ year: `${year}` }}
                                             />
                                         </Typography>
+
                                     </Box>
                                     <Box pt='5px' pl='5px'>
                                         <Typography className="graph-statistic">
@@ -204,15 +204,21 @@ const Dashboard = () => {
                                     </Box>
                                 </Box>
                             </Box>
-                        </Box>
-                        <Box height="400px" m="-20px 0 0 0">
-                            <LineChart isDashboard={true} monthlyGenerated={chartData.monthlyGenerated} monthlyRedeemed={chartData.monthlyRedeemed} />
+                            <Box height="400px" m="-20px 0 0 0">
+                                <LineChart isDashboard={true} monthlyGenerated={chartData.monthlyGenerated} monthlyRedeemed={chartData.monthlyRedeemed} />
+                            </Box>
                         </Box>
                     </Box>
                 </Box>
+
             ) : (
                 <div>Loading...</div>
             )}
+
+
+            {/* Filter Row */}
+
+
             {/* Filter Row */}
             <Box>
                 <Box className="category">
@@ -369,4 +375,6 @@ const Dashboard = () => {
         </Box >
     )
 }
+
 export default Dashboard
+
