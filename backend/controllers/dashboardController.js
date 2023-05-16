@@ -22,16 +22,105 @@ const getDashboardData = async (req, res) => {
             },
             { _id: 0 } // Exclude _id field
         )
+
         // ! Report Need More Checking
-        const foundReport = await Report.findOne(
-            {
-                createdAt: { $gte: dateStart, $lte: dateEnd }
-            },
-            { _id: 0 } // Exclude _id field
-        )
+        const [
+            overallRedeemedCount,
+            redeemedCount,
+            totalAmountRedeemed,
+            overallGeneratedCount,
+            topTen,
+        ] = await Promise.all([
+            // overallRedeemedCount
+            Report.aggregate([
+                { $match: { createdAt: { $gte: dateStart, $lte: dateEnd } } },
+                {
+                    $group: {
+                        _id: null,
+                        overallRedeemedCount: { $sum: "$overallRedeemedCount" },
+                    }
+                }
+            ]),
+            // redeemedCount,
+            Report.aggregate([
+                { $match: { createdAt: { $gte: dateStart, $lte: dateEnd } } },
+                { $unwind: "$redeemedCount" },
+                {
+                    $group: {
+                        _id: { amount: "$redeemedCount.amount" },
+                        count: { $sum: "$redeemedCount.count" }
+                    }
+                },
+            ]),
+            // totalAmountRedeemed
+            Report.aggregate([
+                { $match: { createdAt: { $gte: dateStart, $lte: dateEnd } } },
+                {
+                    $group: {
+                        _id: null,
+                        totalAmountRedeemed: { $sum: "$totalAmountRedeemed" },
+                    }
+                }
+            ]),
+            // overallGeneratedCount,
+            Report.aggregate([
+                { $match: { createdAt: { $gte: dateStart, $lte: dateEnd } } },
+                { $unwind: "$overallGeneratedCount" },
+                {
+                    $group: {
+                        _id: { amount: "$overallGeneratedCount.amount" },
+                        count: { $sum: "$overallGeneratedCount.count" }
+                    }
+                },
+            ]),
+            // topTen,
+            Report.aggregate([
+                { $match: { createdAt: { $gte: dateStart, $lte: dateEnd } } },
+                { $unwind: "$topTen" },
+                {
+                    $group: {
+                        _id: "$topTen.name",
+                        count: { $sum: "$topTen.count" },
+                        totalCredit: { $sum: "$topTen.totalCredit" }
+                    }
+                },
+                {
+                    $group: {
+                        _id: null,
+                        topTen: {
+                            $push: {
+                                name: "$_id",
+                                count: "$count",
+                                totalCredit: "$totalCredit"
+                            }
+                        }
+                    }
+                },
+                { $sort: { totalGivenCredit: -1 } },
+                { $limit: 10 }
+            ]),
+        ])
+
+        const reportData = {
+            overallRedeemedCount: overallRedeemedCount[0]?.overallRedeemedCount || 0,
+            redeemedCount: redeemedCount
+                .map(({ _id, count }) => ({ amount: _id.amount, count }))
+                .sort((a, b) => a.amount - b.amount) || [],
+            overallGeneratedCount: overallGeneratedCount
+                .map(({ _id, count }) => ({ amount: _id.amount, count }))
+                .sort((a, b) => a.amount - b.amount) || [],
+            mostRedeemed: redeemedCount
+                .map(({ _id, count }) => ({ amount: _id.amount, percentage: count / overallRedeemedCount[0]?.overallRedeemedCount * 100 }))
+                .sort((a, b) => a.amount - b.amount) || [],
+            // Topten
+            topTen: topTen[0]?.topTen.map(({ name, count, totalCredit }) => ({ name, count, totalCredit }))
+                .sort((a, b) => b.totalCredit - a.totalCredit) || [],
+            totalAmountRedeemed: totalAmountRedeemed[0]?.totalAmountRedeemed || 0,
+        }
+
         const returnData = {
             ...foundChart._doc,
-            ...foundReport._doc
+            ...reportData
         }
         return res.json(returnData)
     } catch (error) {
@@ -39,226 +128,140 @@ const getDashboardData = async (req, res) => {
     }
 }
 
-// const getChartData = async (req, res) => {
-//     try {
+const getChartData = async (req, res) => {
+    try {
+        const { year } = req.query
 
-//         // Go Chart Model Take Data
+        const yearStart = moment(year).startOf('year').toDate()
+        const yearEnd = moment(year).endOf('year').toDate()
 
-//         const { year } = req.query
-//         const startDate = moment(year).startOf('year').toDate();
-//         const endDate = moment(year).endOf('year').toDate();
+        const foundChart = await Chart.findOne(
+            { createdAt: { $gte: yearStart, $lte: yearEnd } },
+            { _id: 0 } // Exclude _id field
+        )
+        return res.status(200).json(foundChart)
+    } catch (error) {
+        return res.status(404).json({ error: error.message })
+    }
+}
 
-//         const [
-//             monthlyRedeemedThroughYear,
-//             monthlyGeneratedThroughYear,
-//         ] = await Promise.all([
-//             // monthlyRedeemedThroughYear
-//             Serial.aggregate([
-//                 {
-//                     $match: {
-//                         serialStatus: false,
-//                         updatedAt: { $gte: startDate, $lte: endDate }
-//                     }
-//                 },
-//                 {
-//                     $group: {
-//                         _id: {
-//                             year: { $year: "$updatedAt" },
-//                             month: { $month: "$updatedAt" },
-//                         },
-//                         givenCredit: { $sum: "$givenCredit" }
-//                     }
-//                 },
-//                 {
-//                     $project: {
-//                         _id: 0,
-//                         month: "$_id.month",
-//                         year: "$_id.year",
-//                         givenCredit: 1
-//                     }
-//                 },
-//                 {
-//                     $sort: { year: 1, month: 1 }
-//                 }
-//             ]),
-//             // monthlyGeneratedThroughYear
-//             Serial.aggregate([
-//                 {
-//                     $match: {
-//                         // ! MAYBE NO NEED THIS
-//                         // serialStatus: true,
-//                         // ! CUZ GENERATED MEANS ALL
-//                         createdAt: { $gte: startDate, $lte: endDate }
-//                     }
-//                 },
-//                 {
-//                     $group: {
-//                         _id: {
-//                             year: { $year: "$createdAt" },
-//                             month: { $month: "$createdAt" },
-//                         },
-//                         givenCredit: { $sum: "$givenCredit" }
-//                     }
-//                 },
-//                 {
-//                     $project: {
-//                         _id: 0,
-//                         month: "$_id.month",
-//                         year: "$_id.year",
-//                         givenCredit: 1
-//                     }
-//                 },
-//                 {
-//                     $sort: { year: 1, month: 1 }
-//                 }
-//             ]),
-//         ]);
+const getSummaryData = async (req, res) => {
+    try {
+        const { startDate, endDate } = req.query
 
-//         const totalGenerated = monthlyGeneratedThroughYear.reduce((acc, curr) => acc + curr.givenCredit, 0);
-//         const totalRedeemed = monthlyRedeemedThroughYear.reduce((acc, curr) => acc + curr.givenCredit, 0);
+        const dateStart = moment(startDate).startOf('day').toDate()
+        const dateEnd = moment(endDate).endOf('day').toDate()
 
-//         const result = {
-//             monthlyRedeemedThroughYear,
-//             monthlyGeneratedThroughYear,
-//             totalGenerated,
-//             totalRedeemed,
-//         };
-//         res.json(result);
-//     } catch (error) {
-//         return res.status(400).json({ message: "Something wrong" });
-//     }
-// };
+        // Chart Sure No Problem
+        const foundChart = await Chart.findOne(
+            {
+                createdAt: { $gte: yearStart, $lte: yearEnd }
+            },
+            { _id: 0 } // Exclude _id field
+        )
 
-// const getSummary = async (req, res) => {
-//     try {
+        // ! Report Need More Checking
+        const [
+            overallRedeemedCount,
+            redeemedCount,
+            totalAmountRedeemed,
+            overallGeneratedCount,
+            topTen,
+        ] = await Promise.all([
+            // overallRedeemedCount
+            Report.aggregate([
+                { $match: { createdAt: { $gte: dateStart, $lte: dateEnd } } },
+                {
+                    $group: {
+                        _id: null,
+                        overallRedeemedCount: { $sum: "$overallRedeemedCount" },
+                    }
+                }
+            ]),
+            // redeemedCount,
+            Report.aggregate([
+                { $match: { createdAt: { $gte: dateStart, $lte: dateEnd } } },
+                { $unwind: "$redeemedCount" },
+                {
+                    $group: {
+                        _id: { amount: "$redeemedCount.amount" },
+                        count: { $sum: "$redeemedCount.count" }
+                    }
+                },
+            ]),
+            // totalAmountRedeemed
+            Report.aggregate([
+                { $match: { createdAt: { $gte: dateStart, $lte: dateEnd } } },
+                {
+                    $group: {
+                        _id: null,
+                        totalAmountRedeemed: { $sum: "$totalAmountRedeemed" },
+                    }
+                }
+            ]),
+            // overallGeneratedCount,
+            Report.aggregate([
+                { $match: { createdAt: { $gte: dateStart, $lte: dateEnd } } },
+                { $unwind: "$overallGeneratedCount" },
+                {
+                    $group: {
+                        _id: { amount: "$overallGeneratedCount.amount" },
+                        count: { $sum: "$overallGeneratedCount.count" }
+                    }
+                },
+            ]),
+            // topTen,
+            Report.aggregate([
+                { $match: { createdAt: { $gte: dateStart, $lte: dateEnd } } },
+                { $unwind: "$topTen" },
+                {
+                    $group: {
+                        _id: "$topTen.name",
+                        count: { $sum: "$topTen.count" },
+                        totalCredit: { $sum: "$topTen.totalCredit" }
+                    }
+                },
+                {
+                    $group: {
+                        _id: null,
+                        topTen: {
+                            $push: {
+                                name: "$_id",
+                                count: "$count",
+                                totalCredit: "$totalCredit"
+                            }
+                        }
+                    }
+                },
+                { $sort: { totalGivenCredit: -1 } },
+                { $limit: 10 }
+            ]),
+        ])
 
-//         // Go Report Model Take Data
-//         const { startDate, endDate } = req.query
-
-//         let isoStart
-//         let isoEnd = moment(endDate).endOf('day')
-
-//         if (startDate == "null") {
-//             isoStart = moment('1900-01-01')
-//         } else {
-//             isoStart = moment(startDate).startOf('day')
-//         }
-
-//         const [
-//             overallRedeemedCount,
-//             redeemedCounts,
-//             overallGeneratedCount,
-//             totalAmountRedeemed,
-//             topRedeemUser,
-//         ] = await Promise.all([
-//             // overallRedeemedCount
-//             Serial.aggregate([
-//                 {
-//                     $match: {
-//                         serialStatus: false,
-//                         updatedAt: { $gte: new Date(isoStart), $lte: new Date(isoEnd) }
-//                     }
-//                 },
-//                 {
-//                     $group: {
-//                         _id: null,
-//                         count: { $sum: 1 }
-//                     }
-//                 }
-//             ]),
-//             // redeemedCounts
-//             Serial.aggregate([
-//                 {
-//                     $match: {
-//                         serialStatus: false,
-//                         updatedAt: { $gte: new Date(isoStart), $lte: new Date(isoEnd) }
-//                     }
-//                 },
-//                 { $group: { _id: "$givenCredit", count: { $sum: 1 } } },
-//             ]),
-//             // overallGeneratedCount
-//             Serial.aggregate([
-//                 {
-//                     $match: {
-//                         createdAt: { $gte: new Date(isoStart), $lte: new Date(isoEnd) }
-//                     }
-//                 },
-//                 { $group: { _id: "$givenCredit", count: { $sum: 1 } } },
-//             ]),
-//             // totalAmountRedeemed
-//             Serial.aggregate([
-//                 {
-//                     $match: {
-//                         serialStatus: false,
-//                         updatedAt: { $gte: new Date(isoStart), $lte: new Date(isoEnd) }
-//                     }
-//                 },
-//                 { $group: { _id: "givenCredit", sum: { $sum: "$givenCredit" } } },
-//             ]),
-//             // topRedeemUser
-//             Serial.aggregate([
-//                 {
-//                     $match: {
-//                         serialStatus: false,
-//                         updatedAt: { $gte: new Date(isoStart), $lte: new Date(isoEnd) }
-//                     }
-//                 },
-//                 {
-//                     $group: {
-//                         _id: "$redemptionAcc",
-//                         count: { $sum: 1 },
-//                         totalGivenCredit: { $sum: "$givenCredit" },
-//                     }
-//                 },
-//                 {
-//                     $sort: { totalGivenCredit: -1 }
-//                 },
-//                 { $limit: 10 }
-//             ]),
-//         ]);
-
-//         const mostRedeemed = [10, 30, 50, 100];
-
-//         const percentages = await Serial.aggregate([
-//             {
-//                 $match: {
-//                     serialStatus: false,
-//                     updatedAt: { $gte: new Date(isoStart), $lte: new Date(isoEnd) },
-//                     givenCredit: { $in: mostRedeemed }
-//                 }
-//             },
-//             {
-//                 $group: {
-//                     _id: "$givenCredit",
-//                     count: { $sum: 1 }
-//                 }
-//             },
-//             {
-//                 $project: {
-//                     _id: 1,
-//                     percentage: { $multiply: [{ $divide: ["$count", overallRedeemedCount[0]?.count || 0] }, 100] }
-//                 }
-//             }
-//         ]);
-
-//         const percentagesMap = new Map(percentages.map(({ _id, percentage }) => [_id, percentage]));
-
-//         const result = {
-//             overallRedeemedCount: overallRedeemedCount[0]?.count || 0,
-//             redeemedCount: redeemedCounts || 0,
-//             overallGeneratedCount: overallGeneratedCount || 0,
-//             totalAmountRedeemed: totalAmountRedeemed[0]?.sum || 0,
-//             mostRedeemed: mostRedeemed.map(_id => ({ _id, percentage: percentagesMap.get(_id) || 0 })),
-//             topRedeemUser: topRedeemUser,
-//         };
-//         res.json(result);
-//     } catch (error) {
-//         return res.status(400).json({ error: error.message });
-//     }
-// };
+        const reportData = {
+            overallRedeemedCount: overallRedeemedCount[0]?.overallRedeemedCount || 0,
+            redeemedCount: redeemedCount
+                .map(({ _id, count }) => ({ amount: _id.amount, count }))
+                .sort((a, b) => a.amount - b.amount) || [],
+            overallGeneratedCount: overallGeneratedCount
+                .map(({ _id, count }) => ({ amount: _id.amount, count }))
+                .sort((a, b) => a.amount - b.amount) || [],
+            mostRedeemed: redeemedCount
+                .map(({ _id, count }) => ({ amount: _id.amount, percentage: count / overallRedeemedCount[0]?.overallRedeemedCount * 100 }))
+                .sort((a, b) => a.amount - b.amount) || [],
+            // Topten
+            topTen: topTen[0]?.topTen.map(({ name, count, totalCredit }) => ({ name, count, totalCredit }))
+                .sort((a, b) => b.totalCredit - a.totalCredit) || [],
+            totalAmountRedeemed: totalAmountRedeemed[0]?.totalAmountRedeemed || 0,
+        }
+        return res.status(200).json(reportData)
+    } catch (error) {
+        return res.status(404).json({ error: error.message })
+    }
+}
 
 module.exports = {
-    // getChartData,
-    // getSummary,
-    getDashboardData
+    getDashboardData,
+    getChartData,
+    getSummaryData
 };
