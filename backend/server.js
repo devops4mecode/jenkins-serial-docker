@@ -22,14 +22,9 @@ app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
 
-// ! Server Routes
-// !! Auth
 app.use('/api/auth', require('./routes/authRoutes'))
-// !! User
 app.use('/api/users', require('./routes/userRoutes'))
-// !! User
 app.use('/api/serials', require('./routes/serialRoutes'))
-// !! User
 app.use('/api/dashboard', require('./routes/dashboardRoutes'))
 // ! Integration Routes
 app.use('/api/lucky', require('./routes/globalRoutes'))
@@ -50,9 +45,9 @@ app.get('/*', function (req, res) {
 
 app.use(errorHandler)
 
-// generateChartData()
+generateChartData()
 
-// generateSummary()
+generateSummary()
 
 
 mongoose.connection.once("open", () => {
