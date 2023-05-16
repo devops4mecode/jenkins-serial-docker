@@ -21,9 +21,7 @@ const CreditTextField = (props) => {
     } = props;
 
     return (
-        <Box
-            className="credit_field"
-        >
+        <Box className="credit_field" >
             <TextField
                 className="credit-input-field"
                 fullWidth
@@ -41,8 +39,8 @@ const CreditTextField = (props) => {
                     sx: {
                         fontSize: {
                             xs: 12,
-                            md: 18,
-                            xl: 18
+                            md: 14,
+                            xl: 15
                         },
                     }
                 }}

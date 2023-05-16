@@ -19,7 +19,7 @@ const Header = ({ title, subtitle }) => {
                 sx={{
                     fontSize: {
                         xs: "19px",
-                        lg: "25px"
+                        lg: "21px"
                     },
                     paddingBottom: {
                         xs: "2px"
@@ -34,7 +34,7 @@ const Header = ({ title, subtitle }) => {
                 sx={{
                     fontSize: {
                         xs: "15px",
-                        lg: "19px"
+                        lg: "16px"
                     },
                     paddingBottom: {
                         xs: "3px"

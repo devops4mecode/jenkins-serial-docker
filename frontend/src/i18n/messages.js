@@ -46,15 +46,15 @@ export const messages = {
         "logout.button": "Logout",
 
         // for the datagrid
-        "status.redeemed": "REDEEMED",
-        "status.unclaimed": "UNCLAIMED",
-        "record.serial.number": "SERIAL NUMBER",
-        "record.credit": "CREDIT",
-        "record.buyer": "BUYER",
-        "record.sold.date": "PURCHASE DATE",
-        "record.redeemer": "REDEMPTION ACCOUNT",
-        "record.redeemed.date": "REDEMPTION DATE",
-        "record.status": "STATUS",
+        "status.redeemed": "Redeemed",
+        "status.unclaimed": "Unclaimed",
+        "record.serial.number": "Serial Number",
+        "record.credit": "Credit",
+        "record.buyer": "Buyer",
+        "record.sold.date": "Purchase Date",
+        "record.redeemer": "Redemption Account",
+        "record.redeemed.date": "Redemption Date",
+        "record.status": "Status",
 
         // Chart
         "chart.redeemed": "Redeemed",
@@ -210,15 +210,15 @@ export const messages = {
         "logout.button": "Log Keluar",
 
         // for datagrid
-        "status.redeemed": "DITEBUS",
-        "status.unclaimed": "BELUM DITUNTUT",
-        "record.serial.number": "NOMBOR SIRI",
-        "record.credit": "KREDIT",
-        "record.buyer": "PEMBELI",
-        "record.sold.date": "TARIKH PEMBELIAN",
-        "record.redeemer": "AKAUN PENEBUSAN",
-        "record.redeemed.date": "TARIKH PENEBUSAN",
-        "record.status": "TARAF",
+        "status.redeemed": "Ditebus",
+        "status.unclaimed": "Belum Dituntut",
+        "record.serial.number": "Nombor Siri",
+        "record.credit": "Kredit",
+        "record.buyer": "Pembeli",
+        "record.sold.date": "Tarikh Pembelian",
+        "record.redeemer": "Akaun Penebusan",
+        "record.redeemed.date": "Tarikh Penebusan",
+        "record.status": "Taraf",
 
         // Chart
         "chart.redeemed": "PENEBUSAN",

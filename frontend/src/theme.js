@@ -195,7 +195,7 @@ export const themeSettings = (mode) => {
         },
         typography: {
             fontFamily: ['Roboto', 'sans-serif'].join(","),
-            fontSize: 14,
+            fontSize: 13,
             h1: {
                 fontFamily: ['Roboto', 'sans-serif'].join(","),
                 fontSize: 40,
