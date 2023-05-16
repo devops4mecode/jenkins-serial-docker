@@ -92,8 +92,8 @@ exports.generateSummary = () => {
         // const todayStart = moment("2023-05-16").startOf('day').toDate()
         // const todayEnd = moment("2023-05-16").endOf('day').toDate()
         // TEST YESTERDAY
-        // const todayStart = moment().startOf('day').subtract(1, 'day').toDate()
-        // const todayEnd = moment().endOf('day').subtract(1, 'day').toDate()
+        // const todayStart = moment().startOf('day').subtract(9, 'day').toDate()
+        // const todayEnd = moment().endOf('day').subtract(9, 'day').toDate()
 
         const [
             overallRedeemedCount,
@@ -177,9 +177,9 @@ exports.generateSummary = () => {
                 .map(({ _id, count }) => ({ amount: _id, percentage: count / overallRedeemedCount[0]?.count * 100 }))
                 .sort((a, b) => a.amount - b.amount) || [],
             topTen: topTen.map(({ _id, count, totalGivenCredit }) => ({ name: _id, count: count, totalCredit: totalGivenCredit })),
-            totalAmountRedeemed: totalAmountRedeemed[0]?.sum || 0
+            totalAmountRedeemed: totalAmountRedeemed[0]?.sum || 0,
         }
-        
+
         const existingSummary = await Report.findOne({ createdAt: { $gte: todayStart, $lte: todayEnd } })
 
         if (existingSummary) {
