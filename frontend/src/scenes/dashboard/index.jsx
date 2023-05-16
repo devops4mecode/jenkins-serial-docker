@@ -169,40 +169,38 @@ const Dashboard = () => {
                             </Box>
 
                             <Box display='flex' flexDirection='row'>
+                                <Box display='flex' flexDirection='column'>
+                                    <Box pt='12px' pl='5px'>
+                                        <Typography className="graph-header">
+                                            {/* Generated */}
+                                            <FormattedMessage
+                                                id="revenue.generated"
+                                                values={{ year: `${year}` }}
+                                            />
+                                        </Typography>
+                                    </Box>
+                                    <Box pt='5px' pl='5px'>
+                                        <Typography className="graph-statistic">
+                                            {`RM ${chartData.totalGenerated}`}
+                                        </Typography>
+                                    </Box>
+                                </Box>
 
-                                <Box display='flex' flexDirection='row' >
-                                    <Box display='flex' flexDirection='column'>
-                                        <Box pt='12px' pl='5px'>
-                                            <Typography className="graph-header">
-                                                {/* Generated */}
-                                                <FormattedMessage
-                                                    id="revenue.generated"
-                                                    values={{ year: `${year}` }}
-                                                />
-                                            </Typography>
-                                        </Box>
-                                        <Box pt='5px' pl='5px'>
-                                            <Typography className="graph-statistic">
-                                                {`RM ${chartData.totalGenerated}`}
-                                            </Typography>
-                                        </Box>
+                                <Box display='flex' flexDirection='column' marginLeft='24px'>
+                                    <Box pt='12px' pl='5px'>
+                                        <Typography className="graph-header">
+                                            {/* Redeemed */}
+                                            <FormattedMessage
+                                                id="total.amount.redeemed.year"
+                                                values={{ year: `${year}` }}
+                                            />
+                                        </Typography>
 
-                                        {/* <Box display='flex' flexDirection='column' marginLeft='24px'> */}
-                                        <Box pt='12px' pl='5px'>
-                                            <Typography className="graph-header">
-                                                {/* Redeemed */}
-                                                <FormattedMessage
-                                                    id="total.amount.redeemed.year"
-                                                    values={{ year: `${year}` }}
-                                                />
-                                            </Typography>
-
-                                        </Box>
-                                        <Box pt='5px' pl='5px'>
-                                            <Typography className="graph-statistic">
-                                                {`RM ${chartData.totalRedeemed}`}
-                                            </Typography>
-                                        </Box>
+                                    </Box>
+                                    <Box pt='5px' pl='5px'>
+                                        <Typography className="graph-statistic">
+                                            {`RM ${chartData.totalRedeemed}`}
+                                        </Typography>
                                     </Box>
                                 </Box>
                             </Box>
