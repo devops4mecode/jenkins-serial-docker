@@ -7,6 +7,6 @@ router
     .get('/detail', globalController.getSerialDetails)
     .patch('/redeem', globalController.redeemSerials)
     // !NEW 2023-05-12
-    .post('/request', globalController.requestSerials)
+    .post('/request', globalController.generateSerialsByPlayer)
 
 module.exports = router

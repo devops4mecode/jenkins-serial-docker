@@ -79,14 +79,6 @@ const redeemSerials = async (req, res) => {
     }
 };
 
-const requestSerials = async (req, res) => {
-    try {
-        const { redemptionAcc, serialNo } = req.query;
-    } catch (error) {
-        return res.status(400).json({ error: error.message });
-    }
-};
-
 const generateSerialsByPlayer = async (req, res) => {
     try {
         const { givenCredit, amountToGenerate, remarkName, walletBalance } = req.body;
@@ -152,5 +144,4 @@ module.exports = {
     generateSerialsByPlayer,
     getSerialDetails,
     redeemSerials,
-    requestSerials
 }
