@@ -130,6 +130,8 @@ const Dashboard = () => {
                 const { data } = await axios.get(`api/dashboard/summary?startDate=${startFrom}&endDate=${endAt}`, {
                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
                 });
+                console.log("data is")
+                console.log(data)
                 setReportData(data)
             } catch (error) {
                 console.log(error)
@@ -356,7 +358,7 @@ const Dashboard = () => {
 
                     <Grid container spacing={2}>
                         {reportData.topTen.map((item) => (
-                            <Grid item xs={6} sm={6} md={3} key={item.totalCredit}>
+                            <Grid item xs={6} sm={6} md={3} key={item.name}>
                                 <Box className="style-statbox">
                                     <StatBox
                                         title={item.name}
