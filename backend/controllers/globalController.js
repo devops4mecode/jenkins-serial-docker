@@ -89,7 +89,7 @@ const generateSerialsByPlayer = async (req, res) => {
 
         let serials = [];
 
-        if (walletBalance < (givenCredit*amountToGenerate)){
+        if (walletBalance < (givenCredit * amountToGenerate)) {
             return res.status(400).json("Insufficient balance")
         }
 
@@ -120,7 +120,7 @@ const generateSerialsByPlayer = async (req, res) => {
                 redemptionAcc: "",
                 serialStatus: true,
             });
-            // await serialDoc.save();
+            await serialDoc.save();
             serialDocs.push(serialDoc);
         }
         return res.json({ serialDocs });
