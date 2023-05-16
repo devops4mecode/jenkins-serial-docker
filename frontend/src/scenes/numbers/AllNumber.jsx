@@ -1,7 +1,7 @@
 import axios from "axios";
 import moment from "moment"
 import { useEffect, useState } from "react";
-import { useTheme } from "@mui/material";
+import { Button, useTheme } from "@mui/material";
 import { useAuthContext } from "hooks/useAuthContext";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarExport, GridToolbarFilterButton } from "@mui/x-data-grid"
@@ -9,6 +9,7 @@ import { tokens } from "../../theme";
 import Box from "@mui/material/Box";
 import Header from "../../components/Header";
 import '../../css/allNumberTable.css'
+import DeleteModal from "components/DeleteModal";
 
 // const localizedTextsMap = {
 //     toolbarExportCSV: '导出',
@@ -23,6 +24,20 @@ const AllNumber = () => {
     const { user } = useAuthContext()
     const intl = useIntl()
     const [serials, setSerials] = useState([])
+
+    const [openModal, setOpenModal] = useState(false)
+
+    const handleOpenModal = () => {
+        setOpenModal(true)
+    }
+    
+    const handleDelete = () => {
+        // do delete here
+    }
+
+    const handleCancel = () => {
+        setOpenModal(false)
+    }
 
     useEffect(() => {
         const fetchAllSerials = async () => {
@@ -55,7 +70,6 @@ const AllNumber = () => {
         {
             field: "serialNo",
             headerName: <FormattedMessage id="record.serial.number" />,
-            // headerName: "Serial Number",
             type: "number",
             headerAlign: "center",
             align: "center",
@@ -67,7 +81,6 @@ const AllNumber = () => {
         {
             field: "givenCredit",
             headerName: <FormattedMessage id="record.credit" />,
-            // headerName: "Credit",
             type: "number",
             headerAlign: "center",
             align: "center",
@@ -77,7 +90,6 @@ const AllNumber = () => {
         {
             field: "remarkName",
             headerName: <FormattedMessage id="record.buyer" />,
-            // headerName: "Buyer",
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center",
@@ -87,18 +99,16 @@ const AllNumber = () => {
         {
             field: "createdAt",
             headerName: <FormattedMessage id="record.sold.date" />,
-            // headerName: "Purchase Date",
             valueFormatter: (params) =>
                 moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
             headerAlign: "center",
             align: "center",
-            width: 230,
+            width: 200,
             xs: 100
         },
         {
             field: "redemptionAcc",
             headerName: <FormattedMessage id="record.redeemer" />,
-            // headerName: "Redemption Account",
             valueGetter: (params) =>
                 params.row.redemptionAcc || "----",
             cellClassName: "name-column--cell",
@@ -110,25 +120,23 @@ const AllNumber = () => {
         {
             field: "updatedAt",
             headerName: <FormattedMessage id="record.redeemed.date" />,
-            // headerName: "Redemption Date",
             valueGetter: (params) =>
                 params.row.serialStatus ? "---" : moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
             headerAlign: "center",
             align: "center",
-            width: 230,
+            width: 200,
             xs: 100
         },
         {
             field: "serialStatus",
             headerName: <FormattedMessage id="record.status" />,
-            // headerName: "Status",
             valueGetter: (params) =>
                 params.row.serialStatus ? "UNCLAIMED" : "REDEEMED",
             cellClassName: (params) =>
                 params.value === "REDEEMED" ? "status-redeemed" : "name-column--cell",
             headerAlign: "center",
             align: "center",
-            width: 230,
+            width: 210,
             xs: 100
         },
     ]
@@ -172,17 +180,35 @@ const AllNumber = () => {
                         color: "red",
                     },
                 }}>
+
+                <Box display='flex' justifyContent='end' paddingBottom='15px'>
+                    <Button variant="contained" color="error" onClick={handleOpenModal}>
+                        Delete
+                    </Button>
+                </Box>
+
                 <DataGrid
                     rows={serials}
                     columns={columns}
                     components={{ Toolbar: CustomToolbar }}
                     getRowId={getRowId}
+                    checkboxSelection
                     // localeText={localizedTextsMap}
                     disableColumnMenu
                 />
 
                 <Box className="footer"></Box>
             </Box>
+
+            {openModal && (
+                <DeleteModal
+                    message='delete.confirmation.message'
+                    onDelete={handleDelete}
+                    onCancel={handleCancel}
+                    onClose={handleCancel}
+                />
+            )}
+
         </Box>
 
     )

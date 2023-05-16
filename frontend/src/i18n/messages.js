@@ -56,6 +56,11 @@ export const messages = {
         "record.redeemed.date": "Redemption Date",
         "record.status": "Status",
 
+        // Delete Modal
+        "delete.confirmation.message": "Confirm delete?",
+        "delete.yes": "Yes",
+        "delete.cancel": "Cancel",
+
         // Chart
         "chart.redeemed": "Redeemed",
         "chart.sold": "Sold",
@@ -138,6 +143,11 @@ export const messages = {
         "record.redeemed.date": "兑换时间",
         "record.status": "状态",
 
+        // Delete Modal
+        "delete.confirmation.message": "确定删除吗?",
+        "delete.yes": "是",
+        "delete.cancel": "否",
+
         // Chart
         "chart.redeemed": "兑换",
         "chart.sold": "售出",
@@ -219,6 +229,11 @@ export const messages = {
         "record.redeemer": "Akaun Penebusan",
         "record.redeemed.date": "Tarikh Penebusan",
         "record.status": "Taraf",
+
+        // Delete Modal
+        "delete.confirmation.message": "Sahkan Padam?",
+        "delete.yes": "Ya",
+        "delete.cancel": "Tidak",
 
         // Chart
         "chart.redeemed": "PENEBUSAN",

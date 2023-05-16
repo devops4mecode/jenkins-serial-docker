@@ -10,6 +10,8 @@ import Header from "../../components/Header";
 
 
 const UnusedNumber = () => {
+    const theme = useTheme()
+    const colors = tokens(theme.palette.mode)
 
     const { user } = useAuthContext()
     const [serials, setSerials] = useState([])
@@ -31,9 +33,6 @@ const UnusedNumber = () => {
         fetchAllSerials();
     }, [user]);
 
-    const theme = useTheme()
-    const colors = tokens(theme.palette.mode)
-
     function formatNumber(num) {
         const formatted = num.toLocaleString('en-US', { maximumFractionDigits: 0 }).replace(/,/g, '');
         const sections = [];
@@ -48,8 +47,7 @@ const UnusedNumber = () => {
     const columns = [
         {
             field: "serialNo",
-            // headerName: <FormattedMessage id="record.serial.number" />,
-            headerName: "Serial Number",
+            headerName: <FormattedMessage id="record.serial.number" />,
             type: "number",
             headerAlign: "center",
             align: "center",
@@ -59,8 +57,7 @@ const UnusedNumber = () => {
         },
         {
             field: "givenCredit",
-            // headerName: <FormattedMessage id="record.credit" />,
-            headerName: "Credit",
+            headerName: <FormattedMessage id="record.credit" />,
             type: "number",
             headerAlign: "center",
             align: "center",
@@ -68,8 +65,7 @@ const UnusedNumber = () => {
         },
         {
             field: "remarkName",
-            // headerName: <FormattedMessage id="record.buyer" />,
-            headerName: "Buyer",
+            headerName: <FormattedMessage id="record.buyer" />,
             width: 370,
             cellClassName: "name-column--cell",
             headerAlign: "center",
@@ -77,8 +73,7 @@ const UnusedNumber = () => {
         },
         {
             field: "createdAt",
-            // headerName: <FormattedMessage id="record.sold.date" />,
-            headerName: "Purchase Date",
+            headerName: <FormattedMessage id="record.sold.date" />,
             valueFormatter: (params) =>
                 moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
             width: 370,
@@ -130,7 +125,6 @@ const UnusedNumber = () => {
                 <Box className="footer"></Box>
             </Box>
         </Box>
-
     )
 }
 
