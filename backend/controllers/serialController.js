@@ -102,18 +102,55 @@ const generateSerials = async (req, res) => {
 // @desc Get all serials
 // @route GET /serials/status?serialStatus=${serialStatus}
 // @access Private
+// const delSerialsByID = async (req, res) => {
+//     try {
+//         const { serialID } = req.body
+
+//         for (let i = 0; i < serialID.length; i++) {
+//             const removedDocs = await Serial.findOneAndRemove({ _id: serialID[i] })
+
+//             // Search for Receipts containing the serialID
+//             const receipts = await Receipt.find({ serialID: serialID[i] });
+
+//             // Update the Receipts by removing the serialID from the array
+//             for (const receipt of receipts) {
+//                 receipt.serialID.pull(serialID[i]);
+//                 await receipt.save();
+
+//                 // Check if all serialID values have been removed from the Receipt
+//                 if (receipt.serialID.length === 0) {
+//                     await Receipt.findByIdAndRemove(receipt._id);
+//                 }
+//             }
+//         }
+//         return res.json('ok')
+//     } catch (error) {
+//         return res.status(400).json({ message: "Something wrong" });
+//     }
+// };
 const delSerialsByID = async (req, res) => {
     try {
-        const { serialID } = req.body
+        const { serialID } = req.body;
 
-        for (let i = 0; i < serialID.length; i++) {
-            const removedDocs = await Serial.findOneAndRemove({ _id: serialID[i] })
-        }
-        return res.json('ok')
+        // Delete Serial documents using bulk operation
+        await Serial.deleteMany({ _id: { $in: serialID } });
+
+        // Update Receipts in bulk
+        await Receipt.updateMany(
+            { serialID: { $in: serialID } },
+            { $pullAll: { serialID } },
+            { multi: true }
+        );
+
+        // Remove Receipts with empty serialID array
+        await Receipt.deleteMany({ serialID: { $size: 0 } });
+
+        return res.json('ok');
     } catch (error) {
-        return res.status(400).json({ message: "Something wrong" });
+        return res.status(400).json({ message: 'Something wrong' });
     }
 };
+
 
 
 // FUNCTION
