@@ -30,7 +30,17 @@ const AllNumber = () => {
     const handleOpenModal = () => {
         setOpenModal(true)
     }
-    
+
+    const [selectedRows, setSelectedRows] = useState([]);
+
+    const handleRowSelectionChange = (selectionModel) => {
+        setSelectedRows(selectionModel);
+    };
+
+    console.log("selectedRows is")
+    console.log(selectedRows)
+
+
     const handleDelete = () => {
         // do delete here
     }
@@ -153,6 +163,9 @@ const AllNumber = () => {
         )
     }
 
+
+
+
     return (
         <Box m="20px">
             <Header
@@ -195,6 +208,7 @@ const AllNumber = () => {
                     checkboxSelection
                     // localeText={localizedTextsMap}
                     disableColumnMenu
+                    onRowSelectionModelChange={handleRowSelectionChange}
                 />
 
                 <Box className="footer"></Box>
