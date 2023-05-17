@@ -37,12 +37,20 @@ const AllNumber = () => {
         setSelectedRows(selectionModel);
     };
 
-    console.log("selectedRows is")
-    console.log(selectedRows)
-
-
-    const handleDelete = () => {
+    const handleDelete = async () => {
         // do delete here
+        console.log("HELLO selectedRows is")
+        console.log(selectedRows)
+        try {
+            const { data } = await axios.delete(`api/serials/delete`, {
+                headers: { 'Authorization': `Bearer ${user.accessToken}` },
+                data: { serialID: selectedRows }
+            })
+            console.log("data is")
+            console.log(data)
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     const handleCancel = () => {

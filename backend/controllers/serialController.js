@@ -29,72 +29,6 @@ const getDetailsBySerialNo = async (req, res) => {
     }
 };
 
-// @desc Get ALL count for all the credit 
-// @route GET /serials/count?status=false
-// @access Private
-const getTotalRedeemedCount = async (req, res) => {
-    try {
-        const counts = await Serial.aggregate([
-            {
-                $match: {
-                    serialStatus: req.query.status === 'true' ? true : false,
-                },
-            },
-            {
-                $count: "count",
-            },
-        ]);
-        res.json(counts);
-    } catch (error) {
-        return res.status(400).json({ message: "Something wrong" });
-    }
-};
-
-// @desc Get ALL count for each credit respectively (10, 30, 50, 100)
-// @route GET /serials/totalGenerated
-// @access Private
-const getTotalGeneratedCount = async (req, res) => {
-    try {
-        const counts = await Serial.aggregate([
-            {
-                $group: {
-                    _id: "$givenCredit",
-                    count: { $sum: 1 },
-                },
-            },
-        ]);
-        res.json(counts);
-    } catch (error) {
-        return res.status(400).json({ message: "Something wrong" });
-    }
-};
-
-// @desc Get count FOR REDEEMED SERIAL ONLY (10, 30, 50, 100)
-// @route GET /serials/totalGenerated
-// @access Private
-const getRedeemedSerialCount = async (req, res) => {
-    try {
-        const counts = await Serial.aggregate([
-            {
-                $match: {
-                    serialStatus: false,
-                },
-            },
-            {
-                $group: {
-                    _id: "$givenCredit",
-                    count: {
-                        $sum: 1,
-                    },
-                },
-            },
-        ]);
-        res.json(counts);
-    } catch (error) {
-        return res.status(400).json({ message: "Something wrong" });
-    }
-};
-
 // @desc Get all serials
 // @route GET /serials/status?serialStatus=${serialStatus}
 // @access Private
@@ -165,6 +99,23 @@ const generateSerials = async (req, res) => {
     }
 };
 
+// @desc Get all serials
+// @route GET /serials/status?serialStatus=${serialStatus}
+// @access Private
+const delSerialsByID = async (req, res) => {
+    try {
+        const { serialID } = req.body
+
+        for (let i = 0; i < serialID.length; i++) {
+            const removedDocs = await Serial.findOneAndRemove({ _id: serialID[i] })
+        }
+        return res.json("BYEBYE")
+    } catch (error) {
+        return res.status(400).json({ message: "Something wrong" });
+    }
+};
+
+
 // FUNCTION
 function generateSerialNumber() {
     let serial = "";
@@ -181,7 +132,5 @@ module.exports = {
     getDetailsBySerialNo,
     getSerialsByStatus,
     generateSerials,
-    getTotalRedeemedCount,
-    getTotalGeneratedCount,
-    getRedeemedSerialCount,
+    delSerialsByID
 };
