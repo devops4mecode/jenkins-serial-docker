@@ -87,13 +87,12 @@ exports.generateChartData = () => {
 exports.generateSummary = () => {
     // Daily
     const reportSummary = new CronJob('* * * * * *', async function () {
-        const todayStart = moment().startOf('day').toDate()
-        const todayEnd = moment().endOf('day').toDate()
-        // const todayStart = moment("2023-05-16").startOf('day').toDate()
-        // const todayEnd = moment("2023-05-16").endOf('day').toDate()
-        // TEST YESTERDAY
-        // const todayStart = moment().startOf('day').subtract(9, 'day').toDate()
-        // const todayEnd = moment().endOf('day').subtract(9, 'day').toDate()
+
+        // STUPID DATE
+        const todayStart = moment().utcOffset('+08:00').startOf('day')
+            .toDate();
+        const todayEnd = moment().utcOffset('+08:00').endOf('day')
+            .toDate();
 
         const [
             overallRedeemedCount,
