@@ -62,7 +62,6 @@ const Topbar = (props) => {
                 headers: { 'Authorization': `Bearer ${user.accessToken}` }
             })
             setData(data)
-            console.log(data)
         } catch (error) {
             console.error(error)
         }

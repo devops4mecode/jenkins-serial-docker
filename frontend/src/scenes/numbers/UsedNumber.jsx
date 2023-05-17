@@ -8,8 +8,10 @@ import { Box, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 
-
 const UsedNumber = () => {
+
+    const theme = useTheme()
+    const colors = tokens(theme.palette.mode)
 
     const { user } = useAuthContext()
     const [serials, setSerials] = useState([])
@@ -32,9 +34,6 @@ const UsedNumber = () => {
     }, [user]);
 
 
-    const theme = useTheme()
-    const colors = tokens(theme.palette.mode)
-
     function formatNumber(num) {
         const formatted = num.toLocaleString('en-US', { maximumFractionDigits: 0 }).replace(/,/g, '');
         const sections = [];
@@ -49,8 +48,7 @@ const UsedNumber = () => {
     const columns = [
         {
             field: "serialNo",
-            // headerName: <FormattedMessage id="record.serial.number" />,
-            headerName: "Serial Number",
+            headerName: <FormattedMessage id="record.serial.number" />,
             type: "number",
             headerAlign: "center",
             align: "center",
@@ -60,8 +58,7 @@ const UsedNumber = () => {
         },
         {
             field: "givenCredit",
-            // headerName: <FormattedMessage id="record.credit" />,
-            headerName: "Credit",
+            headerName: <FormattedMessage id="record.credit" />,
             type: "number",
             headerAlign: "center",
             align: "center",
@@ -69,8 +66,7 @@ const UsedNumber = () => {
         },
         {
             field: "remarkName",
-            // headerName: <FormattedMessage id="record.buyer" />,
-            headerName: "Buyer",
+            headerName: <FormattedMessage id="record.buyer" />,
             width: 250,
             cellClassName: "name-column--cell",
             headerAlign: "center",
@@ -78,8 +74,7 @@ const UsedNumber = () => {
         },
         {
             field: "createdAt",
-            // headerName: <FormattedMessage id="record.sold.date" />,
-            headerName: "Purchase Date",
+            headerName: <FormattedMessage id="record.sold.date" />,
             valueFormatter: (params) =>
                 moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
             width: 250,
@@ -88,8 +83,7 @@ const UsedNumber = () => {
         },
         {
             field: "redemptionAcc",
-            // headerName: <FormattedMessage id="record.redeemer" />,
-            headerName: "Redemption Account",
+            headerName: <FormattedMessage id="record.redeemer" />,
             width: 250,
             cellClassName: "name-column--cell",
             headerAlign: "center",
@@ -97,8 +91,7 @@ const UsedNumber = () => {
         },
         {
             field: "updatedAt",
-            // headerName: <FormattedMessage id="record.redeemed.date" />,
-            headerName: "Redemption Date",
+            headerName: <FormattedMessage id="record.redeemed.date" />,
             valueFormatter: (params) =>
                 moment(params.value).format("YYYY-MM-DD h:mm:ss a"),
             width: 250,
