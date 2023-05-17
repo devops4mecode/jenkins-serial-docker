@@ -24,8 +24,13 @@ const getSummaryData = async (req, res) => {
     try {
         const { startDate, endDate } = req.query
 
-        const dateStart = moment(startDate).startOf('day').toDate()
-        const dateEnd = moment(endDate).endOf('day').toDate()
+        // const dateStart = moment(startDate).startOf('day').toDate()
+        // const dateEnd = moment(endDate).endOf('day').toDate()
+
+        const dateStart = moment(startDate).utcOffset('+08:00').startOf('day')
+            .toDate();
+        const dateEnd = moment(endDate).utcOffset('+08:00').endOf('day')
+            .toDate();
 
         const [
             overallRedeemedCount,

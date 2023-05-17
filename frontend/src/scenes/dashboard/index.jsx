@@ -130,6 +130,10 @@ const Dashboard = () => {
                 const { data } = await axios.get(`api/dashboard/summary?startDate=${startFrom}&endDate=${endAt}`, {
                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
                 });
+
+                console.log("data is")
+                console.log(data)
+
                 setReportData(data)
             } catch (error) {
                 console.log(error)
