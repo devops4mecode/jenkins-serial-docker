@@ -36,7 +36,6 @@ const GenerateNumber = () => {
             })
 
             const datagriddata = response.data.serialDocs
-            console.log("datagrid data:", datagriddata)
 
             const da = datagriddata.map(dgd => ({
                 _id: dgd._id,
@@ -80,12 +79,10 @@ const GenerateNumber = () => {
 
 
     });
-    console.log(data)
-    
+
     const CSVcreatedAt = new Date(data[0]?.createdAt);
     const CSVformattedDate = `${CSVcreatedAt.getDate().toString().padStart(2, '0')}${(CSVcreatedAt.getMonth() + 1).toString().padStart(2, '0')}${CSVcreatedAt.getFullYear().toString().slice(2)}_${CSVcreatedAt.getHours().toString().padStart(2, '0')}${CSVcreatedAt.getMinutes().toString().padStart(2, '0')}${CSVcreatedAt.getSeconds().toString().padStart(2, '0')}`;
 
-    console.log(CSVformattedDate)
     return <Box m="20px">
         <Header
             title={<FormattedMessage id="generate.serial" />}
