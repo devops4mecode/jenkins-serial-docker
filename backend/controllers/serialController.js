@@ -109,7 +109,7 @@ const delSerialsByID = async (req, res) => {
         for (let i = 0; i < serialID.length; i++) {
             const removedDocs = await Serial.findOneAndRemove({ _id: serialID[i] })
         }
-        return res.json("BYEBYE")
+        return res.json('ok')
     } catch (error) {
         return res.status(400).json({ message: "Something wrong" });
     }

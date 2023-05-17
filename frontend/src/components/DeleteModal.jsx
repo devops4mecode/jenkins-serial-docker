@@ -8,7 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import '../css/modal.css'
 
 
-const DeleteModal = ({ message, selectedSerialNo, onDelete, onCancel, onClose }) => {
+const DeleteModal = ({ message, count, onDelete, onCancel, onClose }) => {
 
     const [openModal, setOpenModal] = useState(true);
 
@@ -34,18 +34,22 @@ const DeleteModal = ({ message, selectedSerialNo, onDelete, onCancel, onClose })
             >
                 <Fade in={openModal}>
                     <Box className="delete-confirmation">
+                    <Box display="flex" alignItems="center" justifyContent="end">
+                    <IconButton>
+                                <CloseIcon onClick={onClose} />
+                            </IconButton>
+                        </Box>
+
                         <Box display="flex" alignItems="center" justifyContent="center">
-                            <Box flexGrow={1} textAlign="center" paddingLeft="40px" paddingTop="15px">
-                                <Typography>{selectedSerialNo}</Typography>
+                            <Box flexGrow={1} textAlign="center"  paddingTop="15px">
+                                <Typography>Count ({count})</Typography>
                             </Box>
                         </Box>
                         <Box display="flex" alignItems="center" justifyContent="center">
-                            <Box flexGrow={1} textAlign="center" paddingLeft="40px" paddingBottom="15px" paddingTop="15px">
+                            <Box flexGrow={1} textAlign="center"  paddingBottom="15px" paddingTop="15px">
                                 <FormattedMessage id={message} />
                             </Box>
-                            <IconButton>
-                                <CloseIcon onClick={onClose} />
-                            </IconButton>
+                            
                         </Box>
 
                         <Divider />

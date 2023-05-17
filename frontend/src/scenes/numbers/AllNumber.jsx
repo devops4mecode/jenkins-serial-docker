@@ -38,16 +38,13 @@ const AllNumber = () => {
     };
 
     const handleDelete = async () => {
-        // do delete here
-        console.log("HELLO selectedRows is")
-        console.log(selectedRows)
+
         try {
             const { data } = await axios.delete(`api/serials/delete`, {
                 headers: { 'Authorization': `Bearer ${user.accessToken}` },
                 data: { serialID: selectedRows }
             })
-            console.log("data is")
-            console.log(data)
+            window.location.reload()
         } catch (error) {
             console.error(error)
         }
@@ -94,7 +91,7 @@ const AllNumber = () => {
             valueGetter: (params) =>
                 formatNumber(params.row.serialNo),
             width: 300,
-            xs: 100,
+            xs: 80,
         },
         {
             field: "givenCredit",
@@ -102,7 +99,7 @@ const AllNumber = () => {
             type: "number",
             headerAlign: "center",
             align: "center",
-            width: 100,
+            width: 80,
             xs: 100
         },
         {
@@ -111,7 +108,7 @@ const AllNumber = () => {
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center",
-            width: 230,
+            width: 240,
             xs: 100
         },
         {
@@ -172,8 +169,6 @@ const AllNumber = () => {
     }
 
 
-
-
     return (
         <Box m="20px">
             <Header
@@ -225,6 +220,7 @@ const AllNumber = () => {
             {openModal && (
                 <DeleteModal
                     message='delete.confirmation.message'
+                    count={selectedRows.length}
                     onDelete={handleDelete}
                     onCancel={handleCancel}
                     onClose={handleCancel}

@@ -131,9 +131,6 @@ const Dashboard = () => {
                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
                 });
 
-                console.log("data is")
-                console.log(data)
-
                 setReportData(data)
             } catch (error) {
                 console.log(error)
