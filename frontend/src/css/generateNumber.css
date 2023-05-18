@@ -2,7 +2,6 @@ a:-webkit-any-link {
     text-decoration: none !important;
 }
 
-
 .credit-button-text {
     color: #6200EE !important;
     font-weight: bold !important;
@@ -142,7 +141,7 @@ a:-webkit-any-link {
     .credit-field-component {
         row-gap: 40px;
         column-gap: 30px;
-        padding-top: 25px;
+        padding-top: 40px;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-template-rows: repeat(2, minmax(0, 1fr));
     }

@@ -105,7 +105,10 @@ const GenerateNumber = () => {
                         <CreditButton onClick={() => setFieldValue("givenCredit", 50)} title="RM50" />
                         <CreditButton onClick={() => setFieldValue("givenCredit", 100)} title="RM100" />
                         <CreditButton onClick={() => setFieldValue("givenCredit", 200)} title="RM200" />
+                        <CreditButton onClick={() => setFieldValue("givenCredit", 300)} title="RM300" />
                         <CreditButton onClick={() => setFieldValue("givenCredit", 500)} title="RM500" />
+                        <CreditButton onClick={() => setFieldValue("givenCredit", 800)} title="RM800" />
+                        <CreditButton onClick={() => setFieldValue("givenCredit", 1000)} title="RM1000" />
                     </Box>
 
                     <Box className="credit-field-component" >
