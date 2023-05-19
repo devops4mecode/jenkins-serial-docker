@@ -11,11 +11,6 @@ import Header from "../../components/Header";
 import '../../css/allNumberTable.css'
 import DeleteModal from "components/DeleteModal";
 
-// const localizedTextsMap = {
-//     toolbarExportCSV: '导出',
-//     toolbarFilter: 'Filter',
-//     toolbarColumns: 'Columns',
-// };
 
 const AllNumber = () => {
     const theme = useTheme()
@@ -90,8 +85,9 @@ const AllNumber = () => {
             align: "center",
             valueGetter: (params) =>
                 formatNumber(params.row.serialNo),
-            width: 300,
-            xs: 80,
+            // minWidth: 300,
+            editable: false,
+            flex: 2,
         },
         {
             field: "givenCredit",
@@ -99,8 +95,9 @@ const AllNumber = () => {
             type: "number",
             headerAlign: "center",
             align: "center",
-            width: 80,
-            xs: 100
+            // minWidth: 80,
+            editable: false,
+            flex: 2,
         },
         {
             field: "remarkName",
@@ -108,8 +105,9 @@ const AllNumber = () => {
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center",
-            width: 240,
-            xs: 100
+            // minWidth: 240,
+            editable: false,
+            flex: 2,
         },
         {
             field: "createdAt",
@@ -118,8 +116,9 @@ const AllNumber = () => {
                 moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
             headerAlign: "center",
             align: "center",
-            width: 200,
-            xs: 100
+            // minWidth: 200,
+            editable: false,
+            flex: 2,
         },
         {
             field: "redemptionAcc",
@@ -129,8 +128,9 @@ const AllNumber = () => {
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center",
-            width: 230,
-            xs: 100
+            // minWidth: 230,
+            editable: false,
+            flex: 2,
         },
         {
             field: "updatedAt",
@@ -139,8 +139,9 @@ const AllNumber = () => {
                 params.row.serialStatus ? "---" : moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
             headerAlign: "center",
             align: "center",
-            width: 200,
-            xs: 100
+            // minWidth: 200,
+            editable: false,
+            flex: 2,
         },
         {
             field: "serialStatus",
@@ -151,8 +152,9 @@ const AllNumber = () => {
                 params.value === "REDEEMED" ? "status-redeemed" : "name-column--cell",
             headerAlign: "center",
             align: "center",
-            width: 210,
-            xs: 100
+            // minWidth: 210,
+            editable: false,
+            flex: 2,
         },
     ]
 
@@ -175,60 +177,77 @@ const AllNumber = () => {
                 title={<FormattedMessage id="all.serial" />}
                 subtitle={<FormattedMessage id="all.serial" />}
             />
-            <Box
-                sx={{
-                    height: '70vh',
-                    width: '100%',
-                    "& .name-column--cell": {
-                        color: colors.greenAccent[300]
-                    },
-                    "& .MuiDataGrid-columnHeaders": {
-                        backgroundColor: colors.blueAccent[700],
-                        borderBottom: "none"
-                    },
-                    "& .MuiDataGrid-footerContainer": {
-                        backgroundColor: colors.blueAccent[700]
-                    },
-                    "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                        color: `${colors.grey[100]} !important`
-                    },
-                    "& .status-redeemed": {
-                        color: "red",
-                    },
-                }}>
 
-                <Box display='flex' justifyContent='end' paddingBottom='15px'>
-                    <Button variant="contained" color="error" onClick={handleOpenModal}>
-                        Delete
-                    </Button>
+
+            <Box
+                mt="5px"
+                display="grid"
+                gridTemplateColumns="repeat(12, 1fr)"
+                gridAutoRows="160px"
+                gap="20px"
+                sx={{
+                    "& > div": { gridColumn: isNonMediumScreen ? undefined : "span 12" }
+                }}
+            >
+                <Box
+                    gridColumn="span 12"
+                    height="fit-content"
+                    // backgroundColor="#FFFFFF"
+                    p="2rem"
+                    // borderRadius="0.55rem"
+                    // className="defaultSection"
+                    sx={{
+                        // height: '70vh'
+                        width: '100%',
+                        "& .name-column--cell": {
+                            color: '#94e2cd'
+                        },
+                        "& .MuiDataGrid-columnHeaders": {
+                            backgroundColor: '#a4a9fc',
+                            borderBottom: "none"
+                        },
+                        "& .MuiDataGrid-footerContainer": {
+                            backgroundColor: '#a4a9fc'
+                        },
+                        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                            color: `'#141414' !important`
+                        },
+                        "& .status-redeemed": {
+                            color: "red",
+                        },
+                    }}
+                >
+                    <Box display='flex' justifyContent='end' paddingBottom='15px'>
+                        <Button variant="contained" color="error" onClick={handleOpenModal}>
+                            Delete
+                        </Button>
+                    </Box>
+
+                    <DataGrid
+                        rows={serials}
+                        columns={columns}
+                        components={{ Toolbar: CustomToolbar }}
+                        getRowId={getRowId}
+                        checkboxSelection
+                        disableColumnMenu
+                        onRowSelectionModelChange={handleRowSelectionChange}
+                    />
+
+                    <Box className="footer"></Box>
                 </Box>
 
-                <DataGrid
-                    rows={serials}
-                    columns={columns}
-                    components={{ Toolbar: CustomToolbar }}
-                    getRowId={getRowId}
-                    checkboxSelection
-                    // localeText={localizedTextsMap}
-                    disableColumnMenu
-                    onRowSelectionModelChange={handleRowSelectionChange}
-                />
+                {openModal && (
+                    <DeleteModal
+                        message='delete.confirmation.message'
+                        count={selectedRows.length}
+                        onDelete={handleDelete}
+                        onCancel={handleCancel}
+                        onClose={handleCancel}
+                    />
+                )}
 
-                <Box className="footer"></Box>
             </Box>
-
-            {openModal && (
-                <DeleteModal
-                    message='delete.confirmation.message'
-                    count={selectedRows.length}
-                    onDelete={handleDelete}
-                    onCancel={handleCancel}
-                    onClose={handleCancel}
-                />
-            )}
-
         </Box>
-
     )
 }
 

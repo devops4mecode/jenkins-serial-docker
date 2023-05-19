@@ -9,8 +9,8 @@ html body #root,
 }
 
 .app {
-  display: flex;
-  position: relative;
+  height: 100%;
+  width: 100%;
 }
 
 ::-webkit-scrollbar {
@@ -35,9 +35,6 @@ html body #root,
 .pro-menu-item {
   list-style: none;
 }
-
-
-
 
 .footer {
   padding-top: 30px;

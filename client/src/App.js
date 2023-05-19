@@ -12,6 +12,7 @@ import Generate from "./scenes/Generate";
 import AllSerial from "./scenes/AllSerial";
 import ActiveSerial from "./scenes/ActiveSerial";
 import RedeemedSerial from "./scenes/RedeemedSerial";
+import LoginPage from "./scenes/login/LoginPage"
 
 
 
@@ -29,18 +30,20 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Layout />}>
                             {/* <Route index element={!user ? <LoginPage /> : <Navigate to="/dashboard" />} /> */}
-                            <Route index element={<Navigate to="/" />} />
+                            <Route index element={!user ? <LoginPage /> : <Navigate to="/dashboard" />} />
 
+                            <Route
+                                path="/login"
+                                element={!user ? <LoginPage /> : <Navigate to="/" />}
+                            />
 
-                            <Route path="dashboard" element={ <Dashboard />} />
-                            <Route path="generateserial" element={<Generate/> } />
-                            <Route path="allSerial" element={<AllSerial/> } />
-                            <Route path="activeserial" element={<ActiveSerial/> } />
-                            <Route path="redeemedserial" element={<RedeemedSerial/> } />
+                            <Route path="dashboard" element={user ? <Dashboard /> : <Navigate to='/login' />} />
+                            <Route path="generateserial" element={user ? <Generate /> : <Navigate to='/' />} />
+                            <Route path="allSerial" element={user ? <AllSerial /> : <Navigate to='/' />} />
+                            <Route path="activeserial" element={user ? <ActiveSerial /> : <Navigate to='/' />} />
+                            <Route path="redeemedserial" element={user ? <RedeemedSerial /> : <Navigate to='/' />} />
 
                         </Route>
-
-
                     </Routes>
                 </ThemeProvider>
             </BrowserRouter>

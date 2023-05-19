@@ -7,6 +7,7 @@ import { AppBar, IconButton, Toolbar, useTheme, InputBase, Menu, MenuItem, Box, 
 import { Menu as MenuIcon, Search, Settings } from "@mui/icons-material";
 import searchIcon from "../../assets/search.png"
 import translateIcon from '../../assets/translate.png'
+import hamburgerIcon from '../../assets/hamburger.png'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { FormattedMessage, useIntl } from "react-intl";
@@ -18,13 +19,7 @@ import '../../css/global.css'
 const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }) => {
     const intl = useIntl()
 
-    const { user } = useAuthContext()
-
     const isNonMediumScreen = useMediaQuery("(min-width: 1024px)")
-
-    const Navigate = useNavigate()
-    const { logout } = useLogout()
-
 
     const LanguageDropdown = () => {
         const ref = useRef(null)
@@ -32,7 +27,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }
         const [isOpen, setIsOpen] = useState(false)
 
         const languageButtonStyle = {
-            flexGrow: 1,
+            // flexGrow: 1,
             backgroundColor: '#92adf0',
             color: 'white'
         }
@@ -66,7 +61,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }
             <Box className='flexBetween' ref={ref} gap="1.5rem">
                 <Box
                     className='flexBetween'
-                    backgroundColor="#E6EBF8"
+                    backgroundColor="#ffffff"
                     borderRadius="9px"
                     gap="1.5rem"
                     p={isNonMediumScreen ? "0.5rem " : "0.3rem"}
@@ -97,7 +92,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }
                     >
                         <Box className='flexBetween' flexDirection='column' >
                             <Button
-                                style={currentLocale === 'en' ? languageButtonStyle : { ...languageButtonStyle, backgroundColor: '#f4f2f5', cursor: 'not-allowed', color: 'black' }}
+                                style={currentLocale === 'en' ? languageButtonStyle : { ...languageButtonStyle, backgroundColor: '#ffffff', cursor: 'not-allowed', color: 'black' }}
                                 onClick={(e) => handleChange(e.target.value)}
                                 disabled={currentLocale === 'en'}
                                 value="en"
@@ -105,7 +100,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }
                                 En
                             </Button>
                             <Button
-                                style={currentLocale === 'zh' ? languageButtonStyle : { ...languageButtonStyle, backgroundColor: '#f4f2f5', cursor: 'not-allowed', color: 'black' }}
+                                style={currentLocale === 'zh' ? languageButtonStyle : { ...languageButtonStyle, backgroundColor: '#ffffff', cursor: 'not-allowed', color: 'black' }}
                                 onClick={(e) => handleChange(e.target.value)}
                                 disabled={currentLocale === 'zh'}
                                 value="zh"
@@ -113,7 +108,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }
                                 Zh
                             </Button>
                             <Button
-                                style={currentLocale === 'ms' ? languageButtonStyle : { ...languageButtonStyle, backgroundColor: '#f4f2f5', cursor: 'not-allowed', color: 'black' }}
+                                style={currentLocale === 'ms' ? languageButtonStyle : { ...languageButtonStyle, backgroundColor: '#ffffff', cursor: 'not-allowed', color: 'black' }}
                                 onClick={(e) => handleChange(e.target.value)}
                                 disabled={currentLocale === 'ms'}
                                 value="ms"
@@ -133,21 +128,21 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }
             position: "fixed",
             width: "100%",
             boxShadow: "none",
-            backgroundColor: "#6200EE",
+            backgroundColor: "#6200EE15",
             p: "0.5rem"
         }}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
             {/* left side */}
             <Box className='flexBetween' sx={{ marginLeft: isNonMediumScreen && isSidebarOpen ? '233px' : '0' }}>
 
-                    {/* open close sidebar */}
-                    <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-                        <MenuIcon style={{ color: '#ffffff' }} />
-                    </IconButton>
+                {/* open close sidebar */}
+                {/* <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+                    <MenuIcon style={{ color: '#ffffff' }} />
+                </IconButton> */}
 
-                  
-
-
+                <Typography>
+                    <img src={hamburgerIcon} alt="hamburger" style={{ width: "20px", height: "20px" }} onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
+                </Typography>
 
                 <Box className='flexBetween' color="#4385EA">
                     <Box display="flex" alignItems="center" gap="0.5rem">

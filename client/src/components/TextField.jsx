@@ -1,10 +1,7 @@
-import { Typography, Box, useTheme, Button, TextField } from "@mui/material";
-import { tokens } from "../theme";
+import { Box, useTheme, TextField } from "@mui/material";
 import '../css/generateNumber.css'
 
 const CreditTextField = (props) => {
-    const theme = useTheme()
-    const colors = tokens(theme.palette.mode)
 
     const {
         label,

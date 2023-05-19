@@ -34,7 +34,7 @@ const Layout = () => {
             locale={currentLocale}
             defaultLocale={LOCALES.ENGLISH}
         >
-            <Box display={isNonMobile ? "flex" : "block"} width="100%" height="100%">
+            <Box display={isNonMobile ? "flex" : "block"}>
                 {user && (
                     <Sidebar
                         isNonMobile={isNonMobile}

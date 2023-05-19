@@ -12,7 +12,9 @@ import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
 import { FormattedMessage } from 'react-intl';
 import '../../css/global.css'
 import Logo from '../../assets/logo.png'
+import { useLogout } from '../../hooks/useLogout';
 
+// const { logout } = useLogout()
 
 const navItems = [
     {
@@ -43,7 +45,8 @@ const navItems = [
     {
         text: "Logout",
         translationKey: "logoutNav",
-        image: <img src={logoutIcon} alt="setting" width="25" height="25" />
+        image: <img src={logoutIcon} alt="setting" width="25" height="25" />,
+        // onClick: logout
     }
 ]
 
@@ -60,6 +63,8 @@ const Sidebar = ({
 
     const navigate = useNavigate()
     const theme = useTheme()
+
+ 
 
     useEffect(() => {
         setActive(pathname.substring(1))
@@ -93,7 +98,7 @@ const Sidebar = ({
         return (
             <Box>
                 <List>
-                    {navItems.map(({ text, image, translationKey }) => {
+                    {navItems.map(({ text, image, translationKey, onClick }) => {
                         if (!image) {
                             return (
                                 <Typography key={text}>
@@ -108,13 +113,16 @@ const Sidebar = ({
                             <ListItem key={text} disablePadding>
                                 <ListItemButton
                                     onClick={() => {
+                                        if (onClick) {
+                                            onClick(); // Call the onClick handler (logout function)
+                                        }
                                         navigate(`/${lcText}`);
                                         setActive(lcText)
                                     }}
                                     style={{
                                         fontSize: '1rem',
-                                        backgroundColor: active === lcText ? "#E6EBF8" : "transparent",
-                                        color: active === lcText ? 'black' : "#747474",
+                                        backgroundColor: active === lcText ? "#ffffff" : "transparent",
+                                        color: active === lcText ? 'black' : "#474747",
                                         borderRadius: active === lcText ? '0.55rem' : 'none',
                                         margin: "0.3rem 1rem"
                                     }}
@@ -144,7 +152,7 @@ const Sidebar = ({
                         width: drawerWidth,
                         "& .MuiDrawer-paper": {
                             color: theme.palette.secondary[200],
-                            backgroundColor: "#FFFFFF",
+                            backgroundColor: "#fafafa",
                             boxSizing: "border-box",
                             borderWidth: isNonMobile ? 0 : "2px",
                             width: drawerWidth,

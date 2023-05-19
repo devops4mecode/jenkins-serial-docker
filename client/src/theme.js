@@ -5,7 +5,8 @@
 
 export const tokensDark = {
     grey: {
-        0: "#f4f2f5",       //background colour for every page light light blue
+        // 0: "#f4f2f5",       //background colour for every page 
+        0: "#ffffff",       //background colour for every page 
         10: "#f6f6f6",      // manually adjusted
         50: "#4385EA",      //logo blue
         100: "#e0e0e0",     //darker grey
@@ -20,7 +21,7 @@ export const tokensDark = {
         1000: "#000000",    // manually adjusted
     },
     primary: {
-        100: "#fcd2d3",
+        100: "#6200EE",     
         200: "#f8a5a7",
         300: "#f5777b",
         400: "#3697E5",     //sky blue, the active sidebar title font colour when hover 
