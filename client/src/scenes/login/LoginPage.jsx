@@ -10,7 +10,7 @@ const LoginPage = () => {
         <Box className="container">
             <Box className="title-component" >
                 <Typography className="title-text" >
-                    <FormattedMessage id="logo.name" />
+                    <FormattedMessage id="lucky.serial" />
                 </Typography>
             </Box>
 

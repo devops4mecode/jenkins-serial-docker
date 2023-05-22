@@ -74,11 +74,11 @@ const Form = () => {
 
                     <Dialog open={Boolean(error)} onClose={handleCloseErrorDialog}>
                         <DialogTitle>
-                            Error
+                            <FormattedMessage id="login.error"/>
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                                These credentials do not match our records.
+                                <FormattedMessage id="login.failed" />
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>

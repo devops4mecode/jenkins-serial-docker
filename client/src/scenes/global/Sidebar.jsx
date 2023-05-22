@@ -14,41 +14,7 @@ import '../../css/global.css'
 import Logo from '../../assets/logo.png'
 import { useLogout } from '../../hooks/useLogout';
 
-// const { logout } = useLogout()
 
-const navItems = [
-    {
-        text: "Dashboard",
-        translationKey: "dashboardNav",
-        image: <img src={dashboardIcon} alt="dashboard" width="25" height="25" />
-    },
-    {
-        text: "Generate Serial",
-        translationKey: "generateSerialNav",
-        image: <img src={generateIcon} alt="receipt" width="25" height="25" />
-    },
-    {
-        text: "All Serial",
-        translationKey: "allSerialNav",
-        image: <img src={allIcon} alt="numbers" width="25" height="25" />
-    },
-    {
-        text: "Active Serial",
-        translationKey: "unclaimedSerialNav",
-        image: <img src={unclaimedIcon} alt="report" width="25" height="25" />
-    },
-    {
-        text: "Redeemed Serial",
-        translationKey: "claimedSerialNav",
-        image: <img src={claimedIcon} alt="user" width="25" height="25" />
-    },
-    {
-        text: "Logout",
-        translationKey: "logoutNav",
-        image: <img src={logoutIcon} alt="setting" width="25" height="25" />,
-        // onClick: logout
-    }
-]
 
 const Sidebar = ({
     drawerWidth,
@@ -64,7 +30,7 @@ const Sidebar = ({
     const navigate = useNavigate()
     const theme = useTheme()
 
- 
+    const { logout } = useLogout()
 
     useEffect(() => {
         setActive(pathname.substring(1))
@@ -93,6 +59,40 @@ const Sidebar = ({
             setIsSidebarOpen(false)
         }
     }
+
+    const navItems = [
+        {
+            text: "Dashboard",
+            translationKey: "dashboardNav",
+            image: <img src={dashboardIcon} alt="dashboard" width="25" height="25" />
+        },
+        {
+            text: "Generate Serial",
+            translationKey: "generateSerialNav",
+            image: <img src={generateIcon} alt="receipt" width="25" height="25" />
+        },
+        {
+            text: "All Serial",
+            translationKey: "allSerialNav",
+            image: <img src={allIcon} alt="numbers" width="25" height="25" />
+        },
+        {
+            text: "Active Serial",
+            translationKey: "unclaimedSerialNav",
+            image: <img src={unclaimedIcon} alt="report" width="25" height="25" />
+        },
+        {
+            text: "Redeemed Serial",
+            translationKey: "claimedSerialNav",
+            image: <img src={claimedIcon} alt="user" width="25" height="25" />
+        },
+        {
+            text: "Logout",
+            translationKey: "logoutNav",
+            image: <img src={logoutIcon} alt="setting" width="25" height="25" />,
+            onClick: logout
+        }
+    ]
 
     const DrawerContent = () => {
         return (

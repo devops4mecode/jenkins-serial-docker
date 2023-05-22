@@ -2,6 +2,17 @@ import { LOCALES } from "./locales"
 
 export const messages = {
     [LOCALES.ENGLISH]: {
+
+        // login page
+        "lucky.serial": "Lucky Serial",
+        "login.username": "Username",
+        "login.password": "Password",
+        "login.button": "Login",
+        "login.username.error": "Please enter your login username",
+        "login.password.error": "Please enter your password",
+        "login.error": "Error",
+        "login.failed": "These credentials do not match our records.",
+
         // navbar
         "search": "Search",
 
@@ -12,6 +23,27 @@ export const messages = {
         "unclaimedSerialNav": "Active Serial",
         "claimedSerialNav": "Redeemed Serial",
         "logoutNav": "Logout",
+
+        //page: dashboard
+        "dashboard": "Dashboard",
+        "dash.text": "Lucky Serial",
+        "all.time": "ALL TIME",
+        "this.year": "THIS YEAR",
+        "this.month": "THIS MONTH",
+        "last.week": "LAST WEEK",
+        "this.week": "THIS WEEK",
+        "yesterday": "YESTERDAY",
+        "today": "TODAY",
+        "start.date": "Start Date",
+        "end.date": "End Date",
+        "total.generated": "Total Generated",
+        "total": "Total",
+        "total.count.redeemed": "Total Count Redeemed",
+        "total.rm.redeemed": "Total Amount Redeemed",
+        "total.redeemed.count": "Total Redeemed (Count)",
+        "most.redeemed.percentage": "Most Redeemed (%)",
+        "top10": "Top 10",
+        
 
         //page: generate
         "generate.serial": "Generate Serial",
@@ -46,6 +78,16 @@ export const messages = {
 
 
     [LOCALES.CHINESE]: {
+        // login page
+        "lucky.serial": "幸运序号",
+        "login.username": "用户名",
+        "login.password": "密码",
+        "login.button": "登录",
+        "login.username.error": "请输入您的用户名",
+        "login.password.error": "请输入您的密码",
+        "login.error": "Error",
+        "login.failed": "抱歉，您的资料不存在我们的记录",
+
         // navbar
         "search": "搜索",
 
@@ -56,6 +98,26 @@ export const messages = {
         "unclaimedSerialNav": "未兑换序号",
         "claimedSerialNav": "已兑换序号",
         "logoutNav": "退出",
+
+        //page: dashboard
+        "dashboard": "仪表盘",
+        "dash.text": "幸运序号",
+        "all.time": "全部",
+        "this.year": "今年",
+        "this.month": "这个月",
+        "last.week": "上个星期",
+        "this.week": "这个星期",
+        "yesterday": "昨天",
+        "today": "今天",
+        "start.date": "从",
+        "end.date": "到",
+        "total": "总数",
+        "total.count.redeemed": "兑换总数",
+        "total.rm.redeemed": "兑换总金额",
+        "total.generated": "总生成",
+        "total.redeemed.count": "总兑换量",
+        "most.redeemed.percentage": "兑换占比",
+        "top10": "前10兑换账号",
 
         //page: generate
         "generate.serial": "生成序号",
@@ -90,6 +152,16 @@ export const messages = {
 
 
     [LOCALES.MALAY]: {
+        // login page
+        "lucky.serial": "Lucky Serial",
+        "login.username": "Nama Pengguna",
+        "login.password": "Kata Laluan",
+        "login.button": "Masuk",
+        "login.username.error": "Sila masukkan nama pengguna log masuk anda",
+        "login.password.error": "Sila masukkan kata laluan anda",
+        "login.error": "Error",
+        "login.failed": "Bukti kelayakan ini tidak sepadan dengan rekod kami.",
+
         // navbar
         "search": "Carian",
 
@@ -100,6 +172,26 @@ export const messages = {
         "unclaimedSerialNav": "Siri Belum Ditebus",
         "claimedSerialNav": "Siri Ditebus",
         "logoutNav": "Log Keluar",
+
+        //page: dashboard
+        "dashboard": "Papan Pemuka",
+        "dash.text": "Lucky Serial",
+        "all.time": "SEMUA",
+        "this.year": "TAHUN INI",
+        "this.month": "BULAN INI",
+        "last.week": "MINGGU LEPAS",
+        "this.week": "MINGGU INI",
+        "yesterday": "SEMALAM",
+        "today": "HARI INI",
+        "start.date": "Dari",
+        "end.date": "Sampai",
+        "total": "Jumlah",
+        "total.count.redeemed": "Jumlah Kiraan Ditebus",
+        "total.rm.redeemed": "Jumlah Amaun yang Ditebus",
+        "total.generated": "Jumlah Menjana",
+        "total.redeemed.count": "Jumlah Ditebus",
+        "most.redeemed.percentage": "Paling Banyak Ditebus",
+        "top10": "10 Teratas Akaun yang Ditebus",
 
         //page: generate
         "generate.serial": "Menjana Nombor Siri",
