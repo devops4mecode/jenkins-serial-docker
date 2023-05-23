@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { FormattedMessage } from "react-intl";
 import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarExport, GridToolbarFilterButton } from "@mui/x-data-grid"
-import { Box, useTheme } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import Header from "../components/Header";
 
 
 const UnusedNumber = () => {
+
+    const isNonMediumScreen = useMediaQuery("(min-width: 1200px)")
 
     const { user } = useAuthContext()
     const [serials, setSerials] = useState([])
@@ -58,12 +60,12 @@ const UnusedNumber = () => {
             type: "number",
             headerAlign: "center",
             align: "center",
-            width: 370
+            width: 250
         },
         {
             field: "remarkName",
             headerName: <FormattedMessage id="serial.buyer" />,
-            width: 370,
+            width: 250,
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center"
@@ -90,6 +92,21 @@ const UnusedNumber = () => {
             </GridToolbarContainer>
         )
     }
+    // sx={{
+    //     "& .name-column--cell": {
+    //         color: '#2E7C67'
+    //     },
+    //     "& .MuiDataGrid-columnHeaders": {
+    //         backgroundColor: '#a4a9fc'
+    //     },
+    //     "& .MuiDataGrid-footerContainer": {
+    //         backgroundColor: '#a4a9fc'
+    //     },
+    //     "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+    //         color: `'#141414' !important`
+    //     },
+    // }}
+
 
     return (
         <Box m="20px">
@@ -97,31 +114,48 @@ const UnusedNumber = () => {
                 title={<FormattedMessage id="valid.serial" />}
                 subtitle={<FormattedMessage id="valid.serial" />}
             />
-            <Box height="70vh" width='100%' sx={{
-                "& .name-column--cell": {
-                    color: '#2E7C67'
-                },
-                "& .MuiDataGrid-columnHeaders": {
-                    backgroundColor: '#a4a9fc'
-                },
-                "& .MuiDataGrid-footerContainer": {
-                    backgroundColor: '#a4a9fc'
-                },
-                "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                    color: `'#141414' !important`
-                },
-            }}>
-                <DataGrid
-                    rows={serials}
-                    columns={columns}
-                    components={{ Toolbar: CustomToolbar }}
-                    getRowId={getRowId}
-                    disableColumnMenu
-                />
 
-                <Box className="footer"></Box>
+            <Box
+                mt="5px"
+                display="grid"
+                gridTemplateColumns="repeat(12, 1fr)"
+                gridAutoRows="160px"
+                gap="20px"
+                sx={{
+                    "& > div": { gridColumn: isNonMediumScreen ? undefined : "span 12" },
+                    "& .name-column--cell": {
+                        color: '#2E7C67'
+                    },
+                    "& .MuiDataGrid-columnHeaders": {
+                        backgroundColor: '#a4a9fc'
+                    },
+                    "& .MuiDataGrid-footerContainer": {
+                        backgroundColor: '#a4a9fc'
+                    },
+                    "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                        color: `'#141414' !important`
+                    },
+                }}
+            >
+                <Box
+                    gridColumn="span 12"
+                    height="70vh"
+                    backgroundColor="#FFFFFF"
+                    borderRadius="0.55rem"
+                    className="defaultSection"
+                >
+                    <DataGrid
+                        rows={serials}
+                        columns={columns}
+                        components={{ Toolbar: CustomToolbar }}
+                        getRowId={getRowId}
+                        disableColumnMenu
+                    />
+                </Box>
             </Box>
-        </Box>
+            <Box className="footer"></Box>
+
+        </Box >
     )
 }
 

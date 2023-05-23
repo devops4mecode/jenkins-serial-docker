@@ -1,7 +1,7 @@
 import axios from "axios";
 import moment from "moment"
 import { useEffect, useState } from "react";
-import { Button, useTheme } from "@mui/material";
+import { Button, useMediaQuery, useTheme } from "@mui/material";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarExport, GridToolbarFilterButton } from "@mui/x-data-grid"
@@ -17,6 +17,8 @@ import DeleteModal from '../components/DeleteModal'
 // };
 
 const AllNumber = () => {
+
+    const isNonMediumScreen = useMediaQuery("(min-width: 1200px)")
 
     const { user } = useAuthContext()
     const intl = useIntl()
@@ -173,26 +175,34 @@ const AllNumber = () => {
                 subtitle={<FormattedMessage id="all.serial" />}
             />
             <Box
+                mt="5px"
+                display="grid"
+                gridTemplateColumns="repeat(12, 1fr)"
+                gridAutoRows="160px"
+                gap="20px"
                 sx={{
-                    height: '70vh',
-                    width: '100%',
+                    "& > div": { gridColumn: isNonMediumScreen ? undefined : "span 12" },
                     "& .name-column--cell": {
                         color: '#2E7C67'
                     },
                     "& .MuiDataGrid-columnHeaders": {
-                        backgroundColor: '#a4a9fc',
-                        borderBottom: "none"
+                        backgroundColor: '#a4a9fc'
                     },
                     "& .MuiDataGrid-footerContainer": {
                         backgroundColor: '#a4a9fc'
                     },
                     "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                        color: `'#141414 !important`
+                        color: `'#141414' !important`
                     },
-                    "& .status-redeemed": {
-                        color: "red",
-                    },
-                }}>
+                }}
+            >
+                <Box
+                    gridColumn="span 12"
+                    height="70vh"
+                    backgroundColor="#FFFFFF"
+                    borderRadius="0.55rem"
+                    className="defaultSection"
+                >
 
                 <Box display='flex' justifyContent='end' paddingBottom='15px'>
                     <Button variant="contained" color="error" onClick={handleOpenModal}>
@@ -210,6 +220,7 @@ const AllNumber = () => {
                     disableColumnMenu
                     onRowSelectionModelChange={handleRowSelectionChange}
                 />
+                </Box>
 
                 <Box className="footer"></Box>
             </Box>
