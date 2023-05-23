@@ -89,9 +89,11 @@ exports.generateSummary = () => {
     const reportSummary = new CronJob('* * * * * *', async function () {
 
         // STUPID DATE
-        const todayStart = moment().utcOffset('+08:00').startOf('day')
+        const todayStart = moment().utcOffset('+08:00')
+        .startOf('day')
             .toDate();
-        const todayEnd = moment().utcOffset('+08:00').endOf('day')
+        const todayEnd = moment().utcOffset('+08:00')
+        .endOf('day')
             .toDate();
 
         const [
@@ -193,6 +195,8 @@ exports.generateSummary = () => {
                 totalCredit: totalGivenCredit
             })),
             totalAmountRedeemed: totalAmountRedeemed[0]?.sum || 0,
+            createdAt: todayStart,
+            updatedAt: todayEnd
         };
 
         const existingSummary = await Report.findOne({ createdAt: { $gte: todayStart, $lte: todayEnd } })
@@ -208,55 +212,3 @@ exports.generateSummary = () => {
         "Asia/Singapore"
     );
 }
-
-
-// [
-//     {
-//         "amount": 5,
-//         "count": 0
-//     },
-//     {
-//         "amount": 10,
-//         "count": 0
-//     },
-//     {
-//         "amount": 15,
-//         "count": 0
-//     },
-//     {
-//         "amount": 20,
-//         "count": 0
-//     },
-//     {
-//         "amount": 30,
-//         "count": 0
-//     },
-//     {
-//         "amount": 50,
-//         "count": 0
-//     },
-//     {
-//         "amount": 100,
-//         "count": 0
-//     },
-//     {
-//         "amount": 200,
-//         "count": 0
-//     },
-//     {
-//         "amount": 300,
-//         "count": 0
-//     },
-//     {
-//         "amount": 500,
-//         "count": 12
-//     },
-//     {
-//         "amount": 800,
-//         "count": 0
-//     },
-//     {
-//         "amount": 1000,
-//         "count": 0
-//     },
-// ]

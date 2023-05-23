@@ -7,6 +7,7 @@ import { FormattedMessage } from 'react-intl'
 import Header from '../components/Header'
 import LineChart from "../components/LineChart"
 import totalRedeemCountIcon from '../assets/total-redeem-count.png'
+import percentageIcon from '../assets/percentage.png'
 import totalAmountRedeemedIcon from '../assets/total-redeemed-rm.png'
 import totalGeneratedIcon from '../assets/total-generated.png'
 import totalRedeemedIcon from '../assets/total-redeemed-count.png'
@@ -189,19 +190,19 @@ const Dashboard = () => {
 
                 <Grid container spacing={1} columns={12}>
                     <Grid item xs={12} sm={12} md={7} xl={8} >
-                        {/* {chartData ? (
+                        {chartData ? (
 
-                            <Box  height="400px" m="20px 0 0 0">
+                            <Box height="400px" m="20px 0 0 0">
                                 <Box>
                                     <Select
                                         value={year}
                                         label="Year"
                                         onChange={handleYearChange}
                                         style={{
-                                            border: '1px solid white',
+                                            border: '1px solid #6200EE15',
                                             color: '#6200EE',
-                                            fontSize: '16px',
-                                            height: '40px'
+                                            fontSize: '14px',
+                                            height: '35px'
                                         }}
                                     >
                                         <MenuItem value={2023}>2023</MenuItem>
@@ -213,27 +214,30 @@ const Dashboard = () => {
                             </Box>
                         ) : (
                             <div>Loading...</div>
-                        )} */}
+                        )}
                     </Grid>
 
                     <Grid item xs={12} sm={12} md={5} xl={4} >
-                        <Box className="default-section">
-                            <Box>
-                                <Typography className='top-section-title'><FormattedMessage id='total' /></Typography>
-                            </Box>
-                            <Box className="top-inner-padding">
-                                <Box display="flex" className="top-border-bottom">
-                                    <Typography><img src={totalRedeemCountIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                    <Typography className="top-small-title"><FormattedMessage id='total.count.redeemed' /></Typography>
-                                    <Divider className="top-divider" orientation="vertical" flexItem />
-                                    <Typography className='small-count'>{reportData.overallRedeemedCount}</Typography>
-                                </Box>
+                        <Box className="topRight">
 
-                                <Box display="flex" paddingTop={1}>
-                                    <Typography><img src={totalAmountRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                    <Typography className="top-small-title"><FormattedMessage id='total.rm.redeemed' /></Typography>
-                                    <Divider className="top-divider" orientation="vertical" flexItem />
-                                    <Typography className='small-count'>{`RM ${reportData.totalAmountRedeemed}`}</Typography>
+                            <Box className="default-section">
+                                <Box>
+                                    <Typography className='top-section-title'><FormattedMessage id='total' /></Typography>
+                                </Box>
+                                <Box className="top-inner-padding">
+                                    <Box display="flex" className="top-border-bottom">
+                                        <Typography><img src={totalRedeemCountIcon} alt="total-generater" className="icon-inside" /></Typography>
+                                        <Typography className="top-small-title"><FormattedMessage id='total.count.redeemed' /></Typography>
+                                        <Divider className="top-divider" orientation="vertical" flexItem />
+                                        <Typography className='small-count'>{reportData.overallRedeemedCount}</Typography>
+                                    </Box>
+
+                                    <Box display="flex" paddingTop={1}>
+                                        <Typography><img src={totalAmountRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
+                                        <Typography className="top-small-title"><FormattedMessage id='total.rm.redeemed' /></Typography>
+                                        <Divider className="top-divider" orientation="vertical" flexItem />
+                                        <Typography className='small-count'>{`RM ${reportData.totalAmountRedeemed}`}</Typography>
+                                    </Box>
                                 </Box>
                             </Box>
                         </Box>
@@ -261,29 +265,24 @@ const Dashboard = () => {
                 </Box>
                 <Grid container className="gridFilter">
                     <Box>
-                        <label className='calendar-label'><FormattedMessage id='start.date'/></label>
+                        <label className='calendar-label'><FormattedMessage id='start.date' /></label>
                         <DatePicker
                             selected={startDate}
                             onChange={date => setStartDate(date)}
-                            dateFormat="MM/dd/yyyy"
+                            dateFormat="dd/MM/yyyy"
                             customInput={<CustomInput onClear={handleStartDate} />}
                         />
                     </Box>
                     <Box>
-                        <label className='calendar-label'><FormattedMessage id='end.date'/></label>
+                        <label className='calendar-label'><FormattedMessage id='end.date' /></label>
                         <DatePicker
-                            selected={startDate}
-                            onChange={date => setStartDate(date)}
-                            dateFormat="MM/dd/yyyy"
+                            selected={endDate}
+                            onChange={date => setEndDate(date)}
+                            dateFormat="dd/MM/yyyy"
                             customInput={<CustomInput onClear={handleEndDate} />}
                         />
                     </Box>
                 </Grid>
-
-
-
-
-
             </Box>
 
 
@@ -302,21 +301,21 @@ const Dashboard = () => {
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 5</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.overallGeneratedCount[0]?.count}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 10</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5 </Typography>
+                                            <Typography className='small-count'>{reportData.overallGeneratedCount[1]?.count}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 15</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.overallGeneratedCount[2]?.count}</Typography>
                                         </Box>
                                     </Box>
                                     <Box className="inner-padding">
@@ -324,21 +323,21 @@ const Dashboard = () => {
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 20</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.overallGeneratedCount[3]?.count}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 30</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.overallGeneratedCount[4]?.count}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 50</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.overallGeneratedCount[5]?.count}</Typography>
                                         </Box>
                                     </Box>
                                 </Grid>
@@ -349,21 +348,21 @@ const Dashboard = () => {
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 100</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.overallGeneratedCount[6]?.count}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 200</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.overallGeneratedCount[7]?.count}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 300</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.overallGeneratedCount[8]?.count}</Typography>
                                         </Box>
                                     </Box>
                                     <Box className="inner-padding">
@@ -371,21 +370,21 @@ const Dashboard = () => {
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 500</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.overallGeneratedCount[9]?.count}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 800</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.overallGeneratedCount[10]?.count}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 1000</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.overallGeneratedCount[11]?.count}</Typography>
                                         </Box>
                                     </Box>
                                 </Grid>
@@ -402,46 +401,46 @@ const Dashboard = () => {
                                 <Grid item xs={12} sm={6} md={6} lg={6} borderRight={{ sm: "1px solid #e3e4e6" }}>
                                     <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 5</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.redeemedCount[0]?.count}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 10</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.redeemedCount[1]?.count}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 15</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.redeemedCount[2]?.count}</Typography>
                                         </Box>
                                     </Box>
                                     <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 20</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.redeemedCount[3]?.count}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 30</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.redeemedCount[4]?.count}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 50</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.redeemedCount[5]?.count}</Typography>
                                         </Box>
                                     </Box>
                                 </Grid>
@@ -449,46 +448,46 @@ const Dashboard = () => {
                                 <Grid item xs={12} sm={6} md={6} lg={6}>
                                     <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 100</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.redeemedCount[6]?.count}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 200</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.redeemedCount[7]?.count}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 300</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.redeemedCount[8]?.count}</Typography>
                                         </Box>
                                     </Box>
                                     <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 500</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.redeemedCount[9]?.count}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 800</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.redeemedCount[10]?.count}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 1000</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.redeemedCount[11]?.count}</Typography>
                                         </Box>
                                     </Box>
                                 </Grid>
@@ -510,46 +509,46 @@ const Dashboard = () => {
                                 <Grid item xs={12} sm={6} md={6} lg={6} borderRight={{ sm: "1px solid #e3e4e6" }}>
                                     <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 5</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.mostRedeemed[0]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 10</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.mostRedeemed[1]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 15</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.mostRedeemed[2]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
                                     </Box>
                                     <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 20</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.mostRedeemed[3]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 30</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.mostRedeemed[4]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 50</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.mostRedeemed[5]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
                                     </Box>
                                 </Grid>
@@ -557,49 +556,46 @@ const Dashboard = () => {
                                 <Grid item xs={12} sm={6} md={6} lg={6}>
                                     <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 100</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.mostRedeemed[6]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 200</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.mostRedeemed[7]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 300</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.mostRedeemed[8]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
                                     </Box>
-                                    {/* </Grid>
-
-                                <Grid item xs={12} sm={6} md={6} lg={3}> */}
                                     <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 500</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.mostRedeemed[9]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 800</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.mostRedeemed[10]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 1000</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.mostRedeemed[11]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
                                     </Box>
                                 </Grid>
@@ -617,46 +613,46 @@ const Dashboard = () => {
                                 <Grid item xs={12} sm={6} md={6} lg={6}>
                                     <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={thirdIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={thirdIcon} alt="top10" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> 1st</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.topTen[0]?.name}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={thirdIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={thirdIcon} alt="top10" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> 2nd</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.topTen[1]?.name}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={thirdIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={thirdIcon} alt="top10" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> 3rd</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.topTen[2]?.name}</Typography>
                                         </Box>
                                     </Box>
                                     <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={consolationIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography><img src={consolationIcon} alt="top10" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> 4th</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.topTen[3]?.name}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
+                                            <Typography><img src={consolationIcon} alt="top10" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> 5th</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.topTen[4]?.name}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
+                                            <Typography><img src={consolationIcon} alt="top10" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> 6th</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.topTen[5]?.name}</Typography>
                                         </Box>
                                     </Box>
                                 </Grid>
@@ -664,35 +660,32 @@ const Dashboard = () => {
                                 <Grid item xs={12} sm={6} md={6} lg={6}>
                                     <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
+                                            <Typography><img src={consolationIcon} alt="top10" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> 7th</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.topTen[6]?.name}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
+                                            <Typography><img src={consolationIcon} alt="top10" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> 8th</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.topTen[7]?.name}</Typography>
                                         </Box>
 
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
+                                            <Typography><img src={consolationIcon} alt="top10" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> 9th</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.topTen[8]?.name}</Typography>
                                         </Box>
                                     </Box>
-                                    {/* </Grid>
-
-                                <Grid item xs={12} sm={6} md={6} lg={3}> */}
                                     <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
-                                            <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
+                                            <Typography><img src={consolationIcon} alt="top10" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> 10th</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
-                                            <Typography className='small-count'>5</Typography>
+                                            <Typography className='small-count'>{reportData.topTen[9]?.name}</Typography>
                                         </Box>
                                     </Box>
                                 </Grid>

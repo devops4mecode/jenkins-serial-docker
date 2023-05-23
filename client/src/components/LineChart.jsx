@@ -1,11 +1,11 @@
 import { ResponsiveLine } from "@nivo/line"
 import { useIntl } from "react-intl"
+import '../'
 
 
 const LineChart = ({ isDashboard, monthlyGenerated, monthlyRedeemed }) => {
 
     const intl = useIntl();
-
 
     const chartData = [
         {
@@ -61,17 +61,19 @@ const LineChart = ({ isDashboard, monthlyGenerated, monthlyRedeemed }) => {
     return (
         <ResponsiveLine
             data={chartData}
+
+
             theme={{
                 axis: {
-                    domain: { line: { stroke: "#e0e0e0" } },
-                    legend: { text: { fill: "#e0e0e0" } },
+                    domain: { line: { stroke: "#141414" } },
+                    legend: { text: { fill: "#141414" } },
                     ticks: {
-                        line: { stroke: "#e0e0e0", strokeWidth: 1 },
-                        text: { fill: "#e0e0e0" }
+                        line: { stroke: "#141414", strokeWidth: 1 },
+                        text: { fill: "#141414" }
                     }
                 },
-                legends: { text: { fill: "#e0e0e0" } },
-                tooltip: { container: { color: "#141b2d" } }
+                legends: { text: { fill: "#141414" } },
+                tooltip: { container: { color: "#141414" } }
             }}
             colors={isDashboard ? { datum: "color" } : { scheme: "nivo" }}
             margin={{ top: 50, right: 30, bottom: 50, left: 40 }}

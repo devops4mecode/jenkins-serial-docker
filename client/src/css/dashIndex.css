@@ -1,11 +1,10 @@
-/* .top-default-section {
-    background-color: white;
-    max-width: 100%;
-    padding: 30px;
-    box-shadow: 1px 2px 5px #cccccc;
-    border-radius: 0.3rem;
-    margin-bottom: 20px;
-} */
+.top-default-section {
+    padding-bottom: 65px;
+}
+
+.topRight {
+    padding-top: 100px;
+}
 
 .default-section {
     background-color: white;
@@ -16,8 +15,12 @@
     margin-bottom: 20px;
 }
 
-.divider{
+.divider {
     height: 27px !important;
+}
+
+.top-divider {
+    height: 27px;
 }
 
 .inner-padding {
@@ -26,26 +29,20 @@
     padding-bottom: 24px;
 }
 
-.top-border-bottom {
-    border-bottom: 1px solid lightgrey;
-    padding-top: 7px;
-    padding-bottom: 7px;
-}
-
-.top-divider{
-    height: 27px;
-}
-
 .top-inner-padding {
     padding-left: 20px;
     padding-right: 40px;
 }
 
-.top-small-title {
-    font-size: 14px !important;
-    color: #747474;
-    width: 80%;
-    padding: 5px 0px 10px 20px;
+.border-bottom {
+    border-bottom: 1px solid lightgrey;
+    padding-top: 7px;
+}
+
+.top-border-bottom {
+    border-bottom: 1px solid lightgrey;
+    padding-top: 7px;
+    padding-bottom: 7px;
 }
 
 .icon-inside {
@@ -55,10 +52,17 @@
 }
 
 .small-title {
+    font-size: 14px !important;
+    color: #747474;
+    width: 56%;
+    padding: 5px 0px 0px 20px;
+}
+
+.top-small-title {
     font-size: 13px !important;
     color: #747474;
-    width: 40%;
-    padding: 5px 0px 0px 20px;
+    width: 80%;
+    padding: 5px 0px 10px 20px;
 }
 
 .small-count {
@@ -70,9 +74,12 @@
     border-left: 1px soild lightgrey;
 }
 
-.border-bottom {
-    border-bottom: 1px solid lightgrey;
-    padding-top: 7px;
+.section-title {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #545454;
+    padding-left: 15px;
+    padding-bottom: 20px;
 }
 
 .top-section-title {
@@ -83,25 +90,15 @@
     padding-bottom: 20px;
 }
 
-.section-title {
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    color: #545454;
-    padding-left: 15px;
-    padding-bottom: 20px;
-}
-
 .apply-filter {
     justify-content: center;
     display: flex;
-    /* flex-direction: column;    */
 }
 
 .button-container {
     display: grid;
     grid-gap: 15px;
     grid-template-columns: repeat(7, 1fr);
-    
 }
 
 .filter-button {
@@ -109,8 +106,7 @@
     font-size: 12px !important;
 }
 
-
-.gridFilter{
+.gridFilter {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-row-gap: 5px !important;
@@ -133,7 +129,7 @@
         padding-bottom: 24px;
     }
 
-    .top-divider{
+    .top-divider {
         height: 42px !important;
     }
 
@@ -152,7 +148,7 @@
         padding-bottom: 24px;
     }
 
-    .top-divider{
+    .top-divider {
         height: 45px !important;
     }
 
@@ -171,9 +167,16 @@
     .filter-button {
         font-size: 12px !important;
     }
+}
 
-
+@media (max-width: 1024px) {
+    .top-default-section {
+        padding-bottom: 0px ;
+    }
     
+    .topRight {
+       padding-top: 50px;
+    }
 }
 
 @media (max-width: 1024px) {
@@ -183,9 +186,7 @@
         padding-bottom: 22px;
         padding-top: 15px;
     }
-}
 
-@media (max-width: 1024px) {
     .top-section-title {
         padding-left: 10px;
     }

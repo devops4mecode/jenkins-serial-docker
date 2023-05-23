@@ -46,6 +46,9 @@ export const messages = {
         "start.date": "From",
         "end.date": "To",
 
+        // Chart
+        "chart.redeemed": "Redeemed",
+        "chart.sold": "Sold",
 
         //page: generate
         "generate.serial": "Generate Serial",
@@ -123,6 +126,10 @@ export const messages = {
         "start.date": "从",
         "end.date": "到",
 
+        // Chart
+        "chart.redeemed": "兑换",
+        "chart.sold": "售出",
+
         //page: generate
         "generate.serial": "生成序号",
         "top.up.credit": "充值",
@@ -198,6 +205,10 @@ export const messages = {
         "today": "HARI INI",
         "start.date": "Dari",
         "end.date": "Sampai",
+
+        // Chart
+        "chart.redeemed": "PENEBUSAN",
+        "chart.sold": "DIJUAL",
 
         //page: generate
         "generate.serial": "Menjana Nombor Siri",
