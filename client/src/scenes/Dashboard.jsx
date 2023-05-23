@@ -16,10 +16,10 @@ import consolationIcon from '../assets/consolation.png'
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import ClearIcon from '@mui/icons-material/Clear';
 import '../css/dashIndex.css'
+import "react-datepicker/dist/react-datepicker.css"
 import '../css/calendar.css'
 import moment from 'moment';
-import DatePicker from "react-datepicker";
-
+import DatePicker from 'react-datepicker';
 
 const Dashboard = () => {
     const { user } = useAuthContext()
@@ -131,7 +131,6 @@ const Dashboard = () => {
                 });
 
                 setReportData(data)
-                console.log(reportData)
             } catch (error) {
                 console.log(error)
             }
@@ -139,42 +138,41 @@ const Dashboard = () => {
         getDashboard()
     }, [startDate, endDate])
 
-    // const CustomInput = ({ value, onClick, onClear }) => (
-    //     <Box
-    //         sx={{
-    //             display: 'flex',
-    //             justifyContent: 'space-between',
-    //             border: '0.5px solid #A5CDF7',
-    //             borderRadius: '0.3rem',
-    //             width: '13rem',
-    //             height: '2rem',
-    //             padding: '0.2rem 0.5rem',
-    //             fontSize: '13px',
-    //             color: '#474747',
-    //             fontWeight: 500,
-    //             alignItems: 'center',
-    //         }}
-    //         onClick={onClick}
-    //     >
-    //         <CalendarMonthOutlinedIcon sx={{ fontSize: '20px', color: '#2A75EA', marginRight: '4px' }} />
-    //         <span style={{}}>{value}</span>
-    //         {value && (
-    //             <ClearIcon
-    //                 sx={{ fontSize: '20px', color: '#999', cursor: 'pointer' }}
-    //                 onClick={onClear}
-    //             />
-    //         )}
-    //     </Box>
-    // );
+    const CustomInput = ({ value, onClick, onClear }) => (
+        <Box
+            sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                border: '0.5px solid #A5CDF7',
+                borderRadius: '0.3rem',
+                width: '13rem',
+                height: '2rem',
+                padding: '0.2rem 0.5rem',
+                fontSize: '13px',
+                color: '#474747',
+                fontWeight: 500,
+                alignItems: 'center',
+            }}
+            onClick={onClick}
+        >
+            <CalendarMonthOutlinedIcon sx={{ fontSize: '20px', color: '#2A75EA', marginRight: '4px' }} />
+            <span style={{}}>{value}</span>
+            {value && (
+                <ClearIcon
+                    sx={{ fontSize: '20px', color: '#999', cursor: 'pointer' }}
+                    onClick={onClear}
+                />
+            )}
+        </Box>
+    );
 
-    // const handleStartDate = () => {
-    //     setStartDate(null)
-    // }
+    const handleStartDate = () => {
+        setStartDate(null)
+    }
 
-    // const handleEndDate = () => {
-    //     setEndDate(null)
-    // }
-
+    const handleEndDate = () => {
+        setEndDate(null)
+    }
 
 
     return (
@@ -245,7 +243,7 @@ const Dashboard = () => {
             </Box>
 
             <Box className="default-section">
-                <Box className="apply-filter" display='flex'>
+                <Box className="apply-filter" >
                     <Box className="button-container">
                         {/* Button For Change Date Range */}
                         {buttonData.map((button, index) => (
@@ -259,436 +257,446 @@ const Dashboard = () => {
                             </Button>
                         ))}
                     </Box>
-                </Box>
 
-                {/* <Box>
+                </Box>
+                <Grid container className="gridFilter">
                     <Box>
-                        <label>to</label>
-                        <DatePicker selected={startDate}
+                        <label className='calendar-label'><FormattedMessage id='start.date'/></label>
+                        <DatePicker
+                            selected={startDate}
                             onChange={date => setStartDate(date)}
                             dateFormat="MM/dd/yyyy"
+                            customInput={<CustomInput onClear={handleStartDate} />}
                         />
                     </Box>
-
                     <Box>
+                        <label className='calendar-label'><FormattedMessage id='end.date'/></label>
+                        <DatePicker
+                            selected={startDate}
+                            onChange={date => setStartDate(date)}
+                            dateFormat="MM/dd/yyyy"
+                            customInput={<CustomInput onClear={handleEndDate} />}
+                        />
                     </Box>
-                </Box> */}
+                </Grid>
+
+
+
+
+
             </Box>
 
 
-            <Box className="default-section">
-                <Box>
-                    <Typography className='section-title'><FormattedMessage id='total.generated' /></Typography>
-                </Box>
-
-                <Grid container spacing={1} columns={12}>
-                    <Grid item xs={12} sm={6} md={6} lg={3} borderRight={{ sm: "1px solid #e3e4e6" }}>
-                        <Box className="inner-padding">
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalGeneratedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 5</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
+            <Box className="big-default-section">
+                <Grid container spacing={2} columns={12}>
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <Box className="default-section">
+                            <Box>
+                                <Typography className='section-title'><FormattedMessage id='total.generated' /></Typography>
                             </Box>
 
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalGeneratedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 10</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5 </Typography>
-                            </Box>
+                            <Grid container spacing={1} columns={12}>
+                                <Grid item xs={12} sm={6} md={6} lg={6} borderRight={{ sm: "1px solid #e3e4e6" }}>
+                                    <Box className="inner-padding">
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 5</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
 
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalGeneratedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 15</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 10</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5 </Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 15</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+                                    </Box>
+                                    <Box className="inner-padding">
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 20</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 30</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 50</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+                                    </Box>
+                                </Grid>
+
+                                <Grid item xs={12} sm={6} md={6} lg={6}>
+                                    <Box className="inner-padding">
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 100</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 200</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 300</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+                                    </Box>
+                                    <Box className="inner-padding">
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 500</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 800</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 1000</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+                                    </Box>
+                                </Grid>
+                            </Grid>
                         </Box>
                     </Grid>
-
-                    <Grid item xs={12} sm={6} md={6} lg={3} borderRight={{ xl: "1px solid #e3e4e6" }}>
-                        <Box className="inner-padding">
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalGeneratedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 20</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <Box className="default-section">
+                            <Box>
+                                <Typography className='section-title'><FormattedMessage id='total.redeemed.count' /></Typography>
                             </Box>
 
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalGeneratedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 30</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
+                            <Grid container spacing={1} columns={12}>
+                                <Grid item xs={12} sm={6} md={6} lg={6} borderRight={{ sm: "1px solid #e3e4e6" }}>
+                                    <Box className="inner-padding">
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 5</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
 
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalGeneratedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 50</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-                        </Box>
-                    </Grid>
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 10</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
 
-                    <Grid item xs={12} sm={6} md={6} lg={3} borderRight={{ sm: "1px solid #e3e4e6" }}>
-                        <Box className="inner-padding">
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalGeneratedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 100</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 15</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+                                    </Box>
+                                    <Box className="inner-padding">
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 20</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
 
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalGeneratedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 200</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 30</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
 
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalGeneratedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 300</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-                        </Box>
-                    </Grid>
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 50</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+                                    </Box>
+                                </Grid>
 
-                    <Grid item xs={12} sm={6} md={6} lg={3}>
-                        <Box className="inner-padding">
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalGeneratedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 500</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
+                                <Grid item xs={12} sm={6} md={6} lg={6}>
+                                    <Box className="inner-padding">
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 100</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
 
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalGeneratedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 800</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 200</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
 
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalGeneratedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 1000</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 300</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+                                    </Box>
+                                    <Box className="inner-padding">
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 500</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 800</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 1000</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+                                    </Box>
+                                </Grid>
+                            </Grid>
                         </Box>
                     </Grid>
                 </Grid>
             </Box>
 
-            <Box className="default-section">
-                <Box>
-                    <Typography className='section-title'><FormattedMessage id='total.redeemed.count' /></Typography>
-                </Box>
-
-                <Grid container spacing={1} columns={12}>
-                    <Grid item xs={12} sm={6} md={6} lg={3} borderRight={{ sm: "1px solid #e3e4e6" }}>
-                        <Box className="inner-padding">
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 5</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
+            <Box className="big-default-section">
+                <Grid container spacing={2} columns={12}>
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <Box className="default-section">
+                            <Box>
+                                <Typography className='section-title'><FormattedMessage id='most.redeemed.percentage' /></Typography>
                             </Box>
 
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 10</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
+                            <Grid container spacing={1} columns={12}>
+                                <Grid item xs={12} sm={6} md={6} lg={6} borderRight={{ sm: "1px solid #e3e4e6" }}>
+                                    <Box className="inner-padding">
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 5</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
 
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 15</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 10</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 15</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+                                    </Box>
+                                    <Box className="inner-padding">
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 20</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 30</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 50</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+                                    </Box>
+                                </Grid>
+
+                                <Grid item xs={12} sm={6} md={6} lg={6}>
+                                    <Box className="inner-padding">
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 100</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 200</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 300</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+                                    </Box>
+                                    {/* </Grid>
+
+                                <Grid item xs={12} sm={6} md={6} lg={3}> */}
+                                    <Box className="inner-padding">
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 500</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 800</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={mostRedeemedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 1000</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+                                    </Box>
+                                </Grid>
+                            </Grid>
                         </Box>
                     </Grid>
 
-                    <Grid item xs={12} sm={6} md={6} lg={3} borderRight={{ xl: "1px solid #e3e4e6" }}>
-                        <Box className="inner-padding">
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 20</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <Box className="default-section">
+                            <Box>
+                                <Typography className='section-title'><FormattedMessage id='top10' /></Typography>
                             </Box>
 
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 30</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
+                            <Grid container spacing={1} columns={12}>
+                                <Grid item xs={12} sm={6} md={6} lg={6}>
+                                    <Box className="inner-padding">
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={thirdIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> 1st</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
 
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 50</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-                        </Box>
-                    </Grid>
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={thirdIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> 2nd</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
 
-                    <Grid item xs={12} sm={6} md={6} lg={3} borderRight={{ sm: "1px solid #e3e4e6" }}>
-                        <Box className="inner-padding">
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 100</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={thirdIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> 3rd</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+                                    </Box>
+                                    <Box className="inner-padding">
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={consolationIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> 4th</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
 
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 200</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> 5th</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
 
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 300</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-                        </Box>
-                    </Grid>
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> 6th</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+                                    </Box>
+                                </Grid>
 
-                    <Grid item xs={12} sm={6} md={6} lg={3}>
-                        <Box className="inner-padding">
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 500</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
+                                <Grid item xs={12} sm={6} md={6} lg={6}>
+                                    <Box className="inner-padding">
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> 7th</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
 
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 800</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> 8th</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
 
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={totalRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 1000</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-                        </Box>
-                    </Grid>
-                </Grid>
-            </Box>
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> 9th</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+                                    </Box>
+                                    {/* </Grid>
 
-            <Box className="default-section">
-                <Box>
-                    <Typography className='section-title'><FormattedMessage id='most.redeemed.percentage' /></Typography>
-                </Box>
-
-                <Grid container spacing={1} columns={12}>
-                    <Grid item xs={12} sm={6} md={6} lg={3} borderRight={{ sm: "1px solid #e3e4e6" }}>
-                        <Box className="inner-padding">
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={mostRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 5</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={mostRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 10</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={mostRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 15</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-                        </Box>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={6} lg={3} borderRight={{ xl: "1px solid #e3e4e6" }}>
-                        <Box className="inner-padding">
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={mostRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 20</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={mostRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 30</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={mostRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 50</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-                        </Box>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={6} lg={3} borderRight={{ sm: "1px solid #e3e4e6" }}>
-                        <Box className="inner-padding">
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={mostRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 100</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={mostRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 200</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={mostRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 300</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-                        </Box>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={6} lg={3}>
-                        <Box className="inner-padding">
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={mostRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 500</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={mostRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 800</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={mostRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> RM 1000</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-                        </Box>
-                    </Grid>
-                </Grid>
-            </Box>
-
-            <Box className="default-section">
-                <Box>
-                    <Typography className='section-title'><FormattedMessage id='top10' /></Typography>
-                </Box>
-
-                <Grid container spacing={1} columns={12}>
-                    <Grid item xs={12} sm={6} md={6} lg={3} borderRight={{ sm: "1px solid #e3e4e6" }}>
-                        <Box className="inner-padding">
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={thirdIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> 1st</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={thirdIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> 2nd</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={thirdIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> 3rd</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-                        </Box>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={6} lg={3} borderRight={{ xl: "1px solid #e3e4e6" }}>
-                        <Box className="inner-padding">
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> 4th</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> 5th</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> 6th</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-                        </Box>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={6} lg={3} borderRight={{ sm: "1px solid #e3e4e6" }}>
-                        <Box className="inner-padding">
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> 7th</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> 8th</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> 9th</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
-                        </Box>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={6} lg={3}>
-                        <Box className="inner-padding">
-                            <Box display="flex" className="border-bottom">
-                                <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                <Typography className="small-title"> 10th</Typography>
-                                <Divider className="divider" orientation="vertical" flexItem />
-                                <Typography className='small-count'>5</Typography>
-                            </Box>
+                                <Grid item xs={12} sm={6} md={6} lg={3}> */}
+                                    <Box className="inner-padding">
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={consolationIcon} alt="total-generater" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> 10th</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>5</Typography>
+                                        </Box>
+                                    </Box>
+                                </Grid>
+                            </Grid>
                         </Box>
                     </Grid>
                 </Grid>

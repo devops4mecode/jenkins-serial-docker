@@ -26,16 +26,7 @@ export const messages = {
 
         //page: dashboard
         "dashboard": "Dashboard",
-        "dash.text": "Lucky Serial",
-        "all.time": "ALL TIME",
-        "this.year": "THIS YEAR",
-        "this.month": "THIS MONTH",
-        "last.week": "LAST WEEK",
-        "this.week": "THIS WEEK",
-        "yesterday": "YESTERDAY",
-        "today": "TODAY",
-        "start.date": "Start Date",
-        "end.date": "End Date",
+        "dash.text": "Lucky Serial",        
         "total.generated": "Total Generated",
         "total": "Total",
         "total.count.redeemed": "Total Count Redeemed",
@@ -44,6 +35,17 @@ export const messages = {
         "most.redeemed.percentage": "Most Redeemed (%)",
         "top10": "Top 10",
         
+        // date filter
+        "all.time": "ALL TIME",
+        "this.year": "THIS YEAR",
+        "this.month": "THIS MONTH",
+        "last.week": "LAST WEEK",
+        "this.week": "THIS WEEK",
+        "yesterday": "YESTERDAY",
+        "today": "TODAY",
+        "start.date": "From",
+        "end.date": "To",
+
 
         //page: generate
         "generate.serial": "Generate Serial",
@@ -101,7 +103,16 @@ export const messages = {
 
         //page: dashboard
         "dashboard": "仪表盘",
-        "dash.text": "幸运序号",
+        "dash.text": "幸运序号",        
+        "total": "总数",
+        "total.count.redeemed": "兑换总数",
+        "total.rm.redeemed": "兑换总金额",
+        "total.generated": "总生成",
+        "total.redeemed.count": "总兑换量",
+        "most.redeemed.percentage": "兑换占比",
+        "top10": "前10兑换账号",
+
+        // date filter
         "all.time": "全部",
         "this.year": "今年",
         "this.month": "这个月",
@@ -111,13 +122,6 @@ export const messages = {
         "today": "今天",
         "start.date": "从",
         "end.date": "到",
-        "total": "总数",
-        "total.count.redeemed": "兑换总数",
-        "total.rm.redeemed": "兑换总金额",
-        "total.generated": "总生成",
-        "total.redeemed.count": "总兑换量",
-        "most.redeemed.percentage": "兑换占比",
-        "top10": "前10兑换账号",
 
         //page: generate
         "generate.serial": "生成序号",
@@ -175,7 +179,16 @@ export const messages = {
 
         //page: dashboard
         "dashboard": "Papan Pemuka",
-        "dash.text": "Lucky Serial",
+        "dash.text": "Lucky Serial",       
+        "total": "Jumlah",
+        "total.count.redeemed": "Jumlah Kiraan Ditebus",
+        "total.rm.redeemed": "Jumlah Amaun yang Ditebus",
+        "total.generated": "Jumlah Menjana",
+        "total.redeemed.count": "Jumlah Ditebus",
+        "most.redeemed.percentage": "Paling Banyak Ditebus",
+        "top10": "10 Teratas Akaun yang Ditebus",
+
+        // date filter
         "all.time": "SEMUA",
         "this.year": "TAHUN INI",
         "this.month": "BULAN INI",
@@ -185,13 +198,6 @@ export const messages = {
         "today": "HARI INI",
         "start.date": "Dari",
         "end.date": "Sampai",
-        "total": "Jumlah",
-        "total.count.redeemed": "Jumlah Kiraan Ditebus",
-        "total.rm.redeemed": "Jumlah Amaun yang Ditebus",
-        "total.generated": "Jumlah Menjana",
-        "total.redeemed.count": "Jumlah Ditebus",
-        "most.redeemed.percentage": "Paling Banyak Ditebus",
-        "top10": "10 Teratas Akaun yang Ditebus",
 
         //page: generate
         "generate.serial": "Menjana Nombor Siri",
