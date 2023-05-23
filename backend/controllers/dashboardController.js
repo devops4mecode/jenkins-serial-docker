@@ -118,14 +118,22 @@ const getSummaryData = async (req, res) => {
                 .map(({ _id, count }) => ({ amount: _id.amount, count }))
                 .sort((a, b) => a.amount - b.amount) || [],
             mostRedeemed: redeemedCount
-                .map(({ _id, count }) => ({ amount: _id.amount, percentage: count / overallRedeemedCount[0]?.overallRedeemedCount * 100 }))
+                .map(({ _id, count }) => ({
+                    amount: _id.amount,
+                    percentage:
+                        overallRedeemedCount[0]?.overallRedeemedCount !== 0
+                            ? (count / overallRedeemedCount[0]?.overallRedeemedCount) * 100
+                            : 0,
+                }))
                 .sort((a, b) => a.amount - b.amount) || [],
-            // Topten
-            topTen: topTen[0]?.topTen.map(({ name, count, totalCredit }) => ({ name, count, totalCredit }))
-                .sort((a, b) => b.totalCredit - a.totalCredit) || [],
+            topTen: topTen[0]?.topTen.map(({ name, count, totalCredit }) => ({
+                name,
+                count,
+                totalCredit,
+            })).sort((a, b) => b.totalCredit - a.totalCredit) || [],
             totalAmountRedeemed: totalAmountRedeemed[0]?.totalAmountRedeemed || 0,
-        }
-        return res.status(200).json(reportData)
+        };
+        return res.status(200).json(reportData);
     } catch (error) {
         return res.status(404).json({ error: error.message })
     }
