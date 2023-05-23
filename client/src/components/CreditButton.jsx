@@ -1,10 +1,8 @@
-import { Typography, Box, useTheme, Button } from "@mui/material";
-import { tokens } from "../theme";
+import { Typography, Button } from "@mui/material";
 import '../css/generateNumber.css'
 
 const CreditButton = ({ onClick, title }) => {
-    const theme = useTheme()
-    const colors = tokens(theme.palette.mode)
+
     return (
         <Button
             variant="contained"

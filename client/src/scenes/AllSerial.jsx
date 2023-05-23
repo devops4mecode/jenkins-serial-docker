@@ -1,20 +1,24 @@
 import axios from "axios";
 import moment from "moment"
 import { useEffect, useState } from "react";
-import { Button, useTheme } from "@mui/material";
-import { useAuthContext } from "hooks/useAuthContext";
+import { Button, useMediaQuery, useTheme } from "@mui/material";
+import { useAuthContext } from "../hooks/useAuthContext";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarExport, GridToolbarFilterButton } from "@mui/x-data-grid"
-import { tokens } from "../../theme";
 import Box from "@mui/material/Box";
-import Header from "../../components/Header";
-import '../../css/allNumberTable.css'
-import DeleteModal from "components/DeleteModal";
+import Header from "../components/Header";
+import '../css/allNumberTable.css'
+import DeleteModal from '../components/DeleteModal'
 
+// const localizedTextsMap = {
+//     toolbarExportCSV: '导出',
+//     toolbarFilter: 'Filter',
+//     toolbarColumns: 'Columns',
+// };
 
 const AllNumber = () => {
-    const theme = useTheme()
-    const colors = tokens(theme.palette.mode)
+
+    const isNonMediumScreen = useMediaQuery("(min-width: 1200px)")
 
     const { user } = useAuthContext()
     const intl = useIntl()
@@ -79,82 +83,75 @@ const AllNumber = () => {
     const columns = [
         {
             field: "serialNo",
-            headerName: <FormattedMessage id="record.serial.number" />,
+            headerName: <FormattedMessage id="serial.number" />,
             type: "number",
             headerAlign: "center",
             align: "center",
             valueGetter: (params) =>
                 formatNumber(params.row.serialNo),
-            // minWidth: 300,
-            editable: false,
-            flex: 2,
+            width: 300,
+            xs: 80,
         },
         {
             field: "givenCredit",
-            headerName: <FormattedMessage id="record.credit" />,
+            headerName: <FormattedMessage id="serial.credit" />,
             type: "number",
             headerAlign: "center",
             align: "center",
-            // minWidth: 80,
-            editable: false,
-            flex: 2,
+            width: 80,
+            xs: 100
         },
         {
             field: "remarkName",
-            headerName: <FormattedMessage id="record.buyer" />,
+            headerName: <FormattedMessage id="serial.buyer" />,
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center",
-            // minWidth: 240,
-            editable: false,
-            flex: 2,
+            width: 240,
+            xs: 100
         },
         {
             field: "createdAt",
-            headerName: <FormattedMessage id="record.sold.date" />,
+            headerName: <FormattedMessage id="serial.purchase.date" />,
             valueFormatter: (params) =>
                 moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
             headerAlign: "center",
             align: "center",
-            // minWidth: 200,
-            editable: false,
-            flex: 2,
+            width: 200,
+            xs: 100
         },
         {
             field: "redemptionAcc",
-            headerName: <FormattedMessage id="record.redeemer" />,
+            headerName: <FormattedMessage id="redeemed.account" />,
             valueGetter: (params) =>
                 params.row.redemptionAcc || "----",
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center",
-            // minWidth: 230,
-            editable: false,
-            flex: 2,
+            width: 230,
+            xs: 100
         },
         {
             field: "updatedAt",
-            headerName: <FormattedMessage id="record.redeemed.date" />,
+            headerName: <FormattedMessage id="redeemed.date" />,
             valueGetter: (params) =>
                 params.row.serialStatus ? "---" : moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
             headerAlign: "center",
             align: "center",
-            // minWidth: 200,
-            editable: false,
-            flex: 2,
+            width: 200,
+            xs: 100
         },
         {
             field: "serialStatus",
-            headerName: <FormattedMessage id="record.status" />,
+            headerName: <FormattedMessage id="serial.status" />,
             valueGetter: (params) =>
                 params.row.serialStatus ? "UNCLAIMED" : "REDEEMED",
             cellClassName: (params) =>
                 params.value === "REDEEMED" ? "status-redeemed" : "name-column--cell",
             headerAlign: "center",
             align: "center",
-            // minWidth: 210,
-            editable: false,
-            flex: 2,
+            width: 210,
+            xs: 100
         },
     ]
 
@@ -177,8 +174,6 @@ const AllNumber = () => {
                 title={<FormattedMessage id="all.serial" />}
                 subtitle={<FormattedMessage id="all.serial" />}
             />
-
-
             <Box
                 mt="5px"
                 display="grid"
@@ -186,68 +181,62 @@ const AllNumber = () => {
                 gridAutoRows="160px"
                 gap="20px"
                 sx={{
-                    "& > div": { gridColumn: isNonMediumScreen ? undefined : "span 12" }
+                    "& > div": { gridColumn: isNonMediumScreen ? undefined : "span 12" },
+                    "& .name-column--cell": {
+                        color: '#2E7C67'
+                    },
+                    "& .MuiDataGrid-columnHeaders": {
+                        backgroundColor: '#a4a9fc'
+                    },
+                    "& .MuiDataGrid-footerContainer": {
+                        backgroundColor: '#a4a9fc'
+                    },
+                    "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                        color: `'#141414' !important`
+                    },
                 }}
             >
                 <Box
                     gridColumn="span 12"
-                    height="fit-content"
-                    // backgroundColor="#FFFFFF"
-                    p="2rem"
-                    // borderRadius="0.55rem"
-                    // className="defaultSection"
-                    sx={{
-                        // height: '70vh'
-                        width: '100%',
-                        "& .name-column--cell": {
-                            color: '#94e2cd'
-                        },
-                        "& .MuiDataGrid-columnHeaders": {
-                            backgroundColor: '#a4a9fc',
-                            borderBottom: "none"
-                        },
-                        "& .MuiDataGrid-footerContainer": {
-                            backgroundColor: '#a4a9fc'
-                        },
-                        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                            color: `'#141414' !important`
-                        },
-                        "& .status-redeemed": {
-                            color: "red",
-                        },
-                    }}
+                    height="70vh"
+                    backgroundColor="#FFFFFF"
+                    borderRadius="0.55rem"
+                    className="defaultSection"
                 >
-                    <Box display='flex' justifyContent='end' paddingBottom='15px'>
-                        <Button variant="contained" color="error" onClick={handleOpenModal}>
-                            Delete
-                        </Button>
-                    </Box>
 
-                    <DataGrid
-                        rows={serials}
-                        columns={columns}
-                        components={{ Toolbar: CustomToolbar }}
-                        getRowId={getRowId}
-                        checkboxSelection
-                        disableColumnMenu
-                        onRowSelectionModelChange={handleRowSelectionChange}
-                    />
-
-                    <Box className="footer"></Box>
+                <Box display='flex' justifyContent='end' paddingBottom='15px'>
+                    <Button variant="contained" color="error" onClick={handleOpenModal}>
+                        <FormattedMessage id="delete" />
+                    </Button>
                 </Box>
 
-                {openModal && (
-                    <DeleteModal
-                        message='delete.confirmation.message'
-                        count={selectedRows.length}
-                        onDelete={handleDelete}
-                        onCancel={handleCancel}
-                        onClose={handleCancel}
-                    />
-                )}
+                <DataGrid
+                    rows={serials}
+                    columns={columns}
+                    components={{ Toolbar: CustomToolbar }}
+                    getRowId={getRowId}
+                    checkboxSelection
+                    // localeText={localizedTextsMap}
+                    disableColumnMenu
+                    onRowSelectionModelChange={handleRowSelectionChange}
+                />
+                </Box>
 
+                <Box className="footer"></Box>
             </Box>
+
+            {openModal && (
+                <DeleteModal
+                    message='delete.confirmation.message'
+                    count={selectedRows.length}
+                    onDelete={handleDelete}
+                    onCancel={handleCancel}
+                    onClose={handleCancel}
+                />
+            )}
+
         </Box>
+
     )
 }
 

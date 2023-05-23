@@ -89,9 +89,11 @@ exports.generateSummary = () => {
     const reportSummary = new CronJob('* * * * * *', async function () {
 
         // STUPID DATE
-        const todayStart = moment().utcOffset('+08:00').startOf('day')
+        const todayStart = moment().utcOffset('+08:00')
+        .startOf('day')
             .toDate();
-        const todayEnd = moment().utcOffset('+08:00').endOf('day')
+        const todayEnd = moment().utcOffset('+08:00')
+        .endOf('day')
             .toDate();
 
         const [
@@ -165,19 +167,37 @@ exports.generateSummary = () => {
             ]),
         ])
 
+        // Predefined
+        const amounts = [5, 10, 15, 20, 30, 50, 100, 200, 300, 500, 800, 1000];
+
         let summaryData = {
             overallRedeemedCount: overallRedeemedCount[0]?.count || 0,
-            redeemedCount: redeemedCount.map(({ _id, count }) => ({ amount: _id, count }))
-                .sort((a, b) => a.amount - b.amount) || [],
-            overallGeneratedCount: overallGeneratedCount
-                .map(({ _id, count }) => ({ amount: _id, count }))
-                .sort((a, b) => a.amount - b.amount) || [],
-            mostRedeemed: redeemedCount
-                .map(({ _id, count }) => ({ amount: _id, percentage: count / overallRedeemedCount[0]?.count * 100 }))
-                .sort((a, b) => a.amount - b.amount) || [],
-            topTen: topTen.map(({ _id, count, totalGivenCredit }) => ({ name: _id, count: count, totalCredit: totalGivenCredit })),
+            redeemedCount: amounts.map((amount) => ({
+                amount,
+                count: redeemedCount.find(({ _id }) => _id === amount)?.count || 0
+            })),
+            overallGeneratedCount: amounts.map((amount) => ({
+                amount,
+                count: overallGeneratedCount.find(({ _id }) => _id === amount)?.count || 0
+            })),
+            mostRedeemed: amounts.map((amount) => {
+                const redeemed = redeemedCount.find(({ _id }) => _id === amount)?.count || 0;
+                const overallRedeemed = overallRedeemedCount[0]?.count || 1;
+                const percentage = (redeemed / overallRedeemed) * 100;
+                return {
+                    amount,
+                    percentage
+                };
+            }),
+            topTen: topTen.map(({ _id, count, totalGivenCredit }) => ({
+                name: _id,
+                count: count,
+                totalCredit: totalGivenCredit
+            })),
             totalAmountRedeemed: totalAmountRedeemed[0]?.sum || 0,
-        }
+            createdAt: todayStart,
+            updatedAt: todayEnd
+        };
 
         const existingSummary = await Report.findOne({ createdAt: { $gte: todayStart, $lte: todayEnd } })
 

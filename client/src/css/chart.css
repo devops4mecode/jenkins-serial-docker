@@ -1,0 +1,37 @@
+/* chartStyles.css */
+
+.axis-domain {
+    stroke: #141414;
+  }
+  
+  .axis-legend-text {
+    fill: #141414;
+  }
+  
+  .axis-ticks-line {
+    stroke: #141414;
+    stroke-width: 1;
+  }
+  
+  .axis-ticks-text {
+    fill: #141414;
+  }
+  
+  .legends-text {
+    fill: #141414;
+  }
+  
+  .tooltip-container {
+    color: #141414;
+  }
+  
+  /* Add more styles as needed */
+  
+  .mobile-chart {
+    padding: 10px;
+  }
+  
+  .desktop-chart {
+    padding: 20px;
+  }
+  
