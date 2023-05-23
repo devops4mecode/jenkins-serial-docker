@@ -165,19 +165,35 @@ exports.generateSummary = () => {
             ]),
         ])
 
+        // Predefined
+        const amounts = [5, 10, 15, 20, 30, 50, 100, 200, 300, 500, 800, 1000];
+
         let summaryData = {
             overallRedeemedCount: overallRedeemedCount[0]?.count || 0,
-            redeemedCount: redeemedCount.map(({ _id, count }) => ({ amount: _id, count }))
-                .sort((a, b) => a.amount - b.amount) || [],
-            overallGeneratedCount: overallGeneratedCount
-                .map(({ _id, count }) => ({ amount: _id, count }))
-                .sort((a, b) => a.amount - b.amount) || [],
-            mostRedeemed: redeemedCount
-                .map(({ _id, count }) => ({ amount: _id, percentage: count / overallRedeemedCount[0]?.count * 100 }))
-                .sort((a, b) => a.amount - b.amount) || [],
-            topTen: topTen.map(({ _id, count, totalGivenCredit }) => ({ name: _id, count: count, totalCredit: totalGivenCredit })),
+            redeemedCount: amounts.map((amount) => ({
+                amount,
+                count: redeemedCount.find(({ _id }) => _id === amount)?.count || 0
+            })),
+            overallGeneratedCount: amounts.map((amount) => ({
+                amount,
+                count: overallGeneratedCount.find(({ _id }) => _id === amount)?.count || 0
+            })),
+            mostRedeemed: amounts.map((amount) => {
+                const redeemed = redeemedCount.find(({ _id }) => _id === amount)?.count || 0;
+                const overallRedeemed = overallRedeemedCount[0]?.count || 1;
+                const percentage = (redeemed / overallRedeemed) * 100;
+                return {
+                    amount,
+                    percentage
+                };
+            }),
+            topTen: topTen.map(({ _id, count, totalGivenCredit }) => ({
+                name: _id,
+                count: count,
+                totalCredit: totalGivenCredit
+            })),
             totalAmountRedeemed: totalAmountRedeemed[0]?.sum || 0,
-        }
+        };
 
         const existingSummary = await Report.findOne({ createdAt: { $gte: todayStart, $lte: todayEnd } })
 
@@ -192,3 +208,55 @@ exports.generateSummary = () => {
         "Asia/Singapore"
     );
 }
+
+
+// [
+//     {
+//         "amount": 5,
+//         "count": 0
+//     },
+//     {
+//         "amount": 10,
+//         "count": 0
+//     },
+//     {
+//         "amount": 15,
+//         "count": 0
+//     },
+//     {
+//         "amount": 20,
+//         "count": 0
+//     },
+//     {
+//         "amount": 30,
+//         "count": 0
+//     },
+//     {
+//         "amount": 50,
+//         "count": 0
+//     },
+//     {
+//         "amount": 100,
+//         "count": 0
+//     },
+//     {
+//         "amount": 200,
+//         "count": 0
+//     },
+//     {
+//         "amount": 300,
+//         "count": 0
+//     },
+//     {
+//         "amount": 500,
+//         "count": 12
+//     },
+//     {
+//         "amount": 800,
+//         "count": 0
+//     },
+//     {
+//         "amount": 1000,
+//         "count": 0
+//     },
+// ]
