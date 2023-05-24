@@ -206,7 +206,6 @@ const Dashboard = () => {
                                         }}
                                     >
                                         <MenuItem value={2023}>2023</MenuItem>
-                                        <MenuItem value={2022}>2022</MenuItem>
                                     </Select>
                                 </Box>
 
