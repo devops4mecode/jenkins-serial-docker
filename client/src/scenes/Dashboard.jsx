@@ -220,7 +220,7 @@ const Dashboard = () => {
                     <Grid item xs={12} sm={12} md={5} xl={4} >
                         <Box className="topRight">
 
-                            <Box className="default-section">
+                            <Box className="topRight-default-section">
                                 <Box>
                                     <Typography className='top-section-title'><FormattedMessage id='total' /></Typography>
                                 </Box>
@@ -229,14 +229,14 @@ const Dashboard = () => {
                                         <Typography><img src={totalAmountRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
                                         <Typography className="top-small-title"><FormattedMessage id='total.amount.generated' /></Typography>
                                         <Divider className="top-divider" orientation="vertical" flexItem />
-                                        <Typography className='top-small-count'>{`RM ${chartData.totalGenerated}`}</Typography>
+                                        <Typography className='top-small-count'>{chartData.totalGenerated}</Typography>
                                     </Box>
 
                                     <Box display="flex" paddingTop={1}>
                                         <Typography><img src={totalRedeemCountIcon} alt="total-generater" className="icon-inside" /></Typography>
                                         <Typography className="top-small-title"><FormattedMessage id='total.amount.redeemed' /></Typography>
                                         <Divider className="top-divider" orientation="vertical" flexItem />
-                                        <Typography className='top-small-count'>{`RM ${chartData.totalRedeemed}`}</Typography>
+                                        <Typography className='top-small-count'>{chartData.totalRedeemed}</Typography>
                                     </Box>
                                 </Box>
                             </Box>
