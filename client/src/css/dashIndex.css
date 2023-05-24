@@ -61,8 +61,15 @@
 .top-small-title {
     font-size: 13px !important;
     color: #747474;
-    width: 80%;
+    width: 70%;
     padding: 5px 0px 10px 20px;
+}
+
+.top10-small-title {
+    font-size: 14px !important;
+    color: #747474;
+    width: 35%;
+    padding: 5px 0px 0px 20px;
 }
 
 .small-count {
@@ -71,6 +78,15 @@
     color: #747474;
     width: 50%;
     padding: 5px 0px 0px 30px;
+    border-left: 1px soild lightgrey;
+}
+
+.top-small-count {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #747474;
+    width: 50%;
+    padding: 5px 0px 0px 25px;
     border-left: 1px soild lightgrey;
 }
 
@@ -138,10 +154,14 @@
         width: 90%;
         padding: 5px 0px 10px 15px;
     }
+
+    .top-small-count {
+        padding: 5px 0px 0px 20px;
+    }
 }
 
 
-@media (max-width: 425px) {
+@media (max-width: 600px) {
     .inner-padding {
         padding-left: 20px;
         padding-right: 30px;
@@ -149,12 +169,12 @@
     }
 
     .top-divider {
-        height: 45px !important;
+        height: 35px !important;
     }
 
     .top-small-title {
         width: 60%;
-        padding: 5px 0px 10px 15px;
+        padding: 5px 0px 10px 10px !important;
     }
 
     .button-container {
@@ -167,24 +187,36 @@
     .filter-button {
         font-size: 12px !important;
     }
+
+    .top10-small-title {
+        width: 56%;
+    }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
     .top-default-section {
-        padding-bottom: 0px ;
+        padding-bottom: 0px !important;
     }
     
     .topRight {
-       padding-top: 50px;
+        padding-top: 60px !important;
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1469px) {
     .button-container {
         grid-gap: 15px;
         grid-template-columns: repeat(4, 1fr);
         padding-bottom: 22px;
         padding-top: 15px;
+    }
+    
+    .top-default-section {
+        padding-bottom: 60px;
+    }
+    
+    .topRight {
+        padding-top: 100px;
     }
 
     .top-section-title {
@@ -201,4 +233,18 @@
         width: 90%;
         padding: 5px 0px 10px 15px;
     }
+
+    .top10-small-title {
+        width: 56%;
+    }
+
+    .small-count {
+        /* width: 50%; */
+        padding: 5px 0px 0px 15px;
+    }
+
+}
+
+@media (max-width: 1024px) {
+
 }
