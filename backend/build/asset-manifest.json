@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.2d2df641.css",
-    "main.js": "/static/js/main.813886bd.js",
+    "main.css": "/static/css/main.ef94fa80.css",
+    "main.js": "/static/js/main.e2d10dd0.js",
     "static/media/calculator.png": "/static/media/calculator.b885443f56e65971a107.png",
     "static/media/total-redeemed-rm.png": "/static/media/total-redeemed-rm.80eeaf20791cfcbdec92.png",
     "static/media/total-redeem-count.png": "/static/media/total-redeem-count.2adb9013d277fd686ff1.png",
@@ -18,11 +18,11 @@
     "static/media/logout.png": "/static/media/logout.1b35a10be06e662095e4.png",
     "static/media/generate-serial.png": "/static/media/generate-serial.dc5f78899893edd628f5.png",
     "index.html": "/index.html",
-    "main.2d2df641.css.map": "/static/css/main.2d2df641.css.map",
-    "main.813886bd.js.map": "/static/js/main.813886bd.js.map"
+    "main.ef94fa80.css.map": "/static/css/main.ef94fa80.css.map",
+    "main.e2d10dd0.js.map": "/static/js/main.e2d10dd0.js.map"
   },
   "entrypoints": [
     "static/css/main.2d2df641.css",
-    "static/js/main.813886bd.js",
+    "static/js/main.813886bd.js"
   ]
 }

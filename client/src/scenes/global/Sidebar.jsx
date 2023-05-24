@@ -5,8 +5,8 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom"
 import dashboardIcon from "../../assets/dashboard.png"
 import generateIcon from '../../assets/generate-serial.png'
 import allIcon from '../../assets/all-serial.png'
-import unclaimedIcon from '../../assets/unclaimed.png'
-import claimedIcon from '../../assets/claimed-serial.png'
+import unclaimedIcon from '../../assets/claimed-serial.png'
+import claimedIcon from '../../assets/unclaimed.png'
 import logoutIcon from '../../assets/logout.png'
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
 import { FormattedMessage } from 'react-intl';
