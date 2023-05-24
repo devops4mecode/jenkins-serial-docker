@@ -1,14 +1,28 @@
 {
   "files": {
-    "main.css": "/static/css/main.ee7c41ff.css",
-    "main.js": "/static/js/main.a2ccc3dd.js",
+    "main.css": "/static/css/main.2d2df641.css",
+    "main.js": "/static/js/main.813886bd.js",
+    "static/media/calculator.png": "/static/media/calculator.b885443f56e65971a107.png",
+    "static/media/total-redeemed-rm.png": "/static/media/total-redeemed-rm.80eeaf20791cfcbdec92.png",
+    "static/media/total-redeem-count.png": "/static/media/total-redeem-count.2adb9013d277fd686ff1.png",
+    "static/media/percentage.png": "/static/media/percentage.adbcefc0c8afc81f58dc.png",
+    "static/media/third.png": "/static/media/third.d8637cae5c8215a707b2.png",
     "static/media/logo.png": "/static/media/logo.31db57baf05e795b2a07.png",
+    "static/media/consolation.png": "/static/media/consolation.6b45fdd11e6153b8bd83.png",
+    "static/media/translate.png": "/static/media/translate.4b9749b3b544ab8c0414.png",
+    "static/media/total-generated.png": "/static/media/total-generated.88156bc3434c7b3a328c.png",
+    "static/media/total-redeemed-count.png": "/static/media/total-redeemed-count.ffbaf750c3762b087c5c.png",
+    "static/media/claimed-serial.png": "/static/media/claimed-serial.adc58b60931cead798a0.png",
+    "static/media/all-serial.png": "/static/media/all-serial.60b8578cacc9740c20d7.png",
+    "static/media/unclaimed.png": "/static/media/unclaimed.4a79c754230b98763e44.png",
+    "static/media/logout.png": "/static/media/logout.1b35a10be06e662095e4.png",
+    "static/media/generate-serial.png": "/static/media/generate-serial.dc5f78899893edd628f5.png",
     "index.html": "/index.html",
-    "main.ee7c41ff.css.map": "/static/css/main.ee7c41ff.css.map",
-    "main.a2ccc3dd.js.map": "/static/js/main.a2ccc3dd.js.map"
+    "main.2d2df641.css.map": "/static/css/main.2d2df641.css.map",
+    "main.813886bd.js.map": "/static/js/main.813886bd.js.map"
   },
   "entrypoints": [
-    "static/css/main.ee7c41ff.css",
-    "static/js/main.a2ccc3dd.js"
+    "static/css/main.2d2df641.css",
+    "static/js/main.813886bd.js"
   ]
 }
