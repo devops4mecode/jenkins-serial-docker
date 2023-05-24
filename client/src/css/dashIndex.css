@@ -106,9 +106,9 @@
     padding-bottom: 20px;
 }
 
-.apply-filter {
-    justify-content: center;
+.section-container {
     display: flex;
+    justify-content: center;
 }
 
 .button-container {
@@ -137,6 +137,26 @@
     font-weight: 600;
 }
 
+.mainDataSection{
+    display: flex;
+    padding: 10px 45px; 
+    transition: all 0.2s ease-in-out; 
+}
+
+.mainTextSection{
+    padding: 5px;
+}
+
+.main-small-title{
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #747474;
+}
+
+.main-small-count {
+    font-size: 13px !important;
+    color: #747474;
+}
 
 @media (max-width: 393px) {
     .inner-padding {
@@ -190,6 +210,10 @@
 
     .top10-small-title {
         width: 56%;
+    }
+
+    .mainDataSection{
+        padding: 10px 30px; 
     }
 }
 

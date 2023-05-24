@@ -11,7 +11,7 @@ import percentageIcon from '../assets/percentage.png'
 import totalAmountRedeemedIcon from '../assets/total-redeemed-rm.png'
 import totalGeneratedIcon from '../assets/total-generated.png'
 import totalRedeemedIcon from '../assets/total-redeemed-count.png'
-import mostRedeemedIcon from '../assets/most-redeemed.png'
+import calculatorIcon from '../assets/calculator.png'
 import thirdIcon from '../assets/third.png'
 import consolationIcon from '../assets/consolation.png'
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
@@ -139,7 +139,7 @@ const Dashboard = () => {
         getDashboard()
     }, [startDate, endDate])
 
-    const CustomInput = React.forwardRef(({ value, onClick, onClear }, ref)  => (
+    const CustomInput = React.forwardRef(({ value, onClick, onClear }, ref) => (
         <Box
             sx={{
                 display: 'flex',
@@ -226,17 +226,17 @@ const Dashboard = () => {
                                 </Box>
                                 <Box className="top-inner-padding">
                                     <Box display="flex" className="top-border-bottom">
-                                        <Typography><img src={totalRedeemCountIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                        <Typography className="top-small-title"><FormattedMessage id='total.count.redeemed' /></Typography>
+                                        <Typography><img src={totalAmountRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
+                                        <Typography className="top-small-title"><FormattedMessage id='total.amount.generated' /></Typography>
                                         <Divider className="top-divider" orientation="vertical" flexItem />
-                                        <Typography className='top-small-count'>{reportData.overallRedeemedCount}</Typography>
+                                        <Typography className='top-small-count'>{`RM ${chartData.totalGenerated}`}</Typography>
                                     </Box>
 
                                     <Box display="flex" paddingTop={1}>
-                                        <Typography><img src={totalAmountRedeemedIcon} alt="total-generater" className="icon-inside" /></Typography>
-                                        <Typography className="top-small-title"><FormattedMessage id='total.rm.redeemed' /></Typography>
+                                        <Typography><img src={totalRedeemCountIcon} alt="total-generater" className="icon-inside" /></Typography>
+                                        <Typography className="top-small-title"><FormattedMessage id='total.amount.redeemed' /></Typography>
                                         <Divider className="top-divider" orientation="vertical" flexItem />
-                                        <Typography className='top-small-count'>{`RM ${reportData.totalAmountRedeemed}`}</Typography>
+                                        <Typography className='top-small-count'>{`RM ${chartData.totalRedeemed}`}</Typography>
                                     </Box>
                                 </Box>
                             </Box>
@@ -247,7 +247,7 @@ const Dashboard = () => {
             </Box>
 
             <Box className="default-section">
-                <Box className="apply-filter" >
+                <Box className="section-container" >
                     <Box className="button-container">
                         {/* Button For Change Date Range */}
                         {buttonData.map((button, index) => (
@@ -285,6 +285,35 @@ const Dashboard = () => {
                 </Grid>
             </Box>
 
+            <Box className="default-section">
+                {/* <Box>
+                    <Typography className='top-section-title'><FormattedMessage id='total' /></Typography>
+                </Box> */}
+                <Grid container columns={12}>
+                    <Grid item xs={12} sm={6} md={6} xl={6} borderRight={{sm: "1px solid #e3e4e6" }}>
+                        <Box className="mainDataSection" sx={{ justifyContent: { xs: 'center', md: 'end' } }}>
+                            <Box className="mainTextSection">
+                                <img src={calculatorIcon} alt="total-generater" className="icon-inside" />
+                            </Box>
+                            <Box className="mainTextSection">
+                                <Typography className="main-small-count"><FormattedMessage id='total.count.redeemed' /></Typography>
+                                <Typography className='main-small-title'>{reportData.overallRedeemedCount}</Typography>
+                            </Box>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6} xl={6}>
+                        <Box className="mainDataSection" sx={{ justifyContent: { xs: 'center', md: 'start' } }}>
+                            <Box className="mainTextSection">
+                                <img src={totalRedeemCountIcon} alt="total-generater" className="icon-inside" />
+                            </Box>
+                            <Box className="mainTextSection">
+                                <Typography className="main-small-count"><FormattedMessage id='total.rm.redeemed' /></Typography>
+                                <Typography className='main-small-title'>{reportData.totalAmountRedeemed}</Typography>
+                            </Box>
+                        </Box>
+                    </Grid>
+                </Grid>
+            </Box>
 
             <Box className="big-default-section">
                 <Grid container spacing={2} columns={12}>
