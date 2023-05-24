@@ -155,7 +155,7 @@ export const messages = {
         "delete": "删除",
 
         // page: active serial
-        "valid.serials": "未兑换序号",
+        "valid.serial": "未兑换序号",
 
         // page: invalid serial
         "invalid.serial": "已兑换序号",
@@ -235,7 +235,7 @@ export const messages = {
         "delete": "Padam",
 
         // page: active serial
-        "valid.serials": "Siri Belum Ditebus",
+        "valid.serial": "Siri Belum Ditebus",
 
         // page: invalid serial
         "invalid.serial": "Siri Ditebus",
