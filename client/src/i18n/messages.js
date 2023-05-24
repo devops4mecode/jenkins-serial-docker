@@ -29,6 +29,8 @@ export const messages = {
         "dash.text": "Lucky Serial",        
         "total.generated": "Total Generated",
         "total": "Total",
+        "total.amount.generated": "Amount Generated",
+        "total.amount.redeemed": "Amount Redeemed",
         "total.count.redeemed": "Total Count Redeemed",
         "total.rm.redeemed": "Total Amount Redeemed",
         "total.redeemed.count": "Total Redeemed (Count)",
@@ -108,8 +110,10 @@ export const messages = {
         "dashboard": "仪表盘",
         "dash.text": "幸运序号",        
         "total": "总数",
-        "total.count.redeemed": "兑换总数",
-        "total.rm.redeemed": "兑换总金额",
+        "total.amount.generated": "生成金额",
+        "total.amount.redeemed": "兑换金额",
+        "total.count.redeemed": "兑换",
+        "total.rm.redeemed": "总兑换金额",
         "total.generated": "总生成",
         "total.redeemed.count": "总兑换量",
         "most.redeemed.percentage": "兑换占比",
@@ -155,7 +159,7 @@ export const messages = {
         "delete": "删除",
 
         // page: active serial
-        "valid.serials": "未兑换序号",
+        "valid.serial": "未兑换序号",
 
         // page: invalid serial
         "invalid.serial": "已兑换序号",
@@ -188,6 +192,8 @@ export const messages = {
         "dashboard": "Papan Pemuka",
         "dash.text": "Lucky Serial",       
         "total": "Jumlah",
+        "total.amount.generated": "Dijana",
+        "total.amount.redeemed": "Ditebus",
         "total.count.redeemed": "Jumlah Kiraan Ditebus",
         "total.rm.redeemed": "Jumlah Amaun yang Ditebus",
         "total.generated": "Jumlah Menjana",
@@ -235,7 +241,7 @@ export const messages = {
         "delete": "Padam",
 
         // page: active serial
-        "valid.serials": "Siri Belum Ditebus",
+        "valid.serial": "Siri Belum Ditebus",
 
         // page: invalid serial
         "invalid.serial": "Siri Ditebus",

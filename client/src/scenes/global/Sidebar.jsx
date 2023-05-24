@@ -1,7 +1,7 @@
 import { Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, SwipeableDrawer, Typography, useMediaQuery, useTheme } from '@mui/material'
 import * as React from 'react'
 import { useState, useEffect, useRef } from 'react';
-import { useLocation, useNavigate } from "react-router-dom"
+import { Navigate, useLocation, useNavigate } from "react-router-dom"
 import dashboardIcon from "../../assets/dashboard.png"
 import generateIcon from '../../assets/generate-serial.png'
 import allIcon from '../../assets/all-serial.png'
@@ -13,7 +13,6 @@ import { FormattedMessage } from 'react-intl';
 import '../../css/global.css'
 import Logo from '../../assets/logo.png'
 import { useLogout } from '../../hooks/useLogout';
-
 
 
 const Sidebar = ({
@@ -31,6 +30,10 @@ const Sidebar = ({
     const theme = useTheme()
 
     const { logout } = useLogout()
+    const handleLogout = () => {
+        logout()
+        navigate('/login')
+    }
 
     useEffect(() => {
         setActive(pathname.substring(1))
@@ -90,7 +93,6 @@ const Sidebar = ({
             text: "Logout",
             translationKey: "logoutNav",
             image: <img src={logoutIcon} alt="setting" width="25" height="25" />,
-            onClick: logout
         }
     ]
 
@@ -116,7 +118,11 @@ const Sidebar = ({
                                         if (onClick) {
                                             onClick(); // Call the onClick handler (logout function)
                                         }
-                                        navigate(`/${lcText}`);
+                                        if (lcText === 'logout') {
+                                            handleLogout()
+                                        } else {
+                                            navigate(`/${lcText}`);
+                                        }
                                         setActive(lcText)
                                     }}
                                     style={{

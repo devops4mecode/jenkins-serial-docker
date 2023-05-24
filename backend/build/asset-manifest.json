@@ -1,7 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.45f31108.css",
-    "main.js": "/static/js/main.9747eb43.js",
+    "main.css": "/static/css/main.2d2df641.css",
+    "main.js": "/static/js/main.813886bd.js",
+    "static/media/calculator.png": "/static/media/calculator.b885443f56e65971a107.png",
     "static/media/total-redeemed-rm.png": "/static/media/total-redeemed-rm.80eeaf20791cfcbdec92.png",
     "static/media/total-redeem-count.png": "/static/media/total-redeem-count.2adb9013d277fd686ff1.png",
     "static/media/percentage.png": "/static/media/percentage.adbcefc0c8afc81f58dc.png",
@@ -17,11 +18,11 @@
     "static/media/logout.png": "/static/media/logout.1b35a10be06e662095e4.png",
     "static/media/generate-serial.png": "/static/media/generate-serial.dc5f78899893edd628f5.png",
     "index.html": "/index.html",
-    "main.45f31108.css.map": "/static/css/main.45f31108.css.map",
-    "main.9747eb43.js.map": "/static/js/main.9747eb43.js.map"
+    "main.2d2df641.css.map": "/static/css/main.2d2df641.css.map",
+    "main.813886bd.js.map": "/static/js/main.813886bd.js.map"
   },
   "entrypoints": [
-    "static/css/main.45f31108.css",
-    "static/js/main.9747eb43.js"
+    "static/css/main.2d2df641.css",
+    "static/js/main.813886bd.js",
   ]
 }
