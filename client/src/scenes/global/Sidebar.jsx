@@ -93,7 +93,6 @@ const Sidebar = ({
             text: "Logout",
             translationKey: "logoutNav",
             image: <img src={logoutIcon} alt="setting" width="25" height="25" />,
-            onClick: handleLogout
         }
     ]
 
@@ -119,7 +118,11 @@ const Sidebar = ({
                                         if (onClick) {
                                             onClick(); // Call the onClick handler (logout function)
                                         }
-                                        navigate(`/${lcText}`);
+                                        if (lcText === 'logout') {
+                                            handleLogout()
+                                        } else {
+                                            navigate(`/${lcText}`);
+                                        }
                                         setActive(lcText)
                                     }}
                                     style={{
