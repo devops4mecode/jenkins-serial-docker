@@ -81,7 +81,7 @@ const redeemSerials = async (req, res) => {
 
 const generateSerialsByPlayer = async (req, res) => {
     try {
-        const { givenCredit, amountToGenerate, remarkName, walletBalance } = req.body;
+        const { givenCredit, amountToGenerate, remarkName, walletBalance } = req.query;
 
         if (!givenCredit || !amountToGenerate || !remarkName || !walletBalance) {
             return res.status(400).json({ message: "All fields must be provided" });
