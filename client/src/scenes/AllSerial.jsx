@@ -170,6 +170,18 @@ const AllNumber = () => {
         )
     }
 
+    serials.sort((a, b) => {
+        const dateA = moment(a.createdAt);
+        const dateB = moment(b.createdAt);
+      
+        if (dateB.isSame(dateA, 'second')) {
+          const updatedAtA = moment(a.updatedAt);
+          const updatedAtB = moment(b.updatedAt);
+          return updatedAtB - updatedAtA;
+        }
+      
+        return dateB - dateA;
+      });
 
     return (
         <Box m="20px">
