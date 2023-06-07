@@ -218,7 +218,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }
                             <Box className="search-dialog-box">
                                 <Box className='searchBox-header'>
                                     <Box flexGrow={1} paddingLeft="40px" paddingBottom="15px" paddingTop="15px">
-                                        <Typography color='#6200EE'>Serial Number: </Typography>
+                                        <Typography className='header-text'>Serial Number: </Typography>
                                     </Box>
                                     <IconButton>
                                         <CloseIcon onClick={handleClose} />
@@ -262,9 +262,9 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }
                                                     </TableCell>
                                                     <TableCell>
                                                         {data.serialStatus ? (
-                                                            <Typography className='searchValue' style={{ color: 'green' }}><FormattedMessage id='unclaimed'/></Typography>
+                                                            <Typography className='searchValue' style={{ color: 'green' }}><FormattedMessage id='unclaimed' /></Typography>
                                                         ) : (
-                                                            <Typography className='searchValue' style={{ color: 'red' }}><FormattedMessage id='redeemed'/></Typography>
+                                                            <Typography className='searchValue' style={{ color: 'red' }}><FormattedMessage id='redeemed' /></Typography>
                                                         )}
                                                     </TableCell>
                                                 </TableRow>
@@ -280,7 +280,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }
                                                     </TableRow>
                                                 )}
 
-                                                 {data.serialStatus === false && (
+                                                {data.serialStatus === false && (
                                                     <TableRow className="borderedRow">
                                                         <TableCell className="tableCellWithBorder">
                                                             <FormattedMessage id='redeemed.date' />
@@ -300,11 +300,29 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }
                                         ok
                                     </Button>
                                 </Box>
-
-
                             </Box>
                         ) : (
-                            <Typography>no record</Typography>
+                            <Box className="search-dialog-box">
+                                <Box className='searchBox-header'>
+                                    <Box flexGrow={1} paddingLeft="40px" paddingBottom="15px" paddingTop="15px">
+                                        <Typography className='header-text'>Serial Number: </Typography>
+                                    </Box>
+                                    <IconButton>
+                                        <CloseIcon onClick={handleClose} />
+                                    </IconButton>
+                                </Box>
+
+                                <Box className='no-search-details'>
+                                    <FormattedMessage id='no.such.record' />
+                                </Box>
+
+                                <Box className='no-ok-box'>
+                                    <Button variant='contained' className='ok-button' onClick={handleClose}>
+                                        ok
+                                    </Button>
+                                </Box>
+
+                            </Box>
                         )}
                     </Modal>
                 </Box>
