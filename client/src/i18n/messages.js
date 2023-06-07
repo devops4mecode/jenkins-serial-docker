@@ -65,9 +65,9 @@ export const messages = {
         "serial.buyer": "User",
         "serial.purchase.date": "Purchase Date",
         "export.csv": "Export",
-        "credit.error.message": "This field must not be empty.",
-        "amount.error.message": "This field must not be empty.",
-        "remark.error.message": "This field must not be empty.",
+        "credit.error": "This field must not be empty.",
+        "amount.error": "This field must not be empty.",
+        "remark.error": "This field must not be empty.",
 
         // page: all serial
         "all.serial": "All Serial",
@@ -147,9 +147,9 @@ export const messages = {
         "serial.buyer": "买家",
         "serial.purchase.date": "购买日期",
         "export.csv": "导出 CSV",
-        "credit.error.message": "须填上序号金额",
-        "amount.error.message": "须填上序号金额",
-        "remark.error.message": "须填上序号金额",
+        "credit.error": "须填上序号金额",
+        "amount.error": "须填上序号金额",
+        "remark.error": "须填上序号金额",
 
         // page: all serial
         "all.serial": "所有序号",
@@ -229,9 +229,9 @@ export const messages = {
         "serial.buyer": "Pembeli",
         "serial.purchase.date": "Tarikh Pembelian",
         "export.csv": "Eksport CSV",
-        "credit.error.message": "Tidak boleh diletakkan kosong.",
-        "amount.error.message": "Tidak boleh diletakkan kosong.",
-        "remark.error.message": "Tidak boleh diletakkan kosong.",
+        "credit.error": "Tidak boleh diletakkan kosong.",
+        "amount.error": "Tidak boleh diletakkan kosong.",
+        "remark.error": "Tidak boleh diletakkan kosong.",
 
         // page: all serial
         "all.serial": "Semua Nombor Siri",

@@ -85,7 +85,6 @@ const AllNumber = () => {
             align: "center",
             valueGetter: (params) =>
                 formatNumber(params.row.serialNo),
-            // minWidth: 300,
             editable: false,
             flex: 2,
         },
@@ -95,7 +94,6 @@ const AllNumber = () => {
             type: "number",
             headerAlign: "center",
             align: "center",
-            // minWidth: 80,
             editable: false,
             flex: 2,
         },
@@ -105,7 +103,6 @@ const AllNumber = () => {
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center",
-            // minWidth: 240,
             editable: false,
             flex: 2,
         },
@@ -116,7 +113,6 @@ const AllNumber = () => {
                 moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
             headerAlign: "center",
             align: "center",
-            // minWidth: 200,
             editable: false,
             flex: 2,
         },
@@ -128,7 +124,6 @@ const AllNumber = () => {
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center",
-            // minWidth: 230,
             editable: false,
             flex: 2,
         },
@@ -139,7 +134,6 @@ const AllNumber = () => {
                 params.row.serialStatus ? "---" : moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
             headerAlign: "center",
             align: "center",
-            // minWidth: 200,
             editable: false,
             flex: 2,
         },
@@ -152,7 +146,6 @@ const AllNumber = () => {
                 params.value === "REDEEMED" ? "status-redeemed" : "name-column--cell",
             headerAlign: "center",
             align: "center",
-            // minWidth: 210,
             editable: false,
             flex: 2,
         },
@@ -178,7 +171,6 @@ const AllNumber = () => {
                 subtitle={<FormattedMessage id="all.serial" />}
             />
 
-
             <Box
                 mt="5px"
                 display="grid"
@@ -192,12 +184,8 @@ const AllNumber = () => {
                 <Box
                     gridColumn="span 12"
                     height="fit-content"
-                    // backgroundColor="#FFFFFF"
                     p="2rem"
-                    // borderRadius="0.55rem"
-                    // className="defaultSection"
                     sx={{
-                        // height: '70vh'
                         width: '100%',
                         "& .name-column--cell": {
                             color: '#94e2cd'
@@ -228,6 +216,11 @@ const AllNumber = () => {
                         columns={columns}
                         components={{ Toolbar: CustomToolbar }}
                         getRowId={getRowId}
+                        initialState={{
+                            sorting: {
+                                sortModel: [{ field: 'createdAt', sort: 'desc' }],
+                            },
+                        }}
                         checkboxSelection
                         disableColumnMenu
                         onRowSelectionModelChange={handleRowSelectionChange}
