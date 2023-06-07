@@ -15,6 +15,8 @@ export const messages = {
 
         // navbar
         "search": "Search",
+        "redeemed": "Redeemed",
+        "unclaimed": "Unclaimed",
 
         // sidebar
         "dashboardNav": "Dashboard",
@@ -97,6 +99,8 @@ export const messages = {
 
         // navbar
         "search": "搜索",
+        "redeemed": "已兑换",
+        "unclaimed": "未被兑换",
 
         // sidebar
         "dashboardNav": "仪表盘",
@@ -179,6 +183,8 @@ export const messages = {
 
         // navbar
         "search": "Carian",
+        "redeemed": "Sudah Ditebus",
+        "unclaimed": "Belum Ditebus",
 
         // sidebar
         "dashboardNav": "Papan Pemuka",

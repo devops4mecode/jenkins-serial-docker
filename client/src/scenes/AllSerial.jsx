@@ -21,8 +21,11 @@ const AllNumber = () => {
     const isNonMediumScreen = useMediaQuery("(min-width: 1200px)")
 
     const { user } = useAuthContext()
-    const intl = useIntl()
     const [serials, setSerials] = useState([])
+
+    const intl = useIntl()
+    const unclaimed = intl.formatMessage({id: 'unclaimed'})
+    const redeemed = intl.formatMessage({id: 'redeemed'})
 
     const [openModal, setOpenModal] = useState(false)
 
@@ -145,9 +148,9 @@ const AllNumber = () => {
             field: "serialStatus",
             headerName: <FormattedMessage id="serial.status" />,
             valueGetter: (params) =>
-                params.row.serialStatus ? "UNCLAIMED" : "REDEEMED",
+                (params.row.serialStatus ? unclaimed : redeemed),
             cellClassName: (params) =>
-                params.value === "REDEEMED" ? "status-redeemed" : "name-column--cell",
+                (params.row.serialStatus ? "name-column--cell" : "status-redeemed"),
             headerAlign: "center",
             align: "center",
             width: 210,
@@ -193,6 +196,9 @@ const AllNumber = () => {
                     },
                     "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
                         color: `'#141414' !important`
+                    },
+                    "& .status-redeemed": {
+                        color: "red",
                     },
                 }}
             >
