@@ -83,6 +83,12 @@ const UnusedNumber = () => {
 
     const getRowId = (row) => row._id
 
+    serials.sort((a, b) => {
+        const dateA = moment(a.createdAt)
+        const dateB = moment(b.createdAt)
+        return dateB - dateA
+    })
+
     const CustomToolbar = () => {
         return (
             <GridToolbarContainer>

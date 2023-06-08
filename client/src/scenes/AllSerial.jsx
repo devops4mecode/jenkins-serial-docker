@@ -24,8 +24,8 @@ const AllNumber = () => {
     const [serials, setSerials] = useState([])
 
     const intl = useIntl()
-    const unclaimed = intl.formatMessage({id: 'unclaimed'})
-    const redeemed = intl.formatMessage({id: 'redeemed'})
+    const unclaimed = intl.formatMessage({ id: 'unclaimed' })
+    const redeemed = intl.formatMessage({ id: 'redeemed' })
 
     const [openModal, setOpenModal] = useState(false)
 
@@ -171,17 +171,17 @@ const AllNumber = () => {
     }
 
     serials.sort((a, b) => {
-        const dateA = moment(a.createdAt);
-        const dateB = moment(b.createdAt);
-      
+        const dateA = moment(a.createdAt)
+        const dateB = moment(b.createdAt)
+
         if (dateB.isSame(dateA, 'second')) {
-          const updatedAtA = moment(a.updatedAt);
-          const updatedAtB = moment(b.updatedAt);
-          return updatedAtB - updatedAtA;
+            const updatedAtA = moment(a.updatedAt)
+            const updatedAtB = moment(b.updatedAt)
+            return updatedAtB - updatedAtA;
         }
-      
-        return dateB - dateA;
-      });
+
+        return dateB - dateA
+    })
 
     return (
         <Box m="20px">
@@ -222,22 +222,22 @@ const AllNumber = () => {
                     className="defaultSection"
                 >
 
-                <Box display='flex' justifyContent='end' paddingBottom='15px'>
-                    <Button variant="contained" color="error" onClick={handleOpenModal}>
-                        <FormattedMessage id="delete" />
-                    </Button>
-                </Box>
+                    <Box display='flex' justifyContent='end' paddingBottom='15px'>
+                        <Button variant="contained" color="error" onClick={handleOpenModal}>
+                            <FormattedMessage id="delete" />
+                        </Button>
+                    </Box>
 
-                <DataGrid
-                    rows={serials}
-                    columns={columns}
-                    components={{ Toolbar: CustomToolbar }}
-                    getRowId={getRowId}
-                    checkboxSelection
-                    // localeText={localizedTextsMap}
-                    disableColumnMenu
-                    onRowSelectionModelChange={handleRowSelectionChange}
-                />
+                    <DataGrid
+                        rows={serials}
+                        columns={columns}
+                        components={{ Toolbar: CustomToolbar }}
+                        getRowId={getRowId}
+                        checkboxSelection
+                        // localeText={localizedTextsMap}
+                        disableColumnMenu
+                        onRowSelectionModelChange={handleRowSelectionChange}
+                    />
                 </Box>
 
                 <Box className="footer"></Box>
