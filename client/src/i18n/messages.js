@@ -38,7 +38,7 @@ export const messages = {
         "total.rm.redeemed": "Total Amount Redeemed",
         "total.redeemed.count": "Total Redeemed (Count)",
         "most.redeemed.percentage": "Most Redeemed (%)",
-        "top10": "Top 10",
+        "top10": "Top 10 Redeemed Account",
         
         // date filter
         "all.time": "ALL TIME",
