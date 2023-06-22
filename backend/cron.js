@@ -1,23 +1,23 @@
+// Required Stuffs
 const CronJob = require('cron').CronJob
-const moment = require('moment');
-
+const { startTime, endTime, yearStart, yearEnd } = require('./utils/timezone');
 // Get From
 const Serial = require('./models/SerialModel')
 const Chart = require('./models/ChartModel');
 // Save To
-const Report = require('./models/ReportModel')
+const Report = require('./models/ReportModel');
 
 exports.generateChartData = () => {
     const dashChart = new CronJob('* * * * * *', async function () {
-        const yearStart = moment().startOf('year').toDate()
-        const yearEnd = moment().endOf('year').toDate()
+
+        const match_query = { $gte: yearStart, $lte: yearEnd }
 
         const [
             monthlyRedeemedThroughYear,
             monthlyGeneratedThroughYear,
         ] = await Promise.all([
             Serial.aggregate([
-                { $match: { serialStatus: false, updatedAt: { $gte: yearStart, $lte: yearEnd } } },
+                { $match: { serialStatus: false, updatedAt: match_query } },
                 {
                     $group: {
                         _id: {
@@ -38,7 +38,7 @@ exports.generateChartData = () => {
                 { $sort: { year: 1, month: 1 } }
             ]),
             Serial.aggregate([
-                { $match: { createdAt: { $gte: yearStart, $lte: yearEnd } } },
+                { $match: { createdAt: match_query } },
                 {
                     $group: {
                         _id: {
@@ -70,7 +70,7 @@ exports.generateChartData = () => {
             totalRedeemed,
         }
 
-        const existingChart = await Chart.findOne({ createdAt: { $gte: yearStart, $lte: yearEnd } })
+        const existingChart = await Chart.findOne({ createdAt: match_query })
 
         if (existingChart) {
             await Chart.updateOne({ _id: existingChart._id }, chartData)
@@ -88,13 +88,7 @@ exports.generateSummary = () => {
     // Daily
     const reportSummary = new CronJob('* * * * * *', async function () {
 
-        // STUPID DATE
-        const todayStart = moment().utcOffset('+08:00')
-        .startOf('day')
-            .toDate();
-        const todayEnd = moment().utcOffset('+08:00')
-        .endOf('day')
-            .toDate();
+        const match_query = { $gte: startTime, $lte: endTime }
 
         const [
             overallRedeemedCount,
@@ -108,7 +102,7 @@ exports.generateSummary = () => {
                 {
                     $match: {
                         serialStatus: false,
-                        updatedAt: { $gte: todayStart, $lte: todayEnd }
+                        updatedAt: match_query
                     }
                 },
                 {
@@ -123,7 +117,7 @@ exports.generateSummary = () => {
                 {
                     $match: {
                         serialStatus: false,
-                        updatedAt: { $gte: todayStart, $lte: todayEnd }
+                        updatedAt: match_query
                     }
                 },
                 { $group: { _id: "$givenCredit", count: { $sum: 1 } } }
@@ -132,7 +126,7 @@ exports.generateSummary = () => {
             Serial.aggregate([
                 {
                     $match: {
-                        createdAt: { $gte: todayStart, $lte: todayEnd }
+                        createdAt: match_query
                     }
                 },
                 { $group: { _id: "$givenCredit", count: { $sum: 1 } } }
@@ -142,7 +136,7 @@ exports.generateSummary = () => {
                 {
                     $match: {
                         serialStatus: false,
-                        updatedAt: { $gte: todayStart, $lte: todayEnd }
+                        updatedAt: match_query
                     }
                 },
                 {
@@ -160,7 +154,7 @@ exports.generateSummary = () => {
                 {
                     $match: {
                         serialStatus: false,
-                        updatedAt: { $gte: todayStart, $lte: todayEnd }
+                        updatedAt: match_query
                     }
                 },
                 { $group: { _id: "givenCredit", sum: { $sum: "$givenCredit" } } },
@@ -195,11 +189,11 @@ exports.generateSummary = () => {
                 totalCredit: totalGivenCredit
             })),
             totalAmountRedeemed: totalAmountRedeemed[0]?.sum || 0,
-            createdAt: todayStart,
-            updatedAt: todayEnd
+            createdAt: startTime,
+            updatedAt: endTime
         };
 
-        const existingSummary = await Report.findOne({ createdAt: { $gte: todayStart, $lte: todayEnd } })
+        const existingSummary = await Report.findOne({ createdAt: match_query })
 
         if (existingSummary) {
             await Report.updateOne({ _id: existingSummary._id }, summaryData)
