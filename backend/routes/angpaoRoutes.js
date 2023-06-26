@@ -4,7 +4,7 @@ const angpaoController = require('../controllers/angpaoController');
 
 // Routes
 router
-    .post('/', angpaoController.createAngpao)
+    .post('/new', angpaoController.createAngpao)
 // .get('/chart', angpaoController.getChartData)
 // .get('/summary', angpaoController.getSummaryData)
 

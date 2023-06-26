@@ -9,16 +9,22 @@ const AngpaoSchema = new Schema({
         type: String,
         enum: ['Random', 'Equal']
     },
-    angpao_value: {
+    angpao_credit: {
         type: Number,
     },
-    angpao_divider: {
+    num_receiver: {
         type: Number,
+    },
+    timeout: {
+        type: Date
+    },
+    remarks: {
+        type: String
     },
     angpao_claim: [{
-        playerID: String,
+        playerID: { type: String, unique: true },
         amount: Number,
-    }]
+    }],
 }, { timestamps: true })
 
 const Angpao = mongoose.model('Angpao', AngpaoSchema)

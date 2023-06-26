@@ -27,6 +27,9 @@ const convertYearEnd = (year) => {
     return moment(year).endOf('year').toDate()
 }
 
+const convertExpiryTime = (timerange) => {
+    return moment(timerange)
+}
 
 module.exports = {
     startTime,
@@ -38,4 +41,5 @@ module.exports = {
     convertDayEnd,
     convertYearStart,
     convertYearEnd,
+    convertExpiryTime
 };
