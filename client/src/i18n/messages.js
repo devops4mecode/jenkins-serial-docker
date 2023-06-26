@@ -2,7 +2,7 @@ import { LOCALES } from "./locales"
 
 export const messages = {
     [LOCALES.ENGLISH]: {
-
+        "reloadPinNav": "reload pin",
         // login page
         "lucky.serial": "Lucky Serial",
         "login.username": "Username",
@@ -21,10 +21,12 @@ export const messages = {
 
         // sidebar
         "dashboardNav": "Dashboard",
+        "luckySerialNav": "Lucky Serial",
         "generateSerialNav": "Generated Serial",
         "allSerialNav": "All Serial",
         "unclaimedSerialNav": "Active Serial",
         "claimedSerialNav": "Redeemed Serial",
+        "angpowNav": "Money Packet",
         "logoutNav": "Logout",
 
         //page: dashboard
@@ -106,10 +108,12 @@ export const messages = {
 
         // sidebar
         "dashboardNav": "仪表盘",
+        "luckySerialNav": "幸运序号",
         "generateSerialNav": "生成序号",
         "allSerialNav": "所有序号",
         "unclaimedSerialNav": "未兑换序号",
         "claimedSerialNav": "已兑换序号",
+        "angpowNav": "红包",
         "logoutNav": "退出",
 
         //page: dashboard
@@ -191,10 +195,12 @@ export const messages = {
 
         // sidebar
         "dashboardNav": "Papan Pemuka",
+        "luckySerialNav": "Lucky Serial",
         "generateSerialNav": "Menjana Nombor Siri",
         "allSerialNav": "Semua Nombor Siri",
         "unclaimedSerialNav": "Siri Belum Ditebus",
         "claimedSerialNav": "Siri Ditebus",
+        "angpowNav": "Duit Paket",
         "logoutNav": "Log Keluar",
 
         //page: dashboard

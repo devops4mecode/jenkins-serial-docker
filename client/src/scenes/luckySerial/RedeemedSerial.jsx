@@ -1,11 +1,11 @@
 import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react"
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
 import { FormattedMessage } from "react-intl";
 import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarExport, GridToolbarFilterButton } from "@mui/x-data-grid"
 import { Box, useMediaQuery } from "@mui/material";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 
 const UsedNumber = () => {
 
