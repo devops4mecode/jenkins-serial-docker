@@ -1,38 +1,3 @@
-// Function to calculate angpao distribution
-const AngpaoFormula = (totalAmount, numReceivers, angpaoType) => {
-    if (angpaoType === 'Random') {
-        const amountCanGet = Math.floor(totalAmount / numReceivers);
-        let remainingAmount = totalAmount - (amountCanGet * numReceivers);
-
-        const angpaoClaim = Array.from({ length: numReceivers }, () => {
-            const randomAmount = Math.floor(Math.random() * remainingAmount);
-            remainingAmount -= randomAmount;
-
-            return {
-                playerID: '', // Set player ID here
-                amount: amountCanGet + randomAmount
-            };
-        });
-
-        return angpaoClaim;
-    } else if (angpaoType === 'Equal') {
-        // Calculate equal amount for each receiver
-        const amountCanGet = Math.floor(totalAmount / numReceivers);
-
-        // Generate equal amounts for receivers
-        const angpaoClaim = Array.from({ length: numReceivers }, () => {
-            return {
-                playerID: '', // Set player ID here
-                amount: amountCanGet
-            };
-        });
-
-        return angpaoClaim;
-    }
-
-    return null; // Invalid angpao type
-};
-
 const RandomizeAngpao = (angpao_credit, num_receiver) => {
     const angpao_claim = [];
 
@@ -91,6 +56,5 @@ const Angpaonize = () => {
 module.exports = {
     RandomizeAngpao,
     EqualizeAngpao,
-    AngpaoFormula,
     Angpaonize,
 }

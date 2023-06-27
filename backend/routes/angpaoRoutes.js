@@ -5,7 +5,6 @@ const angpaoController = require('../controllers/angpaoController');
 // Routes
 router
     .post('/new', angpaoController.createAngpao)
-// .get('/chart', angpaoController.getChartData)
-// .get('/summary', angpaoController.getSummaryData)
+    .patch('/redeem', angpaoController.redeemAngpao)
 
 module.exports = router

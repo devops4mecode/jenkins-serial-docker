@@ -2,6 +2,9 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const AngpaoSchema = new Schema({
+    angpaoID: {
+        type: String,
+    },
     angpao_owner: {
         type: String
     },
@@ -15,14 +18,14 @@ const AngpaoSchema = new Schema({
     num_receiver: {
         type: Number,
     },
-    timeout: {
+    valid_until: {
         type: Date
     },
     remarks: {
         type: String
     },
     angpao_claim: [{
-        playerID: { type: String, unique: true },
+        playerID: String,
         amount: Number,
     }],
 }, { timestamps: true })
