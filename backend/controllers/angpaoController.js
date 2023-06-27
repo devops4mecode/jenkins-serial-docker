@@ -41,12 +41,12 @@ const createAngpao = async (req, res) => {
 
 const redeemAngpao = async (req, res) => {
     try {
-        const { playerID, angpaoID } = req.query
+        const { playerID, angpaoID } = req.query;
 
         const targetAngpao = await Angpao.findOne({
             angpaoID,
             valid_until: { $gt: timeNow },
-        })
+        });
 
         if (!targetAngpao) {
             return res.status(400).json({ message: 'Angpao not found or already expired' });
@@ -54,8 +54,8 @@ const redeemAngpao = async (req, res) => {
 
         const emptyClaims = targetAngpao.angpao_claim.filter(claim => claim.playerID === '');
 
-        if (emptyClaims.length = 0) {
-            return res.status(400).json({ message: `Angpao fully cliamed` })
+        if (emptyClaims.length === 0) {
+            return res.status(400).json({ message: 'Angpao fully claimed' });
         }
 
         const playerExists = targetAngpao.angpao_claim.some(claim => claim.playerID === playerID);
@@ -75,14 +75,14 @@ const redeemAngpao = async (req, res) => {
         const returnData = {
             claim_by: randomClaim.playerID,
             amount: randomClaim.amount,
-        }
+        };
 
         return res.status(200).json(returnData);
 
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }
-}
+};
 
 module.exports = {
     createAngpao,
