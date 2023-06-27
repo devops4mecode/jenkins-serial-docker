@@ -27,6 +27,11 @@ const convertYearEnd = (year) => {
     return moment(year).endOf('year').toDate()
 }
 
+const convertExpiryTime = (mins) => {
+    return moment().add(mins, 'minutes').toDate()
+}
+
+const setAngpaoID = (str) => `A${moment().format('MMDD')}${str.slice(-6)}`;
 
 module.exports = {
     startTime,
@@ -38,4 +43,6 @@ module.exports = {
     convertDayEnd,
     convertYearStart,
     convertYearEnd,
+    convertExpiryTime,
+    setAngpaoID,
 };
