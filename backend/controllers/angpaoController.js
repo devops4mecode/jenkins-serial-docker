@@ -12,6 +12,17 @@ function getBaseUrl() {
     }
 }
 
+const getAllAngpao = async (req, res) => {
+    try {
+        const allAngpao = await Angpao.find()
+
+        return res.json(allAngpao)
+
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+}
+
 // Create Angpao
 const createAngpao = async (req, res) => {
     try {
@@ -124,6 +135,7 @@ const redeemAngpao = async (req, res) => {
 };
 
 module.exports = {
+    getAllAngpao,
     createAngpao,
     getAngpao,
     redeemAngpao,
