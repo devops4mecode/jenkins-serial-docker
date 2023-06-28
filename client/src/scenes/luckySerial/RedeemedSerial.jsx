@@ -10,6 +10,7 @@ import Header from "../../components/Header";
 const UsedNumber = () => {
 
     const isNonMediumScreen = useMediaQuery("(min-width: 1200px)")
+    const dataGridWidth = useMediaQuery("(max-width: 1200px");
 
     const { user } = useAuthContext()
     const [serials, setSerials] = useState([])
@@ -52,7 +53,7 @@ const UsedNumber = () => {
             align: "center",
             valueGetter: (params) =>
                 formatNumber(params.row.serialNo),
-            width: 300
+            minWidth: dataGridWidth ? 270 : 350,
         },
         {
             field: "givenCredit",
@@ -60,12 +61,12 @@ const UsedNumber = () => {
             type: "number",
             headerAlign: "center",
             align: "center",
-            width: 200
+            minWidth: dataGridWidth ? 70 : 200,
         },
         {
             field: "remarkName",
             headerName: <FormattedMessage id="serial.buyer" />,
-            width: 200,
+            minWidth: dataGridWidth ? 210 : 200,
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center"
@@ -75,14 +76,14 @@ const UsedNumber = () => {
             headerName: <FormattedMessage id="serial.purchase.date" />,
             valueFormatter: (params) =>
                 moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
-            width: 250,
+            minWidth: dataGridWidth ? 240 : 250,
             headerAlign: "center",
             align: "center"
         },
         {
             field: "redemptionAcc",
             headerName: <FormattedMessage id="redeemed.account" />,
-            width: 250,
+            minWidth: dataGridWidth ? 210 : 250,
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center"
@@ -93,6 +94,7 @@ const UsedNumber = () => {
             valueFormatter: (params) =>
                 moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
             width: 250,
+            minWidth: dataGridWidth ? 30 : 90,
             headerAlign: "center",
             align: "center"
         }

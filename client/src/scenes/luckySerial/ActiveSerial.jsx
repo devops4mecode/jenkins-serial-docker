@@ -11,6 +11,7 @@ import Header from "../../components/Header";
 const UnusedNumber = () => {
 
     const isNonMediumScreen = useMediaQuery("(min-width: 1200px)")
+    const dataGridWidth = useMediaQuery("(max-width: 1200px");
 
     const { user } = useAuthContext()
     const [serials, setSerials] = useState([])
@@ -52,7 +53,7 @@ const UnusedNumber = () => {
             align: "center",
             valueGetter: (params) =>
                 formatNumber(params.row.serialNo),
-            width: 370
+            minWidth: dataGridWidth ? 270 : 370,
         },
         {
             field: "givenCredit",
@@ -60,12 +61,12 @@ const UnusedNumber = () => {
             type: "number",
             headerAlign: "center",
             align: "center",
-            width: 250
+            minWidth: dataGridWidth ? 70 : 250,
         },
         {
             field: "remarkName",
             headerName: <FormattedMessage id="serial.buyer" />,
-            width: 250,
+            minWidth: dataGridWidth ? 210 : 250,
             cellClassName: "name-column--cell",
             headerAlign: "center",
             align: "center"
@@ -75,7 +76,7 @@ const UnusedNumber = () => {
             headerName: <FormattedMessage id="serial.purchase.date" />,
             valueFormatter: (params) =>
                 moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
-            width: 370,
+            minWidth: dataGridWidth ? 210 : 370,
             headerAlign: "center",
             align: "center"
         },

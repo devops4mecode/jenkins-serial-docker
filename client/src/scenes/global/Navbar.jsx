@@ -1,11 +1,8 @@
 import axios from 'axios';
 import * as React from 'react'
 import { useState, useRef, useEffect } from "react";
-import { useLogout } from '../../hooks/useLogout'
 import { useAuthContext } from '../../hooks/useAuthContext';
-import { Link, useNavigate } from "react-router-dom";
-import { AppBar, IconButton, Toolbar, useTheme, InputBase, Menu, MenuItem, Box, Typography, useMediaQuery, Select, Button, Divider, Modal, TableContainer } from "@mui/material";
-import { Menu as MenuIcon, Search, Settings } from "@mui/icons-material";
+import { AppBar, IconButton, Toolbar, InputBase, Menu, MenuItem, Box, Typography, useMediaQuery, Button,  Modal, TableContainer } from "@mui/material";
 import searchIcon from "../../assets/search.png"
 import translateIcon from '../../assets/translate.png'
 import hamburgerIcon from '../../assets/hamburger.png'
@@ -19,8 +16,6 @@ import Table from '@material-ui/core/Table';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
-
-
 
 const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }) => {
     const intl = useIntl()

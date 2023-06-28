@@ -2,67 +2,101 @@ import { Box, useMediaQuery } from "@mui/material"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import Header from "../../components/Header"
 import { FormattedMessage } from "react-intl"
-import { DataGrid } from "@mui/x-data-grid"
+import { DataGrid, GridToolbarContainer, GridToolbarExport } from "@mui/x-data-grid"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import moment from "moment"
 
 const MoneyPacket = () => {
     const isNonMediumScreen = useMediaQuery("(min-width: 1200px")
+    const dataGridWidth = useMediaQuery("(max-width: 1200px");
 
     const { user } = useAuthContext()
 
+    const [angpao, setAngpao] = useState([])
+
     const columns = [
-        // {
-        //     field: 'rowIndex',
-        //     headerName: 'No',
-        //     flex: 1,
-        //     minWidth: 90,
-        // },
         {
-            field: 'id',
-            headerName: 'ID',
-            width: 90
+            field: 'rowIndex',
+            headerName: 'No',
+            minWidth: dataGridWidth ? 80 : 90,
         },
         {
-            field: 'firstName',
-            headerName: 'First name',
-            width: 150,
-            editable: true,
+            field: 'angpaoID',
+            headerName: <FormattedMessage id="angpaoId" />,
+            minWidth: dataGridWidth ? 170 : 300,
+            editable: false,
+            headerAlign: "center",
+            align: "center",
         },
         {
-            field: 'lastName',
-            headerName: 'Last name',
-            width: 150,
-            editable: true,
+            field: 'angpao_credit',
+            headerName: <FormattedMessage id="angpao_credit" />,
+            minWidth: dataGridWidth ? 190 : 200,
+            editable: false,
+            headerAlign: "center",
+            align: "center",
         },
         {
-            field: 'age',
-            headerName: 'Age',
+            field: 'angpao_owner',
+            headerName: <FormattedMessage id="angpao_owner" />,
+            cellClassName: "name-column--cell",
+            minWidth: dataGridWidth ? 170 : 250,
+            editable: false,
+            headerAlign: "center",
+            align: "center",
+        },
+        {
+            field: 'angpao_type',
+            headerName: <FormattedMessage id="angpao_type" />,
             type: 'number',
-            width: 110,
-            editable: true,
-          },
+            minWidth: dataGridWidth ? 170 : 230,
+            editable: false,
+            headerAlign: "center",
+            align: "center",
+        },
+        {
+            field: 'createdAt',
+            headerName: <FormattedMessage id="createdAt" />,
+            valueFormatter: (params) =>
+            moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
+            type: 'number',
+            minWidth: dataGridWidth ? 230 : 270,
+            editable: false,
+            headerAlign: "center",
+            align: "center",
+        },
     ]
 
-    const rows = [
-        { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-        { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-        { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-        { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-        { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-        { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-        { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    ];
+    useEffect(() => {
+        const fetchAllAngpao = async () => {
+            if (user) {
+                try {
+                    const { data } = await axios.get(`api/angpao/all`, {
+                        headers: { 'Authorization': `Bearer ${user.accessToken}` }
+                    })
 
-    // put in useeffect for row index
+                    const angpaoWithIndex = data.map((angpao, index) => ({
+                        ...angpao,
+                        rowIndex: index + 1
+                    }))
 
-    // const [userList, setUserList] = useState([])
-    
-    // const angpowIndex = data.map((user, index) => ({
-    //     ...user,
-    //     rowIndex: index + 1
-    // }))
-    // setUserList(angpowIndex)
+                    setAngpao(angpaoWithIndex)
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        }
+        fetchAllAngpao()
+    }, [user])
+
+    function CustomToolbar() {
+        return (
+            <GridToolbarContainer>
+                <GridToolbarExport />
+            </GridToolbarContainer>
+        );
+    }
 
     return (
         <Box m="20px">
@@ -79,17 +113,17 @@ const MoneyPacket = () => {
                 sx={{
                     "& > div": { gridColumn: isNonMediumScreen ? undefined : "span 12" },
                     "& .name-column--cell": {
-                        color: '#2E7C67'
+                        color: '#ff7a38'
                     },
                     "& .MuiDataGrid-columnHeaders": {
-                        backgroundColor: '#a4a9fc'
+                        backgroundColor: '#ff7a38'
                     },
                     "& .MuiDataGrid-footerContainer": {
-                        backgroundColor: '#a4a9fc'
+                        backgroundColor: '#ff7a38'
                     },
-                    "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                        color: `'#141414' !important`
-                    },
+                    // "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                    //     color: `'#141414' !important`
+                    // },
                 }}
             >
                 <Box
@@ -100,10 +134,18 @@ const MoneyPacket = () => {
                     className="defaultSection"
                 >
 
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                />
+                    <DataGrid
+                        columns={columns}
+                        rows={angpao}
+                        getRowId={(row) => row._id}
+                        initialState={{
+                            pagination: { paginationModel: { pageSize: 50 } },
+                        }}
+                        pageSizeOptions={[50]}
+                        slots={{
+                            toolbar: CustomToolbar,
+                        }}
+                    />
 
                 </Box>
 

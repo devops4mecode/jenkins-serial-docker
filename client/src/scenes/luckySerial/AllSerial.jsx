@@ -231,7 +231,7 @@ const AllNumber = () => {
                     <DataGrid
                         rows={serials}
                         columns={columns}
-                        components={{ Toolbar: CustomToolbar }}
+                        slots={{ Toolbar: CustomToolbar }}
                         getRowId={getRowId}
                         checkboxSelection
                         // localeText={localizedTextsMap}
