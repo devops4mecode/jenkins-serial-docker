@@ -1,14 +1,13 @@
-const moment = require("moment");
-
 const Report = require("../models/ReportModel")
-const Chart = require("../models/ChartModel")
+const Chart = require("../models/ChartModel");
+const { convertYearStart, convertYearEnd, convertDayStart, convertDayEnd } = require("../utils/timezone");
 
 const getChartData = async (req, res) => {
     try {
         const { year } = req.query
 
-        const yearStart = moment(year).startOf('year').toDate()
-        const yearEnd = moment(year).endOf('year').toDate()
+        const yearStart = convertYearStart(year)
+        const yearEnd = convertYearEnd(year)
 
         const foundChart = await Chart.findOne(
             { createdAt: { $gte: yearStart, $lte: yearEnd } },
@@ -24,13 +23,10 @@ const getSummaryData = async (req, res) => {
     try {
         const { startDate, endDate } = req.query
 
-        // const dateStart = moment(startDate).startOf('day').toDate()
-        // const dateEnd = moment(endDate).endOf('day').toDate()
+        const dateStart = convertDayStart(startDate)
+        const dateEnd = convertDayEnd(endDate)
 
-        const dateStart = moment(startDate).utcOffset('+08:00').startOf('day')
-            .toDate();
-        const dateEnd = moment(endDate).utcOffset('+08:00').endOf('day')
-            .toDate();
+        const match_query = { createdAt: { $gte: dateStart, $lte: dateEnd } }
 
         const [
             overallRedeemedCount,
@@ -41,7 +37,7 @@ const getSummaryData = async (req, res) => {
         ] = await Promise.all([
             // overallRedeemedCount
             Report.aggregate([
-                { $match: { createdAt: { $gte: dateStart, $lte: dateEnd } } },
+                { $match: match_query },
                 {
                     $group: {
                         _id: null,
@@ -51,7 +47,7 @@ const getSummaryData = async (req, res) => {
             ]),
             // redeemedCount,
             Report.aggregate([
-                { $match: { createdAt: { $gte: dateStart, $lte: dateEnd } } },
+                { $match: match_query },
                 { $unwind: "$redeemedCount" },
                 {
                     $group: {
@@ -62,7 +58,7 @@ const getSummaryData = async (req, res) => {
             ]),
             // totalAmountRedeemed
             Report.aggregate([
-                { $match: { createdAt: { $gte: dateStart, $lte: dateEnd } } },
+                { $match: match_query },
                 {
                     $group: {
                         _id: null,
@@ -72,7 +68,7 @@ const getSummaryData = async (req, res) => {
             ]),
             // overallGeneratedCount,
             Report.aggregate([
-                { $match: { createdAt: { $gte: dateStart, $lte: dateEnd } } },
+                { $match: match_query },
                 { $unwind: "$overallGeneratedCount" },
                 {
                     $group: {
@@ -83,7 +79,7 @@ const getSummaryData = async (req, res) => {
             ]),
             // topTen,
             Report.aggregate([
-                { $match: { createdAt: { $gte: dateStart, $lte: dateEnd } } },
+                { $match: match_query },
                 { $unwind: "$topTen" },
                 {
                     $group: {
