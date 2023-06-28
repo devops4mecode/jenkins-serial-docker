@@ -44,18 +44,18 @@ const Sidebar = ({
             if (!isNonMobile && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
                 setIsSidebarOpen(false);
             }
-        };
+        }
         document.addEventListener("mousedown", handleOutsideClick);
         return () => {
             document.removeEventListener("mousedown", handleOutsideClick);
-        };
-    }, [isNonMobile, setIsSidebarOpen]);
+        }
+    }, [isNonMobile, setIsSidebarOpen])
 
     useEffect(() => {
         if (isNonMobile) {
-            setIsSidebarOpen(true);
+            setIsSidebarOpen(true)
         }
-    }, [isNonMobile, setIsSidebarOpen]);
+    }, [isNonMobile, setIsSidebarOpen])
 
     const handleOpenClose = () => {
         if (!isNonMobile) {
@@ -68,6 +68,10 @@ const Sidebar = ({
             text: "Dashboard",
             translationKey: "dashboardNav",
             image: <img src={dashboardIcon} alt="dashboard" width="25" height="25" />
+        },
+        {
+            text: "Lucky Serial",
+            translationKey: "luckySerialNav",
         },
         {
             text: "Generate Serial",
@@ -90,6 +94,15 @@ const Sidebar = ({
             image: <img src={claimedIcon} alt="user" width="25" height="25" />
         },
         {
+            text: "Money Packet",
+            translationKey: "angpowNav",
+        },
+        {
+            text: "Money Packet",
+            translationKey: "angpowNav",
+            image: <img src={claimedIcon} alt="user" width="25" height="25" />
+        },
+        {
             text: "Logout",
             translationKey: "logoutNav",
             image: <img src={logoutIcon} alt="setting" width="25" height="25" />,
@@ -103,8 +116,8 @@ const Sidebar = ({
                     {navItems.map(({ text, image, translationKey, onClick }) => {
                         if (!image) {
                             return (
-                                <Typography key={text}>
-                                    {text}
+                                <Typography key={translationKey} style={{ color: '#6200EE', marginLeft: '20px', fontSize: '14px', paddingTop: '1rem' }}>
+                                    <FormattedMessage id={translationKey} />
                                 </Typography>
                             )
                         }
@@ -116,12 +129,12 @@ const Sidebar = ({
                                 <ListItemButton
                                     onClick={() => {
                                         if (onClick) {
-                                            onClick(); // Call the onClick handler (logout function)
+                                            onClick()
                                         }
                                         if (lcText === 'logout') {
                                             handleLogout()
                                         } else {
-                                            navigate(`/${lcText}`);
+                                            navigate(`/${lcText}`)
                                         }
                                         setActive(lcText)
                                     }}

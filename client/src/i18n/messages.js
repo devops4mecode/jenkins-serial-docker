@@ -2,7 +2,7 @@ import { LOCALES } from "./locales"
 
 export const messages = {
     [LOCALES.ENGLISH]: {
-
+        "reloadPinNav": "reload pin",
         // login page
         "lucky.serial": "Lucky Serial",
         "login.username": "Username",
@@ -21,15 +21,17 @@ export const messages = {
 
         // sidebar
         "dashboardNav": "Dashboard",
+        "luckySerialNav": "Lucky Serial",
         "generateSerialNav": "Generated Serial",
         "allSerialNav": "All Serial",
         "unclaimedSerialNav": "Active Serial",
         "claimedSerialNav": "Redeemed Serial",
+        "angpowNav": "Money Packet",
         "logoutNav": "Logout",
 
         //page: dashboard
         "dashboard": "Dashboard",
-        "dash.text": "Lucky Serial",        
+        "dash.text": "Lucky Serial",
         "total.generated": "Total Generated",
         "total": "Total",
         "total.amount.generated": "Amount Generated",
@@ -38,8 +40,8 @@ export const messages = {
         "total.rm.redeemed": "Total Amount Redeemed",
         "total.redeemed.count": "Total Redeemed (Count)",
         "most.redeemed.percentage": "Most Redeemed (%)",
-        "top10": "Top 10",
-        
+        "top10": "Top 10 Redeemed Account",
+
         // date filter
         "all.time": "ALL TIME",
         "this.year": "THIS YEAR",
@@ -84,6 +86,13 @@ export const messages = {
 
         // page: invalid serial
         "invalid.serial": "Redeemed Serial",
+
+        // page: angpao
+        "angpaoId": "Id",
+        "angpao_credit": "Total Amount",
+        "angpao_owner": "From",
+        "angpao_type": "Type",
+        "createdAt": "Creation Date",
     },
 
 
@@ -106,15 +115,17 @@ export const messages = {
 
         // sidebar
         "dashboardNav": "仪表盘",
+        "luckySerialNav": "幸运序号",
         "generateSerialNav": "生成序号",
         "allSerialNav": "所有序号",
         "unclaimedSerialNav": "未兑换序号",
         "claimedSerialNav": "已兑换序号",
+        "angpowNav": "红包",
         "logoutNav": "退出",
 
         //page: dashboard
         "dashboard": "仪表盘",
-        "dash.text": "幸运序号",        
+        "dash.text": "幸运序号",
         "total": "总数",
         "total.amount.generated": "生成金额",
         "total.amount.redeemed": "兑换金额",
@@ -169,6 +180,13 @@ export const messages = {
 
         // page: invalid serial
         "invalid.serial": "已兑换序号",
+
+        // page: angpao
+        "angpaoId": "红包 ID",
+        "angpao_credit": "总价值",
+        "angpao_owner": "创建人",
+        "angpao_type": "类别",
+        "createdAt": "创建日期",
     },
 
 
@@ -191,15 +209,17 @@ export const messages = {
 
         // sidebar
         "dashboardNav": "Papan Pemuka",
+        "luckySerialNav": "Lucky Serial",
         "generateSerialNav": "Menjana Nombor Siri",
         "allSerialNav": "Semua Nombor Siri",
         "unclaimedSerialNav": "Siri Belum Ditebus",
         "claimedSerialNav": "Siri Ditebus",
+        "angpowNav": "Duit Paket",
         "logoutNav": "Log Keluar",
 
         //page: dashboard
         "dashboard": "Papan Pemuka",
-        "dash.text": "Lucky Serial",       
+        "dash.text": "Lucky Serial",
         "total": "Jumlah",
         "total.amount.generated": "Dijana",
         "total.amount.redeemed": "Ditebus",
@@ -254,5 +274,12 @@ export const messages = {
 
         // page: invalid serial
         "invalid.serial": "Siri Ditebus",
+
+        // page: angpao
+        "angpaoId": "Id",
+        "angpao_credit": "Jumlah",
+        "angpao_owner": "Dari",
+        "angpao_type": "Jenis",
+        "createdAt": "Tarikh",
     },
 }

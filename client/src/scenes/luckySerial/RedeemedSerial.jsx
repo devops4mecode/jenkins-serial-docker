@@ -1,66 +1,26 @@
 import axios from "axios";
-import moment from "moment"
-import { useEffect, useState } from "react";
-import { Button, useMediaQuery, useTheme } from "@mui/material";
-import { useAuthContext } from "../hooks/useAuthContext";
-import { FormattedMessage, useIntl } from "react-intl";
+import moment from "moment";
+import { useEffect, useState } from "react"
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { FormattedMessage } from "react-intl";
 import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarExport, GridToolbarFilterButton } from "@mui/x-data-grid"
-import Box from "@mui/material/Box";
-import Header from "../components/Header";
-import '../css/allNumberTable.css'
-import DeleteModal from '../components/DeleteModal'
+import { Box, useMediaQuery } from "@mui/material";
+import Header from "../../components/Header";
 
-// const localizedTextsMap = {
-//     toolbarExportCSV: '导出',
-//     toolbarFilter: 'Filter',
-//     toolbarColumns: 'Columns',
-// };
-
-const AllNumber = () => {
+const UsedNumber = () => {
 
     const isNonMediumScreen = useMediaQuery("(min-width: 1200px)")
+    const dataGridWidth = useMediaQuery("(max-width: 1200px");
 
     const { user } = useAuthContext()
     const [serials, setSerials] = useState([])
-
-    const intl = useIntl()
-    const unclaimed = intl.formatMessage({ id: 'unclaimed' })
-    const redeemed = intl.formatMessage({ id: 'redeemed' })
-
-    const [openModal, setOpenModal] = useState(false)
-
-    const handleOpenModal = () => {
-        setOpenModal(true)
-    }
-
-    const [selectedRows, setSelectedRows] = useState([]);
-
-    const handleRowSelectionChange = (selectionModel) => {
-        setSelectedRows(selectionModel);
-    };
-
-    const handleDelete = async () => {
-
-        try {
-            const { data } = await axios.delete(`api/serials/delete`, {
-                headers: { 'Authorization': `Bearer ${user.accessToken}` },
-                data: { serialID: selectedRows }
-            })
-            window.location.reload()
-        } catch (error) {
-            console.error(error)
-        }
-    }
-
-    const handleCancel = () => {
-        setOpenModal(false)
-    }
+    const serialStatus = false
 
     useEffect(() => {
         const fetchAllSerials = async () => {
             if (user) {
                 try {
-                    const response = await axios.get(`api/serials/all`, {
+                    const response = await axios.get(`api/serials/status?serialStatus=${serialStatus}`, {
                         headers: { 'Authorization': `Bearer ${user.accessToken}` }
                     });
                     setSerials(response.data);
@@ -71,6 +31,7 @@ const AllNumber = () => {
         };
         fetchAllSerials();
     }, [user]);
+
 
     function formatNumber(num) {
         const formatted = num.toLocaleString('en-US', { maximumFractionDigits: 0 }).replace(/,/g, '');
@@ -92,8 +53,7 @@ const AllNumber = () => {
             align: "center",
             valueGetter: (params) =>
                 formatNumber(params.row.serialNo),
-            width: 300,
-            xs: 80,
+            minWidth: dataGridWidth ? 270 : 350,
         },
         {
             field: "givenCredit",
@@ -101,74 +61,46 @@ const AllNumber = () => {
             type: "number",
             headerAlign: "center",
             align: "center",
-            width: 80,
-            xs: 100
+            minWidth: dataGridWidth ? 70 : 200,
         },
         {
             field: "remarkName",
             headerName: <FormattedMessage id="serial.buyer" />,
+            minWidth: dataGridWidth ? 210 : 200,
             cellClassName: "name-column--cell",
             headerAlign: "center",
-            align: "center",
-            width: 240,
-            xs: 100
+            align: "center"
         },
         {
             field: "createdAt",
             headerName: <FormattedMessage id="serial.purchase.date" />,
             valueFormatter: (params) =>
                 moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
+            minWidth: dataGridWidth ? 240 : 250,
             headerAlign: "center",
-            align: "center",
-            width: 200,
-            xs: 100
+            align: "center"
         },
         {
             field: "redemptionAcc",
             headerName: <FormattedMessage id="redeemed.account" />,
-            valueGetter: (params) =>
-                params.row.redemptionAcc || "----",
+            minWidth: dataGridWidth ? 210 : 250,
             cellClassName: "name-column--cell",
             headerAlign: "center",
-            align: "center",
-            width: 230,
-            xs: 100
+            align: "center"
         },
         {
             field: "updatedAt",
             headerName: <FormattedMessage id="redeemed.date" />,
-            valueGetter: (params) =>
-                params.row.serialStatus ? "---" : moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
+            valueFormatter: (params) =>
+                moment(params.value).format("DD-MM-YYYY h:mm:ss a"),
+            width: 250,
+            minWidth: dataGridWidth ? 30 : 90,
             headerAlign: "center",
-            align: "center",
-            width: 200,
-            xs: 100
-        },
-        {
-            field: "serialStatus",
-            headerName: <FormattedMessage id="serial.status" />,
-            valueGetter: (params) =>
-                (params.row.serialStatus ? unclaimed : redeemed),
-            cellClassName: (params) =>
-                (params.row.serialStatus ? "name-column--cell" : "status-redeemed"),
-            headerAlign: "center",
-            align: "center",
-            width: 210,
-            xs: 100
-        },
+            align: "center"
+        }
     ]
 
     const getRowId = (row) => row._id
-
-    const CustomToolbar = () => {
-        return (
-            <GridToolbarContainer>
-                <GridToolbarColumnsButton />
-                <GridToolbarFilterButton />
-                <GridToolbarExport />
-            </GridToolbarContainer>
-        )
-    }
 
     serials.sort((a, b) => {
         const dateA = moment(a.createdAt)
@@ -183,11 +115,21 @@ const AllNumber = () => {
         return dateB - dateA
     })
 
+    const CustomToolbar = () => {
+        return (
+            <GridToolbarContainer>
+                <GridToolbarColumnsButton />
+                <GridToolbarFilterButton />
+                <GridToolbarExport />
+            </GridToolbarContainer>
+        )
+    }
+
     return (
         <Box m="20px">
             <Header
-                title={<FormattedMessage id="all.serial" />}
-                subtitle={<FormattedMessage id="all.serial" />}
+                title={<FormattedMessage id="invalid.serial" />}
+                subtitle={<FormattedMessage id="invalid.serial" />}
             />
             <Box
                 mt="5px"
@@ -209,9 +151,6 @@ const AllNumber = () => {
                     "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
                         color: `'#141414' !important`
                     },
-                    "& .status-redeemed": {
-                        color: "red",
-                    },
                 }}
             >
                 <Box
@@ -221,41 +160,20 @@ const AllNumber = () => {
                     borderRadius="0.55rem"
                     className="defaultSection"
                 >
-
-                    <Box display='flex' justifyContent='end' paddingBottom='15px'>
-                        <Button variant="contained" color="error" onClick={handleOpenModal}>
-                            <FormattedMessage id="delete" />
-                        </Button>
-                    </Box>
-
                     <DataGrid
                         rows={serials}
                         columns={columns}
                         components={{ Toolbar: CustomToolbar }}
                         getRowId={getRowId}
-                        checkboxSelection
-                        // localeText={localizedTextsMap}
                         disableColumnMenu
-                        onRowSelectionModelChange={handleRowSelectionChange}
                     />
+
+                    <Box className="footer"></Box>
                 </Box>
-
-                <Box className="footer"></Box>
             </Box>
-
-            {openModal && (
-                <DeleteModal
-                    message='delete.confirmation.message'
-                    count={selectedRows.length}
-                    onDelete={handleDelete}
-                    onCancel={handleCancel}
-                    onClose={handleCancel}
-                />
-            )}
-
         </Box>
 
     )
 }
 
-export default AllNumber
+export default UsedNumber
