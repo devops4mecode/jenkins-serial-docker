@@ -29,18 +29,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-backend-
 
-      - name: Copy folder to home directory
-        run: |
-          sudo cp -r ~/actions-runner/_work/SN-Generator/* ~/
-
       - name: Install backend dependencies and restart backend
-        working-directory: ./backend
+        # working-directory: ./backend
         env:
           PRODUCTION_URL: ${{ secrets.PRODUCTION_URL }}
           MONGO_URL: ${{ secrets.MONGODB_URL }}
           PORT: ${{ secrets.PORT }}
           ACCESS_TOKEN_SECRET: ${{ secrets.JWT_ACCESS_TOKEN }}
         run: |
+          ls -la
           npm i --force
           pm2 start server.js --watch
 
