@@ -24,7 +24,8 @@ const getDetailsBySerialNo = async (req, res) => {
 
         const serial = await Serial.findOne({ serialNo });
         res.json(serial);
-    } catch (error) { 
+    } catch (error) {
+         
         return res.status(400).json({ message: "Something wrong" });
     }
 };

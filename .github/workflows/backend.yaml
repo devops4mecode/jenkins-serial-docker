@@ -30,14 +30,13 @@ jobs:
             ${{ runner.os }}-backend-
 
       - name: Install backend dependencies and restart backend
-        # working-directory: ./backend
+        working-directory: ./backend
         env:
           PRODUCTION_URL: ${{ secrets.PRODUCTION_URL }}
           DATABASE_URI: ${{ secrets.MONGODB_URL }}
           PORT: ${{ secrets.PORT }}
           ACCESS_TOKEN_SECRET: ${{ secrets.JWT_ACCESS_TOKEN }}
         run: |
-          ls -la
           npm i --force
           pm2 start server.js --watch
 
