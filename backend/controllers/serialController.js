@@ -13,7 +13,6 @@ const getAllSerials = async (req, res) => {
         return res.status(400).json({ message: "No serials found" });
     }
     res.json(serials);
-    
 };
 
 // @desc Get all serials
