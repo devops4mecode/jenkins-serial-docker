@@ -29,6 +29,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-backend-
 
+      - name: Copy folder to home directory
+        run: |
+          sudo cp -r ~/actions-runner/_work/SN-Generator/* ~/
+
       - name: Install backend dependencies and restart backend
         working-directory: ./backend
         env:
@@ -40,8 +44,6 @@ jobs:
           npm i --force
           pm2 start server.js --watch
 
-      - name: Move or copy folder to home directory
-        run: |
-          cp -r ~/actions-runner/_work/SN-Generator/* ~/
+      
 
 
