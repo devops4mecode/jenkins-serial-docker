@@ -5,12 +5,12 @@ on:
     branches:
       - main
     paths:
-        - 'backend/**'
+      - 'backend/**'
 
 jobs:
   deploy:
     name: Deploy Backend
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout repository
