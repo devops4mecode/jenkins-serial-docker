@@ -47,7 +47,7 @@
 #         env:
 #           # NODE_ENV: ${{ secrets.NODE_ENV }}
 #           PRODUCTION_URL: ${{ secrets.PRODUCTION_URL }}
-#           MONGO_URL: ${{ secrets.MONGODB_URL }}
+#           DATABASE_URI: ${{ secrets.MONGODB_URL }}
 #           PORT: ${{ secrets.PORT }}
 #           ACCESS_TOKEN_SECRET: ${{ secrets.JWT_ACCESS_TOKEN }}
 #         run: |
