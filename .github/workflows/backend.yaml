@@ -24,15 +24,15 @@ jobs:
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
-          path: server/node_modules
+          path: backend/node_modules
           key: ${{ runner.os }}-backend-${{ hashFiles('backend/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-backend-
 
-      - name: Install backend dependencies and restart server
+      - name: Install backend dependencies and restart backend
         working-directory: ./backend
         env:
-          NODE_ENV: ${{ secrets.NODE_ENV }}
+          PRODUCTION_URL: ${{ secrets.PRODUCTION_URL }}
           MONGO_URL: ${{ secrets.MONGODB_URL }}
           PORT: ${{ secrets.PORT }}
           ACCESS_TOKEN_SECRET: ${{ secrets.JWT_ACCESS_TOKEN }}
