@@ -25,9 +25,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: client/node_modules
-          key: ${{ runner.os }}-frontend-${{ hashFiles('client/package-lock.json') }}
+          key: ${{ runner.os }}-client-${{ hashFiles('client/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-frontend-
+            ${{ runner.os }}-client-
 
       - name: Install pm2 globally
         run: npm install -g pm2
