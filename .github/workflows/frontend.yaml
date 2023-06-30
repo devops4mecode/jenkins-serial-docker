@@ -45,7 +45,7 @@ jobs:
       - name: Restart pm2
         working-directory: ./backend
         env:
-          NODE_ENV: production
+          NODE_ENV: ${{ secrets.NODE_ENV }}
           MONGO_URL: ${{ secrets.MONGODB_URL }}
           PORT: ${{ secrets.PORT }}
           ACCESS_TOKEN_SECRET: ${{ secrets.JWT_ACCESS_TOKEN }}
