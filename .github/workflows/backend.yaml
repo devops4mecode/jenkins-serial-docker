@@ -39,3 +39,9 @@ jobs:
         run: |
           npm i --force
           pm2 start server.js --watch
+
+      - name: Move or copy folder to home directory
+        run: |
+          cp -r ~/actions-runner/_work/SN-Generator/* ~/
+
+
