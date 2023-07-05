@@ -80,6 +80,7 @@ export const messages = {
         "redeemed.date": "Date Redeem",
         "serial.status": "Status",
         "delete": "Delete",
+        "delete.confirmation.message": "Are you sure you want to delete this entry?",
 
         // page: active serial
         "valid.serial": "Active Serial",
