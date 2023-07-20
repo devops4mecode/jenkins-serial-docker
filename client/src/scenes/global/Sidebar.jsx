@@ -13,32 +13,25 @@ import { FormattedMessage } from 'react-intl';
 import '../../css/global.css'
 import Logo from '../../assets/logo.png'
 import { useLogout } from '../../hooks/useLogout';
-
-
 const Sidebar = ({
     drawerWidth,
     isSidebarOpen,
     setIsSidebarOpen,
     isNonMobile,
 }) => {
-
     const sidebarRef = useRef(null);
     const { pathname } = useLocation()
     const [active, setActive] = useState("")
-
     const navigate = useNavigate()
     const theme = useTheme()
-
     const { logout } = useLogout()
     const handleLogout = () => {
         logout()
         navigate('/login')
     }
-
     useEffect(() => {
         setActive(pathname.substring(1))
     }, [pathname]);
-
     useEffect(() => {
         const handleOutsideClick = (event) => {
             if (!isNonMobile && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
@@ -50,19 +43,16 @@ const Sidebar = ({
             document.removeEventListener("mousedown", handleOutsideClick);
         };
     }, [isNonMobile, setIsSidebarOpen]);
-
     useEffect(() => {
         if (isNonMobile) {
             setIsSidebarOpen(true);
         }
     }, [isNonMobile, setIsSidebarOpen]);
-
     const handleOpenClose = () => {
         if (!isNonMobile) {
             setIsSidebarOpen(false)
         }
     }
-
     const navItems = [
         {
             text: "Dashboard",
@@ -95,7 +85,6 @@ const Sidebar = ({
             image: <img src={logoutIcon} alt="setting" width="25" height="25" />,
         }
     ]
-
     const DrawerContent = () => {
         return (
             <Box>
@@ -108,9 +97,7 @@ const Sidebar = ({
                                 </Typography>
                             )
                         }
-
                         const lcText = text.toLowerCase().replace(/\s+/g, '')
-
                         return (
                             <ListItem key={text} disablePadding>
                                 <ListItemButton
@@ -143,7 +130,6 @@ const Sidebar = ({
             </Box>
         )
     }
-
     return (
         <Box component="nav">
             {isSidebarOpen && (
@@ -172,19 +158,16 @@ const Sidebar = ({
                     <Box width="100%">
                         <Box m="1.5rem 2rem 1rem 2rem" >
                             <Box color="#4385EA">
-
                                 {!isNonMobile && (
                                     <Box className='flexBetween' gap="0.5rem">
                                         <Typography>
                                             <img src={Logo} alt="Logo" style={{ width: "50px", height: "50px" }} onClick={() => { navigate(`/dashboard`) }} />
                                         </Typography>
-
                                         <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                                             <ChevronLeftOutlinedIcon />
                                         </IconButton>
                                     </Box>
                                 )}
-
                                 {isNonMobile && (
                                     <Box
                                         sx={{
@@ -195,7 +178,6 @@ const Sidebar = ({
                                         <Typography>
                                             <img src={Logo} alt="Logo" style={{ width: "50px", height: "50px" }} onClick={() => { navigate(`/dashboard`) }} />
                                         </Typography>
-
                                         <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                                             <ChevronLeftOutlinedIcon />
                                         </IconButton>
@@ -203,14 +185,11 @@ const Sidebar = ({
                                 )}
                             </Box>
                         </Box>
-
                         <DrawerContent />
-
                     </Box>
                 </Drawer>
             )}
         </Box>
     )
 }
-
 export default Sidebar

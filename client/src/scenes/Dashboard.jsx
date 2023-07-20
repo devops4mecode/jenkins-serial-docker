@@ -260,7 +260,6 @@ const Dashboard = () => {
                             </Button>
                         ))}
                     </Box>
-
                 </Box>
                 <Grid container className="gridFilter" justifyContent="center">
                     <Grid item>

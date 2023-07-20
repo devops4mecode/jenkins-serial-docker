@@ -1,0 +1,45 @@
+name: Backend Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/**'
+
+jobs:
+  deploy:
+    name: Deploy Backend
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: backend/node_modules
+          key: ${{ runner.os }}-backend-${{ hashFiles('backend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-backend-
+
+      - name: Install backend dependencies and restart backend
+        working-directory: ./backend
+        env:
+          PRODUCTION_URL: ${{ secrets.PRODUCTION_URL }}
+          DATABASE_URI: ${{ secrets.MONGODB_URL }}
+          PORT: ${{ secrets.PORT }}
+          ACCESS_TOKEN_SECRET: ${{ secrets.JWT_ACCESS_TOKEN }}
+        run: |
+          npm i --force
+          pm2 start server.js --watch
+
+      
+
+

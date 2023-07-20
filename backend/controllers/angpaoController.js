@@ -1,16 +1,16 @@
 const Angpao = require("../models/AngpaoModel");
 const { RandomizeAngpao, EqualizeAngpao } = require("../utils/angpao");
 const { convertExpiryTime, setAngpaoID, timeNow } = require('../utils/timezone')
-require('dotenv').config()
+// require('dotenv').config()
 
 // Function to get the base URL based on the current environment
-function getBaseUrl() {
-    if (process.env.NODE_ENV === 'production') {
-        return process.env.PRODUCTION_URL;
-    } else {
-        return process.env.DEVELOPMENT_URL;
-    }
-}
+// function getBaseUrl() {
+//     if (process.env.NODE_ENV === 'production') {
+//         return process.env.PRODUCTION_URL;
+//     } else {
+//         return process.env.DEVELOPMENT_URL;
+//     }
+// }
 
 const getAllAngpao = async (req, res) => {
     try {
@@ -52,7 +52,8 @@ const createAngpao = async (req, res) => {
         await newAngpao.save();
 
         // Construct the get API link with angpaoID
-        const getLink = `${getBaseUrl()}/api/angpao/open?angpaoID=${angpaoID}`;
+        const getLink = `${process.env.PRODUCTION_URL}/api/angpao/open?angpaoID=${angpaoID}`;
+        // const getLink = `${getBaseUrl()}/api/angpao/open?angpaoID=${angpaoID}`;
 
         return res.json({ angpao: newAngpao, getLink });
 
