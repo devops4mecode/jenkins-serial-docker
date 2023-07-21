@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.b1b3de5d.css",
-    "main.js": "/static/js/main.77c4af08.js",
+    "main.js": "/static/js/main.6e7d9a52.js",
     "static/media/calculator.png": "/static/media/calculator.b885443f56e65971a107.png",
     "static/media/total-redeemed-rm.png": "/static/media/total-redeemed-rm.80eeaf20791cfcbdec92.png",
     "static/media/total-redeem-count.png": "/static/media/total-redeem-count.2adb9013d277fd686ff1.png",
@@ -19,10 +19,10 @@
     "static/media/generate-serial.png": "/static/media/generate-serial.dc5f78899893edd628f5.png",
     "index.html": "/index.html",
     "main.b1b3de5d.css.map": "/static/css/main.b1b3de5d.css.map",
-    "main.77c4af08.js.map": "/static/js/main.77c4af08.js.map"
+    "main.6e7d9a52.js.map": "/static/js/main.6e7d9a52.js.map"
   },
   "entrypoints": [
     "static/css/main.b1b3de5d.css",
-    "static/js/main.77c4af08.js"
+    "static/js/main.6e7d9a52.js"
   ]
 }
