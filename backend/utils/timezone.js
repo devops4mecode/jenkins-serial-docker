@@ -27,6 +27,20 @@ const convertYearEnd = (year) => {
     return moment(year).endOf('year').toDate()
 }
 
+const getMonthStart = () => {
+    return moment().startOf('month').toDate()
+}
+
+const subtractDays = (count) => {
+    return moment().subtract(count, 'days').toDate()
+}
+
+const getMonthEnd = () => {
+    return moment().endOf('month').toDate()
+}
+
+// ===Not Related===
+// ===Move to Angpao===
 const convertExpiryTime = (mins) => {
     return moment().add(mins, 'minutes').toDate()
 }
@@ -43,6 +57,10 @@ module.exports = {
     convertDayEnd,
     convertYearStart,
     convertYearEnd,
+    getMonthStart,
+    getMonthEnd,
+    subtractDays,
+    // Ignore
     convertExpiryTime,
     setAngpaoID,
 };
