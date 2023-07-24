@@ -23,7 +23,7 @@ exports.spareSummary = () => {
         console.log('running')
 
 
-        const match_query = { $gte: convertDayStart(subtractDays(41)), $lte: convertDayEnd(subtractDays(41)) }
+        const match_query = { $gte: convertDayStart(subtractDays(1)), $lte: convertDayEnd(subtractDays(1)) }
 
         const [
             overallRedeemedCount,
@@ -125,8 +125,8 @@ exports.spareSummary = () => {
                 totalCredit: totalGivenCredit
             })),
             totalAmountRedeemed: totalAmountRedeemed[0]?.sum || 0,
-            createdAt: convertDayStart(subtractDays(41)),
-            updatedAt: convertDayEnd(subtractDays(41))
+            createdAt: convertDayStart(subtractDays(1)),
+            updatedAt: convertDayEnd(subtractDays(1))
         };
 
         const existingSummary = await Report.findOne({ createdAt: match_query })

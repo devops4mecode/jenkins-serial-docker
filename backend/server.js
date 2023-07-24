@@ -28,7 +28,6 @@ app.use('/api/serials', require('./routes/serialRoutes'))
 app.use('/api/dashboard', require('./routes/dashboardRoutes'))
 // ! Integration Routes
 app.use('/api/lucky', require('./routes/globalRoutes'))
-app.use('/api/angpao', require('./routes/angpaoRoutes'))
 
 const buildPath = path.join(__dirname, 'build')
 app.use(express.static(buildPath))

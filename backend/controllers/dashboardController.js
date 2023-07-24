@@ -6,11 +6,8 @@ const getChartData = async (req, res) => {
     try {
         const { year } = req.query
 
-        const yearStart = convertYearStart(year)
-        const yearEnd = convertYearEnd(year)
-
         const foundChart = await Chart.findOne(
-            { createdAt: { $gte: yearStart, $lte: yearEnd } },
+            { createdAt: { $gte: convertYearStart(year), $lte: convertYearEnd(year) } },
             { _id: 0 } // Exclude _id field
         )
         return res.status(200).json(foundChart)
@@ -23,10 +20,7 @@ const getSummaryData = async (req, res) => {
     try {
         const { startDate, endDate } = req.query
 
-        const dateStart = convertDayStart(startDate)
-        const dateEnd = convertDayEnd(endDate)
-
-        const match_query = { createdAt: { $gte: dateStart, $lte: dateEnd } }
+        const match_query = { createdAt: { $gte: convertDayStart(startDate), $lte: convertDayEnd(endDate) } }
 
         const [
             overallRedeemedCount,
