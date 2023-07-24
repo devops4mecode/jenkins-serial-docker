@@ -18,7 +18,9 @@ const getChartData = async (req, res) => {
 
 const getSummaryData = async (req, res) => {
     try {
-        const { startDate, endDate } = req.query
+        let { startDate, endDate } = req.query
+
+        if (!startDate) startDate = '1970-01-01'
 
         const match_query = { createdAt: { $gte: convertDayStart(startDate), $lte: convertDayEnd(endDate) } }
 
