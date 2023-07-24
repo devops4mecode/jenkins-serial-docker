@@ -330,8 +330,6 @@ exports.generateSummary = () => {
                 totalCredit: totalGivenCredit
             })),
             totalAmountRedeemed: totalAmountRedeemed[0]?.sum || 0,
-            createdAt: convertDayStart(),
-            updatedAt: convertDayEnd()
         };
 
         const existingSummary = await Report.findOne({ createdAt: match_query })
