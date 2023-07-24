@@ -1,6 +1,6 @@
 // Required Stuffs
 const CronJob = require('cron').CronJob
-const { startTime, endTime, yearStart, yearEnd, getMonthStart, getMonthEnd, subtractDays, convertDayStart, convertDayEnd } = require('./utils/timezone');
+const { getMonthStart, getMonthEnd, subtractDays, convertDayStart, convertDayEnd, convertYearStart, convertYearEnd } = require('./utils/timezone');
 // Get From
 const Serial = require('./models/SerialModel')
 const Chart = require('./models/ChartModel');
@@ -151,7 +151,7 @@ exports.spareSummary = () => {
 exports.generateChartData = () => {
     const dashChart = new CronJob('* * * * *', async function () {
 
-        const match_query = { $gte: yearStart, $lte: yearEnd }
+        const match_query = { $gte: convertYearStart(), $lte: convertYearEnd() }
 
         const [
             monthlyRedeemedThroughYear,
@@ -229,7 +229,7 @@ exports.generateSummary = () => {
     // Daily
     const reportSummary = new CronJob('* * * * *', async function () {
 
-        const match_query = { $gte: startTime, $lte: endTime }
+        const match_query = { $gte: convertDayStart(), $lte: convertDayEnd() }
 
         const [
             overallRedeemedCount,
