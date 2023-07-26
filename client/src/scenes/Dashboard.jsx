@@ -33,25 +33,23 @@ const Dashboard = () => {
     };
 
     const [chartData, setChartData] = useState({
-        // Before Chart
-        totalGenerated: "",
-        totalRedeemed: "",
-        // Chart
-        monthlyRedeemed: [],
-        monthlyGenerated: [],
+        totalGenerated: 0,
+        totalRedeemed: 0,
+        targetYearChart: [],
     })
 
-    useEffect(() => {
-        const getChart = async () => {
-            try {
-                const { data } = await axios.get(`api/dashboard/chart?${year}`, {
-                    headers: { 'Authorization': `Bearer ${user.accessToken}` }
-                });
-                setChartData(data)
-            } catch (error) {
-                console.log(error)
-            }
+    const getChart = async () => {
+        try {
+            const { data } = await axios.get(`api/dashboard/chart?year=${year}`, {
+                headers: { 'Authorization': `Bearer ${user.accessToken}` }
+            });
+            setChartData(data)
+        } catch (error) {
+            console.error(error)
         }
+    }
+
+    useEffect(() => {
         getChart()
     }, [year])
 
@@ -120,22 +118,23 @@ const Dashboard = () => {
         topTen: [],
     });
 
-    useEffect(() => {
-        let startFrom = startDate;
-        if (startDate) startFrom = moment(startDate).format('YYYY-MM-DD');
-        const endAt = moment(endDate).format('YYYY-MM-DD')
+    let startFrom = startDate;
+    if (startDate) startFrom = moment(startDate).format('YYYY-MM-DD');
+    const endAt = moment(endDate).format('YYYY-MM-DD')
 
-        const getDashboard = async () => {
-            try {
-                const { data } = await axios.get(`api/dashboard/summary?startDate=${startFrom}&endDate=${endAt}`, {
-                    headers: { 'Authorization': `Bearer ${user.accessToken}` }
-                });
+    const getDashboard = async () => {
+        try {
+            const { data } = await axios.get(`api/dashboard/summary?startDate=${startFrom}&endDate=${endAt}`, {
+                headers: { 'Authorization': `Bearer ${user.accessToken}` }
+            });
 
-                setReportData(data)
-            } catch (error) {
-                console.log(error)
-            }
+            setReportData(data)
+        } catch (error) {
+            console.error(error)
         }
+    }
+
+    useEffect(() => {
         getDashboard()
     }, [startDate, endDate])
 
@@ -196,7 +195,7 @@ const Dashboard = () => {
                                 <Box>
                                     <Select
                                         value={year}
-                                        label="Year"
+                                        // label="Year"
                                         onChange={handleYearChange}
                                         style={{
                                             border: '1px solid #6200EE15',
@@ -209,7 +208,7 @@ const Dashboard = () => {
                                     </Select>
                                 </Box>
 
-                                <LineChart isDashboard={true} monthlyGenerated={chartData.monthlyGenerated} monthlyRedeemed={chartData.monthlyRedeemed} />
+                                <LineChart isDashboard={true} targetYearChart={chartData.targetYearChart} />
                             </Box>
                         ) : (
                             <div>Loading...</div>
@@ -288,7 +287,7 @@ const Dashboard = () => {
                     <Typography className='top-section-title'><FormattedMessage id='total' /></Typography>
                 </Box> */}
                 <Grid container columns={12}>
-                    <Grid item xs={12} sm={6} md={6} xl={6} borderRight={{sm: "1px solid #e3e4e6" }}>
+                    <Grid item xs={12} sm={6} md={6} xl={6} borderRight={{ sm: "1px solid #e3e4e6" }}>
                         <Box className="mainDataSection" sx={{ justifyContent: { xs: 'center', md: 'end' } }}>
                             <Box className="mainTextSection">
                                 <img src={calculatorIcon} alt="total-generater" className="icon-inside" />

@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3500
 const mongoose = require('mongoose');
 const corsOptions = require('./config/corsOptions');
 
-const { generateChartData, generateSummary, spareSummary } = require('./cron')
+const { generateCurrentMonthChart, generateChartData, generateSummary, spareSummary } = require('./cron')
 
 console.log(process.env.NODE_ENV)
 
@@ -48,6 +48,8 @@ app.use(errorHandler)
 generateChartData()
 
 generateSummary()
+
+generateCurrentMonthChart()
 
 // spareSummary()
 

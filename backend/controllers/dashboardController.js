@@ -6,11 +6,60 @@ const getChartData = async (req, res) => {
     try {
         const { year } = req.query
 
-        const foundChart = await Chart.findOne(
-            { createdAt: { $gte: convertYearStart(year), $lte: convertYearEnd(year) } },
-            { _id: 0 } // Exclude _id field
-        )
-        return res.status(200).json(foundChart)
+        const match_query = { $gte: convertYearStart(year), $lte: convertYearEnd(year) }
+
+        const [totalGeneratedPerYear, totalRedeemedPerYear, targetYearChart] = await Promise.all([
+            // totalGenerated
+            Chart.aggregate([
+                { $match: { "createdAt": match_query } },
+                {
+                    $group: {
+                        _id: null,
+                        totalAmountGenerated: { $sum: "$amountGenerated" }
+                    }
+                }
+            ]),
+            // totalRedeemed
+            Chart.aggregate([
+                { $match: { "createdAt": match_query } },
+                {
+                    $group: {
+                        _id: null,
+                        totalAmountRedeemed: { $sum: "$amountRedeemed" }
+                    }
+                }
+            ]),
+            // targetYearChart
+            Chart.aggregate([
+                { $match: { "year": parseInt(year) } },
+                {
+                    $group: {
+                        _id: "$month",
+                        totalAmountRedeemed: { $sum: "$amountRedeemed" },
+                        totalAmountGenerated: { $sum: "$amountGenerated" }
+                    }
+                },
+                { $sort: { _id: 1 } }
+            ]),
+        ])
+
+        // Response Data
+        const returnData = {
+            totalGenerated: totalGeneratedPerYear[0]?.totalAmountGenerated || 0,
+            totalRedeemed: totalRedeemedPerYear[0]?.totalAmountRedeemed || 0,
+            targetYearChart: targetYearChart || []
+        }
+
+        return res.json(returnData)
+
+        // const { year } = req.query
+
+        // const foundChart = await Chart.findOne(
+        //     { createdAt: { $gte: convertYearStart(year), $lte: convertYearEnd(year) } },
+        //     { _id: 0 } // Exclude _id field
+        // )
+        // return res.status(200).json(foundChart)
+
     } catch (error) {
         return res.status(404).json({ error: error.message })
     }

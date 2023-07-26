@@ -3,18 +3,10 @@ const Schema = mongoose.Schema
 
 const ChartSchema = new Schema(
     {
-        monthlyRedeemed: [{
-            givenCredit: Number,
-            month: Number,
-            year: Number
-        }],
-        monthlyGenerated: [{
-            givenCredit: Number,
-            month: Number,
-            year: Number
-        }],
-        totalGenerated: Number,
-        totalRedeemed: Number
+        month: Number,
+        year: Number,
+        amountRedeemed: Number,
+        amountGenerated: Number
     },
     { timestamps: true }
 )

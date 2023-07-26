@@ -33,6 +33,17 @@ const getMonthEnd = () => {
     return moment().endOf('month').toDate()
 }
 
+const subtractMonths = (count) => {
+    return moment().subtract(count, 'months').toDate()
+}
+
+const getTargetMonthStart = (date) => {
+    return moment(date).startOf('month').toDate()
+}
+const getTargetMonthEnd = (date) => {
+    return moment(date).endOf('month').toDate()
+}
+
 module.exports = {
     convertDayStart,
     convertDayEnd,
@@ -41,4 +52,7 @@ module.exports = {
     getMonthStart,
     getMonthEnd,
     subtractDays,
+    subtractMonths,
+    getTargetMonthStart,
+    getTargetMonthEnd,
 };

@@ -1,21 +1,76 @@
 // Required Stuffs
 const CronJob = require('cron').CronJob
-const { getMonthStart, getMonthEnd, subtractDays, convertDayStart, convertDayEnd, convertYearStart, convertYearEnd } = require('./utils/timezone');
+const { getMonthStart, getMonthEnd, subtractDays, getTargetMonthStart, getTargetMonthEnd, subtractMonths, convertDayStart, convertDayEnd, convertYearStart, convertYearEnd } = require('./utils/timezone');
 // Get From
 const Serial = require('./models/SerialModel')
 const Chart = require('./models/ChartModel');
 // Save To
 const Report = require('./models/ReportModel');
 
-// exports.generateCurrentMonthChart = () => {
-//     const currentMonthChart = new CronJob('* * * * *', async function () {
+exports.generateCurrentMonthChart = () => {
+    const currentMonthChart = new CronJob('* * * * * *', async function () {
 
-//     },
-//         null,
-//         true,
-//         "Asia/Singapore"
-//     )
-// }
+        console.log('RUNNING')
+
+        const match_query = { $gte: getTargetMonthStart(subtractMonths(0)), $lte: getTargetMonthEnd(subtractMonths(0)) }
+
+        // console.log(match_query)
+
+        const [currentMonthGenerated, currentMonthRedeemed] = await Promise.all([
+            // currentMonthGenerated
+            Serial.aggregate([
+                { $match: { "serialStatus": true, "createdAt": match_query } },
+                {
+                    $group: {
+                        _id: {
+                            year: { $year: '$createdAt' },
+                            month: { $month: '$createdAt' },
+                        },
+                        givenCredit: { $sum: "$givenCredit" }
+                    }
+                }
+            ]),
+            // currentMonthRedeemed
+            Serial.aggregate([
+                { $match: { "serialStatus": false, "updatedAt": match_query } },
+                {
+                    $group: {
+                        _id: {
+                            year: { $year: '$updatedAt' },
+                            month: { $month: '$updatedAt' },
+                        },
+                        givenCredit: { $sum: "$givenCredit" }
+                    }
+                }
+            ])
+        ])
+
+        // Initialize the chartData
+        const chartData = {
+            month: currentMonthGenerated[0]?._id.month,
+            year: currentMonthGenerated[0]?._id.year,
+            amountRedeemed: currentMonthRedeemed[0]?.givenCredit,
+            amountGenerated: currentMonthGenerated[0]?.givenCredit,
+        }
+
+        const existingChart = await Chart.findOne({ month: chartData.month }).exec()
+
+        if (!existingChart) {
+            const newChart = await Chart.create(chartData)
+        } else {
+            const updatedChart = await Chart.updateOne({ _id: existingChart._id }, chartData)
+        }
+
+        // console.log('byebye')
+
+        // console.dir({ currentMonthGenerated, currentMonthRedeemed, chartData, existingChart }, { depth: null })
+
+    },
+        null,
+        true,
+        "Asia/Singapore"
+    )
+}
 
 exports.spareSummary = () => {
     const manualSummary = new CronJob('* * * * * *', async function () {
