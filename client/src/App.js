@@ -15,8 +15,6 @@ import RedeemedSerial from "./scenes/luckySerial/RedeemedSerial";
 import LoginPage from "./scenes/login/LoginPage"
 import MoneyPacket from "./scenes/moneyPacket/MoneyPacket";
 
-
-
 function App() {
     const mode = useSelector((state) => state.global.mode);
     const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);

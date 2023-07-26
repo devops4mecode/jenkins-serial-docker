@@ -2,8 +2,7 @@ import { ResponsiveLine } from "@nivo/line"
 import { useIntl } from "react-intl"
 import '../'
 
-
-const LineChart = ({ isDashboard, monthlyGenerated, monthlyRedeemed }) => {
+const LineChart = ({ isDashboard, targetYearChart }) => {
 
     const intl = useIntl();
 
@@ -46,22 +45,16 @@ const LineChart = ({ isDashboard, monthlyGenerated, monthlyRedeemed }) => {
         },
     ];
 
-    // Map monthly generated data to chart data
-    monthlyGenerated.forEach((data) => {
-        const index = data.month - 1;
-        chartData[1].data[index].y = data.givenCredit;
-    });
-
-    // Map monthly redeemed data to chart data
-    monthlyRedeemed.forEach((data) => {
-        const index = data.month - 1;
-        chartData[0].data[index].y = data.givenCredit;
+    // Map the targetYearChart data to the chartData array
+    targetYearChart.forEach((data) => {
+        const monthIndex = data._id - 1; // Assuming _id starts from 1 and represents the month number
+        chartData[0].data[monthIndex].y = data.totalAmountRedeemed;
+        chartData[1].data[monthIndex].y = data.totalAmountGenerated;
     });
 
     return (
         <ResponsiveLine
             data={chartData}
-
 
             theme={{
                 axis: {
