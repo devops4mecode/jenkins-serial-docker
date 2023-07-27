@@ -73,64 +73,42 @@ const getSummaryData = async (req, res) => {
 
         const match_query = { createdAt: { $gte: convertDayStart(startDate), $lte: convertDayEnd(endDate) } }
 
+        // NEEDED STUFF
+        // Total Count Redeemed - redeemedCountPerDay
+        // Total Amount Redeemed - totalAmountRedeemed
+        // Total Generated Count - amountGeneratedPerDay
+        // Total Redeemed Count - amountRedeemedPerDay
+        // Top Ten Redeemed - topTenRedeemPerDay
+        // Most Redeemed (Percentage) - Count in here
+
         const [
-            overallRedeemedCount,
-            redeemedCount,
+            amountGeneratedPerDay,
+            amountRedeemedPerDay,
+            topTenRedeemPerDay,
+            redeemedCountPerDay,
             totalAmountRedeemed,
-            overallGeneratedCount,
-            topTen,
         ] = await Promise.all([
-            // overallRedeemedCount
+            // amountGeneratedPerDay
             Report.aggregate([
                 { $match: match_query },
-                {
-                    $group: {
-                        _id: null,
-                        overallRedeemedCount: { $sum: "$overallRedeemedCount" },
-                    }
-                }
+                { $unwind: "$amountGeneratedPerDay" },
+                { $group: { _id: { amount: "$amountGeneratedPerDay.amount" }, count: { $sum: "$amountGeneratedPerDay.count" } } },
             ]),
-            // redeemedCount,
+            // amountRedeemedPerDay,
             Report.aggregate([
                 { $match: match_query },
-                { $unwind: "$redeemedCount" },
-                {
-                    $group: {
-                        _id: { amount: "$redeemedCount.amount" },
-                        count: { $sum: "$redeemedCount.count" }
-                    }
-                },
+                { $unwind: "$amountRedeemedPerDay" },
+                { $group: { _id: { amount: "$amountRedeemedPerDay.amount" }, count: { $sum: "$amountRedeemedPerDay.count" } } },
             ]),
-            // totalAmountRedeemed
+            // topTenRedeemPerDay,
             Report.aggregate([
                 { $match: match_query },
+                { $unwind: "$topTenRedeemPerDay" },
                 {
                     $group: {
-                        _id: null,
-                        totalAmountRedeemed: { $sum: "$totalAmountRedeemed" },
-                    }
-                }
-            ]),
-            // overallGeneratedCount,
-            Report.aggregate([
-                { $match: match_query },
-                { $unwind: "$overallGeneratedCount" },
-                {
-                    $group: {
-                        _id: { amount: "$overallGeneratedCount.amount" },
-                        count: { $sum: "$overallGeneratedCount.count" }
-                    }
-                },
-            ]),
-            // topTen,
-            Report.aggregate([
-                { $match: match_query },
-                { $unwind: "$topTen" },
-                {
-                    $group: {
-                        _id: "$topTen.name",
-                        count: { $sum: "$topTen.count" },
-                        totalCredit: { $sum: "$topTen.totalCredit" }
+                        _id: "$topTenRedeemPerDay.name",
+                        count: { $sum: "$topTenRedeemPerDay.count" },
+                        totalCredit: { $sum: "$topTenRedeemPerDay.totalCredit" }
                     }
                 },
                 { $sort: { totalCredit: -1 } },
@@ -138,7 +116,7 @@ const getSummaryData = async (req, res) => {
                 {
                     $group: {
                         _id: null,
-                        topTen: {
+                        topTenRedeemPerDay: {
                             $push: {
                                 name: "$_id",
                                 count: "$count",
@@ -148,33 +126,45 @@ const getSummaryData = async (req, res) => {
                     }
                 },
             ]),
+            // redeemedCountPerDay
+            Report.aggregate([
+                { $match: match_query },
+                { $group: { _id: null, redeemedCountPerDay: { $sum: "$redeemedCountPerDay" }, } }
+            ]),
+            // totalAmountRedeemed
+            Report.aggregate([
+                { $match: match_query },
+                { $group: { _id: null, totalAmountRedeemed: { $sum: "$totalAmountRedeemed" }, } }
+            ]),
         ])
 
-        const reportData = {
-            overallRedeemedCount: overallRedeemedCount[0]?.overallRedeemedCount || 0,
-            redeemedCount: redeemedCount
+        // Here count the mostRedeemed percentage, no need save in report
+        const returnData = {
+            // overallRedeemedCount: overallRedeemedCount[0]?.overallRedeemedCount || 0,
+            overallGeneratedCount: amountGeneratedPerDay
                 .map(({ _id, count }) => ({ amount: _id.amount, count }))
                 .sort((a, b) => a.amount - b.amount) || [],
-            overallGeneratedCount: overallGeneratedCount
+            redeemedCount: amountRedeemedPerDay
                 .map(({ _id, count }) => ({ amount: _id.amount, count }))
                 .sort((a, b) => a.amount - b.amount) || [],
-            mostRedeemed: redeemedCount
-                .map(({ _id, count }) => ({
-                    amount: _id.amount,
-                    percentage:
-                        overallRedeemedCount[0]?.overallRedeemedCount !== 0
-                            ? (count / overallRedeemedCount[0]?.overallRedeemedCount) * 100
-                            : 0,
-                }))
-                .sort((a, b) => a.amount - b.amount) || [],
-            topTen: topTen[0]?.topTen.map(({ name, count, totalCredit }) => ({
+            topTen: topTenRedeemPerDay[0]?.topTenRedeemPerDay.map(({ name, count, totalCredit }) => ({
                 name,
                 count,
                 totalCredit,
             })).sort((a, b) => b.totalCredit - a.totalCredit) || [],
             totalAmountRedeemed: totalAmountRedeemed[0]?.totalAmountRedeemed || 0,
+            mostRedeemed: amountRedeemedPerDay
+                .map(({ _id, count }) => ({
+                    amount: _id.amount,
+                    percentage:
+                        redeemedCountPerDay[0]?.redeemedCountPerDay !== 0
+                            ? (count / redeemedCountPerDay[0]?.redeemedCountPerDay) * 100
+                            : 0,
+                }))
+                .sort((a, b) => a.amount - b.amount) || [],
+            overallRedeemedCount: redeemedCountPerDay[0]?.redeemedCountPerDay || 0,
         };
-        return res.status(200).json(reportData);
+        return res.status(200).json(returnData);
     } catch (error) {
         return res.status(404).json({ error: error.message })
     }

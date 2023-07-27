@@ -3,24 +3,25 @@ const Schema = mongoose.Schema
 
 const ReportSchema = new Schema(
     {
-        mostRedeemed: [{
-            amount: Number,
-            percentage: Number,
-        }],
-        overallGeneratedCount: [{
+        // overallGeneratedCount
+        amountGeneratedPerDay: [{
             amount: Number,
             count: Number,
         }],
-        redeemedCount: [{
+        // redeemedCount
+        amountRedeemedPerDay: [{
             amount: Number,
-            count: Number
+            count: Number,
         }],
-        topTen: [{
+        // topTen
+        topTenRedeemPerDay: [{
             name: String,
             count: Number,
             totalCredit: Number,
         }],
-        overallRedeemedCount: Number,
+        // overallRedeemedCount
+        redeemedCountPerDay: Number,
+        // totalAmountRedeemed
         totalAmountRedeemed: Number,
     },
     { timestamps: true }
