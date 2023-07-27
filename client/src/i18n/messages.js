@@ -20,7 +20,7 @@ export const messages = {
         "no.such.record": "No Such Record",
 
         // sidebar
-        "dashboardNav": "Dashboard!!!",
+        "dashboardNav": "Dashboard",
         "luckySerialNav": "Lucky Serial",
         "generateSerialNav": "Generated Serial",
         "allSerialNav": "All Serial",
