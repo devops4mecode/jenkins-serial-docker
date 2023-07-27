@@ -128,9 +128,7 @@ const Dashboard = () => {
                 headers: { 'Authorization': `Bearer ${user.accessToken}` }
             });
 
-            console.log(data)
-
-
+            // console.log(data)
             setReportData(data)
         } catch (error) {
             console.error(error)
@@ -368,18 +366,18 @@ const Dashboard = () => {
                                             <Divider className="divider" orientation="vertical" flexItem />
                                             <Typography className='small-count'>{reportData.overallGeneratedCount[5]?.count}</Typography>
                                         </Box>
-                                    </Box>
-                                </Grid>
 
-                                <Grid item xs={12} sm={6} md={6} lg={6}>
-                                    <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 100</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
                                             <Typography className='small-count'>{reportData.overallGeneratedCount[6]?.count}</Typography>
                                         </Box>
+                                    </Box>
+                                </Grid>
 
+                                <Grid item xs={12} sm={6} md={6} lg={6}>
+                                    <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 200</Typography>
@@ -393,27 +391,37 @@ const Dashboard = () => {
                                             <Divider className="divider" orientation="vertical" flexItem />
                                             <Typography className='small-count'>{reportData.overallGeneratedCount[8]?.count}</Typography>
                                         </Box>
-                                    </Box>
-                                    <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 500</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
                                             <Typography className='small-count'>{reportData.overallGeneratedCount[9]?.count}</Typography>
                                         </Box>
-
+                                    </Box>
+                                    <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 800</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
                                             <Typography className='small-count'>{reportData.overallGeneratedCount[10]?.count}</Typography>
                                         </Box>
-
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 1000</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
                                             <Typography className='small-count'>{reportData.overallGeneratedCount[11]?.count}</Typography>
+                                        </Box>
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 3000</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>{reportData.overallGeneratedCount[12]?.count}</Typography>
+                                        </Box>
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalGeneratedIcon} alt="total-generated" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 5000</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>{reportData.overallGeneratedCount[13]?.count}</Typography>
                                         </Box>
                                     </Box>
                                 </Grid>
@@ -471,18 +479,18 @@ const Dashboard = () => {
                                             <Divider className="divider" orientation="vertical" flexItem />
                                             <Typography className='small-count'>{reportData.redeemedCount[5]?.count}</Typography>
                                         </Box>
-                                    </Box>
-                                </Grid>
 
-                                <Grid item xs={12} sm={6} md={6} lg={6}>
-                                    <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 100</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
                                             <Typography className='small-count'>{reportData.redeemedCount[6]?.count}</Typography>
                                         </Box>
+                                    </Box>
+                                </Grid>
 
+                                <Grid item xs={12} sm={6} md={6} lg={6}>
+                                    <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 200</Typography>
@@ -496,15 +504,15 @@ const Dashboard = () => {
                                             <Divider className="divider" orientation="vertical" flexItem />
                                             <Typography className='small-count'>{reportData.redeemedCount[8]?.count}</Typography>
                                         </Box>
-                                    </Box>
-                                    <Box className="inner-padding">
+
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 500</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
                                             <Typography className='small-count'>{reportData.redeemedCount[9]?.count}</Typography>
                                         </Box>
-
+                                    </Box>
+                                    <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 800</Typography>
@@ -517,6 +525,20 @@ const Dashboard = () => {
                                             <Typography className="small-title"> RM 1000</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
                                             <Typography className='small-count'>{reportData.redeemedCount[11]?.count}</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 3000</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>{reportData.redeemedCount[12]?.count}</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={totalRedeemedIcon} alt="total-redeemed" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 5000</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>{reportData.redeemedCount[13]?.count}</Typography>
                                         </Box>
                                     </Box>
                                 </Grid>
@@ -579,18 +601,18 @@ const Dashboard = () => {
                                             <Divider className="divider" orientation="vertical" flexItem />
                                             <Typography className='small-count'>{reportData.mostRedeemed[5]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
-                                    </Box>
-                                </Grid>
 
-                                <Grid item xs={12} sm={6} md={6} lg={6}>
-                                    <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 100</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
                                             <Typography className='small-count'>{reportData.mostRedeemed[6]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
+                                    </Box>
+                                </Grid>
 
+                                <Grid item xs={12} sm={6} md={6} lg={6}>
+                                    <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 200</Typography>
@@ -604,15 +626,15 @@ const Dashboard = () => {
                                             <Divider className="divider" orientation="vertical" flexItem />
                                             <Typography className='small-count'>{reportData.mostRedeemed[8]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
-                                    </Box>
-                                    <Box className="inner-padding">
+
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 500</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
                                             <Typography className='small-count'>{reportData.mostRedeemed[9]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
-
+                                    </Box>
+                                    <Box className="inner-padding">
                                         <Box display="flex" className="border-bottom">
                                             <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
                                             <Typography className="small-title"> RM 800</Typography>
@@ -625,6 +647,20 @@ const Dashboard = () => {
                                             <Typography className="small-title"> RM 1000</Typography>
                                             <Divider className="divider" orientation="vertical" flexItem />
                                             <Typography className='small-count'>{reportData.mostRedeemed[11]?.percentage.toFixed(2)} %</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 3000</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>{reportData.mostRedeemed[12]?.percentage.toFixed(2)} %</Typography>
+                                        </Box>
+
+                                        <Box display="flex" className="border-bottom">
+                                            <Typography><img src={percentageIcon} alt="most-redeemed" className="icon-inside" /></Typography>
+                                            <Typography className="small-title"> RM 5000</Typography>
+                                            <Divider className="divider" orientation="vertical" flexItem />
+                                            <Typography className='small-count'>{reportData.mostRedeemed[13]?.percentage.toFixed(2)} %</Typography>
                                         </Box>
                                     </Box>
                                 </Grid>
