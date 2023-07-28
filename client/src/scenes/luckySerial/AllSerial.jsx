@@ -21,7 +21,7 @@ const AllNumber = () => {
     const isNonMediumScreen = useMediaQuery("(min-width: 1200px)")
 
     const { user } = useAuthContext()
-    const [serials, setSerials] = useState([])
+    // const [serials, setSerials] = useState([])
 
     const intl = useIntl()
     const unclaimed = intl.formatMessage({ id: 'unclaimed' })
@@ -56,21 +56,21 @@ const AllNumber = () => {
         setOpenModal(false)
     }
 
-    useEffect(() => {
-        const fetchAllSerials = async () => {
-            if (user) {
-                try {
-                    const response = await axios.get(`api/serials/all`, {
-                        headers: { 'Authorization': `Bearer ${user.accessToken}` }
-                    });
-                    setSerials(response.data);
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-        };
-        fetchAllSerials();
-    }, [user]);
+    // useEffect(() => {
+    //     const fetchAllSerials = async () => {
+    //         if (user) {
+    //             try {
+    //                 const response = await axios.get(`api/serials/all`, {
+    //                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
+    //                 });
+    //                 setSerials(response.data);
+    //             } catch (error) {
+    //                 console.log(error);
+    //             }
+    //         }
+    //     };
+    //     fetchAllSerials();
+    // }, [user]);
 
     function formatNumber(num) {
         const formatted = num.toLocaleString('en-US', { maximumFractionDigits: 0 }).replace(/,/g, '');
@@ -160,28 +160,58 @@ const AllNumber = () => {
 
     const getRowId = (row) => row._id
 
-    const CustomToolbar = () => {
-        return (
-            <GridToolbarContainer>
-                <GridToolbarColumnsButton />
-                <GridToolbarFilterButton />
-                <GridToolbarExport />
-            </GridToolbarContainer>
-        )
+    // Testing
+    const [pageState, setPageState] = useState({
+        isLoading: false,
+        serials: [],
+        total: 0,
+        page: 1,
+        pageSize: 100
+    })
+
+    // This Macam no use dao?
+    // const CustomToolbar = () => {
+    //     return (
+    //         <GridToolbarContainer>
+    //             <GridToolbarColumnsButton />
+    //             <GridToolbarFilterButton />
+    //             <GridToolbarExport />
+    //         </GridToolbarContainer>
+    //     )
+    // }
+
+    // This Cant Use
+    // pageState.serials.sort((a, b) => {
+    //     const dateA = moment(a.createdAt)
+    //     const dateB = moment(b.createdAt)
+
+    //     if (dateB.isSame(dateA, 'second')) {
+    //         const updatedAtA = moment(a.updatedAt)
+    //         const updatedAtB = moment(b.updatedAt)
+    //         return updatedAtB - updatedAtA;
+    //     }
+
+    //     return dateB - dateA
+    // })
+
+    const fetchAllSerials = async () => {
+        try {
+            setPageState(old => ({ ...old, isLoading: true }))
+
+            const { data } = await axios.get(`api/serials?page=${pageState.page}&limit=${pageState.pageSize}`, {
+                headers: { 'Authorization': `Bearer ${user.accessToken}` }
+            })
+
+            setPageState(old => ({ ...old, isLoading: false, serials: data.data, total: data.total }))
+
+        } catch (error) {
+            console.error(error)
+        }
     }
 
-    serials.sort((a, b) => {
-        const dateA = moment(a.createdAt)
-        const dateB = moment(b.createdAt)
-
-        if (dateB.isSame(dateA, 'second')) {
-            const updatedAtA = moment(a.updatedAt)
-            const updatedAtB = moment(b.updatedAt)
-            return updatedAtB - updatedAtA;
-        }
-
-        return dateB - dateA
-    })
+    useEffect(() => {
+        fetchAllSerials()
+    }, [pageState.page, pageState.pageSize])
 
     return (
         <Box m="20px">
@@ -228,16 +258,35 @@ const AllNumber = () => {
                         </Button>
                     </Box>
 
-                    <DataGrid
-                        rows={serials}
+                    {/* OLD */}
+                    {/* <DataGrid
+                        rows={pageState.serials}
                         columns={columns}
-                        slots={{ Toolbar: CustomToolbar }}
+                        // slots={{ Toolbar: CustomToolbar }}
                         getRowId={getRowId}
                         checkboxSelection
                         // localeText={localizedTextsMap}
                         disableColumnMenu
                         onRowSelectionModelChange={handleRowSelectionChange}
+                    /> */}
+
+                    {/* Testing - NEW */}
+                    <DataGrid
+                        rows={pageState.serials}
+                        columns={columns}
+                        getRowId={getRowId}
+                        paginationMode="server"
+                        loading={pageState.isLoading}
+                        rowCount={pageState.total}
+                        checkboxSelection
+                        // disableColumnMenu
+                        // slots={{ Toolbar: CustomToolbar }}
+                        onRowSelectionModelChange={handleRowSelectionChange}
+                        onPaginationModelChange={(pageState) => {
+                            setPageState((old) => ({ ...old, page: pageState.page + 1, pageSize: pageState.pageSize }));
+                        }}
                     />
+
                 </Box>
 
                 <Box className="footer"></Box>

@@ -3,7 +3,7 @@ const router = express.Router();
 const serialController = require('../controllers/serialController');
 const verifyJWT = require('../middleware/verifyJWT');
 
-router.use(verifyJWT)
+// router.use(verifyJWT)
 
 // Routes
 router
@@ -12,5 +12,7 @@ router
     .get('/status', serialController.getSerialsByStatus)
     .post('/generate', serialController.generateSerials)
     .delete('/delete', serialController.delSerialsByID)
+    // TESTING
+    .get('/', serialController.getTesting)
 
 module.exports = router
