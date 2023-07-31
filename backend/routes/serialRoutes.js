@@ -9,7 +9,8 @@ router.use(verifyJWT)
 router
     .get('/all', serialController.getAllSerials)
     .get('/detail', serialController.getDetailsBySerialNo)
-    .get('/status', serialController.getSerialsByStatus)
+    // .get('/status', serialController.getSerialsByStatus)
+    .get('/status', serialController.getSerialWithStatus)
     .post('/generate', serialController.generateSerials)
     .delete('/delete', serialController.delSerialsByID)
 

@@ -25,7 +25,7 @@ const getDetailsBySerialNo = async (req, res) => {
         const serial = await Serial.findOne({ serialNo });
         res.json(serial);
     } catch (error) {
-         
+
         return res.status(400).json({ message: "Something wrong" });
     }
 };
@@ -33,15 +33,31 @@ const getDetailsBySerialNo = async (req, res) => {
 // @desc Get all serials
 // @route GET /serials/status?serialStatus=${serialStatus}
 // @access Private
-const getSerialsByStatus = async (req, res) => {
-    try {
-        const { serialStatus } = req.query;
-        const serials = await Serial.find({ serialStatus });
-        res.json(serials);
-    } catch (error) {
-        return res.status(400).json({ message: "Something wrong" });
-    }
-};
+// const getSerialsByStatus = async (req, res) => {
+//     try {
+//         const { serialStatus } = req.query;
+//         const serials = await Serial.find({ serialStatus });
+//         res.json(serials);
+//     } catch (error) {
+//         return res.status(400).json({ message: "Something wrong" });
+//     }
+// };
+
+const getSerialWithStatus = async (req, res) => {
+    let { page, limit, serialStatus } = req.query
+
+    if (!page) page = 1;
+    if (!limit) limit = 100;
+
+    page = parseInt(page)
+    limit = parseInt(limit)
+
+    const [data, total] = await Promise.all([
+        Serial.find({serialStatus}).skip((page - 1) * limit).limit(limit).exec(),
+        Serial.countDocuments({serialStatus})
+    ])
+    return res.json({data, total})
+}
 
 // @desc Generate Serial(s)
 // @route POST /serials
@@ -129,6 +145,7 @@ const generateSerials = async (req, res) => {
 //         return res.status(400).json({ message: "Something wrong" });
 //     }
 // };
+
 const delSerialsByID = async (req, res) => {
     try {
         const { serialID } = req.body;
@@ -154,6 +171,8 @@ const delSerialsByID = async (req, res) => {
 
 
 
+
+
 // FUNCTION
 function generateSerialNumber() {
     let serial = "";
@@ -168,7 +187,8 @@ function generateSerialNumber() {
 module.exports = {
     getAllSerials,
     getDetailsBySerialNo,
-    getSerialsByStatus,
+    // getSerialsByStatus,
     generateSerials,
-    delSerialsByID
+    delSerialsByID,
+    getSerialWithStatus
 };

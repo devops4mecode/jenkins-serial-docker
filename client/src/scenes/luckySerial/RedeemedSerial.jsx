@@ -13,24 +13,58 @@ const UsedNumber = () => {
     const dataGridWidth = useMediaQuery("(max-width: 1200px");
 
     const { user } = useAuthContext()
-    const [serials, setSerials] = useState([])
+    // const [serials, setSerials] = useState([])
     const serialStatus = false
 
-    useEffect(() => {
-        const fetchAllSerials = async () => {
-            if (user) {
-                try {
-                    const response = await axios.get(`api/serials/status?serialStatus=${serialStatus}`, {
-                        headers: { 'Authorization': `Bearer ${user.accessToken}` }
-                    });
-                    setSerials(response.data);
-                } catch (error) {
-                    console.log(error);
-                }
+    // useEffect(() => {
+    //     const fetchAllSerials = async () => {
+    //         if (user) {
+    //             try {
+    //                 const response = await axios.get(`api/serials/status?serialStatus=${serialStatus}`, {
+    //                     headers: { 'Authorization': `Bearer ${user.accessToken}` }
+    //                 });
+    //                 setSerials(response.data);
+    //             } catch (error) {
+    //                 console.log(error);
+    //             }
+    //         }
+    //     };
+    //     fetchAllSerials();
+    // }, [user]);
+
+    const [pageState, setPageState] = useState({
+        isLoading: false,
+        serials: [],
+        total: 0,
+        page: 1,
+        pageSize: 100
+    })
+
+    const fetchAllSerials = async () => {
+        if (user) {
+            try {
+
+                setPageState(old => ({ ...old, isLoading: true }))
+
+                const { data } = await axios.get(`api/serials/status?serialStatus=${serialStatus}&page=${pageState.page}&limit=${pageState.pageSize}`, {
+                    headers: { 'Authorization': `Bearer ${user.accessToken}` }
+                })
+
+                setPageState(old => ({ ...old, isLoading: false, serials: data.data, total: data.total }))
+
+                // const response = await axios.get(`api/serials/status?serialStatus=${serialStatus}`, {
+                //     headers: { 'Authorization': `Bearer ${user.accessToken}` }
+                // });
+                // setSerials(response.data);
+            } catch (error) {
+                console.log(error);
             }
-        };
-        fetchAllSerials();
-    }, [user]);
+        }
+    }
+
+    useEffect(() => {
+        fetchAllSerials()
+    }, [pageState.page, pageState.pageSize])
 
 
     function formatNumber(num) {
@@ -102,18 +136,18 @@ const UsedNumber = () => {
 
     const getRowId = (row) => row._id
 
-    serials.sort((a, b) => {
-        const dateA = moment(a.createdAt)
-        const dateB = moment(b.createdAt)
+    // serials.sort((a, b) => {
+    //     const dateA = moment(a.createdAt)
+    //     const dateB = moment(b.createdAt)
 
-        if (dateB.isSame(dateA, 'second')) {
-            const updatedAtA = moment(a.updatedAt)
-            const updatedAtB = moment(b.updatedAt)
-            return updatedAtB - updatedAtA;
-        }
+    //     if (dateB.isSame(dateA, 'second')) {
+    //         const updatedAtA = moment(a.updatedAt)
+    //         const updatedAtB = moment(b.updatedAt)
+    //         return updatedAtB - updatedAtA;
+    //     }
 
-        return dateB - dateA
-    })
+    //     return dateB - dateA
+    // })
 
     const CustomToolbar = () => {
         return (
@@ -160,12 +194,24 @@ const UsedNumber = () => {
                     borderRadius="0.55rem"
                     className="defaultSection"
                 >
-                    <DataGrid
+                    {/* <DataGrid
                         rows={serials}
                         columns={columns}
                         slots={{ Toolbar: CustomToolbar }}
                         getRowId={getRowId}
                         disableColumnMenu
+                    /> */}
+
+                    <DataGrid
+                        rows={pageState.serials}
+                        columns={columns}
+                        getRowId={getRowId}
+                        paginationMode="server"
+                        loading={pageState.isLoading}
+                        rowCount={pageState.total}
+                        onPaginationModelChange={(pageState) => {
+                            setPageState((old) => ({ ...old, page: pageState.page + 1, pageSize: pageState.pageSize }))
+                        }}
                     />
 
                     <Box className="footer"></Box>
