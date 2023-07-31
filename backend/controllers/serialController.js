@@ -53,10 +53,10 @@ const getSerialWithStatus = async (req, res) => {
     limit = parseInt(limit)
 
     const [data, total] = await Promise.all([
-        Serial.find({serialStatus}).skip((page - 1) * limit).limit(limit).exec(),
-        Serial.countDocuments({serialStatus})
+        Serial.find({ serialStatus }).sort({ createdAt: -1 }).skip((page - 1) * limit).limit(limit).exec(),
+        Serial.countDocuments({ serialStatus })
     ])
-    return res.json({data, total})
+    return res.json({ data, total })
 }
 
 // @desc Generate Serial(s)
@@ -191,7 +191,7 @@ const getTesting = async (req, res) => {
     // TEST
 
     const [data, total] = await Promise.all([
-        Serial.find().skip((page - 1) * limit).limit(limit).exec(),
+        Serial.find().sort({ createdAt: -1 }).skip((page - 1) * limit).limit(limit).exec(),
         Serial.countDocuments()
     ])
     return res.json({ data, total })
