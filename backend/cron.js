@@ -229,6 +229,12 @@ exports.generateSummary = () => {
                 count: count,
                 totalCredit: totalGivenCredit
             })),
+            // mostRedeemed: amounts.map((amount) => {
+            //     const redeemed = amountRedeemedPerDay.find(({ _id }) => _id === amount)?.count || 0;
+            //     const overallRedeemed = redeemedCountPerDay[0]?.count || 1;
+            //     const percentage = (redeemed / overallRedeemed) * 100;
+            //     return { amount, percentage };
+            // }),
         }
 
         const existingSummary = await Report.findOne({ createdAt: match_query })

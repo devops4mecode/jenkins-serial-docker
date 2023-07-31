@@ -52,6 +52,14 @@ const getChartData = async (req, res) => {
 
         return res.json(returnData)
 
+        // const { year } = req.query
+
+        // const foundChart = await Chart.findOne(
+        //     { createdAt: { $gte: convertYearStart(year), $lte: convertYearEnd(year) } },
+        //     { _id: 0 } // Exclude _id field
+        // )
+        // return res.status(200).json(foundChart)
+
     } catch (error) {
         return res.status(404).json({ error: error.message })
     }

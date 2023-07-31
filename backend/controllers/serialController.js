@@ -25,7 +25,7 @@ const getDetailsBySerialNo = async (req, res) => {
         const serial = await Serial.findOne({ serialNo });
         res.json(serial);
     } catch (error) {
-
+         
         return res.status(400).json({ message: "Something wrong" });
     }
 };
@@ -152,34 +152,7 @@ const delSerialsByID = async (req, res) => {
     }
 };
 
-const getTesting = async (req, res) => {
-    let { page, limit } = req.query
 
-    if (!page) page = 1;
-    if (!limit) limit = 100;
-
-    page = parseInt(page)
-    limit = parseInt(limit)
-
-    // Comment HERE
-    // const serials = await Serial.find().exec()
-
-    // const returnData = {
-    //     data: serials.slice((page - 1) * limit, page * limit),
-    //     total: serials.length
-    // }
-
-    // return res.json(returnData)
-
-    // TEST
-
-    const [data, total] = await Promise.all([
-        Serial.find().skip((page - 1) * limit).limit(limit).exec(),
-        Serial.countDocuments()
-    ])
-    return res.json({ data, total })
-
-}
 
 // FUNCTION
 function generateSerialNumber() {
@@ -197,6 +170,5 @@ module.exports = {
     getDetailsBySerialNo,
     getSerialsByStatus,
     generateSerials,
-    delSerialsByID,
-    getTesting
+    delSerialsByID
 };
