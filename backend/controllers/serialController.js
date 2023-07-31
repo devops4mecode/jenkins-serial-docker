@@ -169,7 +169,34 @@ const delSerialsByID = async (req, res) => {
     }
 };
 
+const getTesting = async (req, res) => {
+    let { page, limit } = req.query
 
+    if (!page) page = 1;
+    if (!limit) limit = 100;
+
+    page = parseInt(page)
+    limit = parseInt(limit)
+
+    // Comment HERE
+    // const serials = await Serial.find().exec()
+
+    // const returnData = {
+    //     data: serials.slice((page - 1) * limit, page * limit),
+    //     total: serials.length
+    // }
+
+    // return res.json(returnData)
+
+    // TEST
+
+    const [data, total] = await Promise.all([
+        Serial.find().skip((page - 1) * limit).limit(limit).exec(),
+        Serial.countDocuments()
+    ])
+    return res.json({ data, total })
+
+}
 
 
 
@@ -190,5 +217,6 @@ module.exports = {
     // getSerialsByStatus,
     generateSerials,
     delSerialsByID,
-    getSerialWithStatus
+    getSerialWithStatus,
+    getTesting
 };
