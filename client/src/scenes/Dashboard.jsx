@@ -193,7 +193,7 @@ const Dashboard = () => {
                         {chartData ? (
 
                             <Box height="400px" m="20px 0 0 0">
-                                <Box>
+                                <Box paddingBottom='20px'>
                                     <Select
                                         value={year}
                                         // label="Year"
