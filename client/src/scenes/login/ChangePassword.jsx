@@ -26,9 +26,7 @@ const ChangePassword = () => {
             const { data } = await axios.patch(`/api/users/update`, values, {
                 headers: { 'Authorization': `Bearer ${user.accessToken}` }
             })
-            // Navigate('/successchangepassword')
-            console.log(data)
-            console.log('success')
+            // Navigate('/successchangepassword')            
         } catch (error) {
             console.error(error)
         }

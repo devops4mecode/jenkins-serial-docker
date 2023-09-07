@@ -37,7 +37,8 @@ const changePassword = async (req, res) => {
     try {
         const { currentPassword, newPassword, confirmPassword } = req.body
 
-        return res.json({ currentPassword, newPassword, confirmPassword })
+        // return res.json({ currentPassword, newPassword, confirmPassword })
+        // res.json(req.user)
         
         if (!currentPassword || !newPassword || !confirmPassword) return res.status(400).json({ message: "All fields are required" })
 
