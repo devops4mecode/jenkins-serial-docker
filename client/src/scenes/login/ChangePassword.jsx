@@ -1,11 +1,12 @@
-import { Box, TextField, Button, useMediaQuery, FormLabel } from "@mui/material";
-import Header from "../../components/Header";
-import { Formik, Form, Field } from "formik";
 import * as yup from "yup";
+import { useRef, useState } from "react";
+import { Toast } from 'primereact/toast';
 import { useNavigate } from "react-router-dom";
-import '../../css/changePassword.css';
-import { useState } from "react";
 import { FormattedMessage } from "react-intl";
+import { Formik, Form, Field } from "formik";
+import { Box, TextField, Button, useMediaQuery, FormLabel, Typography } from "@mui/material";
+import Header from "../../components/Header";
+import '../../css/changePassword.css';
 
 // Testing New
 import { useAuthContext } from "../../hooks/useAuthContext";
@@ -21,19 +22,40 @@ const ChangePassword = () => {
 
     const Navigate = useNavigate()
 
-    const handleSave = async (values) => {
+    const handleSave = async (values, {resetForm}) => {
         try {
             const { data } = await axios.patch(`/api/users/update`, values, {
                 headers: { 'Authorization': `Bearer ${user.accessToken}` }
             })
-            // Navigate('/successchangepassword')            
+            // Navigate('/successchangepassword')
+
+            message()
+            resetForm()
         } catch (error) {
             console.error(error)
         }
     }
 
+    const messageToast = useRef(null)
+
+    const message = () => {
+        messageToast.current.show({
+            severity: 'info',
+            className: 'border-none',
+            content: (
+                <Box className="confirmation-box" style={{ flex: '1' }}>
+                    <Box className="text-center">
+                        <i className="pi pi-exclamation-triangle icon"></i>
+                        <Typography className="confirmation-box-label"><FormattedMessage id='success.text' /></Typography>
+                    </Box>
+                </Box>
+            )
+        })
+    }
+
     return (
         <Box m="1.5rem 1.5rem">
+            
             <Header title={<FormattedMessage id="change.password" />} />
 
             <Box
@@ -51,7 +73,8 @@ const ChangePassword = () => {
                     height="fit-content"
                     p="1rem"
                     borderRadius="0.55rem"
-                >
+                >  
+                <Toast ref={messageToast}/>
                     <Formik
                         onSubmit={handleSave}
                         initialValues={initialValuesToChange}
@@ -59,6 +82,7 @@ const ChangePassword = () => {
                     >
                         {({ errors, touched }) => (
                             <Form className="form">
+                              
                                 <Box className="field">
                                     <FormLabel className="label"><FormattedMessage id="current.password" /></FormLabel>
                                     <Field

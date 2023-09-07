@@ -101,6 +101,7 @@ export const messages = {
         "confirm.empty": "Please confirm your new password.",
         "confirm.failed": "Your password does not match.",
         "save": "Save",
+        "success.text": "Your password has been changed succesfully.",
 
         // page: angpao
         "angpaoId": "Id",
@@ -208,7 +209,8 @@ export const messages = {
         "new.empty": "请输入您的新密码",
         "confirm.empty": "请确认您的新密码",
         "confirm.failed": "您输入的密码不正确",
-        "save": "保存",
+        "save": "保存",        
+        "success.text": "Your password has been changed succesfully.",
 
         // page: angpao
         "angpaoId": "红包 ID",
@@ -317,6 +319,7 @@ export const messages = {
         "confirm.empty": "请确认您的新密码",
         "confirm.failed": "您输入的密码不正确",
         "save": "save",
+        "success.text": "Your password has been changed succesfully.",
 
         // page: angpao
         "angpaoId": "Id",
