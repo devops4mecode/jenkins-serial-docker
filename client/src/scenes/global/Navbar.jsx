@@ -1,6 +1,8 @@
 import axios from 'axios';
 import * as React from 'react'
+import { useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { AppBar, IconButton, Toolbar, InputBase, Menu, MenuItem, Box, Typography, useMediaQuery, Button,  Modal, TableContainer } from "@mui/material";
 import searchIcon from "../../assets/search.png"
@@ -9,15 +11,13 @@ import hamburgerIcon from '../../assets/hamburger.png'
 import passwordIcon from '../../assets/password.png'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { FormattedMessage, useIntl } from "react-intl";
-import '../../css/global.css'
-import '../../css/searchDialog.css'
 import CloseIcon from '@mui/icons-material/Close';
 import Table from '@material-ui/core/Table';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
-import { useNavigate } from 'react-router-dom';
+import '../../css/global.css'
+import '../../css/searchDialog.css'
 
 const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }) => {
     const intl = useIntl()

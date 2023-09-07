@@ -1,7 +1,7 @@
-import { Box, Typography, useTheme, useMediaQuery } from "@mui/material"
 import LoginForm from "./LoginForm"
-import '../../css/loginPage.css'
 import { FormattedMessage } from "react-intl";
+import { Box, Typography, useTheme, useMediaQuery } from "@mui/material"
+import '../../css/loginPage.css'
 
 
 const LoginPage = () => {
