@@ -7,5 +7,6 @@ router
     .get('/:id', userController.getUser)
     .get('/', userController.getAllUsers)
     .patch('/:id', userController.updateUser)
+    .patch('/update', userController.changePassword)
 
 module.exports = router;

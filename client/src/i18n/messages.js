@@ -18,6 +18,7 @@ export const messages = {
         "redeemed": "Redeemed",
         "unclaimed": "Unclaimed",
         "no.such.record": "No Such Record",
+        "change.password": "Change Password",
 
         // sidebar
         "dashboardNav": "Dashboard",
@@ -88,6 +89,19 @@ export const messages = {
         // page: invalid serial
         "invalid.serial": "Redeemed Serial",
 
+        // change password
+        "change.password": "Change Password",
+        "current.password": "Current Password",
+        "new.password": "New Password",
+        "confirm.password": "Confirm Password",
+        "success.message": "Your password has been changed successfully.",
+        "go.to.home": "Go to home",
+        "current.empty": "Please enter your current password.",
+        "new.empty": "Please enter your new password",
+        "confirm.empty": "Please confirm your new password.",
+        "confirm.failed": "Your password does not match.",
+        "save": "Save",
+
         // page: angpao
         "angpaoId": "Id",
         "angpao_credit": "Total Amount",
@@ -113,6 +127,7 @@ export const messages = {
         "redeemed": "已兑换",
         "unclaimed": "未被兑换",
         "no.such.record": "无此记录",
+        "change.password": "更换密码",
 
         // sidebar
         "dashboardNav": "仪表盘",
@@ -182,6 +197,19 @@ export const messages = {
         // page: invalid serial
         "invalid.serial": "已兑换序号",
 
+        // change password
+        "change.password": "更换密码",
+        "current.password": "当前密码",
+        "new.password": "新密码",
+        "confirm.password": "确定新密码",
+        "success.message": "密码已成功被更换。",
+        "go.to.home": "首页",
+        "current.empty": "请输入您现在的密码.",
+        "new.empty": "请输入您的新密码",
+        "confirm.empty": "请确认您的新密码",
+        "confirm.failed": "您输入的密码不正确",
+        "save": "保存",
+
         // page: angpao
         "angpaoId": "红包 ID",
         "angpao_credit": "总价值",
@@ -207,6 +235,7 @@ export const messages = {
         "redeemed": "Sudah Ditebus",
         "unclaimed": "Belum Ditebus",
         "no.such.record": "Tiada Rekod",
+        "change.password": "Tukar Kata Laluan",
 
         // sidebar
         "dashboardNav": "Papan Pemuka",
@@ -275,6 +304,19 @@ export const messages = {
 
         // page: invalid serial
         "invalid.serial": "Siri Ditebus",
+
+        // change password
+        "change.password": "更换密码",
+        "current.password": "当前密码",
+        "new.password": "新密码",
+        "confirm.password": "确定新密码",
+        "success.message": "密码已成功被更换。",
+        "go.to.home": "首页",
+        "current.empty": "请输入您现在的密码.",
+        "new.empty": "请输入您的新密码",
+        "confirm.empty": "请确认您的新密码",
+        "confirm.failed": "您输入的密码不正确",
+        "save": "save",
 
         // page: angpao
         "angpaoId": "Id",

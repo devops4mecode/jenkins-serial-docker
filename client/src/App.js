@@ -14,6 +14,7 @@ import ActiveSerial from "./scenes/luckySerial/ActiveSerial";
 import RedeemedSerial from "./scenes/luckySerial/RedeemedSerial";
 import LoginPage from "./scenes/login/LoginPage"
 import MoneyPacket from "./scenes/moneyPacket/MoneyPacket";
+import ChangePassword from "./scenes/login/ChangePassword";
 
 function App() {
     const mode = useSelector((state) => state.global.mode);
@@ -42,6 +43,7 @@ function App() {
                             <Route path="activeserial" element={user ? <ActiveSerial /> : <Navigate to='/' />} />
                             <Route path="redeemedserial" element={user ? <RedeemedSerial /> : <Navigate to='/' />} />
                             <Route path="moneypacket" element={user ? <MoneyPacket /> : <Navigate to='/' />} />
+                            <Route path="changepassword" element={user ? <ChangePassword /> : <Navigate to="/" />} />
 
                         </Route>
                     </Routes>

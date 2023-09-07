@@ -6,6 +6,7 @@ import { AppBar, IconButton, Toolbar, InputBase, Menu, MenuItem, Box, Typography
 import searchIcon from "../../assets/search.png"
 import translateIcon from '../../assets/translate.png'
 import hamburgerIcon from '../../assets/hamburger.png'
+import passwordIcon from '../../assets/password.png'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { FormattedMessage, useIntl } from "react-intl";
@@ -16,6 +17,7 @@ import Table from '@material-ui/core/Table';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }) => {
     const intl = useIntl()
@@ -26,6 +28,8 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }
     const [searchValue, setSearchValue] = useState('')
     const [data, setData] = useState(null)
     const [open, setOpen] = useState(false)
+
+    const Navigate = useNavigate()
 
     // for search
     const handleSearch = async (searchValue) => {
@@ -67,6 +71,10 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }
         const handleClose = () => {
             setAnchorEl(null)
             setIsOpen(false)
+        }
+
+        const handleChangePassword = () => {
+            Navigate('/changepassword')
         }
 
         useEffect(() => {
@@ -117,7 +125,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                     >
-                        <Box className='flexBetween' flexDirection='column' >
+                        <Box display='flex' padding='0 5px'>
                             <Button
                                 style={currentLocale === 'en' ? languageButtonStyle : { ...languageButtonStyle, backgroundColor: '#ffffff', cursor: 'not-allowed', color: 'black' }}
                                 onClick={(e) => handleChange(e.target.value)}
@@ -143,6 +151,10 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentLocale, handleChange }
                                 Ms
                             </Button>
                         </Box>
+                        <MenuItem onClick={handleChangePassword}>
+                            <img src={passwordIcon} alt='change-password' style={{ width: '1.15rem', marginRight: '10px' }} />
+                            <FormattedMessage id='change.password' />
+                        </MenuItem>
                     </Menu>
                 </Box>
             </Box>
