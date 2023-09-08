@@ -308,18 +308,16 @@ export const messages = {
         "invalid.serial": "Siri Ditebus",
 
         // change password
-        "change.password": "更换密码",
-        "current.password": "当前密码",
-        "new.password": "新密码",
-        "confirm.password": "确定新密码",
-        "success.message": "密码已成功被更换。",
-        "go.to.home": "首页",
-        "current.empty": "请输入您现在的密码.",
-        "new.empty": "请输入您的新密码",
-        "confirm.empty": "请确认您的新密码",
-        "confirm.failed": "您输入的密码不正确",
-        "save": "save",
-        "success.text": "Your password has been changed succesfully.",
+        "change.password": "Tukar Kata Laluan",
+        "current.password": "Kata Laluan Semasa",
+        "new.password": "Kata Laluan Baharu",
+        "confirm.password": "Mengesahkan Kata Laluan Baharu",
+        "current.empty": "Sila masukkan kata laluan semasa anda.",
+        "new.empty": "Sila masukkan kata laluan baharu anda.",
+        "confirm.empty": "Sila sahkan kata laluan baharu anda.",
+        "confirm.failed": "Kata laluan baharu anda tidak sepadan.",
+        "save": "Menyerahkan",
+        "success.text": "Kata laluan anda telah berjaya ditukar.",
 
         // page: angpao
         "angpaoId": "Id",
