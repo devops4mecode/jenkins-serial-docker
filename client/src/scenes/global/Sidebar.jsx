@@ -1,7 +1,9 @@
-import { Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, SwipeableDrawer, Typography, useMediaQuery, useTheme } from '@mui/material'
 import * as React from 'react'
 import { useState, useEffect, useRef } from 'react';
+import { useLogout } from '../../hooks/useLogout';
 import { Navigate, useLocation, useNavigate } from "react-router-dom"
+import { Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, SwipeableDrawer, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { FormattedMessage } from 'react-intl';
 import dashboardIcon from "../../assets/dashboard.png"
 import generateIcon from '../../assets/generate-serial.png'
 import allIcon from '../../assets/all-serial.png'
@@ -9,10 +11,8 @@ import unclaimedIcon from '../../assets/claimed-serial.png'
 import claimedIcon from '../../assets/unclaimed.png'
 import logoutIcon from '../../assets/logout.png'
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
-import { FormattedMessage } from 'react-intl';
-import '../../css/global.css'
 import Logo from '../../assets/logo.png'
-import { useLogout } from '../../hooks/useLogout';
+import '../../css/global.css'
 
 const Sidebar = ({
     drawerWidth,

@@ -5,13 +5,13 @@ import { useAuthContext } from "../../hooks/useAuthContext"
 import { FormattedMessage } from "react-intl"
 import { Formik } from "formik"
 import { CSVLink } from 'react-csv'
+import { CopyToClipboard } from "react-copy-to-clipboard"
 import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material"
 import Header from "../../components/Header"
 import CreditButton from "../../components/CreditButton"
 import CreditTextField from "../../components/TextField"
 import '../../css/generateNumber.css'
 import '../../index.css'
-import { CopyToClipboard } from "react-copy-to-clipboard"
 
 
 const GenerateNumber = () => {

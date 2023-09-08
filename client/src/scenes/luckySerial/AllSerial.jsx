@@ -7,8 +7,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarExport, GridToolbarFilterButton } from "@mui/x-data-grid"
 import Box from "@mui/material/Box";
 import Header from "../../components/Header";
-import '../../css/allNumberTable.css'
 import DeleteModal from '../../components/DeleteModal'
+import '../../css/allNumberTable.css'
 
 // const localizedTextsMap = {
 //     toolbarExportCSV: '导出',
