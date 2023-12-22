@@ -47,32 +47,22 @@ const redeemSerials = async (req, res) => {
             });
         }
 
-        const foundSerialNo = await Serial.findOne(
-            { serialNo },
-            { serialStatus: 1, givenCredit: 1, serialNo: 1 }
-        );
+        // Find using 2 conditions
+        const foundSerialNo = await Serial.findOne({ serialNo, serialStatus: true });
 
-        if (foundSerialNo.serialStatus !== true) {
-            return res.status(400).json({ message: "Already been redeemed" });
-        }
-        if (!foundSerialNo) {
-            return res
-                .status(400)
-                .json({ message: "Serial Number Invalid, Check your input" });
-        } else {
-            // set the serialStatus to false to indicate that the serial has been redeemed
-            foundSerialNo.serialStatus = false;
-            // save the redemptionAcc in the foundSerialNo object
-            foundSerialNo.redemptionAcc = redemptionAcc;
-            // save the updated document
-            await foundSerialNo.save();
+        if (!foundSerialNo) return res.status(400).json({ message: `Invalid Serial Number, Check your input or already been redeemed` })
 
-            return res.status(200).json({
-                message: `Successfully redeem, your wallet will be topup RM${foundSerialNo.givenCredit.toFixed(
-                    2
-                )}`,
-            });
-        }
+        // Quick Save
+        foundSerialNo.serialStatus = false
+        await foundSerialNo.save()
+
+        res.status(200).json({ message: `Successfully redeem, your wallet will be topup RM${foundSerialNo.givenCredit.toFixed(2)}`, });
+
+        foundSerialNo.redemptionAcc = redemptionAcc
+        await foundSerialNo.save()
+
+        return
+
     } catch (error) {
         console.error(error);
         return res.status(400).json({ error: error.message });

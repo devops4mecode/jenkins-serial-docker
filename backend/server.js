@@ -3,22 +3,27 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const { logger, logEvents } = require('./middleware/logger');
-const errorHandler = require('./middleware/errorHandler')
+const { errorHandler } = require('./middleware/errorHandler')
 const cookieParser = require("cookie-parser");
 const connectDB = require('./config/dbConnection')
 const cors = require('cors')
+const helmet = require('helmet')
+const morgan = require('morgan')
 const PORT = process.env.PORT || 3500
 const mongoose = require('mongoose');
 const corsOptions = require('./config/corsOptions');
 
 const { generateCurrentMonthChart, generateSummary, spareSummary } = require('./cron')
 
-console.log(process.env.NODE_ENV)
+// console.log(process.env.NODE_ENV)
 
 connectDB();
 
-app.use(logger)
+// app.use(logger)
 app.use(cors())
+app.use(helmet())
+app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }))
+app.use(morgan('dev'))
 app.use(express.json())
 app.use(cookieParser())
 
@@ -29,19 +34,19 @@ app.use('/api/dashboard', require('./routes/dashboardRoutes'))
 // ! Integration Routes
 app.use('/api/lucky', require('./routes/globalRoutes'))
 
-const buildPath = path.join(__dirname, 'build')
-app.use(express.static(buildPath))
+// const buildPath = path.join(__dirname, 'build')
+// app.use(express.static(buildPath))
 
-app.get('/*', function (req, res) {
-    res.sendFile(
-        path.join(__dirname, 'build/index.html'),
-        function (error) {
-            if (error) {
-                res.status(500).send(error)
-            }
-        }
-    )
-})
+// app.get('/*', function (req, res) {
+//     res.sendFile(
+//         path.join(__dirname, 'build/index.html'),
+//         function (error) {
+//             if (error) {
+//                 res.status(500).send(error)
+//             }
+//         }
+//     )
+// })
 
 app.use(errorHandler)
 
