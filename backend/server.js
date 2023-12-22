@@ -23,7 +23,8 @@ connectDB();
 app.use(cors())
 app.use(helmet())
 app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }))
-app.use(morgan('dev'))
+// Custom Morgan
+app.use(morgan(':method :url :status :response-time ms [:date[clf]]'))
 app.use(express.json())
 app.use(cookieParser())
 
