@@ -24,7 +24,7 @@ app.use(cors())
 app.use(helmet())
 app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }))
 // Custom Morgan
-app.use(morgan(':method :url :status :response-time ms [:date[clf]] '))
+app.use(morgan(':method :url :status :response-time ms [:date[clf]]'))
 app.use(express.json())
 app.use(cookieParser())
 
