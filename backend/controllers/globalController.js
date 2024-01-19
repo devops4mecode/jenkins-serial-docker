@@ -69,9 +69,11 @@ const redeemSerials = async (req, res) => {
     }
 };
 
+const sourceAbbreviations = { 'l7': 'L7', 'tng': 'TNG', 'spay': 'SPAY' };
+
 const generateSerialsByPlayer = async (req, res) => {
     try {
-        const { givenCredit, amountToGenerate, remarkName, walletBalance } = req.query;
+        let { givenCredit, amountToGenerate, remarkName, walletBalance, source } = req.query;
 
         if (!givenCredit || !amountToGenerate || !remarkName || !walletBalance) {
             return res.status(400).json({ message: "All fields must be provided" });
@@ -101,11 +103,15 @@ const generateSerialsByPlayer = async (req, res) => {
         // Return only the requested number of unique serials
         serials = serials.slice(0, amountToGenerate);
 
+        let remarkSource = sourceAbbreviations[source]
+
+        let newRemarkName = `${remarkSource}.${remarkName}`
+
         const serialDocs = [];
         for (let j = 0; j < serials.length; j++) {
             const serialDoc = new Serial({
                 givenCredit,
-                remarkName: "L7." + remarkName,
+                remarkName: newRemarkName,
                 serialNo: serials[j],
                 redemptionAcc: "",
                 serialStatus: true,
