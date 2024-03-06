@@ -2,9 +2,9 @@
 FROM nginx:alpine
 
 # Copy custom configuration file
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 80
+# Expose port 80 443
 EXPOSE 80 443
 
 # Start Nginx
