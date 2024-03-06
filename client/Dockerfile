@@ -1,5 +1,5 @@
 # Use official Node.js image as the base image
-FROM node:12 as build
+FROM node:20 as build
 
 # Set working directory
 WORKDIR /app
@@ -12,5 +12,7 @@ RUN npm install --force
 
 # Copy the entire project
 COPY . .
+
+CMD ["npm", "start"]
 
 
