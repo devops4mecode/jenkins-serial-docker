@@ -1,12 +1,12 @@
 version: "3"
 
 services:
-  client:
+  nginx:
     build:
       context: ./client
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "80:80"
     depends_on:
       - server
 
@@ -25,12 +25,3 @@ services:
       dockerfile: Dockerfile
     ports:
       - "27017:27017"
-
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"
-    depends_on:
-      - client
