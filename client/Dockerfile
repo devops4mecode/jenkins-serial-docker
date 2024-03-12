@@ -14,13 +14,13 @@ RUN npm install --force
 COPY . .
 
 # Build the React app for production
-RUN npm run build --force
+RUN npm run build --force && pwd && ls -la
 
 # Stage 2: Serve React application using Nginx
 FROM nginx:alpine
 
 # Copy built React app from the previous stage
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /build /usr/share/nginx/html
 
 # Copy nginx config file to the server
 COPY nginx.conf /etc/nginx/nginx.conf
