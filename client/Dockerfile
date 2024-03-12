@@ -10,11 +10,11 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install --force
 
-# Copy the entire application code to the container
-COPY /client .
-
 # Build the React app for production
 RUN npm run build --force
+
+# Copy the entire application code to the container
+COPY . .
 
 # Use Nginx as the production server
 FROM nginx:alpine
