@@ -13,11 +13,11 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                sh "${env.DOCKER_COMPOSE_V3} build"
-            }
-        }
+        // stage('Build') {
+        //     steps {
+        //         sh "${env.DOCKER_COMPOSE_V3} build"
+        //     }
+        // }
 
         stage('Deploy Mongo') {
             steps {
@@ -34,6 +34,7 @@ pipeline {
 
         stage('Deploy Client') {
             steps {
+                sh "${env.DOCKER_COMPOSE_V3} build nginx"
                 sh "${env.DOCKER_COMPOSE_V3} up -d nginx"
                 // Add any validation steps to ensure client is accessible
             }
