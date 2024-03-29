@@ -13,6 +13,12 @@ pipeline {
             }
         }
 
+        stage('Build') {
+            steps {
+                sh "${env.DOCKER_COMPOSE_V3} build"
+            }
+        }
+
         stage('Deploy Mongo') {
             steps {
                 sh "${env.DOCKER_COMPOSE_V3} up -d mongo"
