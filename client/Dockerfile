@@ -16,6 +16,9 @@ COPY . .
 # Build the React app for production
 RUN npm run build
 
+# Add a step to list the contents of the /app/build directory to verify that the build output is as expected
+RUN ls -la /app/build
+
 # Stage 2: Serve React application using Nginx
 FROM nginx:alpine
 
@@ -28,7 +31,7 @@ RUN chmod -R 755 /usr/share/nginx/html
 # Copy nginx config file to the server
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 80 for the Nginx server
+# Expose port 8000 for the Nginx server
 EXPOSE 8000
 
 # Start Nginx when the container runs
