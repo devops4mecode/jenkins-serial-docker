@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        // Define any global environment variables here
+        DOCKER_COMPOSE_V3 = 'docker-compose -f docker-compose.yml'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -8,34 +13,64 @@ pipeline {
             }
         }
 
-        // stage('Build') {
-        //     steps {
-        //         sh 'docker-compose build'
-        //     }
-        // }
-
-        // stage('Unit Tests') {
-        //     steps {
-        //         // Add commands to run your unit tests here
-        //     }
-        // }
-
-        // stage('Integration Tests') {
-        //     steps {
-        //         // Add commands to run your integration tests here
-        //     }
-        // }
-
-        stage('Deploy') {
+        stage('Build and Unit Test') {
+            // You could also split this into separate build and test stages for each service if needed
             steps {
-                sh 'docker-compose up -d'
+                sh 'npm install --prefix client'
+                sh 'npm run test --prefix client'
+                sh 'npm install --prefix server'
+                sh 'npm run test --prefix server'
+                // No build step for MongoDB since it uses an official Docker image
+            }
+        }
+
+        stage('Build Client') {
+            steps {
+                sh "${env.DOCKER_COMPOSE_V3} build client"
+            }
+        }
+
+        stage('Build Server') {
+            steps {
+                sh "${env.DOCKER_COMPOSE_V3} build server"
+            }
+        }
+
+        stage('Deploy Mongo') {
+            steps {
+                sh "${env.DOCKER_COMPOSE_V3} up -d mongo"
+            }
+        }
+
+        stage('Deploy Server') {
+            steps {
+                sh "${env.DOCKER_COMPOSE_V3} up -d server"
+                // Add any wait or health check script to ensure server is up
+            }
+        }
+
+        stage('Deploy Client') {
+            steps {
+                sh "${env.DOCKER_COMPOSE_V3} up -d nginx"
+                // Add any validation steps to ensure client is accessible
             }
         }
     }
-    // post {
-    //     always {
-    //         // This will ensure that Jenkins cleans up all the Docker containers and networks after the pipeline runs
-    //         sh 'docker-compose down -v'
-    //     }
-    // }
+
+    post {
+        always {
+            // This input step will pause the pipeline and wait for user input
+            script {
+                def userInput = input(
+                    id: 'confirmDown', message: 'Take down the services?', parameters: [
+                    [$class: 'BooleanParameterDefinition', defaultValue: true, description: 'Check to take down the services', name: 'confirm']
+                ])
+                
+                if (userInput) {
+                    // If the user provides input to proceed, take down the services
+                    sh "${env.DOCKER_COMPOSE_V3} down"
+                }
+            }
+        }
+    }
 }
