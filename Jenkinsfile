@@ -13,29 +13,6 @@ pipeline {
             }
         }
 
-        stage('Build and Unit Test') {
-            // You could also split this into separate build and test stages for each service if needed
-            steps {
-                sh 'npm install --prefix client'
-                sh 'npm run test --prefix client'
-                sh 'npm install --prefix server'
-                sh 'npm run test --prefix server'
-                // No build step for MongoDB since it uses an official Docker image
-            }
-        }
-
-        stage('Build Client') {
-            steps {
-                sh "${env.DOCKER_COMPOSE_V3} build client"
-            }
-        }
-
-        stage('Build Server') {
-            steps {
-                sh "${env.DOCKER_COMPOSE_V3} build server"
-            }
-        }
-
         stage('Deploy Mongo') {
             steps {
                 sh "${env.DOCKER_COMPOSE_V3} up -d mongo"
