@@ -22,6 +22,9 @@ FROM nginx:alpine
 # Copy built React app from the previous stage to the Nginx serve directory
 COPY --from=build /app/build /usr/share/nginx/html
 
+# Set permissions for Nginx
+RUN chmod -R 755 /usr/share/nginx/html
+
 # Copy nginx config file to the server
 COPY nginx.conf /etc/nginx/nginx.conf
 
