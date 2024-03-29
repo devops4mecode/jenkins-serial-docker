@@ -6,7 +6,7 @@ services:
       context: ./client
       dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "8000:80"
     volumes:
       - ./client/build:/usr/share/nginx/html
     depends_on:
