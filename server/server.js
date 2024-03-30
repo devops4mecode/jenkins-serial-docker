@@ -35,20 +35,6 @@ app.use('/api/dashboard', require('./routes/dashboardRoutes'))
 // ! Integration Routes
 app.use('/api/lucky', require('./routes/globalRoutes'))
 
-// const buildPath = path.join(__dirname, 'build')
-// app.use(express.static(buildPath))
-
-// app.get('/*', function (req, res) {
-//     res.sendFile(
-//         path.join(__dirname, 'build/index.html'),
-//         function (error) {
-//             if (error) {
-//                 res.status(500).send(error)
-//             }
-//         }
-//     )
-// })
-
 app.use(errorHandler)
 
 generateSummary()
