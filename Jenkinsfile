@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        // Define any global environment variables here
         DOCKER_COMPOSE_V3 = 'docker-compose -f docker-compose.yml'
     }
 
@@ -13,12 +12,6 @@ pipeline {
             }
         }
 
-        // stage('Build') {
-        //     steps {
-        //         sh "${env.DOCKER_COMPOSE_V3} build"
-        //     }
-        // }
-
         stage('Deploy Mongo') {
             steps {
                 sh "${env.DOCKER_COMPOSE_V3} up -d mongo"
@@ -28,7 +21,7 @@ pipeline {
         stage('Deploy Server') {
             steps {
                 sh "${env.DOCKER_COMPOSE_V3} up -d server"
-                // Add any wait or health check script to ensure server is up
+                // Implement a health check here
             }
         }
 
@@ -36,14 +29,13 @@ pipeline {
             steps {
                 sh "${env.DOCKER_COMPOSE_V3} build nginx"
                 sh "${env.DOCKER_COMPOSE_V3} up -d nginx"
-                // Add any validation steps to ensure client is accessible
+                // Implement client accessibility checks here
             }
         }
     }
 
     post {
         always {
-            // This input step will pause the pipeline and wait for user input
             script {
                 def userInput = input(
                     id: 'confirmDown', message: 'Take down the services?', parameters: [
@@ -51,7 +43,6 @@ pipeline {
                 ])
                 
                 if (userInput) {
-                    // If the user provides input to proceed, take down the services
                     sh "${env.DOCKER_COMPOSE_V3} down"
                 }
             }
